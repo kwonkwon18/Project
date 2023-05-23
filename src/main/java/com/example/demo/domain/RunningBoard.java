@@ -14,6 +14,9 @@ public class RunningBoard {
 	private LocalDate inserted;
 	private String writer;
 	private List<String> fileName;
+	
 	private double Lat;
 	private double Lng;
+	
+	private Integer people;
 }

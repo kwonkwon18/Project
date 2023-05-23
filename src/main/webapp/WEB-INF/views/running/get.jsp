@@ -18,9 +18,9 @@
 	<!-- 본문  -->
 
 	<div class="container-lg">
-		
+
 		<div class="row justify-content-center">
-		<div id="map" style="width: 500px; height: 350px;"></div>
+			<div id="map" style="width: 500px; height: 350px;"></div>
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
 					<div class="me-auto">
@@ -50,11 +50,15 @@
 						<label for="" class="form-label">작성일시</label>
 						<input type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
-					<input id="LatSubmit" type="text" name="Lat" value="${board.lat }" />
-					<input id="LngSubmit" type="text" name="Lng" value="${board.lng }" />
+					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
+					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 
 				</div>
 			</div>
+		</div>
+
+		<div>
+			<button>참여하기</button>
 		</div>
 
 
@@ -62,7 +66,7 @@
 		<!-- **************************************************  -->
 
 
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=923436aa5cc508f168e1ddbc4a032017&libraries=services"></script>
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 		<script>
 			var latNum = $("#LatSubmit").val();
 			var lngNum = $("#LngSubmit").val();

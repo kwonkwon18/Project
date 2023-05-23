@@ -10,7 +10,7 @@ import com.example.demo.mapper.RunningMapper;
 
 @Service
 public class RunningService {
-	
+
 	@Autowired
 	private RunningMapper mapper;
 
@@ -20,12 +20,12 @@ public class RunningService {
 	}
 
 	public List<RunningBoard> listBoard() {
-		
+
 		return mapper.selectList();
 	}
 
 	public RunningBoard getBoard(Integer id) {
-		
+
 		return mapper.selectById(id);
 	}
 

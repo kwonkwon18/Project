@@ -41,6 +41,12 @@
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${runningBoard.body }</textarea>
 					</div>
+					
+					<div class="mb-3">
+						<label for="" class="form-label">인원수</label>
+						<input type="number" class="form-control" name = "people" value="${runningBoard.people }" />
+					</div>
+					
 					<input id="LatSubmit" type="hidden" name="Lat" value="" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="" />
 					<input class="btn btn-primary" type="submit" value="등록" />
@@ -52,7 +58,7 @@
 
 	<!-- ******************************************************************  -->
 
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=923436aa5cc508f168e1ddbc4a032017&libraries=services"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script>
 		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 		var infowindow = new kakao.maps.InfoWindow({

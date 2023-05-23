@@ -17,13 +17,12 @@
 
 	<div class="container-lg">
 		<h1>게시물 목록</h1>
-		<!-- 새로 작성된 코드, 변경된 코드  -->
-		<!-- table.table>thead>tr>th*4^^tbody -->
 		<table class="table">
 			<thead>
 				<tr>
 					<th>#</th>
 					<th>제목</i></th>
+					<th>참여인원</th>
 					<th>작성자</th>
 					<th>작성일자</th>
 				</tr>
@@ -34,6 +33,8 @@
 					<tr>
 						<td>${board.id }</td>
 						<td><a href="/running/id/${board.id }"> ${board.title }</a>
+						<!-- 최대 참여인원과 현재 참여인원을 보여줘야함. 현재 참여인원은 party 테이블을 활용 하자.   -->
+						<td>${board.people }</td>
 						<td><a href="/running/id/${board.id }"> ${board.writer }</a>
 						<td>${board.inserted }</td>
 					</tr>

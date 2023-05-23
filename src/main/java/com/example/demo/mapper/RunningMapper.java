@@ -13,8 +13,8 @@ import com.example.demo.domain.RunningBoard;
 public interface RunningMapper {
 
 	@Insert("""
-			INSERT INTO RunningBoard (title, body, writer, Lat, Lng)
-			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng})
+			INSERT INTO RunningBoard (title, body, writer, Lat, Lng, people)
+			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{people})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(RunningBoard runningBoard);

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
 
 @Mapper
@@ -32,6 +33,8 @@ public interface RunningPartyMapper {
 			where boardId = #{boardId}
 			""")
 	Integer countByBoardId(Integer boardId);
+
+
 	
 
 

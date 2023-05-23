@@ -63,7 +63,7 @@ public class RunningController {
 	public String detail(@PathVariable("id") Integer id, Model model) {
 		
 		RunningBoard getList = service.getBoard(id);
-
+		
 		model.addAttribute("board", getList);
 		
 		return "running/get";
@@ -76,8 +76,7 @@ public class RunningController {
 		
 	}
 	
-	@GetMapping("/currentNum")
-	public Integer 
+
 	
 	
 	

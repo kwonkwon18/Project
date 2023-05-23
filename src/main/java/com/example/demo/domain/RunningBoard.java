@@ -13,10 +13,11 @@ public class RunningBoard {
 	private String body;
 	private LocalDate inserted;
 	private String writer;
-	private List<String> fileName;
+	// private List<String> fileName;
 	
 	private double Lat;
 	private double Lng;
 	
 	private Integer people;
+	private Integer currentNum;
 }

@@ -1,9 +1,9 @@
 
 
 $("#joinPartyBtn").click(function() {
-	const total = $("#totalPeople").text().trim();
+	const total = $("#totalPeople").val().trim();
 	const boardId = $("#boardIdText").text().trim();
-	const userId = $("#writerText").text().trim();
+	const userId = $("#writerText").val().trim();
 	const current = $("#currentPeople").text().trim();
 
 	const data = { boardId, userId };

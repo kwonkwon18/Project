@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
 import com.example.demo.mapper.RunningPartyMapper;
 
@@ -18,7 +19,8 @@ public class RunningPartyService {
 	public Map<String, Object> join(RunningParty runningParty) {
 		
 		 // runningParty.setMemberId("test2");
-		runningParty.setMemberId("test");
+		 runningParty.setMemberId("test3");
+		 
 		
 		Map<String, Object> result = new HashMap<>();
 		
@@ -37,6 +39,8 @@ public class RunningPartyService {
 		
 		return result;
 	}
+
+
 
 	
 

@@ -60,7 +60,7 @@
 		<div>
 			<button id="joinPartyBtn">참여하기</button>
 			<p id = "totalPeople">현재인원 : ${board.people }</p>
-			<p id = "currentPeople">현재인원 : dd</p>
+			<p id = "currentPeople">현재인원 : ${board.currentNum }</p>
 		</div>
 
 

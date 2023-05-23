@@ -44,7 +44,7 @@
 					</div>
 					<div class="mb-3">
 						<label for="" class="form-label">작성자</label>
-						<input type="text" class="form-control" value="${board.writer }" readonly />
+						<input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
 					</div>
 					<div class="mb-3">
 						<label for="" class="form-label">작성일시</label>
@@ -58,7 +58,9 @@
 		</div>
 
 		<div>
-			<button>참여하기</button>
+			<button id="joinPartyBtn">참여하기</button>
+			<p id = "totalPeople">현재인원 : ${board.people }</p>
+			<p id = "currentPeople">현재인원 : dd</p>
 		</div>
 
 
@@ -96,5 +98,10 @@
 			// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 			// marker.setMap(null);
 		</script>
+
+
+
+		<script src="/js/running/runningParty.js"></script>
+
 </body>
 </html>

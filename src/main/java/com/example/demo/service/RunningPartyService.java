@@ -18,8 +18,10 @@ public class RunningPartyService {
 
 	public Map<String, Object> join(RunningParty runningParty) {
 		
-		 // runningParty.setMemberId("test2");
-		 runningParty.setMemberId("test3");
+		 
+		// runningParty.setMemberId("test");
+		// runningParty.setMemberId("test2");
+		runningParty.setMemberId("test3");
 		 
 		
 		Map<String, Object> result = new HashMap<>();

@@ -1,9 +1,9 @@
 
 
 $("#joinPartyBtn").click(function() {
-	const total = $("#totalPeople").val().trim();
+	const total = $("#totalPeople").text().trim();
 	const boardId = $("#boardIdText").text().trim();
-	const userId = $("#writerText").val().trim();
+	const userId = $("#writerText").text().trim();
 	const current = $("#currentPeople").text().trim();
 
 	const data = { boardId, userId };
@@ -14,12 +14,19 @@ $("#joinPartyBtn").click(function() {
 		data: JSON.stringify(data),
 
 		success: function(data) {
-			if (data.join && total > current) {
-				$("#currentPeople").text(data.count);
-			} else {
-				$("#currentPeople").text(data.count);
-			}
 
+			$("#currentPeople").text(data.count);
+			
+			var currentNumber = $("#currentPeople").text().trim();
+			var totalNumber = $("#totalPeople").val().trim();
+			
+			console.log(currentNumber)
+			console.log(totalNumber)
+			
+			if(currentNumber >= totalNumber){
+				$("#joinPartyBtn").attr('disabled', 'disabled');
+			}
+			
 		},
 		error: function(jqXHR) {
 			$("#currentPeople").text(jqXHR.responseJSON.message);

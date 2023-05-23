@@ -58,9 +58,18 @@
 		</div>
 
 		<div>
+			<c:if test="${board.people > board.currentNum }">
 			<button id="joinPartyBtn">참여하기</button>
-			<p id = "totalPeople">현재인원 : ${board.people }</p>
-			<p id = "currentPeople">현재인원 : ${board.currentNum }</p>
+			</c:if>
+			
+			<c:if test="${board.people <= board.currentNum }">
+			<button>마감</button>
+			</c:if>
+		
+			<input type="text" id = "totalPeople" value = "${board.people }"  />		
+			<input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  />		
+			<p id = "currentPeople"></p>
+			<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
 		</div>
 
 

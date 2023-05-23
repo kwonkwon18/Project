@@ -26,22 +26,32 @@ public interface RunningMapper {
 	List<RunningBoard> selectList();
 
 	@Select("""
-			select
-				r.id,
-				r.title,
-				r.body,
-				r.inserted,
-				r.writer,
-				r.Lat,
-				r.Lng,
-				r.people,
-				(select count(*)
-				from RunningParty where boardId = r.id) currentNum
-				from RunningBoard r left join RunningParty on r.id = RunningParty.boardId
-			where r.id = #{id}
-			""")
+			SELECT
+			    r.id,
+			    r.title,
+			    r.body,
+			    r.inserted,
+			    r.writer,
+			    r.Lat,
+			    r.Lng,
+			    r.people,
+			    COUNT(rp.boardId) AS currentNum
+			FROM
+			    RunningBoard r
+			    LEFT JOIN RunningParty rp ON r.id = rp.boardId
+			WHERE
+			    r.id = #{id}
+			GROUP BY
+			    r.id,
+			    r.title,
+			    r.body,
+			    r.inserted,
+			    r.writer,
+			    r.Lat,
+			    r.Lng,
+			    r.people;
+						""")
 	@ResultMap("boardResultMap")
 	RunningBoard selectById(Integer id);
 
 }
-

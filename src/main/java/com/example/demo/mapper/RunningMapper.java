@@ -54,4 +54,23 @@ public interface RunningMapper {
 	@ResultMap("boardResultMap")
 	RunningBoard selectById(Integer id);
 
+	
+	
+	@Select("""
+			select
+			   b.id,
+			   b.title,
+			   b.body,
+			   b.writer,
+			   b.inserted,
+			   b.Lat,
+			   b.Lng,
+			   b.people,
+			   (select memberId from RunningParty where boardId = b.id)
+			   FROM RunningBoard b left join RunningParty p ON b.id = p.boardId
+			   where b.writer = #{writer}
+					""")
+	@ResultMap("boardResultMap")
+	List<RunningBoard> selectMyPageInfo(String writer);
+
 }

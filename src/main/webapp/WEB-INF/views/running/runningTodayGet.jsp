@@ -9,18 +9,16 @@
 </head>
 <body>
 
-
-
 	<div class="container-lg">
 
 		<div class="row justify-content-center">
-			<div id="map" style="width: 500px; height: 350px;"></div>
+		
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
 					<div class="me-auto">
 						<h1>
-							<span id="boardIdText"> ${board.id } </span>
-							번게시물
+							<span id="boardIdText"> ${board.id } 번게시물</span>
+							
 						</h1>
 					</div>
 				</div>
@@ -59,6 +57,11 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
+		
 
 
 </body>

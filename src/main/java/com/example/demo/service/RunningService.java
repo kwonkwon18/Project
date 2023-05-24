@@ -21,8 +21,6 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 @Service
 public class RunningService {
 
-
-
 	@Autowired
 	private RunningMapper mapper;
 
@@ -42,6 +40,11 @@ public class RunningService {
 	public RunningBoard getBoard(Integer id) {
 
 		return mapper.selectById(id);
+	}
+
+	public List<RunningBoard> getMyPageInfo(String writer) {
+		
+		return mapper.selectMyPageInfo(writer);
 	}
 
 

@@ -11,6 +11,9 @@ CREATE TABLE ClimbingBoard (
 SELECT * FROM ClimbingBoard;
 
 ALTER TABLE ClimbingBoard
+MODIFY inserted DATETIME NOT NULL DEFAULT NOW();
+
+ALTER TABLE ClimbingBoard
 MODIFY fileName VARCHAR(100);
 
 ALTER TABLE ClimbingBoard

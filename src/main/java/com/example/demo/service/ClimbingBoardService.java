@@ -10,6 +10,7 @@ import org.springframework.web.multipart.*;
 import com.example.demo.domain.*;
 import com.example.demo.mapper.*;
 
+import ch.qos.logback.core.recovery.*;
 import software.amazon.awssdk.core.sync.*;
 import software.amazon.awssdk.services.s3.*;
 import software.amazon.awssdk.services.s3.model.*;
@@ -29,6 +30,9 @@ public class ClimbingBoardService {
 	
 	@Autowired
 	private ClimbingTodayMapper Todaymapper;
+	
+	@Autowired
+	private ClimbingCourseMapper Coursemapper;
 
 	public boolean addClimbingBoard(ClimbingBoard climbingBoard) {
 		int cnt = mapper.insert(climbingBoard);
@@ -49,7 +53,7 @@ public class ClimbingBoardService {
 	public boolean addClimbingToday(ClimbingToday climbingToday, MultipartFile[] files) throws Exception {
 		for(MultipartFile file : files) {
 			if(file.getSize() > 0) {
-				String objectKey = "today/" + climbingToday.getId() + "/" + file.getOriginalFilename();
+				String objectKey = "project/climbing/" + climbingToday.getId() + "/" + file.getOriginalFilename();
 				PutObjectRequest por = PutObjectRequest.builder()
 						.acl(ObjectCannedACL.PUBLIC_READ)
 						.bucket(bucketName)
@@ -77,6 +81,37 @@ public class ClimbingBoardService {
 		return Todaymapper.selectById(id);
 	}
 
+	public boolean addClimbingCourse(ClimbingCourse climbingCourse, MultipartFile[] files) throws Exception {
+		System.out.println(climbingCourse.getId());
+
+		int cnt = Coursemapper.insert(climbingCourse);
+		for(MultipartFile file : files) {
+			if(file.getSize() > 0) {
+				String objectKey = "project/course/" + climbingCourse.getId() + "/" + file.getOriginalFilename();
+				PutObjectRequest por = PutObjectRequest.builder()
+						.acl(ObjectCannedACL.PUBLIC_READ)
+						.bucket(bucketName)
+						.key(objectKey)
+						.build();
+				RequestBody rb = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+				
+				s3.putObject(por, rb);
+				Todaymapper.insertFileName(climbingCourse.getId(), file.getOriginalFilename());
+				
+			}
+		}
+		return cnt == 1;
+	}
+
+		public List<ClimbingCourse> listCourse() {
+
+		return Coursemapper.selectList();
+	}
+	
+	public ClimbingCourse getClimbingCourse(Integer id) {
+
+		return Coursemapper.selectById(id);
+	}
 
 
 }

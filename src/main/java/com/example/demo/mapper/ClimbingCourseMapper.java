@@ -7,30 +7,32 @@ import org.apache.ibatis.annotations.*;
 import com.example.demo.domain.*;
 
 @Mapper
-public interface ClimbingTodayMapper {
+public interface ClimbingCourseMapper {
 
 	@Insert("""
-			INSERT INTO ClimbingToday (writer, title, body)
+			INSERT INTO ClimbingCourse (writer, title, body)
 			VALUES (#{writer}, #{title}, #{body})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	int insert(ClimbingToday climbingToday);
+	int insert(ClimbingCourse climbingCourse);
 	
 	@Select("""
-			select * from ClimbingToday;
+			select * from ClimbingCourse;
 			""")
-	List<ClimbingToday> selectList();
+	List<ClimbingCourse> selectList();
 
 	@Select("""
-			select * from ClimbingToday 
+			select * from ClimbingCourse 
 			where id = #{id}
 			""")
-	ClimbingToday selectById(Integer id);
+	ClimbingCourse selectById(Integer id);
 
 	@Insert("""
 			INSERT INTO ClimbingFileName (boardId, fileName)
 			VALUES (#{boardId}, #{fileName})
 			""")
-	Integer insertFileName(Integer boardId, String fileName);
+	Integer insertFileName(Integer id, String originalFilename);
 
+
+	
 }

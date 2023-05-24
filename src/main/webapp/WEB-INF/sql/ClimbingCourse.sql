@@ -1,6 +1,6 @@
 USE RunData;
 
-CREATE TABLE ClimbingToday (
+CREATE TABLE ClimbingCourse (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100) NOT NULL,
     body VARCHAR(1000) NOT NULL,
@@ -8,11 +8,7 @@ CREATE TABLE ClimbingToday (
     inserted DATETIME DEFAULT NOW()
 );
 
+SELECT * FROM ClimbingCourse;
 
-SELECT * FROM ClimbingToday;
-
-DESC ClimbingToday;
-
-ALTER TABLE ClimbingToday
+ALTER TABLE ClimbingCourse
 MODIFY inserted DATETIME NOT NULL DEFAULT NOW();
-

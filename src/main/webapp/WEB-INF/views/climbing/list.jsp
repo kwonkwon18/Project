@@ -69,6 +69,33 @@
 		</table>
 	</div>
 
+		<div class="container-lg">
+		<h2>추천 코스</h2>
+		<!-- 새로 작성된 코드, 변경된 코드  -->
+		<!-- table.table>thead>tr>th*4^^tbody -->
+		<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>제목</i></th>
+					<th>작성자</th>
+					<th>작성일자</th>
+				</tr>
+			</thead>
+			<tbody>
+			<!-- courseList를 받았다.  -->
+				<c:forEach items="${courseList }" var="board">
+					<tr>
+						<td>${board.id }</td>
+						<td><a href="/climbing/courseId/${board.id }"> ${board.title }</a>
+						<td>${board.writer }</td>
+						<td>${board.inserted }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+
 
 
 </body>

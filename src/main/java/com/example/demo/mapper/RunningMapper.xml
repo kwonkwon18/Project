@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.RunningMapper">
+
+	<resultMap type="com.example.demo.domain.RunningBoard" id="boardResultMap">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="body" property="body" />
+		<result column="inserted" property="inserted" />
+		<result column="writer" property="writer" />
+		<result column="Lat" property="Lat" />
+		<result column="Lng" property="Lng" />
+		<result column="people" property="people" />
+		<!-- <result column = "filename" property = "filename"/> -->
+	</resultMap>
+
+</mapper>

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>키워드로 장소검색하기</title>
+<title>같이 달릴 사람 ! </title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -17,7 +17,7 @@
 
 	모일 장소를 찍어주세요 !
 	<br />
-	<input id="inputValue" type="text" value="하늘공원" />
+	<input id="inputValue" type="text" placeholder="예) 하늘공원" />
 	<br />
 	<button id="searchPlace">검색</button>
 
@@ -41,15 +41,15 @@
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${runningBoard.body }</textarea>
 					</div>
-					
+
 					<div class="mb-3">
 						<label for="" class="form-label">인원수</label>
-						<input type="number" class="form-control" name = "people" value="${runningBoard.people }" />
+						<input id="peopleInput" type="number" class="form-control" name="people" value="${runningBoard.people }" />
 					</div>
-					
+
 					<input id="LatSubmit" type="hidden" name="Lat" value="" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="" />
-					<input class="btn btn-primary" type="submit" value="등록" />
+					<input id="addButton" disabled class="btn btn-primary" type="submit" value="등록" />
 			</div>
 			</form>
 		</div>
@@ -60,6 +60,49 @@
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script>
+		var checkLat = false;
+		var checkLng = false;
+		var checktitleInput = false;
+		var checkwirterInput = false;
+		var checkbodyTextarea = false;
+		var checkpeopleInput = false;
+
+		function enableSubmit() {
+			if (checkLat && checkLng && checktitleInput && checkwirterInput
+					&& checkbodyTextarea && checkpeopleInput) {
+				$("#addButton").removeAttr("disabled");
+			} else {
+				$("#addButton").attr("disabled", "");
+			}
+		}
+
+
+
+		$("#titleInput").keyup(function() {
+
+			checktitleInput = true;
+
+			enableSubmit();
+		});
+
+		$("#wirterInput").keyup(function() {
+			checkwirterInput = true;
+			enableSubmit();
+		});
+
+		console.log(checkwirterInput)
+		$("#bodyTextarea").keyup(function() {
+			checkbodyTextarea = true;
+			enableSubmit();
+		});
+
+		console.log(checkbodyTextarea)
+		$("#peopleInput").keyup(function() {
+			checkpeopleInput = true;
+			enableSubmit();
+		});
+		console.log(checkpeopleInput)
+
 		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 		var infowindow = new kakao.maps.InfoWindow({
 			zIndex : 1
@@ -130,9 +173,13 @@
 
 			document.getElementById('LatSubmit').value = latlng.getLat();
 			document.getElementById('LngSubmit').value = latlng.getLng();
+			checkLat = true;
+			checkLng = true;
 
 			var resultDiv = document.getElementById('clickLatlng');
 			resultDiv.innerHTML = message;
+
+			enableSubmit();
 
 		});
 	</script>

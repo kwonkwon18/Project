@@ -20,8 +20,8 @@ public class RunningPartyService {
 		
 		 
 		// runningParty.setMemberId("test");
-		// runningParty.setMemberId("test2");
-		runningParty.setMemberId("test3");
+		runningParty.setMemberId("test2");
+		// runningParty.setMemberId("test3");
 		 
 		
 		Map<String, Object> result = new HashMap<>();

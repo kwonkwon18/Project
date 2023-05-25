@@ -40,16 +40,16 @@ public class RunningController {
 	@GetMapping("/runningList")
 	public void list(Model model) {
 
-		Map<String, Object> listMap =  new HashMap<>();
-		
+		Map<String, Object> listMap = new HashMap<>();
+
 		// 메이트 모집
 		List<RunningBoard> list = service.listBoard(); // 페이지 처리 전
 		listMap.put("boardList", list);
-		
+
 		// 오늘의 러닝
 		List<RunningToday> today = todayService.listBoard();
 		listMap.put("todayList", today);
-		
+
 		model.addAllAttributes(listMap);
 
 	}
@@ -100,7 +100,7 @@ public class RunningController {
 		}
 
 	}
-	
+
 	@GetMapping("/todayId/{id}")
 	public String detailToday(@PathVariable("id") Integer id, Model model) {
 
@@ -110,11 +110,25 @@ public class RunningController {
 
 		return "running/runningTodayGet";
 	}
-	
-	
-	
-	
-	
+
+	// 인증 들어가면 Stirng writer 는 authentional.getName으로 할거임
+	@GetMapping("/myPage")
+	public void runningMyPage(String writer, Model model) {
+		
+		Map<String, Object> myPageList = new HashMap<>();
+
+		List<RunningBoard> runningBoards = service.getMyPageInfo(writer);
+		myPageList.put("runningBoards", runningBoards);
+		System.out.println(runningBoards);
+		
+		List<RunningParty> members = service.getJoinMember(writer);
+		myPageList.put("members", members);
+		System.out.println(members);
+		
+		model.addAllAttributes(myPageList);
+		
+	}
+
 	// ******************** AJAX
 
 	@PostMapping("joinParty")

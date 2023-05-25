@@ -53,6 +53,7 @@
 					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 
+
 				</div>
 			</div>
 		</div>

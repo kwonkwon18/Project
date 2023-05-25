@@ -28,6 +28,7 @@ public interface RunningPartyMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer insert(RunningParty runningParty);
 
+	
 	@Select("""
 			select count(*) from RunningParty
 			where boardId = #{boardId}

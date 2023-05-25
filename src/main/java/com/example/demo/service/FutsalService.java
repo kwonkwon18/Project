@@ -46,7 +46,7 @@ public class FutsalService {
 		
 			for(MultipartFile file : files) {
 				if (file.getSize() > 0) {
-					String objectKey = "futsal/id/" + futsalBoard.getId() + "/" + file.getOriginalFilename();
+					String objectKey = "project/" + futsalBoard.getId() + "/" + file.getOriginalFilename();
 					
 				PutObjectRequest por = PutObjectRequest.builder()
 						.bucket(bucketName)
@@ -65,6 +65,29 @@ public class FutsalService {
 		
 		return cnt == 1;
 	}
+	
+	public boolean addRunningToday(RunningToday runningToday, MultipartFile[] files) throws Exception {
+
+		Integer cnt = todayMapper.insertRunningToday(runningToday);
+
+		for (MultipartFile file : files) {
+			if (file.getSize() > 0) {
+
+				// 이름이 될 내용
+				String objectKey = "project/" + runningToday.getId() + "/" + file.getOriginalFilename();
+
+				// s3 첫번째 파라미터
+				PutObjectRequest por = PutObjectRequest.builder().bucket(bucketName).key(objectKey)
+						.acl(ObjectCannedACL.PUBLIC_READ).build();
+
+				// s3 두번째 파라미터
+				RequestBody rb = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+
+				s3.putObject(por, rb);
+
+				todayMapper.insertFileName(runningToday.getId(), file.getOriginalFilename());
+			}
+		}
 
 	public boolean modify(FutsalBoard futsalBoard) {
 		int cnt = mapper.update(futsalBoard);

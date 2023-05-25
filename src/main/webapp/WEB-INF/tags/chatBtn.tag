@@ -22,7 +22,8 @@
 				<button class="dropdown-item btn btn-secondary">버튼 2</button>
 			</div>
 		</div>
-		<textarea style="height: 40px" placeholder="댓글을 남겨주세요" id="commentTextArea" class="form-control"></textarea>
+		<textarea style="height: 40px" placeholder="채팅을 입력해주세요
+		" id="commentTextArea" class="form-control"></textarea>
 		<button id="sendChatBtn" class="btn btn-outline-danger"">
 			<i class="fa-regular fa-paper-plane"></i>
 		</button>

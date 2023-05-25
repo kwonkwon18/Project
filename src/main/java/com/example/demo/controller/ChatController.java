@@ -31,13 +31,16 @@ public class ChatController {
 	@ResponseBody
 	@PreAuthorize("authenticated")
 	public Map<String, Object> chatOpen(Authentication authentication) {
-		System.out.println(authentication.getName());
 		var myName = authentication.getName();
 		List<ChatRoom> invitedList = service.invitedSelectByName(myName);
 		List<String> nickNameList = new ArrayList<>();
 		List<String> lastMessageList = new ArrayList<>();
 		for (ChatRoom chatRoom : invitedList) {
-			nickNameList.add(memberService.getNickName(chatRoom.getInvited()));
+			if(memberService.getNickName(authentication.getName()).equals(chatRoom.getInvited())) {
+				nickNameList.add(memberService.getNickName(chatRoom.getCreater()));
+			} else {
+				nickNameList.add(memberService.getNickName(chatRoom.getInvited()));
+			}
 			lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()));
 		}
 		Map<String, Object> map = new HashMap<>();
@@ -50,11 +53,21 @@ public class ChatController {
 	@GetMapping("room")
 	@ResponseBody
 	@PreAuthorize("authenticated")
-	public Map<String, Object> chatRoom(Authentication authentication) {
-		
+	public Map<String, Object> chatRoom(Authentication authentication, String yourNickName) {
 		
 		Map<String, Object> map = new HashMap<>();
+		String myUserId = authentication.getName();
+		map.put("chatList", service.getChatByYourNickName(yourNickName, myUserId));
 		map.put("myId", authentication.getName());
 		return map;
+	}
+	
+	@PostMapping("add")
+	@ResponseBody
+	@PreAuthorize("authenticated")
+	public void chatAdd(@RequestBody Chat data, Authentication authentication) {
+		data.setSenderId(authentication.getName());
+		System.out.println(data.getSenderId());
+		service.addChat(data);
 	}
 }

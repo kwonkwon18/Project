@@ -30,12 +30,14 @@ $(".chatClose").click(function() {
 	$("#chatList").hide();
 	$("#chatBox").hide();
 	$("#chatListContainer").remove("");
+	$("#chatContainer").remove("");
 })
 
 
 $("#returnBtn").click(function() {
 	$("#chatBox").hide();
 	$("#chatList").show();
+	$("#chatContainer").remove("");
 })
 
 $("#chatList").on("click", ".openChatRoomBtn", function() {
@@ -43,20 +45,27 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 	$("#chatBox").show();
 	var nickName = $(this).find(".nickNameSpan").text();
 	$.ajax("/chat/room", {
-		data: { invitedNickName: nickName },
+		data: { yourNickName: nickName },
 		contentType: "application/json",
 		success: function(data) {
 			var chatList = data.chatList;
 			var myId = data.myId;
-			for(const chat of chatList) {
+			$("#chatBox").append(`
+				<div id="chatContainer"></div> 
+			`)
+			for (const chat of chatList) {
 				lastChatRoomId = chat.chatRoomId;
-				if(chat.senderId === myId) {
-					$("#chatBox").append(`
-						<div style="display: inline-block; padding: 5px; background-color: #f0f0f0; border-radius: 15px; float: right; margin-bottom: 5px;">${chat.message}</div>
+				if (chat.senderId === myId) {
+					$("#chatContainer").append(`
+						<div class="d-flex justify-content-end">
+							<div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div> 
+						</div>
 					`)
 				} else {
-					$("#chatBox").append(`
-						<div style="display: inline-block; padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div>
+					$("#chatContainer").append(`
+						<div class="d-flex justify-content-start">
+							<div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div>
+						</div>
 					`)
 				}
 			}
@@ -67,11 +76,11 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 $("#sendChatBtn").click(function() {
 	const message = $("#chatTextArea").val();
 	const chatRoomId = lastChatRoomId;
-	const data = { message, chatRoomId };
+	const data = { message, chatRoomId};
 	$.ajax("/chat/add", {
 		contentType: "application/json",
 		method: "post",
-		data:  JSON.stringify(data),
+		data: JSON.stringify(data),
 		complete: function() {
 			$("#chatTextArea").val("");
 		}
@@ -79,5 +88,5 @@ $("#sendChatBtn").click(function() {
 })
 
 $("#deleteChatRoomModalButton").click(function() {
-	
+
 })

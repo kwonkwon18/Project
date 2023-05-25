@@ -31,4 +31,11 @@ public interface MemberMapper {
 			""")
 	Integer insertMember(Member member);
 	////////////////
+
+	@Select("""
+			SELECT userId FROM Member
+			WHERE nickName = #{invitedNickName}
+			""")
+	String getUserIdSelectByNickName(String invitedNickName);
+	
 }

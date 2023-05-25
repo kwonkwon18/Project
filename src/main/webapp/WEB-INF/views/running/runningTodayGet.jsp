@@ -35,7 +35,7 @@
 							<div>
 								<!-- http://localhost:8080/image/게시물번호/fileName  -->
 								<!-- aws로 올리면 위 만큼이 aws 주소가 됨   -->
-								<img class="img-fluid img-thumbnail" src="${bucketUrl }/${board.id }/${fileName}" alt="" height="300" width="300" />
+								<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${board.id }/${fileName}" alt="" height="300" width="300" />
 							</div>
 						</c:forEach>
 					</div>

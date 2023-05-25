@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import jakarta.annotation.PostConstruct;
@@ -49,16 +51,28 @@ public class CustomConfig {
 		return s3client;
 
 	}
-
+	
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
+	
+	// 암호 필터할 때 사용하는 것 
+	@Bean
+	public SecurityFilterChain securityfilterchain(HttpSecurity http) throws Exception {
+		
+		// csrf 보안을 사용하지 않겠다는 것
 		http.csrf().disable();
+		
+		http.formLogin().loginPage("/login").defaultSuccessUrl("/running/runningList");
+		
+		// 로그아웃 페이지 설정
+		http.logout().logoutUrl("/logout").logoutSuccessUrl("/running/runningList");
+		
 
-		http.authorizeHttpRequests().anyRequest().permitAll();
-
+		
 		return http.build();
-
 	}
 
 }

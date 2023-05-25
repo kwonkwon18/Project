@@ -1,22 +1,14 @@
 package com.example.demo.service;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.RunningBoard;
-import com.example.demo.domain.RunningToday;
+import com.example.demo.domain.RunningParty;
 import com.example.demo.mapper.RunningMapper;
 import com.example.demo.mapper.RunningTodayMapper;
-
-import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Service
 public class RunningService {
@@ -45,6 +37,11 @@ public class RunningService {
 	public List<RunningBoard> getMyPageInfo(String writer) {
 		
 		return mapper.selectMyPageInfo(writer);
+	}
+
+	public List<RunningParty> getJoinMember(String writer) {
+		
+		return mapper.selectMemberId(writer);
 	}
 
 

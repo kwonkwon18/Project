@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 
 import com.example.demo.domain.RunningBoard;
+import com.example.demo.domain.RunningParty;
 
 @Mapper
 public interface RunningMapper {
@@ -65,12 +66,21 @@ public interface RunningMapper {
 			   b.inserted,
 			   b.Lat,
 			   b.Lng,
-			   b.people,
-			   (select memberId from RunningParty where boardId = b.id)
+			   b.people
 			   FROM RunningBoard b left join RunningParty p ON b.id = p.boardId
 			   where b.writer = #{writer}
 					""")
 	@ResultMap("boardResultMap")
 	List<RunningBoard> selectMyPageInfo(String writer);
+
+	
+
+	
+	@Select("""
+            select boardId ,memberId 
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id
+			where userId = #{writer}
+			""")
+	List<RunningParty> selectMemberId(String writer);
 
 }

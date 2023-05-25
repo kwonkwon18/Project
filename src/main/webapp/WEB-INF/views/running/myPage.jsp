@@ -12,14 +12,14 @@
 <body>
 
 	<!-- <div id="map" style="width: 500px; height: 350px;"></div> -->
-일단 나오는지 확인
+	일단 나오는지 확인
 
 	<div class="container-lg">
 
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
 
-				<c:forEach items="${MyPageInfo }" var="board">
+				<c:forEach items="${runningBoards }" var="board">
 					<div class="d-flex">
 						<div class="me-auto">
 							<h1>
@@ -45,19 +45,33 @@
 							<label for="" class="form-label">호스트</label>
 							<input id="writerText" type="text" class="form-control" value="${board.userId }" readonly />
 						</div>
-						<div class="mb-3">
+
+						<label for="" class="form-label">게스트</label>
+						<c:forEach items="${members }" var="members">
+							<c:if test="${board.id eq members.boardId }">
+								<div class="mb-3">
+									<input type="text" readonly class="form-control" value="${members.memberId }" />
+								</div>
+							</c:if>
+						</c:forEach>
+
+
+						<%-- 						<div class="mb-3">
 							<label for="" class="form-label">게스트</label>
 							<input type="text" readonly class="form-control" value="${board.memberId }" />
-						</div>
+						</div> --%>
+
+
 						<div class="mb-3">
 							<label for="" class="form-label">작성일시</label>
 							<input type="text" readonly class="form-control" value="${board.inserted }" />
 						</div>
+
 						<input id="LatSubmit" type="text" name="Lat" value="${board.lat }" />
 						<input id="LngSubmit" type="text" name="Lng" value="${board.lng }" />
 					</div>
 				</c:forEach>
-				
+
 			</div>
 		</div>
 

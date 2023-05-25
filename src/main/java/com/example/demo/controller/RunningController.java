@@ -114,10 +114,18 @@ public class RunningController {
 	// 인증 들어가면 Stirng writer 는 authentional.getName으로 할거임
 	@GetMapping("/myPage")
 	public void runningMyPage(String writer, Model model) {
+		
+		Map<String, Object> myPageList = new HashMap<>();
 
 		List<RunningBoard> runningBoards = service.getMyPageInfo(writer);
-
-		model.addAttribute("MyPageInfo", runningBoards);
+		myPageList.put("runningBoards", runningBoards);
+		System.out.println(runningBoards);
+		
+		List<RunningParty> members = service.getJoinMember(writer);
+		myPageList.put("members", members);
+		System.out.println(members);
+		
+		model.addAllAttributes(myPageList);
 		
 	}
 

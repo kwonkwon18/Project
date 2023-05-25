@@ -1,7 +1,8 @@
 package com.example.demo.domain;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.Data;
 
@@ -13,8 +14,8 @@ public class Member {
 	private String password;
 	private String name;
 	private String nickName;
-	private LocalTime inserted;
-	private LocalDate birth;
+	private LocalDateTime inserted;
+	private String birth;
 	private Boolean gender;
 	private String career;
 	private String address;
@@ -22,5 +23,8 @@ public class Member {
 	private String email;
 	private String introduce;
 	private Integer manner;
+	
+	private List<String> authority;
 
+	
 }

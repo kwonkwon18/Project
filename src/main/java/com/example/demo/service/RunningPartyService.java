@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.RunningBoard;
@@ -16,12 +17,13 @@ public class RunningPartyService {
 	@Autowired
 	private RunningPartyMapper partyMapper;
 
-	public Map<String, Object> join(RunningParty runningParty) {
+	public Map<String, Object> join(RunningParty runningParty, Authentication authentication
+			) {
 		
 		 
 		//runningParty.setMemberId("test");
 		//runningParty.setMemberId("test2");
-		 runningParty.setMemberId("test3");
+		 runningParty.setMemberId(authentication.getName());
 		 
 		
 		Map<String, Object> result = new HashMap<>();

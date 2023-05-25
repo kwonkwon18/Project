@@ -67,7 +67,7 @@ public interface RunningMapper {
 			   b.Lat,
 			   b.Lng,
 			   b.people
-			   FROM RunningBoard b left join RunningParty p ON b.id = p.boardId
+			   FROM RunningBoard b 
 			   where b.writer = #{writer}
 					""")
 	@ResultMap("boardResultMap")
@@ -82,5 +82,35 @@ public interface RunningMapper {
 			where userId = #{writer}
 			""")
 	List<RunningParty> selectMemberId(String writer);
+
+	
+	
+	
+	@Select("""
+			SELECT
+			    r.id,
+			    r.title,
+			    r.body,
+			    r.inserted,
+			    r.writer,
+			    r.Lat,
+			    r.Lng,
+			    r.people,
+			    COUNT(rp.boardId) AS currentNum
+			FROM
+			    RunningBoard r
+			    LEFT JOIN RunningParty rp ON r.id = rp.boardId
+			GROUP BY
+			    r.id,
+			    r.title,
+			    r.body,
+			    r.inserted,
+			    r.writer,
+			    r.Lat,
+			    r.Lng,
+			    r.people
+						""")
+	@ResultMap("boardResultMap")
+	List<RunningBoard> selectMate();
 
 }

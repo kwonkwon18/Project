@@ -44,6 +44,11 @@ public class RunningService {
 		return mapper.selectMemberId(writer);
 	}
 
+	public List<RunningBoard> getMateBoard() {
+		
+		return mapper.selectMate();
+	}
+
 
 
 }

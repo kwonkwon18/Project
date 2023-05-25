@@ -67,7 +67,9 @@ public class RunningController {
 		runningBoard.setWriter(authentication.getName());
 		
 		boolean ok = service.addBoard(runningBoard);
-
+		
+		
+		
 		if (ok) {
 
 			return "redirect:/running/runningList";
@@ -117,27 +119,39 @@ public class RunningController {
 
 	// 인증 들어가면 Stirng writer 는 authentional.getName으로 할거임
 	@GetMapping("/myPage")
-	public void runningMyPage(String writer, Model model) {
+	public void runningMyPage(Authentication authentication, Model model) {
 		
 		Map<String, Object> myPageList = new HashMap<>();
 
-		List<RunningBoard> runningBoards = service.getMyPageInfo(writer);
+		List<RunningBoard> runningBoards = service.getMyPageInfo(authentication.getName());
 		myPageList.put("runningBoards", runningBoards);
 		System.out.println(runningBoards);
 		
-		List<RunningParty> members = service.getJoinMember(writer);
+		List<RunningParty> members = service.getJoinMember(authentication.getName());
 		myPageList.put("members", members);
 		System.out.println(members);
 		
 		model.addAllAttributes(myPageList);
 		
 	}
+	
+	@GetMapping("/runningMate")
+	public void runningMatePage(Model model) {
+		
+		List<RunningBoard> runningMates = service.getMateBoard();
+
+		model.addAttribute("board", runningMates);
+		System.out.println(runningMates);
+
+		model.addAttribute("runningMates",runningMates);
+	}
+	
 
 	// ******************** AJAX
 
 	@PostMapping("joinParty")
-	public ResponseEntity<Map<String, Object>> joinParty(@RequestBody RunningParty runningParty) {
-		return ResponseEntity.ok().body(partyService.join(runningParty));
+	public ResponseEntity<Map<String, Object>> joinParty(@RequestBody RunningParty runningParty, Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.join(runningParty, authentication));
 
 	}
 

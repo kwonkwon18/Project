@@ -18,7 +18,8 @@ public interface ChatMapper {
 	@Select("""
 			SELECT Message FROM Chat
 			WHERE chatRoomId = #{id}
-			ORDER BY inserted DESC;
+			ORDER BY inserted DESC
+			LIMIT 1;
 			""")
 	String lastMessageSelectById(Integer id);
 

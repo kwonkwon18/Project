@@ -24,21 +24,8 @@ public class MainController {
 	private MemberService memberService;
 	
 	@GetMapping({"/", "main"})
-	public void main(Authentication authentication, Model model) {
-//		if(authentication.isAuthenticated()) {
-//			var myName = authentication.getName();
-//			List<ChatRoom> invitedList = chatService.invitedSelectByName(myName);
-//			List<String> nickNameList = new ArrayList<>();
-//			List<String> lastMessageList = new ArrayList<>();
-//			for(ChatRoom chatRoom : invitedList) {
-//				nickNameList.add(memberService.getNickName(chatRoom.getInvited()));
-//				lastMessageList.add(chatService.lastMessageSelectById(chatRoom.getId()));
-//			}
-//			Map<String, Object> map = new HashMap<>();
-//			map.put("nickNameList", nickNameList);
-//			map.put("lastMessageList", lastMessageList);
-//			model.addAttribute(map);
-//		}
+	public void main() {
+
 	}
 	
 	//  서재권 작업 내용***********************

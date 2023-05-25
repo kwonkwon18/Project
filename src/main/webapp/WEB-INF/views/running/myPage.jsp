@@ -19,6 +19,7 @@
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
 
+
 				<c:forEach items="${runningBoards }" var="board">
 					<div class="d-flex">
 						<div class="me-auto">
@@ -54,13 +55,6 @@
 								</div>
 							</c:if>
 						</c:forEach>
-
-
-						<%-- 						<div class="mb-3">
-							<label for="" class="form-label">게스트</label>
-							<input type="text" readonly class="form-control" value="${board.memberId }" />
-						</div> --%>
-
 
 						<div class="mb-3">
 							<label for="" class="form-label">작성일시</label>

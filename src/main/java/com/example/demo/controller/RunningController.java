@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,8 +61,11 @@ public class RunningController {
 	}
 
 	@PostMapping("/runningAdd")
-	public String addResult(RunningBoard runningBoard, RedirectAttributes trrt) {
-
+	public String addResult(RunningBoard runningBoard, RedirectAttributes trrt, Authentication authentication) {
+		
+		// 보드의 writer를 지정해줌
+		runningBoard.setWriter(authentication.getName());
+		
 		boolean ok = service.addBoard(runningBoard);
 
 		if (ok) {

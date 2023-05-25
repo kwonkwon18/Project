@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>같이 달릴 사람 ! </title>
+<title>같이 달릴 사람 !</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -33,10 +33,12 @@
 						<label for="titleInput" class="form-label">제목</label>
 						<input id="titleInput" class="form-control" type="text" name="title" value="${runningBoard.title }" />
 					</div>
-					<div class="mb-3">
+
+					<%-- 					<div class="mb-3">
 						<label for="wirterInput" class="form-label">글쓴이</label>
 						<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningBoard.writer }" />
-					</div>
+					</div> --%>
+
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${runningBoard.body }</textarea>
@@ -63,20 +65,17 @@
 		var checkLat = false;
 		var checkLng = false;
 		var checktitleInput = false;
-		var checkwirterInput = false;
+
 		var checkbodyTextarea = false;
 		var checkpeopleInput = false;
 
 		function enableSubmit() {
-			if (checkLat && checkLng && checktitleInput && checkwirterInput
-					&& checkbodyTextarea && checkpeopleInput) {
+			if (checkLat && checkLng && checktitleInput && checkbodyTextarea && checkpeopleInput) {
 				$("#addButton").removeAttr("disabled");
 			} else {
 				$("#addButton").attr("disabled", "");
 			}
 		}
-
-
 
 		$("#titleInput").keyup(function() {
 
@@ -85,17 +84,14 @@
 			enableSubmit();
 		});
 
-		$("#wirterInput").keyup(function() {
-			checkwirterInput = true;
-			enableSubmit();
-		});
 
-		console.log(checkwirterInput)
+
 		$("#bodyTextarea").keyup(function() {
 			checkbodyTextarea = true;
 			enableSubmit();
 		});
 
+ 
 		console.log(checkbodyTextarea)
 		$("#peopleInput").keyup(function() {
 			checkpeopleInput = true;

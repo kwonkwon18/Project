@@ -42,10 +42,12 @@
 						<label for="" class="form-label">본문</label>
 						<textarea class="form-control" readonly rows="10">${board.body }</textarea>
 					</div>
+					
 					<div class="mb-3">
 						<label for="" class="form-label">작성자</label>
 						<input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
 					</div>
+					
 					<div class="mb-3">
 						<label for="" class="form-label">작성일시</label>
 						<input type="text" readonly class="form-control" value="${board.inserted }" />

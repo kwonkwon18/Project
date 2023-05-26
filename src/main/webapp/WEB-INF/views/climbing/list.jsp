@@ -29,11 +29,11 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- boardList를 받았다.  -->
-				<c:forEach items="${boardList }" var="board">
+			<!-- mateList를 받았다.  -->
+				<c:forEach items="${climbingMateList }" var="board">
 					<tr>
 						<td>${board.id }</td>
-						<td><a href="/climbing/id/${board.id }"> ${board.title }</a>
+						<td><a href="/climbing/mateId/${board.id }"> ${board.title }</a>
 						<td>${board.writer }</td>
 						<td>${board.inserted }</td>
 					</tr>
@@ -57,7 +57,7 @@
 			</thead>
 			<tbody>
 			<!-- todayList를 받았다.  -->
-				<c:forEach items="${todayList }" var="board">
+				<c:forEach items="${climbingTodayList }" var="board">
 					<tr>
 						<td>${board.id }</td>
 						<td><a href="/climbing/todayId/${board.id }"> ${board.title }</a>
@@ -84,7 +84,7 @@
 			</thead>
 			<tbody>
 			<!-- courseList를 받았다.  -->
-				<c:forEach items="${courseList }" var="board">
+				<c:forEach items="${climbingCourseList }" var="board">
 					<tr>
 						<td>${board.id }</td>
 						<td><a href="/climbing/courseId/${board.id }"> ${board.title }</a>
@@ -96,6 +96,37 @@
 		</table>
 	</div>
 
+<div class="container-lg">
+		<div class="row">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+
+					<!-- 이전 버튼 -->
+					<c:if test="${pageInfo.currentPageNum gt 1 }">
+						<my:pageItem pageNum="${pageInfo.currentPageNum - 1 }">
+							<i class="fa-solid fa-angle-left"></i>
+						</my:pageItem>
+					</c:if>
+
+					<c:forEach begin="${pageInfo.leftPageNum }" end="${pageInfo.rightPageNum }" var="pageNum">
+						<my:pageItem pageNum="${pageNum }">
+							${pageNum }
+						</my:pageItem>
+					</c:forEach>
+
+					<!-- 다음 버튼 -->
+					<c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum }">
+						<%-- 페이지 번호 : ${pageInfo.currentPageNum + 1 } --%>
+						<my:pageItem pageNum="${pageInfo.currentPageNum + 1 }">
+							<i class="fa-solid fa-angle-right"></i>
+						</my:pageItem>
+					
+					</c:if>
+
+				</ul>
+			</nav>
+		</div>
+	</div>
 
 
 </body>

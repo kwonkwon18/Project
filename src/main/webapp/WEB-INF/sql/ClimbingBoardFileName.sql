@@ -1,15 +1,14 @@
 USE RunData;
 
-CREATE TABLE ClimbingFileName (
+CREATE TABLE ClimbingBoardFileName (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     boardId INT NOT NULL,
     fileName VARCHAR(300) NOT NULL,
     FOREIGN KEY (boardId) REFERENCES ClimbingBoard(id)
 );
 
-SELECT * FROM ClimbingFileName;
+DROP TABLE ClimbingBoardFileName;
 
-ALTER TABLE ClimbingFileName
-MODIFY id INT PRIMARY KEY AUTO_INCREMENT;
+SELECT * FROM ClimbingBoardFileName;
 
 SELECT * FROM ClimbingCourse;

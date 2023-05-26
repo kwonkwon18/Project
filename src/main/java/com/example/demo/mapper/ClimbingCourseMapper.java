@@ -17,21 +17,29 @@ public interface ClimbingCourseMapper {
 	int insert(ClimbingCourse climbingCourse);
 	
 	@Select("""
-			select * from ClimbingCourse;
+			SELECT * FROM ClimbingCourse;
 			""")
 	List<ClimbingCourse> selectList();
 
 	@Select("""
-			select * from ClimbingCourse 
-			where id = #{id}
+			SELECT 
+				c.id,
+				c.title,
+				c.body,
+				c.writer,
+				c.inserted,
+				f.fileName
+			FROM ClimbingCourse c LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId
+			WHERE c.id = #{id}
 			""")
+	@ResultMap("climbingCourseResultMap")
 	ClimbingCourse selectById(Integer id);
 
 	@Insert("""
-			INSERT INTO ClimbingFileName (boardId, fileName)
-			VALUES (#{boardId}, #{fileName})
+			INSERT INTO ClimbingCourseFileName (courseId, fileName)
+			VALUES (#{courseId}, #{fileName})
 			""")
-	Integer insertFileName(Integer id, String originalFilename);
+	Integer insertFileName(Integer courseId, String fileName);
 
 
 	

@@ -85,6 +85,10 @@
 		});
 
 
+		$("#writerInput").keyup(function() {
+			checkwirterInput = true;
+			enableSubmit();
+		});
 
 		$("#bodyTextarea").keyup(function() {
 			checkbodyTextarea = true;

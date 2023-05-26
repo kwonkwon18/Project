@@ -1,6 +1,6 @@
 USE RunData;
 
-CREATE TABLE ClimbingBoard (
+CREATE TABLE ClimbingMate (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100) NOT NULL,
     body VARCHAR(1000) NOT NULL,
@@ -8,34 +8,29 @@ CREATE TABLE ClimbingBoard (
     inserted DATETIME DEFAULT NOW()
 );
 
-DROP TABLE ClimbingBoard;
+DROP TABLE ClimbingMate;
 
-SELECT * FROM ClimbingBoard;
+SELECT * FROM ClimbingMate;
 
-ALTER TABLE ClimbingBoard	
+ALTER TABLE ClimbingMate	
 MODIFY inserted DATETIME NOT NULL DEFAULT NOW();
 
-ALTER TABLE ClimbingBoard
+ALTER TABLE ClimbingMate
 MODIFY fileName VARCHAR(100);
 
-ALTER TABLE ClimbingBoard
+ALTER TABLE ClimbingMate
 ADD Lat INT;
 
-ALTER TABLE ClimbingBoard
+ALTER TABLE ClimbingMate
 ADD Lng INT;
 
-ALTER TABLE ClimbingBoard
+ALTER TABLE ClimbingMate
 MODIFY Lat Double;
 
-ALTER TABLE ClimbingBoard
+ALTER TABLE ClimbingMate
 MODIFY Lng Double;
 
-SELECT * FROM ClimbingBoard;
+SELECT * FROM ClimbingMate;
 
-DELETE FROM C
-WHERE id <=3;
-
-
-DESC ClimbingBoard;
 
 

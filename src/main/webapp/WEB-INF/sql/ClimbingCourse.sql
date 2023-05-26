@@ -12,3 +12,5 @@ SELECT * FROM ClimbingCourse;
 
 ALTER TABLE ClimbingCourse
 MODIFY inserted DATETIME NOT NULL DEFAULT NOW();
+
+SELECT * FROM ClimbingCourseFileName;

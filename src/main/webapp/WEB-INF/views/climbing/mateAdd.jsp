@@ -31,15 +31,15 @@
 				<form method="post">
 					<div class="mb-3">
 						<label for="titleInput" class="form-label">제목</label>
-						<input id="titleInput" class="form-control" type="text" name="title" value="${climbingBoard.title }" />
+						<input id="titleInput" class="form-control" type="text" name="title" value="${climbingMate.title }" />
 					</div>
 					<div class="mb-3">
-						<label for="wirterInput" class="form-label">글쓴이</label>
-						<input id="wirterInput" class="form-control" type="text" name="writer" value="${climbingBoard.writer }" />
+						<label for="writerInput" class="form-label">글쓴이</label>
+						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingMate.writer }" />
 					</div>
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
-						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${climbingBoard.body }</textarea>
+						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${climbingMate.body }</textarea>
 					</div>
 					<input id="LatSubmit" type="hidden" name="Lat" value="" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="" />

@@ -11,8 +11,3 @@ CREATE TABLE ClimbingToday (
 
 SELECT * FROM ClimbingToday;
 
-DESC ClimbingToday;
-
-ALTER TABLE ClimbingToday
-MODIFY inserted DATETIME NOT NULL DEFAULT NOW();
-

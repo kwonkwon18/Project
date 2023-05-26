@@ -42,7 +42,7 @@ public class RunningTodayService {
 			if (file.getSize() > 0) {
 
 				// 이름이 될 내용
-				String objectKey = "project/" + runningToday.getId() + "/" + file.getOriginalFilename();
+				String objectKey = "project/runningToday/" + runningToday.getId() + "/" + file.getOriginalFilename();
 
 				// s3 첫번째 파라미터
 				PutObjectRequest por = PutObjectRequest.builder().bucket(bucketName).key(objectKey)
@@ -63,6 +63,6 @@ public class RunningTodayService {
 
 	public RunningToday getBoard(Integer id) {
 		
-		return todayMapper.selectById(id);
+		return todayMapper.selectFileNameById(id);
 	}
 }

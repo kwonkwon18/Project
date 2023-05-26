@@ -4,13 +4,15 @@ CREATE TABLE ClimbingBoard (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100) NOT NULL,
     body VARCHAR(1000) NOT NULL,
-    writer VARCHAR(20) NOT NULL UNIQUE,
+    writer VARCHAR(20) NOT NULL,
     inserted DATETIME DEFAULT NOW()
 );
 
+DROP TABLE ClimbingBoard;
+
 SELECT * FROM ClimbingBoard;
 
-ALTER TABLE ClimbingBoard
+ALTER TABLE ClimbingBoard	
 MODIFY inserted DATETIME NOT NULL DEFAULT NOW();
 
 ALTER TABLE ClimbingBoard

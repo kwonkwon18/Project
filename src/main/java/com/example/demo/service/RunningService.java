@@ -44,6 +44,21 @@ public class RunningService {
 		return mapper.selectMemberId(writer);
 	}
 
+	public List<RunningBoard> getMateBoard() {
+		
+		return mapper.selectMate();
+	}
+
+	public List<RunningParty> selectMemberIdByBoardId(Integer id, String writer) {
+		
+		return mapper.selectMemberIdByBoardId(id, writer);
+	}
+
+	public List<RunningParty> selectMemberIdByBoardId() {
+		// TODO Auto-generated method stub
+		return mapper.selectMember();
+	}
+
 
 
 }

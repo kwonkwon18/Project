@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,10 +61,15 @@ public class RunningController {
 	}
 
 	@PostMapping("/runningAdd")
-	public String addResult(RunningBoard runningBoard, RedirectAttributes trrt) {
-
+	public String addResult(RunningBoard runningBoard, RedirectAttributes trrt, Authentication authentication) {
+		
+		// 보드의 writer를 지정해줌
+		runningBoard.setWriter(authentication.getName());
+		
 		boolean ok = service.addBoard(runningBoard);
-
+		
+		
+		
 		if (ok) {
 
 			return "redirect:/running/runningList";
@@ -73,11 +79,18 @@ public class RunningController {
 	}
 
 	@GetMapping("/id/{id}")
-	public String detail(@PathVariable("id") Integer id, Model model) {
+	public String detail(@PathVariable("id") Integer id, Model model,String writer) {
 
+		Map<String, Object> getMemberList = new HashMap<>();
+		
 		RunningBoard getList = service.getBoard(id);
+		getMemberList.put("board", getList);
 
-		model.addAttribute("board", getList);
+		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("members", members);
+		System.out.println(members);
+		
+		model.addAllAttributes(getMemberList);
 
 		return "running/runningGet";
 	}
@@ -113,27 +126,51 @@ public class RunningController {
 
 	// 인증 들어가면 Stirng writer 는 authentional.getName으로 할거임
 	@GetMapping("/myPage")
-	public void runningMyPage(String writer, Model model) {
+	public void runningMyPage(Authentication authentication, Model model) {
 		
 		Map<String, Object> myPageList = new HashMap<>();
 
-		List<RunningBoard> runningBoards = service.getMyPageInfo(writer);
+		List<RunningBoard> runningBoards = service.getMyPageInfo(authentication.getName());
 		myPageList.put("runningBoards", runningBoards);
 		System.out.println(runningBoards);
 		
-		List<RunningParty> members = service.getJoinMember(writer);
+		List<RunningParty> members = service.getJoinMember(authentication.getName());
 		myPageList.put("members", members);
 		System.out.println(members);
 		
 		model.addAllAttributes(myPageList);
 		
 	}
+	
+	@GetMapping("/runningMate")
+	public void runningMatePage(Model model) {
+		
+		Map<String, Object> getMemberList = new HashMap<>();
+		
+		List<RunningBoard> runningMates = service.getMateBoard();
+		getMemberList.put("runningMates", runningMates);
+
+		/* model.addAttribute("board", runningMates); */
+		System.out.println(runningMates);
+		
+		List<RunningParty> members = service.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+		System.out.println(members);
+		model.addAllAttributes(getMemberList);
+	}
+	
 
 	// ******************** AJAX
 
 	@PostMapping("joinParty")
-	public ResponseEntity<Map<String, Object>> joinParty(@RequestBody RunningParty runningParty) {
-		return ResponseEntity.ok().body(partyService.join(runningParty));
+	public ResponseEntity<Map<String, Object>> joinParty(@RequestBody RunningParty runningParty, Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.join(runningParty, authentication));
+
+	}
+	
+	@PostMapping("rejectParty")
+	public ResponseEntity<Map<String, Object>> rejectParty(@RequestBody RunningParty runningParty, Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.reject(runningParty, authentication));
 
 	}
 

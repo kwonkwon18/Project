@@ -48,7 +48,7 @@
 
 					<div>
 						<a class="btn btn-secondary" href="/climbing/mateModify/${board.id }">수정</a>
-						<button form="removeForm" class="btn btn-danger">삭제</button>
+						<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
 					</div>
 
 					<div class="d-none">
@@ -109,5 +109,7 @@
 						// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 						// marker.setMap(null);
 					</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+					
 </body>
 </html>

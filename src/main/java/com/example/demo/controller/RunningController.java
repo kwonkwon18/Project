@@ -79,15 +79,14 @@ public class RunningController {
 	}
 
 	@GetMapping("/id/{id}")
-	public String detail(@PathVariable("id") Integer id, Model model, Authentication authentication) {
+	public String detail(@PathVariable("id") Integer id, Model model,String writer) {
 
 		Map<String, Object> getMemberList = new HashMap<>();
 		
 		RunningBoard getList = service.getBoard(id);
 		getMemberList.put("board", getList);
-		
-		
-		List<RunningParty> members = service.getJoinMember(authentication.getName());
+
+		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
 		System.out.println(members);
 		

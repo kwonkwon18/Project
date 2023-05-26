@@ -21,7 +21,7 @@
 	<div class="container-lg">
 
 		<div class="row justify-content-center">
-			<div id="map" style="width: 500px; height: 350px;"></div>
+			<div id="map" style="width: 500px; height: 500x;"></div>
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
 					<div class="me-auto">
@@ -56,6 +56,7 @@
 					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 
+
 					<!--  -->
 					<label for="" class="form-label">신청한 사람</label>
 					<c:forEach items="${members}" var="member">
@@ -79,18 +80,30 @@
 		<div>
 
 
-			<c:set var="currentUserId" value="${pageContext.request.userPrincipal.name}" />
+			<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
+			<c:set var="isMember" value="false" />
 
 			<c:forEach items="${members}" var="member">
 				<c:if test="${currentUserId eq member.memberId}">
-					<button id="rejectPartyBtn">취소하기1</button>
+					<c:set var="isMember" value="true" />
 				</c:if>
 			</c:forEach>
 
+			<c:choose>
+				<c:when test="${isMember}">
+					<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️> </button>
+				</c:when>
+				<c:otherwise>
+					<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+				</c:otherwise>
+			</c:choose>
 
 
-			<c:if test="${board.people > board.currentNum }">
-				<button id="joinPartyBtn">참여하기</button>
+
+
+<%-- 			<c:if test="${board.people > board.currentNum }">
+				<button id="joinPartyBtn">참여하기1</button>
+				${currentUserId }
 			</c:if>
 
 
@@ -100,7 +113,7 @@
 
 			<c:if test="${board.people <= board.currentNum }">
 				<button id="rejectPartyBtn">취소하기2</button>
-			</c:if>
+			</c:if> --%>
 
 
 

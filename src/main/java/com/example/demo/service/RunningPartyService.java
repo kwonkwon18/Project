@@ -19,8 +19,7 @@ public class RunningPartyService {
 
 	public Map<String, Object> join(RunningParty runningParty, Authentication authentication
 			) {
-		
-		 
+
 		 runningParty.setMemberId(authentication.getName());
 		 System.out.println(runningParty.getMemberId());
 		

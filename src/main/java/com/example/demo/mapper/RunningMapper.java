@@ -57,8 +57,6 @@ public interface RunningMapper {
 	@ResultMap("boardResultMap")
 	RunningBoard selectById(Integer id);
 
-	
-	
 	@Select("""
 			select
 			   b.id,
@@ -69,23 +67,26 @@ public interface RunningMapper {
 			   b.Lat,
 			   b.Lng,
 			   b.people
-			   FROM RunningBoard b 
+			   FROM RunningBoard b
 			   where b.writer = #{writer}
 					""")
 	@ResultMap("boardResultMap")
 	List<RunningBoard> selectMyPageInfo(String writer);
 
-	
-
-	
 	@Select("""
-            select boardId ,memberId 
+			select boardId ,memberId
 			from RunningParty p left join RunningBoard b ON p.boardId = b.id
 			where userId = #{writer}
 			""")
 	List<RunningParty> selectMemberId(String writer);
-	
-	
+
+	@Select("""
+			         select boardId ,memberId
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id
+			where userId = #{writer} and boardId = #{boardId}
+			""")
+	List<RunningParty> selectMemberIdByBoardId(Integer boardId, String writer);
+
 	@Select("""
 			SELECT
 			    r.id,

@@ -35,17 +35,17 @@
 								</div>
 								<div class="mb-3">
 									<label for="" class="form-label">작성자</label>
-									<input id = "writerData" type="text" class="form-control" value="${board.writer}" readonly />
+									<input id="writerData" type="text" class="form-control" value="${board.writer}" readonly />
 								</div>
 								<!-- 본문 내용 -->
-								<label for="" class="form-label">같이 달린 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️</label>
+								<%-- <label for="" class="form-label">같이 달릴 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️</label>
 								<c:forEach items="${members}" var="member">
 									<c:if test="${board.id eq member.boardId}">
 										<div class="mb-3">
 											<input type="text" readonly class="form-control" value="${member.memberId}" />
 										</div>
 									</c:if>
-								</c:forEach>
+								</c:forEach> --%>
 								<div class="mb-3">
 									<label for="" class="form-label">작성일시</label>
 									<input type="text" readonly class="form-control" value="${board.inserted}" />
@@ -57,7 +57,7 @@
 
 								<c:if test="${board.people > board.currentNum }">
 									<button id="joinPartyBtn${status.index + 1}">나도 껴조 ~</button>
-									<p id = "message${status.index + 1}"></p>
+									<p id="message${status.index + 1}"></p>
 								</c:if>
 
 								<c:if test="${board.people <= board.currentNum }">
@@ -140,12 +140,22 @@ $(document).ready(function() {
 				contentType: "application/json",
 				data: JSON.stringify(data),
 				success: function() {
+					alert("신청되었습니다. ");
 					$("#message${status.index + 1}").text("성공");
+
 				},
 				error: function() {
+					alert("신청 실패 ");
 					$("#message${status.index + 1}").text("실패");
+				}, 
+				
+				complete : function(){
+			history.scrollRestoration = "auto";
+			
+			location.replace("/running/id/${board.id}");
+					
 				}
-			});
+			})
 		});
 	</c:forEach>
 });

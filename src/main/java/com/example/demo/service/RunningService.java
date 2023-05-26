@@ -49,6 +49,11 @@ public class RunningService {
 		return mapper.selectMate();
 	}
 
+	public List<RunningParty> selectMemberIdByBoardId(Integer id, String writer) {
+		
+		return mapper.selectMemberIdByBoardId(id, writer);
+	}
+
 
 
 }

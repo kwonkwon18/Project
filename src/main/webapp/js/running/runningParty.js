@@ -1,6 +1,9 @@
 
 
 $("#joinPartyBtn").click(function() {
+	
+	  alert("신청되었습니다. ");
+	
 	const total = $("#totalPeople").text().trim();
 	const boardId = $("#boardIdText").text().trim();
 	const userId = $("#writerText").val().trim();
@@ -26,6 +29,7 @@ $("#joinPartyBtn").click(function() {
 			if(currentNumber >= totalNumber){
 				$("#joinPartyBtn").attr('disabled', 'disabled');
 			}
+			location.reload();
 			
 		},
 		error: function(jqXHR) {
@@ -39,6 +43,9 @@ $("#joinPartyBtn").click(function() {
 })
 
 $("#rejectPartyBtn").click(function() {
+	
+	alert("취소되었습니다. ");
+	
 	const total = $("#totalPeople").text().trim();
 	const boardId = $("#boardIdText").text().trim();
 	const userId = $("#writerText").val().trim();
@@ -62,11 +69,12 @@ $("#rejectPartyBtn").click(function() {
 			console.log(totalNumber)
 			
 
-			
+			location.reload();
 		},
 		error: function(jqXHR) {
 			$("#currentPeople").text(jqXHR.responseJSON.message);
 		}
+		
 
 
 	})

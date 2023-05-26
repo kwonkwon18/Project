@@ -15,8 +15,7 @@ public interface RunningPartyMapper {
 	
 	@Delete("""
 			delete from RunningParty
-			where boardId = #{boardId} and
-			userId = #{userId}
+			where boardId = #{boardId} and userId = #{userId}
 			""")
 	Integer delete(RunningParty runningParty);
 

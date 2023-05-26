@@ -17,13 +17,18 @@ import com.example.demo.service.*;
 @RequestMapping("futsal/")
 public class FutsalController {
 
+	// 매치 후기 게시판
+	
 	@Autowired
-	private FutsalService service;
+	private FutsalService futsalService;
+	
+	@Autowired
+	private FutsalPartyService futsalPartyService;
 	
 	@GetMapping("list")
 	public void list(Model model) {
 		
-		List<FutsalBoard> list = service.listBoard();
+		List<FutsalBoard> list = futsalService.listBoard();
 		
 		model.addAttribute("boardList", list);
 	}
@@ -38,13 +43,13 @@ public class FutsalController {
 			@RequestParam("files") MultipartFile[] files,
 			FutsalBoard futsalBoard, RedirectAttributes rttr) throws Exception {
 		
-		boolean ok = service.addBoard(futsalBoard, files);
 		
+		boolean ok = futsalService.addBoard(futsalBoard, files);
 		if (ok) {
-			rttr.addFlashAttribute("message", "매치가 등록되었습니다.");
+			rttr.addFlashAttribute("message", "게시물이 등록되었습니다.");
 			return "redirect:/futsal/id/" + futsalBoard.getId();
 		} else {
-			rttr.addFlashAttribute("message", "매치 등록 중 문제가 발생하였습니다.");
+			rttr.addFlashAttribute("message", "게시물 등록 중 문제가 발생하였습니다.");
 			return "redirect:/futsal/add";
 		}
 		
@@ -55,7 +60,7 @@ public class FutsalController {
 	public String board(
 			@PathVariable("id") Integer id,
 			Model model) {
-		FutsalBoard board = service.getFutsalBoard(id);
+		FutsalBoard board = futsalService.getFutsalBoard(id);
 		
 		model.addAttribute("board", board);
 		
@@ -64,14 +69,16 @@ public class FutsalController {
 	
 	@GetMapping("modify/{id}")
 	public String moifyForm(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("board", service.getFutsalBoard(id));
+		model.addAttribute("board", futsalService.getFutsalBoard(id));
 		return "futsal/modify";
 	}
 	
 	@PostMapping("modify/{id}")
 	public String modifyProcess(FutsalBoard futsalBoard,
-			RedirectAttributes rttr) {
-		boolean ok = service.modify(futsalBoard);
+			@RequestParam(value = "files", required = false) MultipartFile[] addFiles,
+			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
+			RedirectAttributes rttr) throws Exception {
+		boolean ok = futsalService.modify(futsalBoard, addFiles, removeFileNames);
 		
 		if (ok) {
 			// 해당 게시물 보기로 리디렉션
@@ -86,7 +93,7 @@ public class FutsalController {
 	
 	@PostMapping("remove")
 	public String remove(Integer id, RedirectAttributes rttr) {
-		boolean ok = service.remove(id);
+		boolean ok = futsalService.remove(id);
 		
 		if(ok) {
 			rttr.addFlashAttribute("message", id + "번 게시물이 삭제되었습니다.");
@@ -96,6 +103,50 @@ public class FutsalController {
 			return "redirect:/futsal/id/" + id;
 		}
 	}
+	
+	
+	// 매치 구하기
+	@GetMapping("futsalPartyList")
+	public void futsalPartyList(Model model) {
+		
+		List<FutsalParty> list = futsalPartyService.partyList();
+		
+		model.addAttribute("partyList", list);
+	}
+	
+	@GetMapping("partyId/{id}")
+	public String futsalPartyBoard(
+			@PathVariable("id") Integer id,
+			Model model) {
+		FutsalParty futsalParty = futsalPartyService.getFutsalParty(id);
+		
+		model.addAttribute("party", futsalParty);
+		
+		return "futsal/futsalPartyGet";
+	}
+	
+	@GetMapping("futsalPartyAdd")
+	public void futsalPartyAddForm() {
+	
+	}
+	
+	@PostMapping("futsalPartyAdd")
+	public String futsalPartyAddProcess(
+			FutsalParty futsalParty, RedirectAttributes rttr) throws Exception {
+		
+		
+		boolean ok = futsalPartyService.addFutsalParty(futsalParty);
+		if (ok) {
+			rttr.addFlashAttribute("message", "매치가 등록되었습니다.");
+			return "redirect:/futsal/partyId/" + futsalParty.getId();
+		} else {
+			rttr.addFlashAttribute("message", "매치 등록 중 문제가 발생하였습니다.");
+			return "redirect:/futsal/futsalPartyAdd";
+		}
+		
+	}
+	
+	
 	
 }
 

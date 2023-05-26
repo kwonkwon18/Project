@@ -13,31 +13,28 @@
 </head>
 <body>
 
-<div class="container-lg">
+	<div class="container-lg">
 		
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
-				<div class="d-flex">
-					<div class="me-auto">
-						<h1>
-							<span id="boardIdText"> ${board.id } </span>
-							번게시물
-						</h1>
-						<div id="map" style="width: 500px; height: 350px;"></div>
-					</div>
-				</div>
 
 				<div>
-					<div class="mb-3">
-						<label for="" class="form-label">제목</label>
-						<input type="text" class="form-control" value="${board.title }" readonly />
-					</div>
+					
 
+					<div class="d-flex">
+						<div class="me-auto">
+							<div class="mb-3">
+								<label for="" class="form-label"># ${board.id }</label>
+								<input type="text" class="form-control" value="${board.title }" readonly />
+							</div>
+							<div id="map" style="width: 500px; height: 350px;"></div>
+						</div>
+					</div>
 					<!-- 그림 파일 출력 -->
 					<div class="mb-3">
 						<c:forEach items="${board.fileName }" var="fileName">
 							<div class="mb-3">
-								<img class="img-thumbnail img-fluid" src="${bucketUrl }/${board.id }/${fileName}" alt="" />
+								<img class="img-thumbnail img-fluid" src="${bucketUrl }/futsalBoard/${board.id }/${fileName}" alt="" />
 							</div>
 						</c:forEach>
 					</div>
@@ -55,8 +52,8 @@
 						<input type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
 					<div>
-						위도<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <br />
-						경도<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+						<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <br />
+						<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 					</div>
 		
 					<div>
@@ -69,10 +66,10 @@
 		</div>
 		
 		<div class="d-none">
-				<form action="/futsal/remove" method="post" id="removeForm">
-					<input type="text" name="id" value="${board.id }" />
-				</form>
-			</div>
+			<form action="/futsal/remove" method="post" id="removeForm">
+				<input type="text" name="id" value="${board.id }" />
+			</form>
+		</div>
 
 			<!-- Modal -->
 			<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -103,7 +100,7 @@
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			mapOption = {
 				center : new kakao.maps.LatLng(latNum, lngNum), // 지도의 중심좌표
-				level : 3
+				level : 4
 			// 지도의 확대 레벨
 			};
 

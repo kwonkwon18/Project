@@ -46,6 +46,7 @@ public class CustomConfig {
 		AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
 		AwsCredentialsProvider provider = StaticCredentialsProvider.create(credentials);
 
+
 		S3Client s3client = S3Client.builder().credentialsProvider(provider).region(Region.AP_NORTHEAST_2).build();
 
 		return s3client;

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +21,7 @@
 	<div class="container-lg">
 
 		<div class="row justify-content-center">
-			<div id="map" style="width: 500px; height: 350px;"></div>
+			<div id="map" style="width: 500px; height: 500x;"></div>
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
 					<div class="me-auto">
@@ -42,10 +43,12 @@
 						<label for="" class="form-label">본문</label>
 						<textarea class="form-control" readonly rows="10">${board.body }</textarea>
 					</div>
+
 					<div class="mb-3">
 						<label for="" class="form-label">작성자</label>
 						<input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
 					</div>
+
 					<div class="mb-3">
 						<label for="" class="form-label">작성일시</label>
 						<input type="text" readonly class="form-control" value="${board.inserted }" />
@@ -53,22 +56,81 @@
 					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 
+
+					<!--  -->
+					<label for="" class="form-label">신청한 사람 </label>
+					<c:forEach items="${members}" var="member">
+						<c:if test="${board.id eq member.boardId}">
+							<div class="mb-3">
+								<input type="text" readonly class="form-control" value="${member.memberId}" />
+							</div>
+						</c:if>
+					</c:forEach>
+					<!--  -->
+
+
+
 				</div>
 			</div>
 		</div>
 
+
+
+
 		<div>
-			<c:if test="${board.people > board.currentNum }">
-			<button id="joinPartyBtn">참여하기</button>
+
+
+			<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
+			<c:set var="isMember" value="false" />
+
+			<c:forEach items="${members}" var="member">
+				<c:if test="${currentUserId eq member.memberId}">
+					<c:set var="isMember" value="true" />
+				</c:if>
+			</c:forEach>
+
+			<c:choose>
+				<c:when test="${isMember}">
+					<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
+				</c:when>
+				<c:otherwise>
+					<c:if test="${board.people > board.currentNum }">
+						<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+
+
+
+
+			<%-- 			<c:if test="${board.people > board.currentNum }">
+				<button id="joinPartyBtn">참여하기1</button>
+				${currentUserId }
 			</c:if>
-			
+
+
+
+
+
+
 			<c:if test="${board.people <= board.currentNum }">
-			<button>마감</button>
+				<button id="rejectPartyBtn">취소하기2</button>
+			</c:if> --%>
+
+
+
+
+			<c:if test="${board.people <= board.currentNum }">
+				<button>마감</button>
 			</c:if>
-		
-			<input type="text" id = "totalPeople" value = "${board.people }"  />		
-			<input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  />		
-			<p id = "currentPeople"></p>
+
+
+
+
+
+			<input type="text" id="totalPeople" value="${board.people }" />
+			<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
+			<p id="currentPeople"></p>
 			<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
 		</div>
 
@@ -111,6 +173,5 @@
 
 
 		<script src="/js/running/runningParty.js"></script>
-
 </body>
 </html>

@@ -1,116 +1,71 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>같이 달릴 사람 !</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<div id="map" style="width: 100%; height: 350px;"></div>
-
-
-	모일 장소를 찍어주세요 !
-	<br />
-	<input id="inputValue" type="text" placeholder="예) 하늘공원" />
-	<br />
-	<button id="searchPlace">검색</button>
-
-	<div id="clickLatlng"></div>
-
 	<div class="container-lg">
 
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
-				<h1>게시물 작성</h1>
-				<form method="post">
+
+
+				<h1>${board.id }번 게시물 수정</h1>
+					<div id="map" style="width: 80%; height: 350px;"></div>
+					모일 장소를 찍어주세요 !
+					<div id="clickLatlng"></div>
+					<br />
+					<input id="inputValue" type="text" value="" />
+					<button id="searchPlace">검색</button>
+				
+				<form method="post" enctype="multipart/form-data">
+					<input type="hidden" name="id" value="${board.id }" />
 					<div class="mb-3">
 						<label for="titleInput" class="form-label">제목</label>
-						<input id="titleInput" class="form-control" type="text" name="title" value="${runningBoard.title }" />
+						<input class="form-control" id="titleInput" type="text" name="title" value="${board.title }" />
 					</div>
-
-					<%-- 					<div class="mb-3">
-						<label for="wirterInput" class="form-label">글쓴이</label>
-						<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningBoard.writer }" />
-					</div> --%>
-
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
-						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${runningBoard.body }</textarea>
+						<textarea class="form-control" id="bodyTextarea" rows="10" name="body">${board.body }</textarea>
 					</div>
-
 					<div class="mb-3">
-						<label for="" class="form-label">인원수</label>
-						<input id="peopleInput" type="number" class="form-control" name="people" value="${runningBoard.people }" />
+						<label for="" class="form-label">작성일시</label>
+						<input class="form-control" type="text" value="${board.inserted }" readonly />
 					</div>
-
-					<input id="LatSubmit" type="hidden" name="Lat" value="" />
-					<input id="LngSubmit" type="hidden" name="Lng" value="" />
-					<input id="addButton" disabled class="btn btn-primary" type="submit" value="등록" />
+					<div>
+						<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <br />
+						<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+					</div>
+					<div class="mb-3">
+						<input class="btn btn-secondary" type="submit" value="수정" />
+					</div>
+				</form>
 			</div>
-			</form>
 		</div>
 	</div>
-	</div>
-
-	<!-- ******************************************************************  -->
-
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+	
+	<!-- **************************************************  -->
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3f405ca1718e37ea86f8585e0ca94ef5
+&libraries=services"></script>
 	<script>
-		var checkLat = false;
-		var checkLng = false;
-		var checktitleInput = false;
-
-		var checkbodyTextarea = false;
-		var checkpeopleInput = false;
-
-		function enableSubmit() {
-			if (checkLat && checkLng && checktitleInput && checkbodyTextarea && checkpeopleInput) {
-				$("#addButton").removeAttr("disabled");
-			} else {
-				$("#addButton").attr("disabled", "");
-			}
-		}
-
-		$("#titleInput").keyup(function() {
-
-			checktitleInput = true;
-
-			enableSubmit();
-		});
-
-
-		$("#writerInput").keyup(function() {
-			checkwirterInput = true;
-			enableSubmit();
-		});
-
-		$("#bodyTextarea").keyup(function() {
-			checkbodyTextarea = true;
-			enableSubmit();
-		});
-
- 
-		console.log(checkbodyTextarea)
-		$("#peopleInput").keyup(function() {
-			checkpeopleInput = true;
-			enableSubmit();
-		});
-		console.log(checkpeopleInput)
-
 		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 		var infowindow = new kakao.maps.InfoWindow({
 			zIndex : 1
 		});
 
+		var lat = $("#LatSubmit").val();
+		var lng = $("#LngSubmit").val();
 		var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 		var mapOption = {
-			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+			center : new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
 			level : 3
 		// 지도의 확대 레벨
 		};
@@ -154,7 +109,7 @@
 			ps.keywordSearch(keyword, placesSearchCB);
 		});
 
-		var markerPosition = new kakao.maps.LatLng(37.566826, 126.9786567);
+		var markerPosition = new kakao.maps.LatLng(lat, lng);
 
 		var marker = new kakao.maps.Marker({
 			position : markerPosition
@@ -168,23 +123,19 @@
 			marker.setPosition(latlng);
 
 			// 이거는 저장해서 값으로 사용해야함 
-			var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-			message += '경도는 ' + latlng.getLng() + ' 입니다';
+			//var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+			//message += '경도는 ' + latlng.getLng() + ' 입니다';
 
 			document.getElementById('LatSubmit').value = latlng.getLat();
 			document.getElementById('LngSubmit').value = latlng.getLng();
-			checkLat = true;
-			checkLng = true;
 
-			var resultDiv = document.getElementById('clickLatlng');
-			resultDiv.innerHTML = message;
-
-			enableSubmit();
+			//var resultDiv = document.getElementById('clickLatlng');
+			//resultDiv.innerHTML = message;
 
 		});
 	</script>
 
-
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

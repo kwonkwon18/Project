@@ -9,18 +9,16 @@
 </head>
 <body>
 
-
-
 	<div class="container-lg">
 
 		<div class="row justify-content-center">
-			<div id="map" style="width: 500px; height: 350px;"></div>
+		
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
 					<div class="me-auto">
 						<h1>
-							<span id="boardIdText"> ${board.id } </span>
-							번게시물
+							<span id="boardIdText"> ${board.id } 번게시물</span>
+							
 						</h1>
 					</div>
 				</div>
@@ -37,7 +35,7 @@
 							<div>
 								<!-- http://localhost:8080/image/게시물번호/fileName  -->
 								<!-- aws로 올리면 위 만큼이 aws 주소가 됨   -->
-								<img class="img-fluid img-thumbnail" src="${bucketUrl }/${board.id }/${fileName}" alt="" height="300" width="300" />
+								<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${board.id }/${fileName}" alt="" height="300" width="300" />
 							</div>
 						</c:forEach>
 					</div>
@@ -59,6 +57,11 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
+		
 
 
 </body>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -59,15 +60,21 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
 
 		<div>
 			<c:if test="${board.people > board.currentNum }">
 			<button id="joinPartyBtn">참여하기</button>
 			</c:if>
 			
+			<sec:authorize access="authentication.name eq #member.writer">
 			<c:if test="${board.people <= board.currentNum }">
 			<button>마감</button>
 			</c:if>
+			</sec:authorize>
+			
 		
 			<input type="text" id = "totalPeople" value = "${board.people }"  />		
 			<input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  />		

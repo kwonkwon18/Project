@@ -57,14 +57,15 @@
 
 								<c:if test="${board.people > board.currentNum }">
 									<button id="joinPartyBtn${status.index + 1}">나도 껴조 ~</button>
+									<p id = "message${status.index + 1}"></p>
 								</c:if>
 
 								<c:if test="${board.people <= board.currentNum }">
 									<button>마감됐어..</button>
 								</c:if>
 
-								<input type="text" id="totalPeople" value="${board.people }" />
-								<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
+								<input type="hidden" id="totalPeople" value="${board.people }" />
+								<input type="hidden" id="currentPeopleHidden" value="${board.currentNum }" />
 								<p id="currentPeople"></p>
 
 
@@ -134,14 +135,18 @@ $(document).ready(function() {
 				userId: "${board.writer}"
 			};
 
-				$.ajax("/running/joinParty", {
-					method: "post",
-					contentType: "application/json",
-					data: JSON.stringify(data)
-				});
-				
-				
+			$.ajax("/running/joinParty", {
+				method: "post",
+				contentType: "application/json",
+				data: JSON.stringify(data),
+				success: function() {
+					$("#message${status.index + 1}").text("성공");
+				},
+				error: function() {
+					$("#message${status.index + 1}").text("실패");
+				}
 			});
+		});
 	</c:forEach>
 });
 </script>

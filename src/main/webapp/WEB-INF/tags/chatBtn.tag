@@ -14,7 +14,9 @@
 
 	<div class="input-group" style="position: absolute; bottom: 0; right: 0;">
 		<div class="btn-group dropup">
-			<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+			<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+				<i class="fa-solid fa-bars"></i>
+			</button>
 			<div class="dropdown-menu">
 				<a class="dropdown-item" href="#">링크 1</a>
 				<button class="dropdown-item btn btn-secondary">버튼 1</button>
@@ -23,7 +25,7 @@
 			</div>
 		</div>
 		<textarea style="height: 40px" placeholder="채팅을 입력해주세요
-		" id="commentTextArea" class="form-control"></textarea>
+		" id="chatTextArea" class="form-control"></textarea>
 		<button id="sendChatBtn" class="btn btn-outline-danger"">
 			<i class="fa-regular fa-paper-plane"></i>
 		</button>
@@ -34,7 +36,7 @@
 <div style="border: 1fx solid #ccc; padding: 10px; overflow-y: auto; float: left; height: 90vh; width: 300px; display: none; background-color: blue; border-radius: 3%; margin-bottom: 15px; margin-left: 15px;" id="chatList" class="position-fixed bottom-0 start-0">
 	<span style="position: absolute; left: 50%; transform: translateX(-50%);">채팅방 리스트</span>
 	<button type="button" class="chatClose" style="background-color: white; position: absolute; top: 0; right: 0; border-color: white; height: 40px; width: 40px;">
-		<i class="fa-solid fa-x"></i>	
+		<i class="fa-solid fa-x"></i>
 	</button>
 	<br />
 	<br />

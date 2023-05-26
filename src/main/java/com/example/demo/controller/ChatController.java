@@ -67,7 +67,15 @@ public class ChatController {
 	@PreAuthorize("authenticated")
 	public void chatAdd(@RequestBody Chat data, Authentication authentication) {
 		data.setSenderId(authentication.getName());
-		System.out.println(data.getSenderId());
 		service.addChat(data);
+	}
+	
+	@GetMapping("check")
+	@ResponseBody
+	@PreAuthorize("authenticated")
+	public Map<String, Object> chatCheck(@RequestParam("chatRoomId") Integer chatRoomId, Integer lastChatId) {
+		return Map.of("chatList", service.checkId(lastChatId, chatRoomId));
+		
+		
 	}
 }

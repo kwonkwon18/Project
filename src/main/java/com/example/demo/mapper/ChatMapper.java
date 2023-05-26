@@ -37,7 +37,7 @@ public interface ChatMapper {
 
 	@Insert("""
 			INSERT INTO Chat(chatRoomId, senderId, recipientId, message)
-			VALUES(#{data.getChatRoomId}, #{data.getSenderId}, #{data.getRecipientId}, #{data.getMessage})
+			VALUES(#{chatRoomId}, #{senderId}, #{recipientId}, #{message})
 			
 			""")
 	void addChat(Chat data);
@@ -51,7 +51,13 @@ public interface ChatMapper {
 			SELECT creater, invited FROM ChatRoom
 			WHERE id = #{id}
 			""")
-	String[] getChatRoomUserId(Integer id);
+	Map<String, String> getChatRoomUserId(Integer id);
+
+	@Select("""
+			SELECT * FROM Chat
+			WHERE chatRoomId = #{chatRoomId} AND id > #{lastChatId}
+			""")
+	List<Chat> checkId(Integer lastChatId, Integer chatRoomId);
 
 
 }

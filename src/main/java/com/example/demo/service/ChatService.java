@@ -35,12 +35,22 @@ public class ChatService {
 	}
 
 	public void addChat(Chat data) {
-		for(String s : mapper.getChatRoomUserId(data.getChatRoomId())) {
-			if(!s.equals(data.getSenderId())) {
-				data.setRecipientId(s);
-			}
+//		for(String s : mapper.getChatRoomUserId(data.getChatRoomId())) {
+//			if(!s.equals(data.getSenderId())) {
+//				data.setRecipientId(s);
+//			}
+//		}
+		Map<String, String> map = mapper.getChatRoomUserId(data.getChatRoomId());
+			if(!map.get("creater").equals(data.getSenderId())) {
+				data.setRecipientId(map.get("creater"));
+			} else {
+				data.setRecipientId(map.get("invited"));
 		}
 		mapper.addChat(data);
+	}
+
+	public List<Chat> checkId(Integer lastChatId, Integer chatRoomId) {
+		return mapper.checkId(lastChatId, chatRoomId);
 	}
 
 

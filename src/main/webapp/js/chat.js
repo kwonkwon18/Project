@@ -1,4 +1,7 @@
 var lastChatRoomId;
+var repeat;
+var lastChatId;
+
 
 $("#chatButton").click(function() {
 	$("#chatButton").hide();
@@ -31,6 +34,7 @@ $(".chatClose").click(function() {
 	$("#chatBox").hide();
 	$("#chatListContainer").remove("");
 	$("#chatContainer").remove("");
+	clearInterval(repeat);
 })
 
 
@@ -38,45 +42,79 @@ $("#returnBtn").click(function() {
 	$("#chatBox").hide();
 	$("#chatList").show();
 	$("#chatContainer").remove("");
+	clearInterval(repeat);
 })
 
 $("#chatList").on("click", ".openChatRoomBtn", function() {
-	$("#chatList").hide();
-	$("#chatBox").show();
-	var nickName = $(this).find(".nickNameSpan").text();
-	$.ajax("/chat/room", {
-		data: { yourNickName: nickName },
-		contentType: "application/json",
-		success: function(data) {
-			var chatList = data.chatList;
-			var myId = data.myId;
-			$("#chatBox").append(`
-				<div id="chatContainer"></div> 
-			`)
-			for (const chat of chatList) {
-				lastChatRoomId = chat.chatRoomId;
-				if (chat.senderId === myId) {
-					$("#chatContainer").append(`
-						<div class="d-flex justify-content-end">
-							<div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div> 
-						</div>
-					`)
-				} else {
-					$("#chatContainer").append(`
-						<div class="d-flex justify-content-start">
-							<div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div>
-						</div>
-					`)
-				}
-			}
-		}
-	})
+    $("#chatList").hide();
+    $("#chatBox").show();
+    var nickName = $(this).find(".nickNameSpan").text();
+    $.ajax("/chat/room", {
+        data: { yourNickName: nickName },
+        contentType: "application/json",
+        success: function(data) {
+            var chatList = data.chatList;
+            var myId = data.myId;
+            $("#chatBox").append(`
+                <div id="chatContainer"></div> 
+            `)
+            for (const chat of chatList) {
+                lastChatRoomId = chat.chatRoomId;
+                if (chat.senderId === myId) {
+                    $("#chatContainer").append(`
+                        <div class="d-flex justify-content-end">
+                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div> 
+                        </div>
+                    `)
+                } else {
+                    $("#chatContainer").append(`
+                        <div class="d-flex justify-content-start">
+                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div>
+                        </div>
+                    `)
+                }
+            }
+            lastChatId = chatList[chatList.length - 1].id;
+            repeat = setInterval(function() {
+                currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
+            }, 1000);
+
+        }
+    })
 })
+
+function currentChatId(lastChatId, chatRoomId, chatContainer) {
+    $.ajax("/chat/check?chatRoomId=" + chatRoomId + "&lastChatId=" + lastChatId, {
+        success: function(chatList) {
+            if (chatList.length === 0) {
+                return;
+            }
+            for (const chat of chatList) {
+                lastChatRoomId = chat.chatRoomId;
+                if (chat.senderId === myId) {
+                    chatContainer.append(`
+                        <div class="d-flex justify-content-end">
+                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div> 
+                        </div>
+                    `)
+                } else {
+                    chatContainer.append(`
+                        <div class="d-flex justify-content-start">
+                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div>
+                        </div>
+                    `)
+                }
+            }
+            lastChatId = chatList[chatList.length - 1].id;
+        }
+    })
+}
+
 
 $("#sendChatBtn").click(function() {
 	const message = $("#chatTextArea").val();
 	const chatRoomId = lastChatRoomId;
-	const data = { message, chatRoomId};
+	const data = { message, chatRoomId };
 	$.ajax("/chat/add", {
 		contentType: "application/json",
 		method: "post",

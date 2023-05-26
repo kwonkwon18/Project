@@ -65,10 +65,10 @@ public class CustomConfig {
 		// csrf 보안을 사용하지 않겠다는 것
 		http.csrf().disable();
 		
-		http.formLogin().loginPage("/login").defaultSuccessUrl("/running/runningList");
+		http.formLogin().loginPage("/login").defaultSuccessUrl("/main");
 		
 		// 로그아웃 페이지 설정
-		http.logout().logoutUrl("/logout").logoutSuccessUrl("/running/runningList");
+		http.logout().logoutUrl("/logout").logoutSuccessUrl("/main");
 		
 
 		

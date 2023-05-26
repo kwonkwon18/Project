@@ -21,10 +21,8 @@ public class RunningPartyService {
 			) {
 		
 		 
-		//runningParty.setMemberId("test");
-		//runningParty.setMemberId("test2");
 		 runningParty.setMemberId(authentication.getName());
-		 
+		 System.out.println(runningParty.getMemberId());
 		
 		Map<String, Object> result = new HashMap<>();
 		
@@ -36,9 +34,35 @@ public class RunningPartyService {
 			Integer insertCnt = partyMapper.insert(runningParty);
 			result.put("join", true);
 		}
+
+		// 참여인원갯수 넘겨주기
+		Integer count = partyMapper.countByBoardId(runningParty.getBoardId());
+		System.out.println(count);
+		result.put("count", count);
+		
+		return result;
+	}
+	
+	
+	public Map<String, Object> reject(RunningParty runningParty, Authentication authentication
+			) {
+		
+		
+		runningParty.setMemberId(authentication.getName());
+		System.out.println(runningParty.getMemberId());
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		result.put("join", false);
+		
+		Integer deleteCnt = partyMapper.delete(runningParty);
+		System.out.println(deleteCnt);
 		
 		// 참여인원갯수 넘겨주기
 		Integer count = partyMapper.countByBoardId(runningParty.getBoardId());
+		
+		System.out.println(runningParty.getBoardId());
+		System.out.println(count);
 		result.put("count", count);
 		
 		return result;

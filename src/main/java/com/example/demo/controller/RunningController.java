@@ -79,11 +79,19 @@ public class RunningController {
 	}
 
 	@GetMapping("/id/{id}")
-	public String detail(@PathVariable("id") Integer id, Model model) {
+	public String detail(@PathVariable("id") Integer id, Model model, Authentication authentication) {
 
+		Map<String, Object> getMemberList = new HashMap<>();
+		
 		RunningBoard getList = service.getBoard(id);
-
-		model.addAttribute("board", getList);
+		getMemberList.put("board", getList);
+		
+		
+		List<RunningParty> members = service.getJoinMember(authentication.getName());
+		getMemberList.put("members", members);
+		System.out.println(members);
+		
+		model.addAllAttributes(getMemberList);
 
 		return "running/runningGet";
 	}
@@ -151,6 +159,12 @@ public class RunningController {
 
 	@PostMapping("joinParty")
 	public ResponseEntity<Map<String, Object>> joinParty(@RequestBody RunningParty runningParty, Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.join(runningParty, authentication));
+
+	}
+	
+	@PostMapping("rejectParty")
+	public ResponseEntity<Map<String, Object>> rejectParty(@RequestBody RunningParty runningParty, Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.join(runningParty, authentication));
 
 	}

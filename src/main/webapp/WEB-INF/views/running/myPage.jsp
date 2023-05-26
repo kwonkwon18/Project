@@ -34,7 +34,8 @@
                 <input type="text" class="form-control" value="${board.title}" readonly />
               </div>
               <!-- 본문 내용 -->
-              <label for="" class="form-label">같이 달린 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️ <c:forEach items="${members}" var="member">
+              <label for="" class="form-label">같이 달린 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️ 
+              <c:forEach items="${members}" var="member">
                 <c:if test="${board.id eq member.boardId}">
                   <div class="mb-3">
                     <input type="text" readonly class="form-control" value="${member.memberId}" />

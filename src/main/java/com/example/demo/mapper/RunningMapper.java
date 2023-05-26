@@ -36,10 +36,12 @@ public interface RunningMapper {
 			    r.Lat,
 			    r.Lng,
 			    r.people,
+			    m.userId,
 			    COUNT(rp.boardId) AS currentNum
 			FROM
 			    RunningBoard r
 			    LEFT JOIN RunningParty rp ON r.id = rp.boardId
+			    LEFT JOIN Member m ON r.writer = m.nickName
 			WHERE
 			    r.id = #{id}
 			GROUP BY
@@ -82,8 +84,6 @@ public interface RunningMapper {
 			where userId = #{writer}
 			""")
 	List<RunningParty> selectMemberId(String writer);
-
-	
 	
 	
 	@Select("""

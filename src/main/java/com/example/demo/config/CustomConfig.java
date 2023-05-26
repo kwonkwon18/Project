@@ -51,37 +51,6 @@ public class CustomConfig {
 		AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
 		AwsCredentialsProvider provider = StaticCredentialsProvider.create(credentials);
 
-		S3Client s3client = S3Client.builder().credentialsProvider(provider).region(Region.AP_NORTHEAST_2).build();
-
-		return s3client;
-
-	}
-
-
-	@Value("${aws.accessKeyId}")
-	private String accessKey;
-
-	@Value("${aws.secretAccessKey}")
-	private String secretKey;
-
-	@Value("${aws.s3.bucketUrl}")
-	private String bucketUrl;
-
-	@Autowired
-	private ServletContext application;
-
-	// 빈이 만들어지자마자 바로 실행해라
-	@PostConstruct
-	public void init() {
-		application.setAttribute("bucketUrl", bucketUrl);
-	}
-
-	@Bean
-	public S3Client s3client() {
-
-		AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
-		AwsCredentialsProvider provider = StaticCredentialsProvider.create(credentials);
-
 		S3Client s3client = S3Client.builder()
 				.credentialsProvider(provider)
 				.region(Region.AP_NORTHEAST_2)

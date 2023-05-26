@@ -21,7 +21,7 @@
 	
 			<div id="map" style="width: 80%; height: 350px;"></div>
 			<div id="clickLatlng"></div>
-			모일 장소를 찍어주세요 !
+			경기한 위치를 알려주세요!
 			<br />
 			<input id="inputValue" type="text" value="하늘공원" />
 			<button id="searchPlace">검색</button>
@@ -50,12 +50,11 @@
 					<input id="LatSubmit" type="hidden" name="Lat" value="" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="" />
 					<div class="mb-3">
-						<input class="btn btn-primary" type="submit" value="등록" />
+						<input id="addParty" class="btn btn-primary" type="submit" value="등록" />
 					</div>
+				</form>
 			</div>
-			</form>
 		</div>
-	</div>
 	</div>
 	
 	<!-- ******************************************************************  -->
@@ -71,7 +70,7 @@
 		var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 		var mapOption = {
 			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-			level : 3
+			level : 4
 		// 지도의 확대 레벨
 		};
 

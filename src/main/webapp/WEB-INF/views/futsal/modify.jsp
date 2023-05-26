@@ -32,9 +32,32 @@
 						<label for="titleInput" class="form-label">제목</label>
 						<input class="form-control" id="titleInput" type="text" name="title" value="${board.title }" />
 					</div>
+					
+					<!-- 그림 파일 출력 -->
+					<div class="mb-3">
+						<c:forEach items="${board.fileName }" var="fileName" varStatus="status" >
+							<div class="form-check form-switch">
+							  <input name="removeFiles" value="${fileName }" class="form-check-input" type="checkbox" role="switch" id="removeCheckBox${status.index }">
+							  <label class="form-check-label" for="removeCheckBox${status.index }">
+							  	<i class="fa-solid fa-trash-can text-danger"></i>
+							  </label>
+							</div>
+							<div class="mb-3">
+								<img class="img-thumbnail img-fluid" src="${bucketUrl }/${board.id }/${fileName}" alt="" />
+							</div>
+						</c:forEach>
+					</div>
+					
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea class="form-control" id="bodyTextarea" rows="10" name="body">${board.body }</textarea>
+					</div>
+					<div class="mb-3">
+						<label for="fileInput" class="form-label">그림 파일</label>
+						<input class="form-control" type="file" id="fileInput" name="files" accept="image/*" multiple>
+						<div class="form-text">
+							총 10MB, 하나의 파일은 1MB를 초과할 수 없습니다.
+						</div>
 					</div>
 					<div class="mb-3">
 						<label for="" class="form-label">작성일시</label>
@@ -66,7 +89,7 @@
 		var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 		var mapOption = {
 			center : new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
-			level : 3
+			level : 4
 		// 지도의 확대 레벨
 		};
 

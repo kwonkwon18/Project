@@ -85,7 +85,7 @@
 			enableSubmit();
 		});
 
-		$("#wirterInput").keyup(function() {
+		$("#writerInput").keyup(function() {
 			checkwirterInput = true;
 			enableSubmit();
 		});

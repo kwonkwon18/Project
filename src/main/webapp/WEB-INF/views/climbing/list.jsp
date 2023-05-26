@@ -30,10 +30,10 @@
 			</thead>
 			<tbody>
 			<!-- boardList를 받았다.  -->
-				<c:forEach items="${boardList }" var="board">
+				<c:forEach items="${mateList }" var="board">
 					<tr>
 						<td>${board.id }</td>
-						<td><a href="/climbing/id/${board.id }"> ${board.title }</a>
+						<td><a href="/climbing/mateId/${board.id }"> ${board.title }</a>
 						<td>${board.writer }</td>
 						<td>${board.inserted }</td>
 					</tr>

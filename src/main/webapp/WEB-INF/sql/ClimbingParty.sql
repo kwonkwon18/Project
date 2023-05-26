@@ -6,4 +6,6 @@ CREATE TABLE ClimbingParty (
     FOREIGN KEY (boardId) REFERENCES ClimbingBoard(id)
 );
 
+DROP TABLE ClimbingParty;
+
 SELECT * FROM ClimbingParty;

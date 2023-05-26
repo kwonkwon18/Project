@@ -11,6 +11,9 @@ CREATE TABLE ClimbingToday (
 
 SELECT * FROM ClimbingToday;
 
+DELETE FROM ClimbingToday
+WHERE id <= 13;
+
 DESC ClimbingToday;
 
 ALTER TABLE ClimbingToday

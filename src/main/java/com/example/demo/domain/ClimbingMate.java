@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class ClimbingBoard {
+public class ClimbingMate {
 	// db에 존재하는 필드
 	private Integer id;
 	private String title;

@@ -1,21 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
-
-
-
-	<!-- 본문  -->
 
 	<div class="container-lg">
 		
@@ -48,47 +43,18 @@
 						<label for="" class="form-label">작성일시</label>
 						<input type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
-					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
-					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
-
+					<!-- 그림 파일 출력 -->
+					<div class="mb-3">
+						<c:forEach items="${board.fileName }" var="fileName">
+							<div class="mb-3">
+								<img class="img-thumbnail img-fluid" src="${bucketUrl}/climbingCourse/${board.id}/${fileName}" alt="" />
+							</div>
+						</c:forEach>	
+					</div>
 				</div>
 			</div>
 		</div>
-
-
-
-		<!-- **************************************************  -->
-
-
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b777f97571bb42bba6053423e16e967&libraries=services"></script>
-		<script>
-			var latNum = $("#LatSubmit").val();
-			var lngNum = $("#LngSubmit").val();
-			console.log("latNum:", latNum);
-			console.log("lngNum:", lngNum);
-
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-			mapOption = {
-				center : new kakao.maps.LatLng(latNum, lngNum), // 지도의 중심좌표
-				level : 3
-			// 지도의 확대 레벨
-			};
-
-			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-			// 마커가 표시될 위치입니다 
-			var markerPosition = new kakao.maps.LatLng(latNum, lngNum);
-
-			// 마커를 생성합니다
-			var marker = new kakao.maps.Marker({
-				position : markerPosition
-			});
-
-			// 마커가 지도 위에 표시되도록 설정합니다
-			marker.setMap(map);
-
-			// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-			// marker.setMap(null);
-		</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

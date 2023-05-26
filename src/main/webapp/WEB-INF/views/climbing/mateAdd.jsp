@@ -34,8 +34,8 @@
 						<input id="titleInput" class="form-control" type="text" name="title" value="${climbingBoard.title }" />
 					</div>
 					<div class="mb-3">
-						<label for="wirterInput" class="form-label">글쓴이</label>
-						<input id="wirterInput" class="form-control" type="text" name="writer" value="${climbingBoard.writer }" />
+						<label for="writerInput" class="form-label">글쓴이</label>
+						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingBoard.writer }" />
 					</div>
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>

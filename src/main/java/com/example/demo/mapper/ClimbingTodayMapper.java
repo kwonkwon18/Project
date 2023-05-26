@@ -17,20 +17,28 @@ public interface ClimbingTodayMapper {
 	int insert(ClimbingToday climbingToday);
 	
 	@Select("""
-			select * from ClimbingToday;
+			SELECT * FROM ClimbingToday;
 			""")
 	List<ClimbingToday> selectList();
 
 	@Select("""
-			select * from ClimbingToday 
-			where id = #{id}
+			SELECT 
+				c.id,
+				c.title,
+				c.body,
+				c.writer,
+				c.inserted,
+				f.fileName
+			FROM ClimbingToday c LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+			WHERE c.id = #{id}
 			""")
+	@ResultMap("climbingTodayResultMap")
 	ClimbingToday selectById(Integer id);
 
 	@Insert("""
-			INSERT INTO ClimbingFileName (boardId, fileName)
-			VALUES (#{boardId}, #{fileName})
+			INSERT INTO ClimbingTodayFileName (todayId, fileName)
+			VALUES (#{todayId}, #{fileName})
 			""")
-	Integer insertFileName(Integer boardId, String fileName);
+	Integer insertFileName(Integer todayId, String fileName);
 
 }

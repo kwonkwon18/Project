@@ -15,14 +15,14 @@ public interface ClimbingTodayMapper {
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(ClimbingToday climbingToday);
-	
+
 	@Select("""
 			SELECT * FROM ClimbingToday;
 			""")
 	List<ClimbingToday> selectList();
 
 	@Select("""
-			SELECT 
+			SELECT
 				c.id,
 				c.title,
 				c.body,
@@ -40,5 +40,41 @@ public interface ClimbingTodayMapper {
 			VALUES (#{todayId}, #{fileName})
 			""")
 	Integer insertFileName(Integer todayId, String fileName);
+
+	@Delete("""
+			DELETE FROM ClimbingTodayFileName
+			WHERE todayId = #{todayId}
+				AND fileName = #{fileName}
+			""")
+	void deleteFileNameByBoardIdAndFileName(Integer id, String fileName);
+
+	@Update("""
+			UPDATE ClimbingToday
+			SET
+				title = #{title},
+				body = #{body}
+			WHERE
+				id = #{id}
+			""")
+	int update(ClimbingToday climbingToday);
+
+	@Select("""
+			SELECT fileName FROM ClimbingTodayFileName
+			WHERE todayId = #{todayId}
+			""")
+	List<String> selectFileNamesByBoardId(Integer id);
+
+	@Delete("""
+			DELETE FROM ClimbingTodayFileName
+			WHERE todayId = #{todayId}
+				AND fileName = #{fileName}
+			""")
+	void deleteFileNameByTodayId(Integer id);
+
+	@Delete("""
+			DELETE FROM ClimbingToday
+			WHERE id = #{id}
+			""")
+	int deleteById(Integer id);
 
 }

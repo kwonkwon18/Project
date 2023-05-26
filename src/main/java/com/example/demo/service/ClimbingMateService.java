@@ -28,12 +28,6 @@ public class ClimbingMateService {
 	@Autowired
 	private ClimbingMateMapper mateMapper;
 	
-	@Autowired
-	private ClimbingTodayMapper todayMapper;
-	
-	@Autowired
-	private ClimbingCourseMapper courseMapper;
-	
 	public boolean addClimbingMate(ClimbingMate climbingMate) {
 		int cnt = mateMapper.insert(climbingMate);
 		return cnt == 1;

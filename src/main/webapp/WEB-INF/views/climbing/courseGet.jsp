@@ -15,7 +15,6 @@
 	<div class="container-lg">
 		
 		<div class="row justify-content-center">
-		<div id="map" style="width: 500px; height: 350px;"></div>
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
 					<div class="me-auto">

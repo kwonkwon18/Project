@@ -11,40 +11,40 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	
 	<div class="container-lg">
-
-		<div class="row justify-content-center">
-			<div class="col-12 col-md-8 col-lg-6">
-				<h1>게시물 작성</h1>
-				<form method="post" enctype="multipart/form-data" action="">
-					<div class="mb-3">
-						<label for="titleInput" class="form-label">제목</label>
-						<input id="titleInput" class="form-control" type="text" name="title" value="${climbingToday.title }" />
-					</div>
-					<div class="mb-3">
-						<label for="writerInput" class="form-label">글쓴이</label>
-						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingToday.writer }" />
-					</div>
-					<div class="mb-3">
-						<label for="bodyTextarea" class="form-label">본문</label>
-						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${climbingToday.body }</textarea>
-					</div>
-					<div class="mb-3">
-						<label for="fileInput" class="form-label">그림 파일</label>
-						<input class="form-control" type="file" id="fileInput" name="files" accept="image/*" multiple>
-						<div class="form-text">
-							총 10MB, 하나의 파일은 1MB를 초과할 수 없습니다. 
-						</div>
-					</div>
-					<input class="btn btn-primary" type="submit" value="등록" />
-			</div>
-			</form>
-		</div>
+		<h2>메이트구하기</h2>
+		<!-- 새로 작성된 코드, 변경된 코드  -->
+		<!-- table.table>thead>tr>th*4^^tbody -->
+		<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>제목</i></th>
+					<th>작성자</th>
+					<th>작성일자</th>
+				</tr>
+			</thead>
+			<tbody>
+			<!-- mateList를 받았다.  -->
+				<c:forEach items="${climbingMateList }" var="board">
+					<tr>
+						<td>${board.id }</td>
+						<td><a href="/climbing/mateId/${board.id }"> ${board.title }</a>
+						<td>${board.writer }</td>
+						<td>${board.inserted }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
-	</div>
-	
-
+	<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>

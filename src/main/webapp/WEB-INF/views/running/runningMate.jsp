@@ -12,6 +12,8 @@
 </head>
 <body>
 	확인용
+	
+	<c:set ></c:set>
 	<div class="d-flex">
 		<div class="row">
 			<c:forEach items="${runningMates}" var="board" varStatus="status">
@@ -38,14 +40,14 @@
 									<input id="writerData" type="text" class="form-control" value="${board.writer}" readonly />
 								</div>
 								<!-- 본문 내용 -->
-								<%-- <label for="" class="form-label">같이 달릴 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️</label>
+							<label for="" class="form-label">같이 달릴 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️</label>
 								<c:forEach items="${members}" var="member">
 									<c:if test="${board.id eq member.boardId}">
 										<div class="mb-3">
 											<input type="text" readonly class="form-control" value="${member.memberId}" />
 										</div>
 									</c:if>
-								</c:forEach> --%>
+								</c:forEach>
 								<div class="mb-3">
 									<label for="" class="form-label">작성일시</label>
 									<input type="text" readonly class="form-control" value="${board.inserted}" />
@@ -55,8 +57,9 @@
 								<a href="/running/id/${board.id}" class="btn btn-primary">Go somewhere</a>
 								<div>모집인원 : ${board.people } / 현재인원 : ${board.currentNum }</div>
 
+
 								<c:if test="${board.people > board.currentNum }">
-									<button id="joinPartyBtn${status.index + 1}">나도 껴조 ~</button>
+									<button id="joinPartyBtn${status.index + 1}">신청하러가기</button>
 									<p id="message${status.index + 1}"></p>
 								</c:if>
 
@@ -130,32 +133,9 @@ $(document).ready(function() {
 
 		// 버튼 클릭 이벤트 핸들러
 		$('#joinPartyBtn${status.index + 1}').click(function() {
-			const data = {
-				boardId: "${board.id}",
-				userId: "${board.writer}"
-			};
-
-			$.ajax("/running/joinParty", {
-				method: "post",
-				contentType: "application/json",
-				data: JSON.stringify(data),
-				success: function() {
-					alert("신청되었습니다. ");
-					$("#message${status.index + 1}").text("성공");
-
-				},
-				error: function() {
-					alert("신청 실패 ");
-					$("#message${status.index + 1}").text("실패");
-				}, 
-				
-				complete : function(){
-			history.scrollRestoration = "auto";
+			location.href='/running/id/${board.id}';
 			
-			location.replace("/running/id/${board.id}");
-					
-				}
-			})
+
 		});
 	</c:forEach>
 });

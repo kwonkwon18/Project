@@ -1,6 +1,6 @@
 
 
-$("#joinPartyBtn").click(function() {
+/*$("#joinPartyBtn").click(function() {
 	const total = $("#totalPeople").text().trim();
 	const boardId = $("#boardIdText").text().trim();
 	const userId = $("#writerText").val().trim();
@@ -36,7 +36,8 @@ $("#joinPartyBtn").click(function() {
 	})
 
 
-})
+})*/
+
 
 
 

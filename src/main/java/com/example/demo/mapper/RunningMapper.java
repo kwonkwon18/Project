@@ -114,4 +114,13 @@ public interface RunningMapper {
 	@ResultMap("boardResultMap")
 	List<RunningBoard> selectMate();
 
+	
+	
+	
+	@Select("""
+	         select boardId ,memberId
+	from RunningParty p left join RunningBoard b ON p.boardId = b.id
+	""")
+	List<RunningParty> selectMember();
+
 }

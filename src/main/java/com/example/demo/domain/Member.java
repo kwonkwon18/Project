@@ -16,7 +16,7 @@ public class Member {
 	private String nickName;
 	private LocalDateTime inserted;
 	private String birth;
-	private Boolean gender;
+	private String gender;
 	private String career;
 	private String address;
 	private String phone;

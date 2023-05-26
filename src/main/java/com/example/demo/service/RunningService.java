@@ -54,6 +54,11 @@ public class RunningService {
 		return mapper.selectMemberIdByBoardId(id, writer);
 	}
 
+	public List<RunningParty> selectMemberIdByBoardId() {
+		// TODO Auto-generated method stub
+		return mapper.selectMember();
+	}
+
 
 
 }

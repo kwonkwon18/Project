@@ -58,7 +58,7 @@
 
 
 					<!--  -->
-					<label for="" class="form-label">신청한 사람</label>
+					<label for="" class="form-label">신청한 사람 </label>
 					<c:forEach items="${members}" var="member">
 						<c:if test="${board.id eq member.boardId}">
 							<div class="mb-3">
@@ -91,17 +91,19 @@
 
 			<c:choose>
 				<c:when test="${isMember}">
-					<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️> </button>
+					<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
 				</c:when>
 				<c:otherwise>
-					<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+					<c:if test="${board.people > board.currentNum }">
+						<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 
 
 
 
-<%-- 			<c:if test="${board.people > board.currentNum }">
+			<%-- 			<c:if test="${board.people > board.currentNum }">
 				<button id="joinPartyBtn">참여하기1</button>
 				${currentUserId }
 			</c:if>

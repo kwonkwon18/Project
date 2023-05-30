@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import java.time.*;
 import java.util.*;
 
 import org.apache.ibatis.annotations.*;
@@ -25,9 +26,9 @@ public interface ChatMapper {
 
 	@Select("""
 			SELECT id FROM ChatRoom
-			WHERE (invited = #{yourUserId} AND creater = #{myUserId}) OR (invited = #{myUserId} AND creater = #{yourUserId})
+			WHERE (invited = #{myUserId} OR creater = #{myUserId}) AND inserted = #{inserted})
 			""")
-	Integer getChatRoomId(String yourUserId, String myUserId);
+	Integer getChatRoomId(LocalDateTime inserted, String myUserId);
 
 	@Select("""
 			SELECT * FROM Chat
@@ -58,6 +59,34 @@ public interface ChatMapper {
 			WHERE chatRoomId = #{chatRoomId} AND id > #{lastChatId}
 			""")
 	List<Chat> checkId(Integer lastChatId, Integer chatRoomId);
+
+	@Delete("""
+			DELETE FROM ChatRoom
+			WHERE id = #{chatRoomId} 
+			""")
+	void chatRoomDeleteByChatRoomId(Integer chatRoomId);
+
+	@Delete("""
+			DELETE FROM Chat
+			WHERE chatRoomId = #{chatRoomId}
+			""")
+	void chatDeleteByChatRoomId(Integer chatRoomId);
+
+	@Update("""
+			Update ChatRoom
+			SET
+				creater = null
+			WHERE id = #{chatRoomId}
+			""")
+	void removeChatRoomCreater(Integer chatRoomId);
+
+	@Update("""
+			Update ChatRoom
+			SET
+				invited = null
+			WHERE id = #{chatRoomId}
+			""")
+	void removeChatRoomInvited(Integer chatRoomId);
 
 
 }

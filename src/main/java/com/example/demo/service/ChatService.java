@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.time.*;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
@@ -26,10 +27,8 @@ public class ChatService {
 		return mapper.lastMessageSelectById(id);
 	}
 
-	public List<Chat> getChatByYourNickName(String yourNickName, String myUserId) {
-		String yourUserId = memberMapper.getUserIdSelectByNickName(yourNickName);
-		
-		int chatRoomId = mapper.getChatRoomId(yourUserId, myUserId);
+	public List<Chat> getChatByYourNickName(LocalDateTime inserted, String myUserId) {
+		int chatRoomId = mapper.getChatRoomId(inserted, myUserId);
 		
 		return mapper.getChatSelectByChatRoomId(chatRoomId);
 	}
@@ -51,6 +50,23 @@ public class ChatService {
 
 	public List<Chat> checkId(Integer lastChatId, Integer chatRoomId) {
 		return mapper.checkId(lastChatId, chatRoomId);
+	}
+
+	public void delete(Integer chatRoomId, String myUserId) {
+		if(mapper.getChatRoomUserId(chatRoomId).get("creater") == null || mapper.getChatRoomUserId(chatRoomId).get("invited") == null) {
+			mapper.chatDeleteByChatRoomId(chatRoomId);
+			mapper.chatRoomDeleteByChatRoomId(chatRoomId);
+		} else {
+			if (mapper.getChatRoomUserId(chatRoomId).get("creater").equals(myUserId)) {
+				mapper.removeChatRoomCreater(chatRoomId);
+			} else {
+				mapper.removeChatRoomInvited(chatRoomId);
+			}
+		}
+	}
+
+	public Object getChatRoomId(String myUserId, LocalDateTime dateInserted) {
+		return mapper.getChatRoomId(dateInserted, myUserId);
 	}
 
 

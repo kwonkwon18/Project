@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.time.*;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
@@ -32,20 +33,27 @@ public class ChatController {
 	@PreAuthorize("authenticated")
 	public Map<String, Object> chatOpen(Authentication authentication) {
 		var myName = authentication.getName();
-		List<ChatRoom> invitedList = service.invitedSelectByName(myName);
+		List<ChatRoom> chatRoomList = service.invitedSelectByName(myName);
 		List<String> nickNameList = new ArrayList<>();
 		List<String> lastMessageList = new ArrayList<>();
-		for (ChatRoom chatRoom : invitedList) {
+		List<LocalDateTime> insertedList = new ArrayList<>();
+		for (ChatRoom chatRoom : chatRoomList) {
 			if(memberService.getNickName(authentication.getName()).equals(chatRoom.getInvited())) {
 				nickNameList.add(memberService.getNickName(chatRoom.getCreater()));
 			} else {
 				nickNameList.add(memberService.getNickName(chatRoom.getInvited()));
 			}
-			lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()));
+			if(service.lastMessageSelectById(chatRoom.getId()) == null) {
+				lastMessageList.add("");
+			} else {
+				lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()));
+			}
+			insertedList.add(chatRoom.getInserted());
 		}
 		Map<String, Object> map = new HashMap<>();
 		map.put("nickNameList", nickNameList);
 		map.put("lastMessageList", lastMessageList);
+		map.put("insertedList", insertedList);
 		return map;
 	}
 
@@ -53,11 +61,14 @@ public class ChatController {
 	@GetMapping("room")
 	@ResponseBody
 	@PreAuthorize("authenticated")
-	public Map<String, Object> chatRoom(Authentication authentication, String yourNickName) {
+	public Map<String, Object> chatRoom(Authentication authentication, LocalDateTime inserted) {
 		
+		System.out.println(inserted);
+		System.out.println(authentication.getName());
 		Map<String, Object> map = new HashMap<>();
 		String myUserId = authentication.getName();
-		map.put("chatList", service.getChatByYourNickName(yourNickName, myUserId));
+		map.put("chatList", service.getChatByYourNickName(inserted, myUserId));
+		map.put("chatRoomId", service.getChatRoomId(myUserId, inserted));
 		map.put("myId", authentication.getName());
 		return map;
 	}
@@ -77,5 +88,11 @@ public class ChatController {
 		return Map.of("chatList", service.checkId(lastChatId, chatRoomId));
 		
 		
+	}
+	
+	@GetMapping("deleteRoom/{chatRoomId}")
+	@PreAuthorize("authenticated")
+	public void deleteRoom(@PathVariable("chatRoomId") Integer chatRoomId,Authentication authentication) {
+		service.delete(chatRoomId, authentication.getName());
 	}
 }

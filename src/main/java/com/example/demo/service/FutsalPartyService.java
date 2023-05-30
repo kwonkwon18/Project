@@ -38,6 +38,26 @@ public class FutsalPartyService {
 		return cnt == 1;
 	}
 
+	public Map<String, Object> futsalPartyMember(FutsalPartyMember futsalPartyMember) {
+		Map<String, Object> result = new HashMap<>();
+	
+		futsalPartyMember.setFutsalApplyMember("test");
+		
+		result.put("member", false);
+		
+		Integer deleteCnt = futsalPartyMapper.deletePartyMember(futsalPartyMember);
+		
+		if(deleteCnt != 1) {
+			Integer insertCnt = futsalPartyMapper.insertPartyMember(futsalPartyMember);
+			result.put("member", true);		
+		}
+		
+		Integer count = futsalPartyMapper.countByFutsalPartyId(futsalPartyMember.getFutsalPartyId());
+		result.put("count", count);
+		
+		return result;
+	}
+
 
 	
 	

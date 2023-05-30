@@ -11,10 +11,10 @@ public class FutsalParty {
 	private String title;
 	private String body;
 	private String writer;
-	private String futsalGender;
 	private String stadium;
 	private Integer memberNum;
-	private Integer lastMemberNum;
+	private Integer applyNum;
+	private String futsalGender;
 	private LocalDate startDate;
 	private LocalTime startTime;
 	private Double Lat;

@@ -24,7 +24,8 @@
 					<div class="d-flex">
 						<div class="me-auto">
 							<div class="mb-3">
-								<label for="" class="form-label">매치 정보</label>
+								<h1 id="futsalPartyId">${party.id } 매치 정보</h1>
+								<label for="" class="form-label"></label>
 								<input type="text" class="form-control" value="${party.title }" readonly />
 							</div>
 							<div id="map" style="width: 500px; height: 350px;"></div>
@@ -45,7 +46,7 @@
 					</div>
 					<div class="mb-3">
 						<label for="" class="form-label">지원인원</label>
-						<input type="Number" readonly class="form-control" value="${party.lastMemberNum }" readonly />
+						<input id="applyNum" type="Number" readonly class="form-control" value="${party.applyNum }" readonly /> ${party.applyNum }
 					</div>
 					<div class="mb-3">
 						<label for="" class="form-label">모집인원</label>
@@ -66,7 +67,7 @@
 					</div>
 		
 					<div>
-						<a class="btn btn-primary" href="/futsal/futsalPartyList">지원하기</a>
+						<a id="futsalPartyApply" class="btn btn-primary" href="/futsal/futsalPartyMember">지원하기</a>
 						<a class="btn btn-secondary" href="/futsal/modify/${party.id }">수정</a>
 						<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 					</div>
@@ -100,6 +101,8 @@
 	
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script src="/js/futsal/futsalParty.js"></script>
 
 	<script>
 		String selectedColor = request.getParameter("futsalGender");

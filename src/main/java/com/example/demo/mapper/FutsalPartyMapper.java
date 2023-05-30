@@ -40,5 +40,25 @@ public interface FutsalPartyMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(FutsalParty futsalParty);
 
+	@Delete("""
+			DELETE FROM FutsalPartyMember
+			WHERE futsalPartyId = #{futsalPartyId}
+			AND futsalApplyMember = #{futsalApplyMember}
+			""")
+	Integer deletePartyMember(FutsalPartyMember futsalPartyMember);
+	
+	@Insert("""
+			INSERT INTO FutsalPartyMember
+			VALUES (#{futsalPartyId}, #{futsalApplyMember})
+			""")
+	Integer insertPartyMember(FutsalPartyMember futsalPartyMember);
+
+	@Select("""
+			SELECT COUNT(*)
+			FROM FutsalPartyMember
+			WHERE futsalPartyId = #{futsalPartyId}
+			""")
+	Integer countByFutsalPartyId(Integer futsalPartyId);
+
 
 }

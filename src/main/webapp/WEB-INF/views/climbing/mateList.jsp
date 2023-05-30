@@ -39,9 +39,9 @@
 		<nav>
 			<ul>
 				<span style="margin-left: 50px;"></span>
-				<a href="menu1.jsp" style="text-decoration-line: none;">전체</a>
-				<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">검색 </a>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
+				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">검색 </a>
+				<div class="dropdown-menu" aria-labelledby="search1">
 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
 				<a href="menu3.jsp" style="text-decoration-line: none;">지도로 보기</a>
@@ -49,34 +49,37 @@
 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
 			</ul>
-			<ul>
-				<button type="button" class="btn btn-success" style="pointer-events: none;">종류🌄</button>
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					<li><a class="dropdown-item" href="#">Action</a></li>
-					<li><a class="dropdown-item" href="#">Another action</a></li>
-					<li><a class="dropdown-item" href="#">Something else here</a></li>
-				</ul>
-			</ul>
-			<ul>
-				<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					<li><a class="dropdown-item" href="#">Action</a></li>
-					<li><a class="dropdown-item" href="#">Another action</a></li>
-					<li><a class="dropdown-item" href="#">Something else here</a></li>
-				</ul>
-				<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success" type="submit">
-					<i class="fa-solid fa-magnifying-glass"></i>
-				</button>
-
+			<div id="dropdown1" style="display: none">
 				<ul>
-					<div style="text-align: right;">
-						<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a> <a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
-					</div>
+					<button type="button" class="btn btn-success" style="pointer-events: none;">종류🌄</button>
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						<li><a class="dropdown-item" href="#">Action</a></li>
+						<li><a class="dropdown-item" href="#">Another action</a></li>
+						<li><a class="dropdown-item" href="#">Something else here</a></li>
+					</ul>
 				</ul>
+				<ul>
+					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
+					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						<li><a class="dropdown-item" href="#">Action</a></li>
+						<li><a class="dropdown-item" href="#">Another action</a></li>
+						<li><a class="dropdown-item" href="#">Something else here</a></li>
+					</ul>
+					<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success" type="submit">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</ul>
+			</div>
 		</nav>
+
+		<ul>
+			<div style="text-align: right;">
+				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a> <a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
+			</div>
+		</ul>
 
 		<div class="row">
 			<c:forEach items="${climbingMateList}" var="board">
@@ -98,8 +101,17 @@
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+		$("#all1").click(function () {
+			$("#dropdown1").slideUp()
+		})
+		$("#search1").click(function () {
+			$("#dropdown1").slideDown()
+		})
+			
+		</script>
 </body>
 </html>

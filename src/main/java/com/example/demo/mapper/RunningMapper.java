@@ -15,8 +15,8 @@ import com.example.demo.domain.RunningParty;
 public interface RunningMapper {
 
 	@Insert("""
-			INSERT INTO RunningBoard (title, body, writer, Lat, Lng, people)
-			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{people})
+			INSERT INTO RunningBoard (title, body, writer, Lat, Lng, people, time)
+			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{people}, #{time})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(RunningBoard runningBoard);
@@ -36,6 +36,7 @@ public interface RunningMapper {
 			    r.Lat,
 			    r.Lng,
 			    r.people,
+			    r.time,
 			    m.userId,
 			    COUNT(rp.boardId) AS currentNum
 			FROM
@@ -52,7 +53,8 @@ public interface RunningMapper {
 			    r.writer,
 			    r.Lat,
 			    r.Lng,
-			    r.people;
+			    r.people
+			    
 						""")
 	@ResultMap("boardResultMap")
 	RunningBoard selectById(Integer id);
@@ -66,7 +68,8 @@ public interface RunningMapper {
 			   b.inserted,
 			   b.Lat,
 			   b.Lng,
-			   b.people
+			   b.people,
+			   b.time
 			   FROM RunningBoard b
 			   where b.writer = #{writer}
 					""")
@@ -97,6 +100,7 @@ public interface RunningMapper {
 			    r.Lat,
 			    r.Lng,
 			    r.people,
+			    r.time,
 			    COUNT(rp.boardId) AS currentNum
 			FROM
 			    RunningBoard r
@@ -109,7 +113,9 @@ public interface RunningMapper {
 			    r.writer,
 			    r.Lat,
 			    r.Lng,
-			    r.people
+			    r.people,
+			    r.time
+			    
 						""")
 	@ResultMap("boardResultMap")
 	List<RunningBoard> selectMate();

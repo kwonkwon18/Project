@@ -31,7 +31,7 @@
 				<form method="post">
 					<div class="mb-3">
 						<label for="titleInput" class="form-label">제목</label>
-						<input id="titleInput" class="form-control" type="text" name="title" value="${runningBoard.title }" />
+						<input id="titleInput" class="form-control" type="text" name="title" value="${runningBoard.title }" required />
 					</div>
 
 					<%-- 					<div class="mb-3">
@@ -41,16 +41,21 @@
 
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
-						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${runningBoard.body }</textarea>
+						<textarea rows="10" id="bodyTextarea" class="form-control" name="body" required>${runningBoard.body }</textarea>
 					</div>
 
 					<div class="mb-3">
 						<label for="" class="form-label">인원수</label>
-						<input id="peopleInput" type="number" class="form-control" name="people" value="${runningBoard.people }" />
+						<input id="peopleInput" type="number" required class="form-control" name="people" value="${runningBoard.people }" placeholder="숫자를 입력해주세요 ex) 1" />
+					</div>
+					
+					<div class="mb-3">
+						<label for="dateInput" class="form-label">모이는 시간</label>
+						<input  required id = "dateInput" name = "time" type="datetime-local" />
 					</div>
 
-					<input id="LatSubmit" type="hidden" name="Lat" value="" />
-					<input id="LngSubmit" type="hidden" name="Lng" value="" />
+					<input id="LatSubmit" type="hidden" name="Lat" value="37.56676114114433" />
+					<input id="LngSubmit" type="hidden" name="Lng" value="126.97869755300808" />
 					<input id="addButton" disabled class="btn btn-primary" type="submit" value="등록" />
 			</div>
 			</form>
@@ -96,12 +101,17 @@
 		});
 
  
-		console.log(checkbodyTextarea)
+		
 		$("#peopleInput").keyup(function() {
 			checkpeopleInput = true;
 			enableSubmit();
 		});
-		console.log(checkpeopleInput)
+		
+		$("#peopleInput").click(function() {
+			checkpeopleInput = true;
+			enableSubmit();
+		});
+		
 
 		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 		var infowindow = new kakao.maps.InfoWindow({

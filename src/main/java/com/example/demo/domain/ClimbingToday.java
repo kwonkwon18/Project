@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 public class ClimbingToday {
 	private Integer id;
-	private String writer;
 	private String title;
 	private String body;
+	private String writer;
 	private LocalDate inserted;
 	private List<String> fileName;
 }

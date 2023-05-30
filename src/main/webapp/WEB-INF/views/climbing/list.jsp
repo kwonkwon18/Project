@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +16,30 @@
 
 	<div class="container-lg">
 		<h2>메이트구하기</h2>
+		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+			</div>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="1.png" class="d-block w-100" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="..." class="d-block w-100" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="..." class="d-block w-100" alt="...">
+				</div>
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+			</button>
+		</div>
 		<!-- 새로 작성된 코드, 변경된 코드  -->
 		<!-- table.table>thead>tr>th*4^^tbody -->
 		<table class="table">
@@ -29,7 +52,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- mateList를 받았다.  -->
+				<!-- mateList를 받았다.  -->
 				<c:forEach items="${climbingMateList }" var="board">
 					<tr>
 						<td>${board.id }</td>
@@ -41,8 +64,8 @@
 			</tbody>
 		</table>
 	</div>
-	
-		<div class="container-lg">
+
+	<div class="container-lg">
 		<h2>오늘의 등산</h2>
 		<!-- 새로 작성된 코드, 변경된 코드  -->
 		<!-- table.table>thead>tr>th*4^^tbody -->
@@ -56,7 +79,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- todayList를 받았다.  -->
+				<!-- todayList를 받았다.  -->
 				<c:forEach items="${climbingTodayList }" var="board">
 					<tr>
 						<td>${board.id }</td>
@@ -69,7 +92,7 @@
 		</table>
 	</div>
 
-		<div class="container-lg">
+	<div class="container-lg">
 		<h2>추천 코스</h2>
 		<!-- 새로 작성된 코드, 변경된 코드  -->
 		<!-- table.table>thead>tr>th*4^^tbody -->
@@ -83,7 +106,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- courseList를 받았다.  -->
+				<!-- courseList를 받았다.  -->
 				<c:forEach items="${climbingCourseList }" var="board">
 					<tr>
 						<td>${board.id }</td>
@@ -96,7 +119,7 @@
 		</table>
 	</div>
 
-<div class="container-lg">
+	<div class="container-lg">
 		<div class="row">
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
@@ -120,7 +143,7 @@
 						<my:pageItem pageNum="${pageInfo.currentPageNum + 1 }">
 							<i class="fa-solid fa-angle-right"></i>
 						</my:pageItem>
-					
+
 					</c:if>
 
 				</ul>

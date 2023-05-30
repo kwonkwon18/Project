@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -12,8 +13,11 @@
 </head>
 <body>
 	확인용
-	
-	<c:set ></c:set>
+	<jsp:useBean id="now" class="java.util.Date" />
+	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
+	오늘 날짜 :
+	<c:out value="${today}" />
+
 	<div class="d-flex">
 		<div class="row">
 			<c:forEach items="${runningMates}" var="board" varStatus="status">
@@ -24,9 +28,12 @@
 							<h5 class="card-title">
 								<div class="me-auto">
 									<h1>
-										<span id="boardIdText">${board.id}</span>
+										<span id="boardIdText${status.index + 1}">${board.id}</span>
 										번게시물
 									</h1>
+
+
+
 								</div>
 							</h5>
 							<div>
@@ -37,31 +44,70 @@
 								</div>
 								<div class="mb-3">
 									<label for="" class="form-label">작성자</label>
-									<input id="writerData" type="text" class="form-control" value="${board.writer}" readonly />
+									<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
 								</div>
+
 								<!-- 본문 내용 -->
-							<label for="" class="form-label">같이 달릴 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️</label>
+
+
+								<c:set var="isUser" value="false" />
+								<label for="" class="form-label">같이 달릴 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️</label>
 								<c:forEach items="${members}" var="member">
 									<c:if test="${board.id eq member.boardId}">
 										<div class="mb-3">
 											<input type="text" readonly class="form-control" value="${member.memberId}" />
 										</div>
+										<c:if test="${currentUserId eq member.memberId}">
+											<c:set var="isUser" value="true" />
+										</c:if>
 									</c:if>
 								</c:forEach>
+								<div class="mb-3">
+									<label for="" class="form-label">모임시간</label>
+									<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+								</div>
+
 								<div class="mb-3">
 									<label for="" class="form-label">작성일시</label>
 									<input type="text" readonly class="form-control" value="${board.inserted}" />
 								</div>
 								<input class="LatSubmit${status.index + 1}" type="hidden" name="Lat" value="${board.lat}" />
 								<input class="LngSubmit${status.index + 1}" type="hidden" name="Lng" value="${board.lng}" />
-								<a href="/running/id/${board.id}" class="btn btn-primary">Go somewhere</a>
+								<a href="/running/id/${board.id}" class="btn btn-primary">자세히 보기</a>
 								<div>모집인원 : ${board.people } / 현재인원 : ${board.currentNum }</div>
 
 
-								<c:if test="${board.people > board.currentNum }">
-									<button id="joinPartyBtn${status.index + 1}">신청하러가기</button>
-									<p id="message${status.index + 1}"></p>
+								<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
+								<c:set var="isMember" value="false" />
+
+
+
+								<c:if test="${currentUserId eq board.writer}">
+									<c:set var="isMember" value="true" />
 								</c:if>
+
+
+								<c:choose>
+									<c:when test="${isMember}">
+										<button id="">${isMember}내가올린게시물${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}</button>
+									</c:when>
+									<c:when test="${isUser}">
+										<button id="">${isUser}이미신청한러닝입니다.${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}</button>
+										<button id="rejectPartyBtn${status.index + 1}">취소하기</button>
+									</c:when>
+									<c:otherwise>
+										<c:if test="${board.people > board.currentNum }">
+											<button id="joinPartyBtn${status.index + 1}">신청하기 ${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}</button>
+											<p id="message${status.index + 1}"></p>
+										</c:if>
+									</c:otherwise>
+								</c:choose>
+
+
+
+
+
+
 
 								<c:if test="${board.people <= board.currentNum }">
 									<button>마감됐어..</button>
@@ -71,21 +117,27 @@
 								<input type="hidden" id="currentPeopleHidden" value="${board.currentNum }" />
 								<p id="currentPeople"></p>
 
-
+								<div></div>
 							</div>
 						</div>
 					</div>
+					<c:set var="latNum" value="${board.lat}" />
+					<c:set var="lngNum" value="${board.lng}" />
 				</div>
-				<c:set var="latNum" value="${board.lat}" />
-				<c:set var="lngNum" value="${board.lng}" />
 			</c:forEach>
 		</div>
 	</div>
+
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script>
+	function setDraggable(draggable) {
+	    // 마우스 드래그로 지도 이동 가능여부를 설정합니다
+	    map.setDraggable(draggable);    
+	}
+	
 	$(document).ready(function() {
 		<c:forEach items="${runningMates}" var="board" varStatus="status">
 			var latNum${status.index + 1} = ${board.lat};
@@ -131,13 +183,68 @@ $(document).ready(function() {
 
 		marker${status.index + 1}.setMap(map${status.index + 1});
 
+
+		
+		
+		
 		// 버튼 클릭 이벤트 핸들러
 		$('#joinPartyBtn${status.index + 1}').click(function() {
-			location.href='/running/id/${board.id}';
+			
+			const boardId = $("#boardIdText${status.index + 1}").text().trim();
+			const userId = $("#writerData${status.index + 1}").val().trim();
+			
+			const data = {boardId, userId};
+			
+			$.ajax("/running/joinParty", {
+				method : "post",
+				contentType : "application/json",
+				data : JSON.stringify(data),
+				
+				success : function(data) {
+					if(data.join){
+						alert("신청되었습니다.");
+					} else {
+						alert(data.message);
+					}
+					location.reload();
+				},
+				error : function(jqXHR) {
+					alert("신청 실패")
+				}
+			})
 			
 
 		});
-	</c:forEach>
+
+
+$('#rejectPartyBtn${status.index + 1}').click(function() {
+	
+	const boardId = $("#boardIdText${status.index + 1}").text().trim();
+	const userId = $("#writerData${status.index + 1}").val().trim();
+	
+	const data = {boardId, userId};
+	
+	$.ajax("/running/rejectParty", {
+		method : "post",
+		contentType : "application/json",
+		data : JSON.stringify(data),
+		
+		success : function(data) {
+			if(!data.join){
+				alert("취소되었습니다.");
+			} else {
+				alert("취소되지 않았습니다.");
+			}
+			location.reload();
+		},
+		error : function(jqXHR) {
+			alert("취소 중 오류 발생")
+		}
+	})
+	
+
+});
+</c:forEach>
 });
 </script>
 

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -13,8 +16,12 @@
 </head>
 <body>
 
+	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
+	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
+	<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
 
-
+	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
+	<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 
 	<!-- 본문  -->
 
@@ -27,7 +34,7 @@
 					<div class="me-auto">
 						<h1>
 							<span id="boardIdText"> ${board.id } </span>
-							번게시물
+							번게시물${formattedDate }
 						</h1>
 					</div>
 				</div>
@@ -50,8 +57,13 @@
 					</div>
 
 					<div class="mb-3">
+						<label for="" class="form-label">모임시간</label>
+						<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+					</div>
+
+					<div class="mb-3">
 						<label for="" class="form-label">작성일시</label>
-						<input type="text" readonly class="form-control" value="${board.inserted }" />
+						<input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
 					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
@@ -79,31 +91,36 @@
 
 		<div>
 
+			<c:if test="${openDate < nowDate }">
+				<button>마감된 러닝</button>
+			</c:if>
 
-			<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
-			<c:set var="isMember" value="false" />
+			<c:if test="${openDate > nowDate }">
 
-			<c:forEach items="${members}" var="member">
-				<c:if test="${currentUserId eq member.memberId}">
-					<c:set var="isMember" value="true" />
-				</c:if>
-			</c:forEach>
+				<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
+				<c:set var="isMember" value="false" />
 
-			<c:choose>
-				<c:when test="${isMember}">
-					<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
-				</c:when>
-				<c:otherwise>
-					<c:if test="${board.people > board.currentNum }">
-						<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+				<c:forEach items="${members}" var="member">
+					<c:if test="${currentUserId eq member.memberId}">
+						<c:set var="isMember" value="true" />
 					</c:if>
-				</c:otherwise>
-			</c:choose>
+				</c:forEach>
+
+				<c:choose>
+					<c:when test="${isMember}">
+						<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${board.people > board.currentNum }">
+							<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+					</c:if>
+					</c:otherwise>
+				</c:choose>
 
 
 
 
-			<%-- 			<c:if test="${board.people > board.currentNum }">
+				<%-- 			<c:if test="${board.people > board.currentNum }">
 				<button id="joinPartyBtn">참여하기1</button>
 				${currentUserId }
 			</c:if>
@@ -120,18 +137,22 @@
 
 
 
-			<c:if test="${board.people <= board.currentNum }">
-				<button>마감</button>
+				<c:if test="${board.people <= board.currentNum }">
+					<button>마감</button>
+				</c:if>
+
+
+
+
+
+
+
+
+				<input type="text" id="totalPeople" value="${board.people }" />
+				<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
+				<p id="currentPeople"></p>
+				<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
 			</c:if>
-
-
-
-
-
-			<input type="text" id="totalPeople" value="${board.people }" />
-			<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
-			<p id="currentPeople"></p>
-			<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
 		</div>
 
 

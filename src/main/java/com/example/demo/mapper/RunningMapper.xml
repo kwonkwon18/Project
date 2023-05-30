@@ -13,6 +13,7 @@
 			<result column="Lat" property="Lat" />
 			<result column="Lng" property="Lng" />
 			<result column="people" property="people" />
+			<result column="time" property="time" />
 			<!-- <result column = "filename" property = "filename"/> -->
 		</resultMap>
 	</mapper>

@@ -58,12 +58,13 @@ public class ClimbingController {
 	}
 
 	@GetMapping("todayList")
-	public void todayList(Model model,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "search", defaultValue = "") String search,
-			@RequestParam(value = "type", required = false) String type) {
+	public void todayList(Model model
+//			@RequestParam(value = "page", defaultValue = "1") Integer page,
+//			@RequestParam(value = "search", defaultValue = "") String search,
+//			@RequestParam(value = "type", required = false) String type) 
+			) {
 		
-		Map<String, Object> listMap = todayService.listBoard(page, search, type);		
+		Map<String, Object> listMap = new HashMap<>();		
 		// 오늘의 등산
 		List<ClimbingToday> today = todayService.listBoard(); // 페이지 처리 전
 		listMap.put("climbingTodayList", today);
@@ -156,6 +157,30 @@ public class ClimbingController {
 			return "redirect:/mateId/" + id;
 		}
 	}
+	
+	@GetMapping("/mateMap")
+	public void mateMap() {
+		
+	}
+	
+	@GetMapping("/climbingMate")
+	public void climbingMatePage(Model model) {
+		
+		Map<String, Object> getMemberList = new HashMap<>();
+		
+		List<ClimbingMate> climbingMates = mateService.getMateBoard();
+		getMemberList.put("climbingMates", climbingMates);
+
+		/* model.addAttribute("board", climbingMates); */
+		System.out.println(climbingMates);
+		
+		List<ClimbingParty> members = mateService.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+		System.out.println(members);
+		model.addAllAttributes(getMemberList);
+	}
+	
+	
 
 	@GetMapping("/todayAdd")
 	public void todayProcess() {

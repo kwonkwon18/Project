@@ -8,7 +8,7 @@ $("#joinPartyBtn").click(function() {
 
 	const data = { boardId, userId };
 
-	$.ajax("/running/joinParty", {
+	$.ajax("/climbing/joinParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),

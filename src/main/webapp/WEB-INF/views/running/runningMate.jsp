@@ -148,7 +148,7 @@
 		var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
 		var mapOption${status.index + 1} = {
 			center : new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
-			level : 3
+			level : 1
 		};
 
 		var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});

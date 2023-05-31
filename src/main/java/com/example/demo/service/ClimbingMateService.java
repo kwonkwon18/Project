@@ -107,6 +107,28 @@ public class ClimbingMateService {
 	
 		return cnt == 1;
 	}
+
+	public List<ClimbingMate> getMateBoard() {
+
+		return mateMapper.selectMate();
+	}
+	
+	public List<ClimbingMate> getMyPageInfo(String writer) {
+		
+		return mateMapper.selectMyPageInfo(writer);
+	}
+
+
+	public List<ClimbingParty> selectMemberIdByBoardId(Integer id, String writer) {
+
+		return mateMapper.selectMemberIdByBoardId(id, writer);
+	}
+
+	public List<ClimbingParty> selectMemberIdByBoardId() {
+
+		return mateMapper.selectMember();
+	}
+
 }
 
 

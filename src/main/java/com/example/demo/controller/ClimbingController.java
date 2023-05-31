@@ -157,6 +157,30 @@ public class ClimbingController {
 			return "redirect:/mateId/" + id;
 		}
 	}
+	
+	@GetMapping("/mateMap")
+	public void mateMap() {
+		
+	}
+	
+	@GetMapping("/climbingMate")
+	public void climbingMatePage(Model model) {
+		
+		Map<String, Object> getMemberList = new HashMap<>();
+		
+		List<ClimbingMate> climbingMates = mateService.getMateBoard();
+		getMemberList.put("climbingMates", climbingMates);
+
+		/* model.addAttribute("board", climbingMates); */
+		System.out.println(climbingMates);
+		
+		List<ClimbingParty> members = mateService.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+		System.out.println(members);
+		model.addAllAttributes(getMemberList);
+	}
+	
+	
 
 	@GetMapping("/todayAdd")
 	public void todayProcess() {

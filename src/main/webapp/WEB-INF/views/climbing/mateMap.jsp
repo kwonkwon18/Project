@@ -74,7 +74,7 @@
 				</ul>
 			</div>
 		</nav>
-
+		
 		<ul>
 			<div style="text-align: right;">
 				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a> <a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
@@ -97,22 +97,89 @@
 				</div>
 			</c:forEach>
 		</div>
+
+	<br />
+	<br />
+
+	<div>
+		<ul style="display: flex; align-items: center; margin-left: 360px;">
+			<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 400px">
+			<button class="btn btn-outline-success" type="submit">
+				<i class="fa-solid fa-magnifying-glass"></i>
+			</button>
+		</ul>
 	</div>
-
-
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		<script type="text/javascript">
-		$("#all1").click(function () {
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+	<script type="text/javascript">
+		$("#all1").click(function() {
 			$("#dropdown1").slideUp()
 		})
-		$("#search1").click(function () {
+		$("#search1").click(function() {
 			$("#dropdown1").slideDown()
 		})
+	</script>
+
+	<!-- ******************************************************************  -->
+
+	<script>
+	$(document).ready(function() {
+		<c:forEach items="${runningMates}" var="board" varStatus="status">
+			var latNum${status.index + 1} = ${board.lat};
+			var lngNum${status.index + 1} = ${board.lng};
+
+			var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
+			var mapOption${status.index + 1} = {
+				center : new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
+				level : 3
+			};
+
+			var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
+
+			var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
+			var marker${status.index + 1} = new kakao.maps.Marker({
+				position : markerPosition${status.index + 1}
+			});
+
+			marker${status.index + 1}.setMap(map${status.index + 1});
+		</c:forEach>
+	});
+	</script>
+
+	<script>
+$(document).ready(function() {
+	<c:forEach items="${runningMates}" var="board" varStatus="status">
+		// 지도 초기화
+		var latNum${status.index + 1} = ${board.lat};
+		var lngNum${status.index + 1} = ${board.lng};
+
+		var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
+		var mapOption${status.index + 1} = {
+			center : new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
+			level : 1
+		};
+
+		var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
+
+		var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
+		var marker${status.index + 1} = new kakao.maps.Marker({
+			position : markerPosition${status.index + 1}
+		});
+
+		marker${status.index + 1}.setMap(map${status.index + 1});
+
+		// 버튼 클릭 이벤트 핸들러
+		$('#joinPartyBtn${status.index + 1}').click(function() {
+			location.href='/running/id/${board.id}';
 			
-		</script>
+
+		});
+	</c:forEach>
+});
+	</script>
 </body>
 </html>

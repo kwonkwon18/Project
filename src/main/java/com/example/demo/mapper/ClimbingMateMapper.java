@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.*;
 
 import com.example.demo.domain.*;
 
-
 @Mapper
 public interface ClimbingMateMapper {
 
@@ -23,12 +22,92 @@ public interface ClimbingMateMapper {
 	List<ClimbingMate> selectList();
 
 	@Select("""
-			SELECT * FROM ClimbingMate 
-			WHERE Id = #{id}
+			SELECT
+			    c.id,
+			    c.title,
+			    c.body,
+			    c.inserted,
+			    c.writer,
+			    c.Lat,
+			    c.Lng,
+			    c.people,
+			    m.userId,
+			    COUNT(rp.boardId) AS currentNum
+			FROM
+			    ClimbingMate c
+			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
+			    LEFT JOIN Member m ON c.writer = m.nickName
+			WHERE
+			    c.id = #{id}
+			GROUP BY
+			    c.id,
+			    c.title,
+			    c.body,
+			    c.inserted,
+			    c.writer,
+			    c.Lat,
+			    c.Lng,
+			    c.people;
 			""")
+	@ResultMap("climbingMateResultMap")
 	ClimbingMate selectById(Integer id);
 
-	List<ClimbingMate> selectById();
+	@Select("""
+			select
+			   c.id,
+			   c.title,
+			   c.body,
+			   c.writer,
+			   c.inserted,
+			   c.Lat,
+			   c.Lng,
+			   c.people
+			   FROM ClimbingMate c
+			   where b.writer = #{writer}
+			""")
+	@ResultMap("climbingMateResultMap")
+	List<ClimbingMate> selectMyPageInfo(String writer);
+
+	@Select("""
+			select boardId ,memberId
+			from ClimbingParty p left join ClimbingMate c ON p.boardId = c.id
+			where userId = #{writer}
+			""")
+	List<ClimbingParty> selectMemberId(String writer);
+
+	@Select("""
+			select boardId ,memberId
+			from ClimbingParty p left join ClimbingMate c ON p.boardId = c.id
+			where userId = #{writer} and boardId = #{boardId}
+			""")
+	List<ClimbingParty> selectMemberIdByBoardId(Integer boardId, String writer);
+	
+	@Select("""
+			SELECT
+			    c.id,
+			    c.title,
+			    c.body,
+			    c.inserted,
+			    c.writer,
+			    c.Lat,
+			    c.Lng,
+			    c.people,
+			    COUNT(rp.boardId) AS currentNum
+			FROM
+			    ClimbingMate c
+			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
+			GROUP BY
+			    c.id,
+			    c.title,
+			    c.body,
+			    c.inserted,
+			    c.writer,
+			    c.Lat,
+			    c.Lng,
+			    c.people
+			""")
+	@ResultMap("climbingMateResultMap")
+	List<ClimbingMate> selectMate();
 
 	@Delete("""
 			DELETE FROM ClimbingMateFileName
@@ -39,7 +118,7 @@ public interface ClimbingMateMapper {
 
 	@Insert("""
 			INSERT INTO FileName (mateId, fileName)
-			VALUES (#{mateId}, #{fileName}) 
+			VALUES (#{mateId}, #{fileName})
 			""")
 	void insertFileName(Integer id, String originalFilename);
 
@@ -85,6 +164,10 @@ public interface ClimbingMateMapper {
 			""")
 	void deleteFileNameByMateId(Integer id);
 
-
+	@Select("""
+	select boardId ,memberId
+	from ClimbingParty p left join ClimbingBoard b ON p.boardId = b.id
+	""")
+	List<ClimbingParty> selectMember();
 
 }

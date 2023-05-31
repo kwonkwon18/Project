@@ -16,4 +16,10 @@ public class ClimbingMate {
 	private List<String> fileName;
 	private double Lat;
 	private double Lng;
+	
+	private Integer people;
+	private Integer currentNum;
+	
+	private String userId; // 호스트 ==> get 화면에서 가져올 수 있음
+	private String memberId; // 게스트
 }

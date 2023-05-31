@@ -135,5 +135,11 @@ public interface RunningMapper {
 			select * from Member where userId = #{userId}
 			""")
 	Member selectMemberById(String userId);
+	
+	
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	List<Member> selectUserId(String userId);
 
 }

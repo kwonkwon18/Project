@@ -65,6 +65,11 @@ public class RunningService {
 		return mapper.selectMember();
 	}
 
+	public List<Member> getUserId(String userId) {
+		// TODO Auto-generated method stub
+		return  mapper.selectUserId(userId);
+	}
+
 
 
 }

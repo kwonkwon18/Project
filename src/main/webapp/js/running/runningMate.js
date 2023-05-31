@@ -16,17 +16,17 @@ $("#joinPartyBtn").click(function() {
 		success: function(data) {
 
 			$("#currentPeople").text(data.count);
-			
+
 			var currentNumber = $("#currentPeople").text().trim();
 			var totalNumber = $("#totalPeople").val().trim();
-			
+
 			console.log(currentNumber)
 			console.log(totalNumber)
-			
-			if(currentNumber >= totalNumber){
+
+			if (currentNumber >= totalNumber) {
 				$("#joinPartyBtn").attr('disabled', 'disabled');
 			}
-			
+
 		},
 		error: function(jqXHR) {
 			$("#currentPeople").text(jqXHR.responseJSON.message);

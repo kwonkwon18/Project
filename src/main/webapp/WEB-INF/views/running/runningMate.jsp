@@ -12,121 +12,59 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	확인용
-	<jsp:useBean id="now" class="java.util.Date" />
-	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
-	오늘 날짜 :
-	<c:out value="${today}" />
-
-	<div class="d-flex">
-		<div class="row">
-			<c:forEach items="${runningMates}" var="board" varStatus="status">
-				<div class="col-md-4">
-					<div class="card" style="width: 18rem;">
-						<img src="..." class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">
-								<div class="me-auto">
-									<h1>
-										<span id="boardIdText${status.index + 1}">${board.id}</span>
-										번게시물
-									</h1>
 
 
-
-								</div>
-							</h5>
-							<div>
-								<div id="map${status.index + 1}" class="map-container" style="width: 300px; height: 300px;"></div>
-								<div class="mb-3">
-									<label for="" class="form-label">제목</label>
-									<input type="text" class="form-control" value="${board.title}" readonly />
-								</div>
-								<div class="mb-3">
-									<label for="" class="form-label">작성자</label>
-									<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
-								</div>
-
-								<!-- 본문 내용 -->
-
-
-								<c:set var="isUser" value="false" />
-								<label for="" class="form-label">같이 달릴 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️</label>
-								<c:forEach items="${members}" var="member">
-									<c:if test="${board.id eq member.boardId}">
-										<div class="mb-3">
-											<input type="text" readonly class="form-control" value="${member.memberId}" />
-										</div>
-										<c:if test="${currentUserId eq member.memberId}">
-											<c:set var="isUser" value="true" />
-										</c:if>
-									</c:if>
-								</c:forEach>
-								<div class="mb-3">
-									<label for="" class="form-label">모임시간</label>
-									<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
-								</div>
-
-								<div class="mb-3">
-									<label for="" class="form-label">작성일시</label>
-									<input type="text" readonly class="form-control" value="${board.inserted}" />
-								</div>
-								<input class="LatSubmit${status.index + 1}" type="hidden" name="Lat" value="${board.lat}" />
-								<input class="LngSubmit${status.index + 1}" type="hidden" name="Lng" value="${board.lng}" />
-								<a href="/running/id/${board.id}" class="btn btn-primary">자세히 보기</a>
-								<div>모집인원 : ${board.people } / 현재인원 : ${board.currentNum }</div>
-
-
-								<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
-								<c:set var="isMember" value="false" />
-
-
-
-								<c:if test="${currentUserId eq board.writer}">
-									<c:set var="isMember" value="true" />
-								</c:if>
-
-
-								<c:choose>
-									<c:when test="${isMember}">
-										<button id="">${isMember}내가올린게시물${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}</button>
-									</c:when>
-									<c:when test="${isUser}">
-										<button id="">${isUser}이미신청한러닝입니다.${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}</button>
-										<button id="rejectPartyBtn${status.index + 1}">취소하기</button>
-									</c:when>
-									<c:otherwise>
-										<c:if test="${board.people > board.currentNum }">
-											<button id="joinPartyBtn${status.index + 1}">신청하기 ${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}</button>
-											<p id="message${status.index + 1}"></p>
-										</c:if>
-									</c:otherwise>
-								</c:choose>
-
-
-
-
-
-
-
-								<c:if test="${board.people <= board.currentNum }">
-									<button>마감됐어..</button>
-								</c:if>
-
-								<input type="hidden" id="totalPeople" value="${board.people }" />
-								<input type="hidden" id="currentPeopleHidden" value="${board.currentNum }" />
-								<p id="currentPeople"></p>
-
-								<div></div>
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		<c:forEach items="${runningMates}" var="board" varStatus="status">
+			<div class="col">
+				<div class="card">
+					<img src="..." class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">
+							<span id="boardIdText${status.index + 1}">${board.id}</span>
+							번게시물
+						</h5>
+						<div>
+							<div class="mb-3">
+								<label for="" class="form-label">제목</label>
+								<input type="text" class="form-control" value="${board.title}" readonly />
 							</div>
+							<div class="mb-3">
+								<label for="" class="form-label">작성자</label>
+								<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
+							</div>
+							<div class="mb-3">
+								<label for="" class="form-label">모임시간</label>
+								<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+							</div>
+							<button type="button" id="modifyButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 						</div>
 					</div>
-					<c:set var="latNum" value="${board.lat}" />
-					<c:set var="lngNum" value="${board.lng}" />
 				</div>
-			</c:forEach>
+			</div>
+		</c:forEach>
+	</div>
+
+	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">수정하기</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<label for="inputOldPassword" class="form-label">이전 암호</label>
+					<input form="modifyForm" id="inputOldPassword" type="text" class="form-control" name="oldPassword" />
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					<button type="submit" disabled form="modifyForm" class="btn btn-primary">확인</button>
+				</div>
+			</div>
 		</div>
 	</div>
+
+
 
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -134,8 +72,12 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 
 
-	<script>
 
+
+
+
+
+	<script>
 	
 	$(document).ready(function() {
 		
@@ -225,6 +167,10 @@ $('#rejectPartyBtn${status.index + 1}').click(function() {
 });
 </c:forEach>
 });
+	
+	
+
+	
 </script>
 
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
 import com.example.demo.mapper.RunningMapper;
@@ -23,17 +24,22 @@ public class RunningPartyService {
 
 	public Map<String, Object> join(RunningParty runningParty, Authentication authentication) {
 
+		Member member = mapper.selectMemberById(authentication.getName());
+		System.out.println(authentication.getName());
+
 		RunningBoard board = mapper.selectById(runningParty.getBoardId());
 		int currentNum = partyMapper.countByBoardId(runningParty.getBoardId());
+
+		Map<String, Object> result = new HashMap<>();
 
 		System.out.println(board.getPeople() + "총인원");
 		System.out.println(currentNum + "현재인원");
 
 		if (board.getPeople() > currentNum) {
 
-			runningParty.setMemberId(authentication.getName());
+			runningParty.setMemberId(member.getNickName());
 
-			Map<String, Object> result = new HashMap<>();
+			System.out.println(runningParty);
 
 			result.put("join", false);
 
@@ -46,17 +52,20 @@ public class RunningPartyService {
 
 			// 참여인원갯수 넘겨주기
 			Integer count = partyMapper.countByBoardId(runningParty.getBoardId());
-			System.out.println(count);
-			result.put("count", count);
 
+			result.put("count", count);
+			System.out.println("****" + result);
 			return result;
+
 		} else {
 			// 신청 불가능한 경우
-			Map<String, Object> result = new HashMap<>();
 			result.put("join", false);
 			result.put("message", "신청이 불가능합니다."); // 메시지 추가
+			System.out.println(result);
 			return result;
 		}
+		
+		
 
 	}
 

@@ -64,9 +64,9 @@ public class RunningController {
 	public String addResult(RunningBoard runningBoard, RedirectAttributes trrt, Authentication authentication) {
 
 		// 보드의 writer를 지정해줌
-		runningBoard.setWriter(authentication.getName());
+		// runningBoard.setWriter(authentication.getName());
 
-		boolean ok = service.addBoard(runningBoard);
+		boolean ok = service.addBoard(runningBoard, authentication);
 
 		if (ok) {
 

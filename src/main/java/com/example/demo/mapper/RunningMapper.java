@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 
+import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
 
@@ -128,5 +129,11 @@ public interface RunningMapper {
 	from RunningParty p left join RunningBoard b ON p.boardId = b.id
 	""")
 	List<RunningParty> selectMember();
+
+	
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	Member selectMemberById(String userId);
 
 }

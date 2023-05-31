@@ -34,10 +34,10 @@
 						<input id="titleInput" class="form-control" type="text" name="title" value="${runningBoard.title }" required />
 					</div>
 
-					<%-- 					<div class="mb-3">
+					<%-- 				<div class="mb-3">
 						<label for="wirterInput" class="form-label">글쓴이</label>
 						<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningBoard.writer }" />
-					</div> --%>
+					</div>  --%>
 
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
@@ -121,7 +121,7 @@
 		var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 		var mapOption = {
 			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-			level : 3
+			level : 1
 		// 지도의 확대 레벨
 		};
 

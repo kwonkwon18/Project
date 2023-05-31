@@ -3,8 +3,10 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
 import com.example.demo.mapper.RunningMapper;
@@ -19,7 +21,11 @@ public class RunningService {
 	@Autowired
 	private RunningTodayMapper todayMapper;
 
-	public boolean addBoard(RunningBoard runningBoard) {
+	public boolean addBoard(RunningBoard runningBoard, Authentication authentication) {
+		
+		Member member = mapper.selectMemberById(authentication.getName());
+		runningBoard.setWriter(member.getNickName());
+		
 		int cnt = mapper.insert(runningBoard);
 		return cnt == 1;
 	}

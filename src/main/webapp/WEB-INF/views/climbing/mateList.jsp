@@ -77,7 +77,8 @@
 
 		<ul>
 			<div style="text-align: right;">
-				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a> <a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
+				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a> 
+				<a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
 			</div>
 		</ul>
 

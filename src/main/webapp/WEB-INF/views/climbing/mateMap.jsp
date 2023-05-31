@@ -102,7 +102,7 @@
 	<br />
 
 	<div>
-		<ul style="display: flex; align-items: center; margin-left: 360px;">
+		<ul style="display: flex; align-items: left; margin-left: 50px;">
 			<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 400px">
 			<button class="btn btn-outline-success" type="submit">
 				<i class="fa-solid fa-magnifying-glass"></i>
@@ -128,14 +128,14 @@
 
 	<script>
 	$(document).ready(function() {
-		<c:forEach items="${runningMates}" var="board" varStatus="status">
+		<c:forEach items="${climbingMates}" var="board" varStatus="status">
 			var latNum${status.index + 1} = ${board.lat};
 			var lngNum${status.index + 1} = ${board.lng};
 
 			var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
 			var mapOption${status.index + 1} = {
 				center : new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
-				level : 3
+				level : 1
 			};
 
 			var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
@@ -152,7 +152,7 @@
 
 	<script>
 $(document).ready(function() {
-	<c:forEach items="${runningMates}" var="board" varStatus="status">
+	<c:forEach items="${climbingMates}" var="board" varStatus="status">
 		// 지도 초기화
 		var latNum${status.index + 1} = ${board.lat};
 		var lngNum${status.index + 1} = ${board.lng};
@@ -174,9 +174,7 @@ $(document).ready(function() {
 
 		// 버튼 클릭 이벤트 핸들러
 		$('#joinPartyBtn${status.index + 1}').click(function() {
-			location.href='/running/id/${board.id}';
-			
-
+			location.href='/climbing/id/${board.id}';
 		});
 	</c:forEach>
 });

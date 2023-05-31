@@ -46,9 +46,10 @@
 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-				<span style="margin-left: 480px;"></span>
-				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
+				<div style="float: right; margin-right: 100px;">
+					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
+					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
+				</div>
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
@@ -75,12 +76,6 @@
 				</ul>
 			</div>
 		</nav>
-		
-		<ul>
-			<div style="text-align: right;">
-				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a> <a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
-			</div>
-		</ul>
 
 		<div class="row">
 			<c:forEach items="${climbingMateList}" var="board">
@@ -99,90 +94,64 @@
 			</c:forEach>
 		</div>
 
-	<br />
-	<br />
+		<br /> <br />
 
-	<div>
-		<ul style="display: flex; align-items: left; margin-left: 50px;">
-			<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 400px">
-			<button class="btn btn-outline-success" type="submit">
-				<i class="fa-solid fa-magnifying-glass"></i>
-			</button>
-		</ul>
-	</div>
-	
-	<div id="map" style="width: 100%; height: 350px;"></div>
-	
-	
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
-	<script type="text/javascript">
-		$("#all1").click(function() {
-			$("#dropdown1").slideUp()
-		})
-		$("#search1").click(function() {
-			$("#dropdown1").slideDown()
-		})
-	</script>
+		<div style="display: flex;">
+			<div style="flex: 1; margin-left: 60px;">
+				<ul style="display: flex; align-items: left;">
+					<input value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
+					<button class="btn btn-outline-success" type="submit">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</ul>
+				<div style="margin-left: 40px;">
+					<a id="all2" href="#" style="text-decoration-line: none;">전체</a>
+					<a id="bungae" href="#" style="text-decoration-line: none;">번개</a>
+					<a id="somoim" href="#" style="text-decoration-line: none;">소모임</a>
+				</div>
+			</div>
+			<div id="map" style="width: 60%; height: 400px;"></div>
+		</div>
 
-	<!-- ******************************************************************  -->
 
-	<script>
-	$(document).ready(function() {
-		<c:forEach items="${climbingMates}" var="board" varStatus="status">
-			var latNum${status.index + 1} = ${board.lat};
-			var lngNum${status.index + 1} = ${board.lng};
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+		<script type="text/javascript">
+			$("#all1").click(function() {
+				$("#dropdown1").slideUp()
+			})
+			$("#search1").click(function() {
+				$("#dropdown1").slideDown()
+			})
+		</script>
 
-			var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
-			var mapOption${status.index + 1} = {
-				center : new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
-				level : 1
-			};
+		<!-- ******************************************************************  -->
 
-			var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
+		<script>
+			$(document).ready(function() {
+				var latNum = 37.566736219721896;
+				var lngNum = 126.9779137163515;
 
-			var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
-			var marker${status.index + 1} = new kakao.maps.Marker({
-				position : markerPosition${status.index + 1}
+				var mapContainer = document.getElementById('map');
+				var mapOption = {
+					center : new kakao.maps.LatLng(latNum, lngNum),
+					level : 1
+				};
+
+				var map = new kakao.maps.Map(mapContainer, mapOption);
+
+				var markerPosition = new kakao.maps.LatLng(latNum, lngNum);
+				var marker = new kakao.maps.Marker({
+					position : markerPosition
+				});
+
+				marker.setMap(map);
+
 			});
-
-			marker${status.index + 1}.setMap(map${status.index + 1});
-		</c:forEach>
-	});
-	</script>
-
-	<script>
-$(document).ready(function() {
-	<c:forEach items="${climbingMates}" var="board" varStatus="status">
-		// 지도 초기화
-		var latNum${status.index + 1} = ${board.lat};
-		var lngNum${status.index + 1} = ${board.lng};
-
-		var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
-		var mapOption${status.index + 1} = {
-			center : new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
-			level : 1
-		};
-
-		var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
-
-		var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
-		var marker${status.index + 1} = new kakao.maps.Marker({
-			position : markerPosition${status.index + 1}
-		});
-
-		marker${status.index + 1}.setMap(map${status.index + 1});
-
-		// 버튼 클릭 이벤트 핸들러
-		$('#joinPartyBtn${status.index + 1}').click(function() {
-			location.href='/climbing/id/${board.id}';
-		});
-	</c:forEach>
-});
-	</script>
+		</script>
 </body>
 </html>

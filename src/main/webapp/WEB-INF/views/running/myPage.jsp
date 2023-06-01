@@ -13,8 +13,9 @@
 <body>
 
 	<h1>내가 올린 메이트</h1>
+	
 	<div class="row row-cols-1 row-cols-md-3 g-4">
-		<c:forEach items="${runningBoards}" var="board" varStatus="status">
+		<c:forEach items="${totalMyData}" var="board" varStatus="status">
 			<div class="col">
 				<div class="card">
 					<img src="..." class="card-img-top" alt="...">
@@ -42,10 +43,10 @@
 
 							<div class="mb-3">
 								<label for="" class="form-label">참석자</label>
-								<c:forEach items="${members}" var="members">
-								<c:if test="${members.boardId eq board.id}">
-									<input id="timeText" type="text" class="form-control" value="${members.memberId }" readonly />
-								</c:if>
+								<c:forEach items="${members}" var="member">
+									<c:if test="${member.boardId eq board.id}">
+										<input id="memberText${status.index + 1}" type="text" class="form-control" value="${member.memberId }" readonly />
+									</c:if>
 								</c:forEach>
 							</div>
 

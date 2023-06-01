@@ -71,6 +71,11 @@ public class RunningService {
 		// TODO Auto-generated method stub
 		return  mapper.selectUserId(userId);
 	}
+	
+	public Member getMembertUserId(String userId) {
+		// TODO Auto-generated method stub
+		return mapper.selectMemberUserId(userId);
+	}
 
 	public Map<String, Object> getBoardForModal(Integer boardId, Authentication authentication) {
 		
@@ -96,6 +101,11 @@ public class RunningService {
 		getMemberList.put("myNickName", myNickName);
 		
 		return getMemberList;
+	}
+
+	public List<RunningBoard> getTotalMyPageInfo(String nickName1, String nickName2) {
+		// TODO Auto-generated method stub
+		return mapper.selectTotalMyPageInfo(nickName1, nickName2);
 	}
 
 

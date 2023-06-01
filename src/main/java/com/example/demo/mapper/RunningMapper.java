@@ -142,6 +142,11 @@ public interface RunningMapper {
 	List<Member> selectUserId(String userId);
 
 	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	Member selectMemberUserId(String userId);
+
+	@Select("""
 			select p.boardId , p.memberId, p.userId
 			from RunningParty p left join RunningBoard b ON p.boardId = b.id
 			where boardId = #{boardId} group by p.boardId, p.memberId;
@@ -149,11 +154,27 @@ public interface RunningMapper {
 	@ResultMap("boardResultMap2")
 	List<RunningParty> selectForMemberIdByBoardId(Integer boardId);
 
-	
-	
 	@Select("""
 			select * from Member where userId = #{userId}
 			""")
 	Member getNickName(String userId);
+
+	@Select("""
+			 select
+			   b.id,
+			   b.title,
+			   b.body,
+			   b.writer,
+			   b.inserted,
+			   b.Lat,
+			   b.Lng,
+			   b.people,
+			   b.time,
+			   b.address,
+			   memberId
+			   FROM RunningBoard b left join RunningParty p on b.id = p.boardId
+			   where b.writer = #{nickName} or p.memberId = #{nickName2};
+			""")
+	List<RunningBoard> selectTotalMyPageInfo(String nickName, String nickName2);
 
 }

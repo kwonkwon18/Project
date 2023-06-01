@@ -131,18 +131,24 @@ public class RunningController {
 
 	@GetMapping("/myPage")
 	public void runningMyPage(Authentication authentication, Model model) {
-
+		
+		Member member = service.getMembertUserId(authentication.getName());
+		
+		
 		Map<String, Object> myPageList = new HashMap<>();
-
+		
+		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
+		System.out.println("***" + totalMyData);
+		myPageList.put("totalMyData" , totalMyData);
+		
 		// id 기준으로 리스트업 
-		List<RunningBoard> runningBoards = service.getMyPageInfo(authentication.getName());
-		myPageList.put("runningBoards", runningBoards);
-		System.out.println(runningBoards);
+//		List<RunningBoard> runningBoards = service.getMyPageInfo(authentication.getName());
+//		myPageList.put("runningBoards", runningBoards);
+//		System.out.println(runningBoards);
 
 		// 참여자들 리스트업 
-		List<RunningParty> members = service.getJoinMember(authentication.getName());
+		List<RunningParty> members = service.getJoinMember(member.getNickName());
 		myPageList.put("members", members);
-		System.out.println(members);
 
 		model.addAllAttributes(myPageList);
 

@@ -79,7 +79,7 @@ public class RunningController {
 	}
 
 	@GetMapping("/id/{id}")
-	public String detail(@PathVariable("id") Integer id, Model model, String writer) {
+	public String detail(@PathVariable("id") Integer id, Model model, String writer, Authentication authentication) {
 
 		Map<String, Object> getMemberList = new HashMap<>();
 
@@ -89,6 +89,10 @@ public class RunningController {
 		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
 		System.out.println(members);
+		
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+		
 
 		model.addAllAttributes(getMemberList);
 
@@ -183,7 +187,6 @@ public class RunningController {
 		
 		
 		// 현재 로그인한 사람의 닉네임을 넘겨줘야함 
-		
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
 		

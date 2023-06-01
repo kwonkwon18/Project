@@ -15,6 +15,7 @@
 			<result column="Lng" property="Lng" />
 			<result column="people" property="people" />
 			<result column="time" property="time" />
+			<result column="address" property="address" />			
 			<!-- <result column = "filename" property = "filename"/> -->
 		</resultMap>
 		

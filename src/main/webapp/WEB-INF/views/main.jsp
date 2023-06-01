@@ -13,6 +13,8 @@
 <body>
 	<my:chatBtn></my:chatBtn>
 
+	<button type="button" id="mate" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#makeChat">버튼</button>
+	
 	<!-- Modal -->
 	<div class="modal fade" id="makeChat" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -30,7 +32,6 @@
 		</div>
 	</div>
 
-	<button type="button" id="mate" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#makeChat">버튼</button>
 
 
 

@@ -74,7 +74,7 @@
 
 
 								
-								<c:set var="isMember" value="false" />
+							<c:set var="isMember" value="false" />
 
 
 							<c:forEach items="${memberList}" var="memberList">

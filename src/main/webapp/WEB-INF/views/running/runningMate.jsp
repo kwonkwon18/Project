@@ -36,7 +36,23 @@
 								<label for="" class="form-label">모임시간</label>
 								<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
 							</div>
-							<button type="button" id="listUpButton${status.index + 1}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+							${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}
+
+							<c:set var="isMember" value="false" />
+							<c:forEach items="${memberList}" var="memberList">
+								<c:if test="${memberList.nickName eq board.writer}">
+									<c:set var="isMember" value="true" />
+								</c:if>
+							</c:forEach>
+
+							<c:if test="${isMember}">
+								<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+							</c:if>
+
+							<c:if test="${not isMember}">
+								<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+							</c:if>
+
 						</div>
 					</div>
 				</div>
@@ -51,38 +67,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">모달 제목</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-
-					<div class="mb-3">
-						<label for="" class="form-label">제목</label>
-						<br />
-						<span>한강 달릴 사람</span>
-					</div>
-
-					<div class="mb-3">
-						<label for="" class="form-label">작성자</label>
-						<br />
-						<span>운영자</span>
-					</div>
-
-					<div class="mb-3">
-						<label for="" class="form-label">모임 시간</label>
-						<br />
-						<span>2023.05.31</span>
-					</div>
-
-					위치 
-					<img src="https://dimg.donga.com/wps/NEWS/IMAGE/2022/01/28/111500268.2.jpg" alt="" style="width: 200px; height: 200px;" /> <br />
-
-					<div class="mb-3">
-						<label for="" class="form-label">신청자</label><br />
-						<span>신청자 1</span> <br />
-						<span>신청자 2</span>
-					</div>
-
-					<button>신청하기</button>
-
-				</div>
+				<div class="modal-body" id="resMate"></div>
 			</div>
 		</div>
 	</div>
@@ -91,7 +76,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
-	<script src = "/js/running/runningMate.js"></script>
+	<script src="/js/running/runningMate.js"></script>
 
 </body>
 </html>

@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 	<mapper namespace="com.example.demo.mapper.RunningMapper">
+	
 		<resultMap type="com.example.demo.domain.RunningBoard" id="boardResultMap">
 			<id column="id" property="id" />
 			<result column="title" property="title" />
@@ -16,4 +17,15 @@
 			<result column="time" property="time" />
 			<!-- <result column = "filename" property = "filename"/> -->
 		</resultMap>
+		
+		
+		<resultMap type="com.example.demo.domain.RunningParty" id="boardResultMap2">
+			<result column="boardId" property="boardId" />
+			<result column="userId" property="userId" />
+			<result column="memberId" property="memberId" />
+			<!-- <result column = "filename" property = "filename"/> -->
+		</resultMap>
+		
+		
+		
 	</mapper>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -157,7 +158,6 @@ public class RunningController {
 		
 		
 		// 현재 로그인한 사람의 닉네임을 넘겨줘야함 
-		
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
 		
@@ -208,5 +208,15 @@ public class RunningController {
 		return ResponseEntity.ok().body(partyService.reject(runningParty, authentication));
 
 	}
+	
+	@GetMapping("/getRunningDetail")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> detailForModal(Integer boardId, Authentication authentication) {
+		
+		return ResponseEntity.ok().body(service.getBoardForModal(boardId, authentication));
+		
+	}
+	
+
 
 }

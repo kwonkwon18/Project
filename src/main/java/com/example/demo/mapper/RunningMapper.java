@@ -55,7 +55,7 @@ public interface RunningMapper {
 			    r.Lat,
 			    r.Lng,
 			    r.people
-			    
+
 						""")
 	@ResultMap("boardResultMap")
 	RunningBoard selectById(Integer id);
@@ -85,9 +85,9 @@ public interface RunningMapper {
 	List<RunningParty> selectMemberId(String writer);
 
 	@Select("""
-			         select boardId ,memberId
+			select boardId ,memberId
 			from RunningParty p left join RunningBoard b ON p.boardId = b.id
-			where userId = #{writer} and boardId = #{boardId}
+			where boardId = #{boardId} and userId = #{writer}
 			""")
 	List<RunningParty> selectMemberIdByBoardId(Integer boardId, String writer);
 
@@ -116,30 +116,39 @@ public interface RunningMapper {
 			    r.Lng,
 			    r.people,
 			    r.time
-			    
 						""")
 	@ResultMap("boardResultMap")
 	List<RunningBoard> selectMate();
 
-	
-	
-	
 	@Select("""
-	         select boardId ,memberId
-	from RunningParty p left join RunningBoard b ON p.boardId = b.id
-	""")
+			         select boardId ,memberId
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id
+			""")
 	List<RunningParty> selectMember();
 
-	
 	@Select("""
 			select * from Member where userId = #{userId}
 			""")
 	Member selectMemberById(String userId);
+
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	List<Member> selectUserId(String userId);
+
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} group by p.boardId, p.memberId;
+						""")
+	@ResultMap("boardResultMap2")
+	List<RunningParty> selectForMemberIdByBoardId(Integer boardId);
+
 	
 	
 	@Select("""
 			select * from Member where userId = #{userId}
 			""")
-	List<Member> selectUserId(String userId);
+	Member getNickName(String userId);
 
 }

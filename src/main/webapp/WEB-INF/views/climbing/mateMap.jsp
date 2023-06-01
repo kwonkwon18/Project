@@ -101,6 +101,8 @@
 
 	<br />
 	<br />
+	
+
 
 	<div>
 		<ul style="display: flex; align-items: left; margin-left: 50px;">
@@ -133,56 +135,26 @@
 
 	<script>
 	$(document).ready(function() {
-		<c:forEach items="${climbingMates}" var="board" varStatus="status">
-			var latNum${status.index + 1} = ${board.lat};
-			var lngNum${status.index + 1} = ${board.lng};
-
-			var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
-			var mapOption${status.index + 1} = {
-				center : new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
+			var latNum = 37.566736219721896;
+			var lngNum = 126.9779137163515;
+			
+			var mapContainer = document.getElementById('map');
+			var mapOption = {
+				center : new kakao.maps.LatLng(latNum, lngNum),
 				level : 1
 			};
 
-			var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
+			var map = new kakao.maps.Map(mapContainer, mapOption);
 
-			var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
-			var marker${status.index + 1} = new kakao.maps.Marker({
-				position : markerPosition${status.index + 1}
+			var markerPosition = new kakao.maps.LatLng(latNum, lngNum);
+			var marker = new kakao.maps.Marker({
+				position : markerPosition
 			});
 
-			marker${status.index + 1}.setMap(map${status.index + 1});
-		</c:forEach>
+			marker.setMap(map);
+		
 	});
 	</script>
 
-	<script>
-$(document).ready(function() {
-	<c:forEach items="${climbingMates}" var="board" varStatus="status">
-		// 지도 초기화
-		var latNum${status.index + 1} = ${board.lat};
-		var lngNum${status.index + 1} = ${board.lng};
-
-		var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
-		var mapOption${status.index + 1} = {
-			center : new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
-			level : 1
-		};
-
-		var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
-
-		var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
-		var marker${status.index + 1} = new kakao.maps.Marker({
-			position : markerPosition${status.index + 1}
-		});
-
-		marker${status.index + 1}.setMap(map${status.index + 1});
-
-		// 버튼 클릭 이벤트 핸들러
-		$('#joinPartyBtn${status.index + 1}').click(function() {
-			location.href='/climbing/id/${board.id}';
-		});
-	</c:forEach>
-});
-	</script>
 </body>
-</html>
+</html> 

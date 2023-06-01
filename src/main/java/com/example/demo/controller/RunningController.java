@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
 import com.example.demo.domain.RunningToday;
@@ -77,7 +79,7 @@ public class RunningController {
 	}
 
 	@GetMapping("/id/{id}")
-	public String detail(@PathVariable("id") Integer id, Model model, String writer) {
+	public String detail(@PathVariable("id") Integer id, Model model, String writer, Authentication authentication) {
 
 		Map<String, Object> getMemberList = new HashMap<>();
 
@@ -87,6 +89,10 @@ public class RunningController {
 		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
 		System.out.println(members);
+		
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+		
 
 		model.addAllAttributes(getMemberList);
 
@@ -141,7 +147,7 @@ public class RunningController {
 	}
 
 	@GetMapping("/runningMate")
-	public void runningMatePage(Model model) {
+	public void runningMatePage(Model model, Authentication authentication) {
 
 		Map<String, Object> getMemberList = new HashMap<>();
 
@@ -153,7 +159,40 @@ public class RunningController {
 
 		List<RunningParty> members = service.selectMemberIdByBoardId();
 		getMemberList.put("members", members);
-		System.out.println(members);
+		
+		
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함 
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+		
+
+		
+		
+		model.addAllAttributes(getMemberList);
+	}
+	
+	@GetMapping("/runningMate1")
+	public void runningMatePage1(Model model, Authentication authentication) {
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		List<RunningBoard> runningMates = service.getMateBoard();
+		getMemberList.put("runningMates", runningMates);
+
+		/* model.addAttribute("board", runningMates); */
+		System.out.println(runningMates);
+
+		List<RunningParty> members = service.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+		
+		
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함 
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+		
+
+		
+		
 		model.addAllAttributes(getMemberList);
 	}
 
@@ -172,5 +211,15 @@ public class RunningController {
 		return ResponseEntity.ok().body(partyService.reject(runningParty, authentication));
 
 	}
+	
+	@GetMapping("/getRunningDetail")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> detailForModal(Integer boardId, Authentication authentication) {
+		
+		return ResponseEntity.ok().body(service.getBoardForModal(boardId, authentication));
+		
+	}
+	
+
 
 }

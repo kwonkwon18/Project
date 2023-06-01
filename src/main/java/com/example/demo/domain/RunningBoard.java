@@ -19,6 +19,7 @@ public class RunningBoard {
 	
 	private double Lat;
 	private double Lng;
+	private String address;
 	
 	private Integer people;
 	private Integer currentNum;

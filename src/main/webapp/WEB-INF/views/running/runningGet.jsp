@@ -45,6 +45,10 @@
 						<input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
 
+					<div class="mb-3">
+						<label for="dateInput" class="form-label">장소</label>
+						<input type="text" class="form-control" value="${board.address }" readonly />
+					</div>
 
 					<div class="mb-3">
 						<label for="" class="form-label">본문</label>
@@ -69,16 +73,9 @@
 					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 
 
-					<!--  -->
-					<label for="" class="form-label">신청한 사람 </label>
-					<c:forEach items="${members}" var="member">
-						<c:if test="${board.id eq member.boardId}">
-							<div class="mb-3">
-								<input type="text" readonly class="form-control" value="${member.memberId}" />
-							</div>
-						</c:if>
-					</c:forEach>
-					<!--  -->
+
+
+
 
 
 
@@ -87,59 +84,48 @@
 		</div>
 
 
+		<c:set var="isUser" value="false" />
+		<c:forEach items="${memberList}" var="memberList">
+			<c:if test="${memberList.nickName eq board.writer}">
+				<c:set var="isUser" value="true" />
+			</c:if>
+		</c:forEach>
+
+		<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
+		<c:set var="isMember" value="false" />
+		<c:forEach items="${members}" var="members">
+			<c:if test="${members.memberId eq currentUserId}">
+				<c:set var="isMember" value="true" />
+			</c:if>
+		</c:forEach>
+
 
 
 		<div>
-
-			<c:if test="${openDate < nowDate }">
-				<button>마감된 러닝</button>
-			</c:if>
-
-			<c:if test="${openDate > nowDate }">
-
-				<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
-				<c:set var="isMember" value="false" />
-
-				<c:forEach items="${members}" var="member">
-					<c:if test="${currentUserId eq member.memberId}">
-						<c:set var="isMember" value="true" />
-					</c:if>
-				</c:forEach>
-
-				<c:choose>
-					<c:when test="${isMember}">
-						<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
-					</c:when>
-					<c:otherwise>
-						<c:if test="${board.people > board.currentNum }">
-							<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
-					</c:if>
-					</c:otherwise>
-				</c:choose>
-
-
-
-
-				<%-- 			<c:if test="${board.people > board.currentNum }">
-				<button id="joinPartyBtn">참여하기1</button>
-				${currentUserId }
-			</c:if>
-
-
-
-
-
-
-			<c:if test="${board.people <= board.currentNum }">
-				<button id="rejectPartyBtn">취소하기2</button>
-			</c:if> --%>
-
-
-
-
-				<c:if test="${board.people <= board.currentNum }">
-					<button>마감</button>
+			<c:if test="${!isUser}">
+				<c:if test="${openDate < nowDate }">
+					<button>마감된 러닝</button>
 				</c:if>
+
+				<c:if test="${openDate > nowDate }">
+
+					<c:choose>
+						<c:when test="${isMember}">
+							<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
+						</c:when>
+						<c:otherwise>
+							<c:if test="${board.people > board.currentNum }">
+								<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+					</c:if>
+						</c:otherwise>
+					</c:choose>
+
+					<c:if test="${board.people <= board.currentNum }">
+						<button>마감</button>
+					</c:if>
+				</c:if>
+
+
 
 
 
@@ -152,6 +138,10 @@
 				<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
 				<p id="currentPeople"></p>
 				<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
+			</c:if>
+
+			<c:if test="${isUser}">
+			내가 올린 게시물
 			</c:if>
 		</div>
 

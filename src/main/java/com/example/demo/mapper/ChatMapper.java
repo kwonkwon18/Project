@@ -111,6 +111,12 @@ public interface ChatMapper {
 				id = #{chatRoomId}
 			""")
 	void resetCreaterChatCount(Integer chatRoomId);
+
+	@Select("""
+			SELECT inserted FROM Chat
+			WHERE chatRoomId = #{chatRoomId}
+			""")
+	List<LocalDateTime> getinsertedByChatRoomId(int chatRoomId);
 	
 
 }

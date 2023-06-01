@@ -50,7 +50,11 @@ public class ChatController {
 			if(service.lastMessageSelectById(chatRoom.getId()) == null) {
 				lastMessageList.add("");
 			} else {
-				lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()));
+				if(service.lastMessageSelectById(chatRoom.getId()).length() > 15) {
+					lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()).substring(0, 13) + "...");
+				} else {
+					lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()));
+				}
 			}
 			insertedList.add(chatRoom.getInserted());
 			time = chatRoom.getInserted().toLocalTime();
@@ -94,10 +98,14 @@ public class ChatController {
 	@GetMapping("check")
 	@ResponseBody
 	@PreAuthorize("authenticated")
-	public Map<String, Object> chatCheck(@RequestParam("chatRoomId") Integer chatRoomId, Integer lastChatId) {
-		return Map.of("chatList", service.checkId(lastChatId, chatRoomId));
-		
-		
+	public Map<String, Object> chatCheck(
+			@RequestParam("chatRoomId") Integer chatRoomId,
+			Integer lastChatId,
+			Authentication authentication) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("chatList", service.checkId(lastChatId, chatRoomId));
+		map.put("myUserId", authentication.getName());
+		return map;
 	}
 	
 	@GetMapping("deleteRoom/{chatRoomId}")

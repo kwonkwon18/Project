@@ -16,12 +16,16 @@ function showList() {
 			`)
 			for (var i = 0; i < nickNameList.length; i++) {
 				$("#chatListContainer").append(`
-					<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn">
-						<span class="nickNameSpan">${nickNameList[i]}</span>
-						님과의 대화방
-						<span>${timeList[i]}</span>
-						<br />
-						<span>${lastMessageList[i]}</span><span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+					<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+						<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+							<span class="nickNameSpan">${nickNameList[i]}</span>
+							<span>님과의 대화방</span>
+							<span class="ms-auto">${timeList[i]}</span>
+						</div>
+						<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+							<span>${lastMessageList[i]}</span>
+							<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+						</div>
 						<input type="hidden" class="inserted" value="${insertedList[i]}">
 					</button>
 				`);
@@ -74,13 +78,15 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 				if (chat.senderId === myId) {
 					$("#chatContainer").append(`
                         <div class="d-flex justify-content-end" style="padding-right: 10px;">
-                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div> 
+                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
                         </div>
                     `)
 				} else {
 					$("#chatContainer").append(`
                         <div class="d-flex justify-content-start" style="padding-left: 10px;">
-                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div>
+                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+                            <div>${chat.time}</div>
                         </div>
                     `)
 				}
@@ -94,23 +100,29 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 	})
 })
 
-function currentChatId(lastChatId, chatRoomId, chatContainer) {
-	$.ajax("/chat/check?chatRoomId=" + chatRoomId + "&lastChatId=" + lastChatId, {
-		success: function(chatList) {
+function currentChatId(lastChatIdParam, chatRoomId, chatContainer) {
+	$.ajax("/chat/check?chatRoomId=" + chatRoomId + "&lastChatId=" + lastChatIdParam, {
+		success: function(chatList1) {
+			const chatList = chatList1.chatList;
+			console.log(chatList.myUserId);
+			console.log(chatList.length);
+			console.log(chatList);
 			if (chatList.length === 0) {
 				return;
 			}
 			for (const chat of chatList) {
-				if (chat.senderId === myId) {
+				if (chat.senderId === chatList1.myUserId) {
 					chatContainer.append(`
-                        <div class="d-flex justify-content-end">
-                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div> 
+                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
                         </div>
                     `)
 				} else {
 					chatContainer.append(`
-                        <div class="d-flex justify-content-start">
-                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px;">${chat.message}</div>
+                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
                         </div>
                     `)
 				}

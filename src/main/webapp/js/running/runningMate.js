@@ -19,13 +19,16 @@ function handleListUpButtonClick() {
 			let compareTime = new Date(time);
 
 
-			console.log(data);
-			console.log(latNum);
-			console.log(lngNum);
-			console.log(people);
-			console.log(currentNum);
-			console.log(nickName);
-			console.log(compareTime);
+//			console.log(data);
+//			console.log(latNum);
+//			console.log(lngNum);
+//			console.log(people);
+//			console.log(currentNum);
+//			console.log(nickName);
+//			console.log(compareTime);
+			
+			$(".chatRoomModalBody").remove();
+			$("#chatRoomModalBefore").after('<div class="modal-body chatRoomModalBody">' + data.board.writer + '님과의 대화방을 생성하시겠습니까?</div>');
 
 			$("#resMate").empty();
 
@@ -62,7 +65,10 @@ function handleListUpButtonClick() {
 					isMine = true;
 				}
 
-				$("#resMate").append(`<span>${memberId}</span> <br />`);
+				$("#resMate").append(`
+				<button type="button" class="chatRoomCheckBtn">${memberId}</button> <br />
+				<button type="hidden" class="createChatRoomCheckBtn" data-bs-toggle="modal" data-bs-target="#createChatRoom">${memberId}</button> <br />
+				`);
 			}
 
 			console.log(isMine)
@@ -140,6 +146,7 @@ function handleListUpButtonClick() {
 		}
 	});
 }
+
 
 
 $(".listUpButton").click(handleListUpButtonClick);

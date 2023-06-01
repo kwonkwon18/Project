@@ -38,6 +38,7 @@ public class ChatController {
 		List<LocalDateTime> insertedList = new ArrayList<>();
 		List<String> timeList = new ArrayList<>();
 		List<Integer> chatCount = new ArrayList<>();
+		List<LocalDateTime> chatInsertedList = new ArrayList<>();
 		LocalTime time;
 		for (ChatRoom chatRoom : chatRoomList) {
 			if(memberService.getNickName(authentication.getName()).equals(chatRoom.getInvited())) {
@@ -57,7 +58,8 @@ public class ChatController {
 				}
 			}
 			insertedList.add(chatRoom.getInserted());
-			time = chatRoom.getInserted().toLocalTime();
+			chatInsertedList.add(service.getChatLastInserted(chatRoom.getId()));
+			time = service.getChatLastInserted(chatRoom.getId()).toLocalTime();
 			timeList.add(time.getHour() + ":" + time.getMinute());
 		}
 		Map<String, Object> map = new HashMap<>();
@@ -66,6 +68,7 @@ public class ChatController {
 		map.put("insertedList", insertedList);
 		map.put("timeList", timeList);
 		map.put("chatCount", chatCount);
+		map.put("chatInsertedList", chatInsertedList);
 		return map;
 	}
 
@@ -112,5 +115,13 @@ public class ChatController {
 	@PreAuthorize("authenticated")
 	public void deleteRoom(@PathVariable("chatRoomId") Integer chatRoomId,Authentication authentication) {
 		service.delete(chatRoomId, authentication.getName());
+	}
+	
+	@GetMapping("roomCheck")
+	@ResponseBody
+	public Map<String, Object> checkRoom(@RequestBody String yourNickName, Authentication authentication) {
+		String yourId = memberService.getUserId(yourNickName);
+		boolean check = service.checkChatRoom(yourId, authentication.getName());
+		return Map.of("check", check);
 	}
 }

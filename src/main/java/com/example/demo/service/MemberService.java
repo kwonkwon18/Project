@@ -39,4 +39,10 @@ public class MemberService {
 		
 	}
 
+
+
+	public String getUserId(String yourNickName) {
+		return mapper.getUserIdSelectByNickName(yourNickName);
+	}
+
 }

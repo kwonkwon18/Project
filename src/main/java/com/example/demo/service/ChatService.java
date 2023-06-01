@@ -27,7 +27,7 @@ public class ChatService {
 		return mapper.lastMessageSelectById(id);
 	}
 
-	public List<Chat> getChatByYourNickName(LocalDateTime inserted, String myUserId) {
+	public List<Chat> getChat(LocalDateTime inserted, String myUserId) {
 		int chatRoomId = mapper.getChatRoomId(inserted, myUserId);
 		
 		return mapper.getChatSelectByChatRoomId(chatRoomId);
@@ -65,8 +65,18 @@ public class ChatService {
 		}
 	}
 
-	public Object getChatRoomId(String myUserId, LocalDateTime dateInserted) {
+	public Integer getChatRoomId(String myUserId, LocalDateTime dateInserted) {
 		return mapper.getChatRoomId(dateInserted, myUserId);
+	}
+
+	public void resetCount(Integer chatRoomId, String myUserId) {
+		if(myUserId.equals(mapper.getCreaterByChatRoomId(chatRoomId))) {
+			mapper.resetInvitedChatCount(chatRoomId);
+		} else {
+			mapper.resetCreaterChatCount(chatRoomId);
+		}
+		// TODO Auto-generated method stub
+		
 	}
 
 

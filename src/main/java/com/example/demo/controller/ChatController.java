@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.access.prepost.*;
 import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
-import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.domain.*;
@@ -37,11 +36,16 @@ public class ChatController {
 		List<String> nickNameList = new ArrayList<>();
 		List<String> lastMessageList = new ArrayList<>();
 		List<LocalDateTime> insertedList = new ArrayList<>();
+		List<String> timeList = new ArrayList<>();
+		List<Integer> chatCount = new ArrayList<>();
+		LocalTime time;
 		for (ChatRoom chatRoom : chatRoomList) {
 			if(memberService.getNickName(authentication.getName()).equals(chatRoom.getInvited())) {
 				nickNameList.add(memberService.getNickName(chatRoom.getCreater()));
+				chatCount.add(chatRoom.getCreaterChatCount());
 			} else {
 				nickNameList.add(memberService.getNickName(chatRoom.getInvited()));
+				chatCount.add(chatRoom.getInvitedChatCount());
 			}
 			if(service.lastMessageSelectById(chatRoom.getId()) == null) {
 				lastMessageList.add("");
@@ -49,11 +53,15 @@ public class ChatController {
 				lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()));
 			}
 			insertedList.add(chatRoom.getInserted());
+			time = chatRoom.getInserted().toLocalTime();
+			timeList.add(time.getHour() + ":" + time.getMinute());
 		}
 		Map<String, Object> map = new HashMap<>();
 		map.put("nickNameList", nickNameList);
 		map.put("lastMessageList", lastMessageList);
 		map.put("insertedList", insertedList);
+		map.put("timeList", timeList);
+		map.put("chatCount", chatCount);
 		return map;
 	}
 
@@ -63,12 +71,14 @@ public class ChatController {
 	@PreAuthorize("authenticated")
 	public Map<String, Object> chatRoom(Authentication authentication, LocalDateTime inserted) {
 		
-		System.out.println(inserted);
+		System.out.println(inserted.getClass().getName());
 		System.out.println(authentication.getName());
 		Map<String, Object> map = new HashMap<>();
 		String myUserId = authentication.getName();
-		map.put("chatList", service.getChatByYourNickName(inserted, myUserId));
-		map.put("chatRoomId", service.getChatRoomId(myUserId, inserted));
+		Integer chatRoomId = service.getChatRoomId(myUserId, inserted);
+		service.resetCount(chatRoomId, myUserId);
+		map.put("chatList", service.getChat(inserted, myUserId));
+		map.put("chatRoomId", chatRoomId);
 		map.put("myId", authentication.getName());
 		return map;
 	}

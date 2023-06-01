@@ -26,7 +26,7 @@ public interface ChatMapper {
 
 	@Select("""
 			SELECT id FROM ChatRoom
-			WHERE (invited = #{myUserId} OR creater = #{myUserId}) AND inserted = #{inserted})
+			WHERE (invited = #{myUserId} OR creater = #{myUserId}) AND inserted = #{inserted}
 			""")
 	Integer getChatRoomId(LocalDateTime inserted, String myUserId);
 
@@ -88,5 +88,29 @@ public interface ChatMapper {
 			""")
 	void removeChatRoomInvited(Integer chatRoomId);
 
+	@Select("""
+			SELECT creater FROM ChatRoom
+			WHERE id = #{chatRoomId}
+			""")
+	String getCreaterByChatRoomId(Integer chatRoomId);
+
+	@Update("""
+			UPDATE ChatRoom
+			SET
+				invitedChatCount = 0
+			WHERE
+				id = #{chatRoomId}
+			""")
+	void resetInvitedChatCount(Integer chatRoomId);
+	
+	@Update("""
+			UPDATE ChatRoom
+			SET
+				createrChatCount = 0
+			WHERE
+				id = #{chatRoomId}
+			""")
+	void resetCreaterChatCount(Integer chatRoomId);
+	
 
 }

@@ -9,6 +9,8 @@ function showList() {
 			var nickNameList = data.nickNameList;
 			var lastMessageList = data.lastMessageList;
 			var insertedList = data.insertedList;
+			var timeList = data.timeList;
+			var chatCount = data.chatCount;
 			$("#chatList").append(`
 			<div id="chatListContainer"></div>
 			`)
@@ -17,15 +19,16 @@ function showList() {
 					<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn">
 						<span class="nickNameSpan">${nickNameList[i]}</span>
 						님과의 대화방
+						<span>${timeList[i]}</span>
 						<br />
-						<span>${lastMessageList[i]}</span>
+						<span>${lastMessageList[i]}</span><span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
 						<input type="hidden" class="inserted" value="${insertedList[i]}">
 					</button>
 				`);
 			}
 		}
 	});
-}
+}	
 
 $("#chatButton").click(function() {
 	$("#chatButton").hide();
@@ -55,7 +58,7 @@ $("#returnBtn").click(function() {
 $("#chatList").on("click", ".openChatRoomBtn", function() {
 	$("#chatList").hide();
 	$("#chatBox").show();
-	var nickName = $(this).find(".nickNameSpan").text();
+//	var nickName = $(this).find(".nickNameSpan").text();
 	var inserted = $(this).find(".inserted").val();
 	$.ajax("/chat/room", {
 		data: { inserted: inserted},

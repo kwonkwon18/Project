@@ -128,16 +128,18 @@ public class RunningController {
 		return "running/runningTodayGet";
 	}
 
-	// 인증 들어가면 Stirng writer 는 authentional.getName으로 할거임
+
 	@GetMapping("/myPage")
 	public void runningMyPage(Authentication authentication, Model model) {
 
 		Map<String, Object> myPageList = new HashMap<>();
 
+		// id 기준으로 리스트업 
 		List<RunningBoard> runningBoards = service.getMyPageInfo(authentication.getName());
 		myPageList.put("runningBoards", runningBoards);
 		System.out.println(runningBoards);
 
+		// 참여자들 리스트업 
 		List<RunningParty> members = service.getJoinMember(authentication.getName());
 		myPageList.put("members", members);
 		System.out.println(members);

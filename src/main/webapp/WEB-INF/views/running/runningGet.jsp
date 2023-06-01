@@ -45,10 +45,6 @@
 						<input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
 
-					<div class="mb-3">
-						<label for="dateInput" class="form-label">장소</label>
-						<input type="text" class="form-control" value="${board.address }" readonly />
-					</div>
 
 					<div class="mb-3">
 						<label for="" class="form-label">본문</label>
@@ -74,16 +70,20 @@
 
 
 
-
-
-
-
+					<label for="" class="form-label">신청한 사람 </label>
+					<c:forEach items="${members}" var="member">
+						<c:if test="${board.id eq member.boardId}">
+							<div class="mb-3">
+								<input type="text" readonly class="form-control" value="${member.memberId}" />
+							</div>
+						</c:if>
+					</c:forEach>
 
 				</div>
 			</div>
 		</div>
 
-
+		<!-- 본인 게시물 확인 -->
 		<c:set var="isUser" value="false" />
 		<c:forEach items="${memberList}" var="memberList">
 			<c:if test="${memberList.nickName eq board.writer}">
@@ -91,10 +91,16 @@
 			</c:if>
 		</c:forEach>
 
-		<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
+		<c:forEach items="${memberList}" var="memberList">
+			<c:set var="memberNickName" value="${memberList.nickName}" />
+		</c:forEach>
+
+
+		<!-- 본인 신청 확인  -->
+		<%-- <c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" /> --%>
 		<c:set var="isMember" value="false" />
 		<c:forEach items="${members}" var="members">
-			<c:if test="${members.memberId eq currentUserId}">
+			<c:if test="${members.memberId eq memberNickName}">
 				<c:set var="isMember" value="true" />
 			</c:if>
 		</c:forEach>
@@ -116,7 +122,7 @@
 						<c:otherwise>
 							<c:if test="${board.people > board.currentNum }">
 								<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
-					</c:if>
+               </c:if>
 						</c:otherwise>
 					</c:choose>
 
@@ -126,14 +132,6 @@
 				</c:if>
 
 
-
-
-
-
-
-
-
-
 				<input type="text" id="totalPeople" value="${board.people }" />
 				<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
 				<p id="currentPeople"></p>
@@ -141,9 +139,10 @@
 			</c:if>
 
 			<c:if test="${isUser}">
-			내가 올린 게시물
+				<button>내가 올린 게시물</button>
 			</c:if>
 		</div>
+
 
 
 

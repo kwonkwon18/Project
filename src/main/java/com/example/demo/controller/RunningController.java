@@ -65,16 +65,12 @@ public class RunningController {
 	@PostMapping("/runningAdd")
 	public String addResult(RunningBoard runningBoard, RedirectAttributes trrt, Authentication authentication) {
 
-		// 보드의 writer를 지정해줌
-		// runningBoard.setWriter(authentication.getName());
-
 		boolean ok = service.addBoard(runningBoard, authentication);
 
 		if (ok) {
-
 			return "redirect:/running/runningList";
 		} else {
-			return "redirect:/running/runningList";
+			return "redirect:/running/runningAdd";
 		}
 	}
 
@@ -137,6 +133,8 @@ public class RunningController {
 		
 		Map<String, Object> myPageList = new HashMap<>();
 		
+		myPageList.put("MyNickName", member.getNickName());
+		
 		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
 		System.out.println("***" + totalMyData);
 		myPageList.put("totalMyData" , totalMyData);
@@ -149,6 +147,7 @@ public class RunningController {
 		// 참여자들 리스트업 
 		List<RunningParty> members = service.getJoinMember(member.getNickName());
 		myPageList.put("members", members);
+		System.out.println("멤버스 : " + members);
 
 		model.addAllAttributes(myPageList);
 

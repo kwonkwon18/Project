@@ -13,6 +13,11 @@
 </head>
 <body>
 
+	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
+	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
+	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
+
+
 	<div class="container-lg">
 		<h2>메이트구하기</h2>
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -109,6 +114,8 @@
 
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach items="${runningMates}" var="board" varStatus="status">
+				<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
+				<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 				<div class="col">
 					<div class="card">
 						<img src="..." class="card-img-top" alt="...">
@@ -139,13 +146,21 @@
 									</c:if>
 								</c:forEach>
 
-								<c:if test="${isMember}">
-									<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+								<c:if test="${openDate <= nowDate }">
+									<button>마감된 러닝</button>
 								</c:if>
 
-								<c:if test="${not isMember}">
-									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+								<c:if test="${openDate > nowDate }">
+									<c:if test="${isMember}">
+										<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+									</c:if>
+
+									<c:if test="${not isMember}">
+										<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+									</c:if>
 								</c:if>
+
+
 
 							</div>
 						</div>

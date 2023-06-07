@@ -291,8 +291,8 @@ public class RunningController {
 
 		// 결과를 listSearch에 저장하여 클라이언트로 전달합니다.
 		listSearch.put("result", service.searchMate(searchTerm));
-
-		System.out.println(listSearch.get("result"));
+			
+		System.out.println("****" + searchTerm);
 		return listSearch;
 	}
 

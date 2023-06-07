@@ -59,6 +59,7 @@
 					<a class="dropdown-item" href="#">메뉴 항목 2</a>
 					<a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
+				
 				<a href="runningMap" style="text-decoration-line: none;">지도로 보기</a>
 				<span style="margin-left: 480px;"></span>
 				<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>

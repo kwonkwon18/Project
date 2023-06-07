@@ -284,9 +284,9 @@ public interface RunningMapper {
 	
 	@Select("""
 			SELECT * FROM RunningBoard
-			WHERE title LIKE '%${searchTerm}%'
+			WHERE address LIKE '%${searchTerm}%'
 			""")
-	Object selectBySearchTerm(String searchTerm);
+	List<RunningBoard> selectBySearchTerm(String searchTerm);
 
 //	@Select("""
 //			<scipt>

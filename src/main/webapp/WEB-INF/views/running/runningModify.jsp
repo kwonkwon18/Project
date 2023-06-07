@@ -80,7 +80,7 @@
 
 						<div class="mb-3">
 							<label for="" class="form-label">인원수</label>
-							<input id="peopleInput" type="number" required class="form-control" name="people" value="${runningBoard.people }" placeholder="숫자를 입력해주세요 ex) 1" />
+							<input id="peopleInput" type="number" required class="form-control" name="people" value="${climbingMate.people }" placeholder="숫자를 입력해주세요 ex) 1" />
 						</div>
 
 						<div class="mb-3">
@@ -111,6 +111,6 @@
 
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
-	<script src="/js/running/runningAdd.js"></script>
+	<script src="/js/climbing/mateAdd.js"></script>
 </body>
 </html>

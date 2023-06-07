@@ -15,7 +15,7 @@ public class ClimbingMate {
 	private String writer;
 	private String address;
 	private LocalDateTime time;
-	private List<String> fileName;
+//	private List<String> fileName;
 	private double Lat;
 	private double Lng;
 	

@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.*;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,7 @@ import com.example.demo.service.*;
 @Controller
 @RequestMapping("climbing")
 public class ClimbingController {
-
+	
 	@Autowired
 	private ClimbingMateService mateService;
 
@@ -24,6 +26,10 @@ public class ClimbingController {
 
 	@Autowired
 	private ClimbingCourseService courseService;
+	
+	@Autowired
+	private ClimbingPartyService partyService;
+
 
 	@GetMapping("list")
 	public void list(Model model) {
@@ -203,7 +209,27 @@ public class ClimbingController {
 	    return listSearch;
 	}
 
+	@GetMapping("/getClimbingDetail")
+	@ResponseBody
+	public ResponseEntity<Object> detailForModal(Integer boardId, Authentication authentication) {
+		
+		return ResponseEntity.ok().body(mateService.getBoardForModal(boardId, authentication));
+		
+	}
 	
+	@PostMapping("joinParty")
+	public ResponseEntity<Map<String, Object>> joinParty(@RequestBody ClimbingParty climbingParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.join(climbingParty, authentication));
+
+	}
+
+	@PostMapping("rejectParty")
+	public ResponseEntity<Map<String, Object>> rejectParty(@RequestBody ClimbingParty climbingParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.reject(climbingParty, authentication));
+
+	}
 	
 
 	@GetMapping("/todayAdd")

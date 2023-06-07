@@ -10,8 +10,8 @@ import com.example.demo.domain.*;
 public interface ClimbingMateMapper {
 
 	@Insert("""
-			INSERT INTO ClimbingMate (title, body, writer, Lat, Lng)
-			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng})
+			INSERT INTO ClimbingMate (title, body, writer, Lat, Lng, time)
+			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{time})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(ClimbingMate climbingMate);
@@ -33,7 +33,7 @@ public interface ClimbingMateMapper {
 			    c.Lng,
 			    c.people,
 			    m.userId,
-			    COUNT(rp.boardId) AS currentNum
+			    COUNT(cp.boardId) AS currentNum
 			FROM
 			    ClimbingMate c
 			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
@@ -93,7 +93,7 @@ public interface ClimbingMateMapper {
 			    c.Lat,
 			    c.Lng,
 			    c.people,
-			    COUNT(rp.boardId) AS currentNum
+			    COUNT(cp.boardId) AS currentNum
 			FROM
 			    ClimbingMate c
 			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
@@ -176,6 +176,24 @@ public interface ClimbingMateMapper {
 			WHERE title LIKE '%${searchTerm}%'
 			""")
 	List<ClimbingMate> selectBySearchTerm(String searchTerm);
+
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	List<Member> selectUserId(String userId);
+
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from ClimbingParty p left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} group by p.boardId, p.memberId;
+						""")
+	List<ClimbingParty> selectForMemberIdByBoardId(Integer boardId);
+
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	Member getNickName(String name);
+
 
 
 }

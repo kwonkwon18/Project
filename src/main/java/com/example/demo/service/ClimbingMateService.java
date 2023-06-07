@@ -129,6 +129,11 @@ public class ClimbingMateService {
 		return mateMapper.selectMember();
 	}
 
+	public List<ClimbingMate> searchMate(String searchTerm) {
+		// TODO Auto-generated method stub
+		return mateMapper.selectBySearchTerm(searchTerm);
+	}
+
 }
 
 

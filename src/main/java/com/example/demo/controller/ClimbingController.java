@@ -159,8 +159,14 @@ public class ClimbingController {
 	}
 	
 	@GetMapping("/mateMap")
-	public void mateMap() {
+	public void mateMap(Model model) {
+		Map<String, Object> listMap = new HashMap<>();
+
+		// 메이트 구하기
+		List<ClimbingMate> mate = mateService.listBoard(); // 페이지 처리 전
+		listMap.put("climbingMateList", mate);
 		
+		model.addAllAttributes(listMap);
 	}
 	
 	@GetMapping("/climbingMate")
@@ -179,6 +185,24 @@ public class ClimbingController {
 		System.out.println(members);
 		model.addAllAttributes(getMemberList);
 	}
+	
+	@GetMapping("/search")
+	@ResponseBody
+	public Map<String, Object> mateSearch(@RequestParam("search") String searchTerm) {
+	    Map<String, Object> listSearch = new HashMap<>();
+	    
+	    
+	    // 검색어를 이용하여 필요한 처리를 수행하고 결과를 listSearch에 저장합니다.
+	    // 예: DB에서 검색 쿼리를 수행하거나 다른 로직을 수행합니다.
+	    
+	    
+	    // 결과를 listSearch에 저장하여 클라이언트로 전달합니다.
+	    listSearch.put("result", mateService.searchMate(searchTerm));
+	    
+	    System.out.println(listSearch.get("result"));
+	    return listSearch;
+	}
+
 	
 	
 

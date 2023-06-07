@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.domain.ClimbingMate;
 import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
@@ -65,16 +66,12 @@ public class RunningController {
 	@PostMapping("/runningAdd")
 	public String addResult(RunningBoard runningBoard, RedirectAttributes trrt, Authentication authentication) {
 
-		// 보드의 writer를 지정해줌
-		// runningBoard.setWriter(authentication.getName());
-
 		boolean ok = service.addBoard(runningBoard, authentication);
 
 		if (ok) {
-
 			return "redirect:/running/runningList";
 		} else {
-			return "redirect:/running/runningList";
+			return "redirect:/running/runningAdd";
 		}
 	}
 
@@ -128,31 +125,48 @@ public class RunningController {
 		return "running/runningTodayGet";
 	}
 
-	// 인증 들어가면 Stirng writer 는 authentional.getName으로 할거임
+
 	@GetMapping("/myPage")
 	public void runningMyPage(Authentication authentication, Model model) {
-
+		
+		Member member = service.getMembertUserId(authentication.getName());
+		System.out.println("접근함");
+		
 		Map<String, Object> myPageList = new HashMap<>();
+		
+		myPageList.put("MyNickName", member.getNickName());
+		
+		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
+		System.out.println("***" + totalMyData);
+		myPageList.put("totalMyData" , totalMyData);
+		
+		// id 기준으로 리스트업 
+//		List<RunningBoard> runningBoards = service.getMyPageInfo(authentication.getName());
+//		myPageList.put("runningBoards", runningBoards);
+//		System.out.println(runningBoards);
 
-		List<RunningBoard> runningBoards = service.getMyPageInfo(authentication.getName());
-		myPageList.put("runningBoards", runningBoards);
-		System.out.println(runningBoards);
-
-		List<RunningParty> members = service.getJoinMember(authentication.getName());
+		// 참여자들 리스트업 
+		List<RunningParty> members = service.getJoinMember(member.getNickName());
 		myPageList.put("members", members);
-		System.out.println(members);
+		System.out.println("멤버스 : " + members);
 
 		model.addAllAttributes(myPageList);
 
 	}
 
+	// 여기서 List<String> Mapper 써줄 것임
 	@GetMapping("/runningMate")
-	public void runningMatePage(Model model, Authentication authentication) {
+	public void runningMatePage(Model model, Authentication authentication, 
+			@RequestParam(value = "type", required = false) String type) {
+		
+		System.err.println("접근 1");
 
 		Map<String, Object> getMemberList = new HashMap<>();
 
-		List<RunningBoard> runningMates = service.getMateBoard();
+
+		List<RunningBoard> runningMates = service.getMateBoardByAddress(authentication, type);
 		getMemberList.put("runningMates", runningMates);
+		
 
 		/* model.addAttribute("board", runningMates); */
 		System.out.println(runningMates);
@@ -195,6 +209,64 @@ public class RunningController {
 		
 		model.addAllAttributes(getMemberList);
 	}
+	
+	@GetMapping("/runningModify/{id}")
+	public String runningModifyForm(@PathVariable("id") Integer id, Model model, String writer, Authentication authentication) {
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		RunningBoard getList = service.getBoard(id);
+		getMemberList.put("board", getList);
+
+		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("members", members);
+		System.out.println(members);
+		
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+		
+
+		model.addAllAttributes(getMemberList);
+		
+		return "running/runningModify";
+	}
+	
+	@PostMapping("/runningModify/{id}")
+	public String runningModifyProcess(RunningBoard runningBoard,
+			RedirectAttributes rttr) throws Exception {
+		
+		boolean ok = service.modify(runningBoard);
+
+		if (ok) {
+			// 해당 게시물 보기로 리디렉션
+//			rttr.addAttribute("success", "success");
+			rttr.addFlashAttribute("message", runningBoard.getId() + "번 게시물이 수정되었습니다.");
+			return "redirect:/running/id/" + runningBoard.getId();
+		} else {
+			// 수정 form 으로 리디렉션
+//			rttr.addAttribute("fail", "fail");
+			rttr.addFlashAttribute("message", runningBoard.getId() + "번 게시물이 수정되지 않았습니다.");
+			return "redirect:/running/runningModify/" + runningBoard.getId();
+		}
+	}
+	
+	@PostMapping("/runningRemove")
+	public String runningRemove(Integer id, RedirectAttributes rttr) {
+		boolean ok = service.remove(id);
+		if (ok) {
+			// query string에 추가
+//			rttr.addAttribute("success", "remove");
+
+			// 모델에 추가
+			rttr.addFlashAttribute("message", id + "번 게시물이 삭제되었습니다.");
+			return "redirect:/running/runningMate";
+		} else {
+			return "redirect:/running/runningModify/" + id;
+		}
+	}
+	
+	
+	
 
 	// ******************** AJAX
 

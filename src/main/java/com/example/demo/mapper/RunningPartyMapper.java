@@ -34,6 +34,12 @@ public interface RunningPartyMapper {
 			""")
 	Integer countByBoardId(Integer boardId);
 
+	@Delete("""
+			DELETE FROM RunningParty
+			WHERE boardId = #{boardId}
+			""")
+	Integer deleteByBoardId(Integer boardId);
+
 
 	
 

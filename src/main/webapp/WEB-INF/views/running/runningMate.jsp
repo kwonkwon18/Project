@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+
+<my:navBar></my:navBar>
+
+	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
+	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
+	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
+
 
 	<div class="container-lg">
 		<h2>메이트구하기</h2>
@@ -96,8 +104,9 @@
 
 		<ul>
 			<div style="text-align: right;">
-				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a>
+				<a href="/running/runningMate?type=distance" style="text-decoration-line: none;">거리순</a>
 				<a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
+				<a href="/running/runningMate" style="text-decoration-line: none;">정렬초기화</a>
 			</div>
 		</ul>
 
@@ -109,6 +118,8 @@
 
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach items="${runningMates}" var="board" varStatus="status">
+				<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
+				<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 				<div class="col">
 					<div class="card">
 						<img src="..." class="card-img-top" alt="...">
@@ -127,6 +138,10 @@
 									<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
 								</div>
 								<div class="mb-3">
+									<label for="" class="form-label">모임장소</label>
+									<input id="addressText" type="text" class="form-control" value="${board.address }" readonly />
+								</div>
+								<div class="mb-3">
 									<label for="" class="form-label">모임시간</label>
 									<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
 								</div>
@@ -139,13 +154,21 @@
 									</c:if>
 								</c:forEach>
 
-								<c:if test="${isMember}">
-									<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+								<c:if test="${openDate <= nowDate }">
+									<button>마감된 러닝</button>
 								</c:if>
 
-								<c:if test="${not isMember}">
-									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+								<c:if test="${openDate > nowDate }">
+									<c:if test="${isMember}">
+										<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+									</c:if>
+
+									<c:if test="${not isMember}">
+										<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+									</c:if>
 								</c:if>
+
+
 
 							</div>
 						</div>

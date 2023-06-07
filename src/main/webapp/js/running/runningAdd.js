@@ -39,10 +39,10 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 			let address = result[0].road_address.address_name;
 			console.log(address.split(' ')[1]);
 
-			
+
 			console.log("위도 " + clickedLatLng.getLat());
 			console.log("경도 " + clickedLatLng.getLng());
-			
+
 			$("#LatSubmit").val(clickedLatLng.getLat());
 			$("#LngSubmit").val(clickedLatLng.getLng());
 			$("#addressInput").val(address.split(' ')[1]);
@@ -100,18 +100,7 @@ function placesSearchCB(data, status, pagination) {
 }
 
 function displayMarker(place) {
-	/*	// 마커를 생성하고 지도에 표시합니다
-		var marker = new kakao.maps.Marker({
-			map: map,
-			position: new kakao.maps.LatLng(place.y, place.x)
-		});
-	
-		// 마커에 클릭이벤트를 등록합니다
-		kakao.maps.event.addListener(marker, 'click', function() {
-			// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-			infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-			infowindow.open(map, marker);
-		});*/
+
 }
 
 function displayCurrentLocation(locPosition) {
@@ -125,11 +114,14 @@ function displayCurrentLocation(locPosition) {
 	map.setCenter(locPosition);
 }
 
-$("#searchPlace").click(function() {
-	var keyword = document.getElementById("inputValue").value.trim();
-	ps.keywordSearch(keyword, placesSearchCB);
-});
 
+$("#inputValue").on("keyup", function(key) {
+	if (key.keyCode == 13) {
+		var keyword = document.getElementById("inputValue").value.trim();
+
+		ps.keywordSearch(keyword, placesSearchCB);
+	}
+});
 marker.setMap(map);
 
 // 클릭한 위치를 기준으로 장소 검색
@@ -137,3 +129,16 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	var latlng = mouseEvent.latLng;
 	marker.setPosition(latlng);
 });
+
+$("#addButton").click(function() {
+	let lng = $("#LngSubmit").val();
+
+
+	if (lng === '') {
+		event.preventDefault();  // 기본 이벤트 동작 중지
+		alert("지도에 마커를 표시해주세요");
+	}
+
+
+
+})

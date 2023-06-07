@@ -17,9 +17,9 @@
 
 	모일 장소를 찍어주세요 !
 	<br />
-	<input id="inputValue" type="text" placeholder="예) 하늘공원" />
+	<input id="inputValue" type="text" placeholder="예)서울숲" />
 	<br />
-	<button id="searchPlace">검색</button>
+	
 
 	<div id="clickLatlng"></div>
 
@@ -46,7 +46,7 @@
 
 					<div class="mb-3">
 						<label for="dateInput" class="form-label">장소</label>
-						<input required id="addressInput" name="address" type="text" />
+						<input required id="addressInput" name="address" type="text" readonly />
 					</div>
 
 					<div class="mb-3">
@@ -59,10 +59,8 @@
 						<input required id="dateInput" name="time" type="datetime-local" />
 					</div>
 
-
-
-					<input id="LatSubmit" type="text" name="Lat" value="37.56676114114433" />
-					<input id="LngSubmit" type="text" name="Lng" value="126.97869755300808" />
+					<input id="LatSubmit" type="text" name="Lat" value="" />
+					<input id="LngSubmit" type="text" name="Lng" value="" />
 					<input id="addButton" class="btn btn-primary" type="submit" value="등록" />
 			</div>
 			</form>

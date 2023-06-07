@@ -39,7 +39,6 @@
 		</div>
 		<nav>
 			<ul>
-				<span style="margin-left: 50px;"></span>
 				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 				<div class="dropdown-menu" aria-labelledby="search1">
@@ -151,12 +150,13 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 
 	<script type="text/javascript">
-		$("#all1").click(function() {
-			$("#dropdown1").slideUp()
-		})
-		$("#search1").click(function() {
-			$("#dropdown1").slideDown()
-		})
+	$("#search1").click(function() {
+		if ($("#dropdown1").is(":hidden")) {
+			$("#dropdown1").slideDown();
+		} else {
+			$("#dropdown1").slideUp();
+		}
+	});
 	</script>
 	<script src="/js/climbing/mateMap.js"></script>
 

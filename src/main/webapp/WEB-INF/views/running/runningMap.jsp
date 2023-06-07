@@ -37,45 +37,9 @@
 				<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
 			</button>
 		</div>
-		<nav>
-			<ul>
-				<span style="margin-left: 50px;"></span>
-				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
-				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
-				<div class="dropdown-menu" aria-labelledby="search1">
-					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
-				</div>
-				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-				<div style="float: right; margin-right: 100px;">
-					<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
-					<!-- <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
-				</div>
-			</ul>
-			<div id="dropdown1" style="display: none">
-				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">종류🌄</button>
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
-					</ul>
-				</ul>
-				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
-					</ul>
-					<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
-				</ul>
-			</div>
-		</nav>
+		<a id="goToRunningMate" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
+		<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
+		
 
 		<!-- 		<div class="row" id="all3"> -->
 		<%-- 			<c:forEach items="${climbingMateList}" var="board"> --%>
@@ -99,7 +63,7 @@
 		<div style="display: flex;">
 			<div style="flex: 1; margin-left: 70px;" id="mateMapBox">
 				<ul style="display: flex; align-items: left;">
-					<form action="/runningMate1" class="d-flex" role="search">
+					<form action="/running/search" class="d-flex" role="search">
 						<input id="searchInput" value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
 						<button id="search" class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
@@ -108,30 +72,9 @@
 				</ul>
 
 
-				<div style="margin-left: 40px;">
-					<a id="all2" href="#" style="text-decoration-line: none;">전체</a> 
-					<a id="bungae" href="#" style="text-decoration-line: none;">번개</a>
-					<a id="somoim" href="#" style="text-decoration-line: none;">소모임</a>
-				</div>
-
 				<br />
 				<div id="mateMapData">
-					<c:forEach items="${climbingMateList}" var="board" varStatus="loop">
-						<c:if test="${loop.index < 3}">
-							<div class="col-md-4">
-								<div class="card" style="width: 18rem; margin-left: 40px;">
-									<div class="card-body">
-										<h5 class="card-title">🌄${board.title}</h5>
-										<p class="card-text">작성자: ${board.writer}</p>
-										<p class="card-text">작성일자: ${board.inserted}</p>
-										<div style="text-align: right">
-											<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</c:if>
-					</c:forEach>
+
 				</div>
 			</div>
 			<div id="map" style="width: 60%; height: 655px;"></div>

@@ -12,36 +12,37 @@ $(document).ready(function() {
 			method: 'get',   // 요청 메서드를 선택합니다 (GET, POST 등).
 			data: { search: searchTerm },  // 요청 데이터로 검색어를 전달합니다.
 			success: function(response) {
-				var climbingMateList = response.result;
+				let runningMateList = response.result;
+				console.log(runningMateList);
 				$("#mateMapData").remove("");
 				$("#mateMapBoxItem").remove("");
 
+				console.log(runningMateList.title);
+
 				$("#mateMapBox").append(`
-					<div id="mateMapBoxItem">
-					
-					</div>
-				`)
-				for (const board of climbingMateList) {
-					if (i < 3) {
-						i = i + 1;
-						$("#mateMapBoxItem").append(`
-						<div class="col-md-4">
-							<div class="card" style="width: 18rem; margin-left: 40px;">
-								<div class="card-body">
-									<h5 class="card-title">🌄${board.title}</h5>
-									<p class="card-text">작성자: ${board.writer}</p>
-									<p class="card-text">작성일자: ${board.inserted}</p>
-									<div style="text-align: right">
-										<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
-									</div>
-								</div>
-							</div>
-						</div>
-				  	`)
-					}
+          <div id="mateMapBoxItem">
+
+          </div>
+        `);
+
+				for (let i = 0; i < 3; i++) {
+					const runningMate = runningMateList[i];
+
+					$("#mateMapBoxItem").append(`
+            <div class="col-md-4">
+              <div class="card" style="width: 18rem; margin-left: 40px;">
+                <div class="card-body">
+                  <h5 class="card-title">🙋‍♂️🙋‍♂️${runningMate.title}</h5>
+                  <p class="card-text">작성자: ${runningMate.writer}</p>
+                  <p class="card-text">작성일자: ${runningMate.inserted}</p>
+                  <div style="text-align: right">
+                    <a href="/running/id/${runningMate.id}" class="btn btn-primary">더보기</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `);
 				}
-				// 요청이 성공하면 결과를 처리합니다.
-				// response 변수에 서버에서 받은 응답이 저장됩니다.
 			},
 		});
 	});

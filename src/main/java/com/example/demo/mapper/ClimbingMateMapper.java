@@ -10,8 +10,8 @@ import com.example.demo.domain.*;
 public interface ClimbingMateMapper {
 
 	@Insert("""
-			INSERT INTO ClimbingMate (title, body, writer, Lat, Lng, time)
-			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{time})
+			INSERT INTO ClimbingMate (title, body, writer, Lat, Lng, time, address, people)
+			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{time}, #{address}, #{people})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(ClimbingMate climbingMate);
@@ -32,6 +32,8 @@ public interface ClimbingMateMapper {
 			    c.Lat,
 			    c.Lng,
 			    c.people,
+			    c.address,
+			    c.time,
 			    m.userId,
 			    COUNT(cp.boardId) AS currentNum
 			FROM
@@ -48,7 +50,8 @@ public interface ClimbingMateMapper {
 			    c.writer,
 			    c.Lat,
 			    c.Lng,
-			    c.people;
+			    c.people,
+			    c.address;
 			""")
 	@ResultMap("climbingMateResultMap")
 	ClimbingMate selectById(Integer id);
@@ -62,7 +65,9 @@ public interface ClimbingMateMapper {
 			   c.inserted,
 			   c.Lat,
 			   c.Lng,
-			   c.people
+			   c.people,
+			   c.time,
+			   c.address
 			   FROM ClimbingMate c
 			   where b.writer = #{writer}
 			""")
@@ -184,9 +189,10 @@ public interface ClimbingMateMapper {
 
 	@Select("""
 			select p.boardId , p.memberId, p.userId
-			from ClimbingParty p left join RunningBoard b ON p.boardId = b.id
+			from ClimbingParty p left join ClimbingMate b ON p.boardId = b.id
 			where boardId = #{boardId} group by p.boardId, p.memberId;
 						""")
+	@ResultMap("climbingMateResultMap2")
 	List<ClimbingParty> selectForMemberIdByBoardId(Integer boardId);
 
 	@Select("""

@@ -110,18 +110,12 @@
 		</ul>
 
 
-
-
-
-
-
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach items="${runningMates}" var="board" varStatus="status">
 				<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
 				<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 				<div class="col">
 					<div class="card">
-						<img src="..." class="card-img-top" alt="...">
 						<div class="card-body">     
 							<h5 class="card-title"> 🏃‍♀️🏃‍♂️ ${board.title}</h5>
 							<div>
@@ -153,7 +147,7 @@
 
 								<c:if test="${openDate > nowDate }">
 									<c:if test="${isMember}">
-										<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+										<button type="button" onclick="location.href='/climbing/id/${board.id}' ">지원 사항 상세보기</button>
 									</c:if>
 
 									<c:if test="${not isMember}">

@@ -94,8 +94,7 @@ public interface RunningMapper {
 			    r.Lng,
 			    r.people,
 			    r.address
-			    
-
+			   
 						""")
 	@ResultMap("boardResultMap")
 	RunningBoard selectByIdForMate(Integer id);

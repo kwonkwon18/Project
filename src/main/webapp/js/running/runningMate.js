@@ -64,7 +64,7 @@ function handleListUpButtonClick() {
 
 				$("#resMate").append(`<span>${memberId}</span> <br />`);
 			}
-
+			
 			console.log(isMine)
 
 			// 필요한 경우에 각각의 memberId 값을 가져올 수 있음
@@ -179,4 +179,11 @@ $(document).on('click', '.joinPartyBtn', function() {
 	});
 });
 
+
+$("#all1").click(function() {
+	$("#dropdown1").slideUp()
+})
+$("#search1").click(function() {
+	$("#dropdown1").slideDown()
+})
 

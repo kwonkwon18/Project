@@ -47,8 +47,8 @@
 				</div>
 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
 				<div style="float: right; margin-right: 100px;">
-					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
+					<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
+					<!-- <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 				</div>
 			</ul>
 			<div id="dropdown1" style="display: none">
@@ -99,7 +99,7 @@
 		<div style="display: flex;">
 			<div style="flex: 1; margin-left: 70px;" id="mateMapBox">
 				<ul style="display: flex; align-items: left;">
-					<form action="/search" class="d-flex" role="search">
+					<form action="/runningMate1" class="d-flex" role="search">
 						<input id="searchInput" value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
 						<button id="search" class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
@@ -109,7 +109,9 @@
 
 
 				<div style="margin-left: 40px;">
-					<a id="all2" href="#" style="text-decoration-line: none;">전체</a> <a id="bungae" href="#" style="text-decoration-line: none;">번개</a> <a id="somoim" href="#" style="text-decoration-line: none;">소모임</a>
+					<a id="all2" href="#" style="text-decoration-line: none;">전체</a> 
+					<a id="bungae" href="#" style="text-decoration-line: none;">번개</a>
+					<a id="somoim" href="#" style="text-decoration-line: none;">소모임</a>
 				</div>
 
 				<br />
@@ -150,7 +152,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
-	<script src="/js/running/runningMap.js"></script>
+	
+	<script src = "/js/running/runningMap.js"></script>
+		
+
 
 </body>
 </html> 

@@ -77,22 +77,22 @@
 			</div>
 		</nav>
 
-		<!-- 		<div class="row" id="all3"> -->
-		<%-- 			<c:forEach items="${climbingMateList}" var="board"> --%>
-		<!-- 				<div class="col-md-4"> -->
-		<!-- 					<div class="card" style="width: 18rem;"> -->
-		<!-- 						<div class="card-body"> -->
-		<%-- 							<h5 class="card-title">🌄${board.title}</h5> --%>
-		<%-- 							<p class="card-text">작성자: ${board.writer}</p> --%>
-		<%-- 							<p class="card-text">작성일자: ${board.inserted}</p> --%>
-		<!-- 							<div style="text-align: right"> -->
-		<%-- 								<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a> --%>
-		<!-- 							</div> -->
-		<!-- 						</div> -->
-		<!-- 					</div> -->
-		<!-- 				</div> -->
-		<%-- 			</c:forEach> --%>
-		<!-- 		</div> -->
+<!-- 				<div class="row" id="all3"> -->
+<%-- 					<c:forEach items="${climbingMateList}" var="board"> --%>
+<!-- 						<div class="col-md-4"> -->
+<!-- 							<div class="card" style="width: 18rem;"> -->
+<!-- 								<div class="card-body"> -->
+<%-- 									<h5 class="card-title">🌄${board.title}</h5> --%>
+<%-- 									<p class="card-text">작성자: ${board.writer}</p> --%>
+<%-- 									<p class="card-text">작성일자: ${board.inserted}</p> --%>
+<!-- 									<div style="text-align: right"> -->
+<%-- 										<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a> --%>
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<%-- 					</c:forEach> --%>
+<!-- 				</div> -->
 
 		<br /> <br />
 
@@ -108,16 +108,16 @@
 				</ul>
 
 
-				<div style="margin-left: 40px;">
-					<a id="all2" href="#" style="text-decoration-line: none;">전체</a> <a id="bungae" href="#" style="text-decoration-line: none;">번개</a> <a id="somoim" href="#" style="text-decoration-line: none;">소모임</a>
-				</div>
+<!-- 				<div style="margin-left: 40px;"> -->
+<!-- 					<a id="all2" href="#" style="text-decoration-line: none;">전체</a> <a id="bungae" href="#" style="text-decoration-line: none;">번개</a> <a id="somoim" href="#" style="text-decoration-line: none;">소모임</a> -->
+<!-- 				</div> -->
 
 				<br />
 				<div id="mateMapData">
 					<c:forEach items="${climbingMateList}" var="board" varStatus="loop">
 						<c:if test="${loop.index < 3}">
 							<div class="col-md-4">
-								<div class="card" style="width: 18rem; margin-left: 40px;">
+								<div class="card" style="width: 18rem; margin-left: 40px; margin-bottom: 14px;">
 									<div class="card-body">
 										<h5 class="card-title">🌄${board.title}</h5>
 										<p class="card-text">작성자: ${board.writer}</p>
@@ -150,7 +150,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
-	<script src="/js/climbing/mateMap.js"></script>
 	<script type="text/javascript">
 		$("#all1").click(function() {
 			$("#dropdown1").slideUp()
@@ -159,6 +158,7 @@
 			$("#dropdown1").slideDown()
 		})
 	</script>
+	<script src="/js/climbing/mateMap.js"></script>
 
 	<!-- ******************************************************************  -->
 

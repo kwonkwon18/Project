@@ -12,16 +12,16 @@ $(document).ready(function() {
 			data: { search: searchTerm },  // 요청 데이터로 검색어를 전달합니다.
 			success: function(response) {
 				var climbingMateList = response.result;
-				$("#mateListData").remove("");
+				$("#mateListData").empty();
 				$("#mateMapBoxItem").remove("");
 
 				$("#mateMapBox").append(`
 					<div id="mateMapBoxItem">
 					
 					</div>
-				`)
+				`);
 				for (const board of climbingMateList) {
-						$("#mateMapBoxItem").append(`
+					$("#mateMapBoxItem").append(`
 						<div class="col-md-4">
 							<div class="card" style="width: 18rem; margin-left: 40px;">
 								<div class="card-body">
@@ -34,8 +34,8 @@ $(document).ready(function() {
 								</div>
 							</div>
 						</div>
-					}
-				}	
+					`);
+				}
 				// 요청이 성공하면 결과를 처리합니다.
 				// response 변수에 서버에서 받은 응답이 저장됩니다.
 			},

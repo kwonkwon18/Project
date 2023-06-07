@@ -39,14 +39,13 @@
 		<br />
 		<nav>
 			<ul>
-				<span style="margin-left: 50px;"></span>
 				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 				<div class="dropdown-menu" aria-labelledby="search1">
 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-				<span style="margin-left: 480px;"></span>
+				<span style="margin-left: 700px;"></span>
 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
 			</ul>
@@ -55,18 +54,18 @@
 					<button type="button" class="btn btn-success" style="pointer-events: none;">종류🌄</button>
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
+						<li><a class="dropdown-item" href="#">전체</a></li>
+						<li><a class="dropdown-item" href="#">번개</a></li>
+						<li><a class="dropdown-item" href="#">소모임</a></li>
 					</ul>
 				</ul>
 				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
+						<li><a class="dropdown-item" href="#">제목</a></li>
+						<li><a class="dropdown-item" href="#">작성자</a></li>
+						<li><a class="dropdown-item" href="#">내용</a></li>
 					</ul>
 					<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
 					<button class="btn btn-outline-success" type="submit">

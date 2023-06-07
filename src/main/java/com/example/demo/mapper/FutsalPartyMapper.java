@@ -60,5 +60,19 @@ public interface FutsalPartyMapper {
 			""")
 	Integer countByFutsalPartyId(Integer futsalPartyId);
 
+	@Select("""
+			SELECT *
+			FROM Member
+			WHERE userId = #{userId}
+			""")
+	Member selectByUserId(String userId);
+
+	@Select("""
+			SELECT applyNum
+			FROM FutsalParty
+			WHERE id = #{futsalPartyId}
+			""")
+	int countByPartyId(Integer futsalPartyId);
+
 
 }

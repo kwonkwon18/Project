@@ -23,6 +23,8 @@ public class RunningPartyService {
 
 	public Map<String, Object> join(RunningParty runningParty, Authentication authentication) {
 
+		Memeber member = mapper.selectMemberById(authentication.getName());
+		
 		RunningBoard board = mapper.selectById(runningParty.getBoardId());
 		int currentNum = partyMapper.countByBoardId(runningParty.getBoardId());
 

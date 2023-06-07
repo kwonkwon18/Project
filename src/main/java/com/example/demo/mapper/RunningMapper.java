@@ -285,7 +285,7 @@ public interface RunningMapper {
 	
 	@Select("""
 			SELECT * FROM RunningBoard
-			WHERE title LIKE '%${searchTerm}%'
+			WHERE address LIKE '%${searchTerm}%'
 			""")
 	List<RunningBoard> selectBySearchTerm(String searchTerm);
 

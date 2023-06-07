@@ -17,7 +17,8 @@ public interface ClimbingMateMapper {
 	int insert(ClimbingMate climbingMate);
 
 	@Select("""
-			SELECT * FROM ClimbingMate;
+			SELECT * FROM ClimbingMate
+			ORDER BY Id DESC;
 			""")
 	List<ClimbingMate> selectList();
 
@@ -169,5 +170,12 @@ public interface ClimbingMateMapper {
 	from ClimbingParty p left join ClimbingBoard b ON p.boardId = b.id
 	""")
 	List<ClimbingParty> selectMember();
+
+	@Select("""
+			SELECT * FROM ClimbingMate
+			WHERE title LIKE '%${searchTerm}%'
+			""")
+	List<ClimbingMate> selectBySearchTerm(String searchTerm);
+
 
 }

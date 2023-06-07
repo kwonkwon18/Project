@@ -11,7 +11,6 @@
 </head>
 <body>
 	<div class="container-lg">
-		<h2>메이트구하기</h2>
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -36,6 +35,8 @@
 				<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
 			</button>
 		</div>
+		<h2>메이트구하기</h2>
+		<br />
 		<nav>
 			<ul>
 				<span style="margin-left: 50px;"></span>
@@ -77,12 +78,11 @@
 
 		<ul>
 			<div style="text-align: right;">
-				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a> 
-				<a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
+				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a> <a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
 			</div>
 		</ul>
 
-		<div class="row">
+		<div id="mateListData" class="row">
 			<c:forEach items="${climbingMateList}" var="board">
 				<div class="col-md-4">
 					<div class="card" style="width: 18rem;">
@@ -101,19 +101,19 @@
 	</div>
 
 
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		<script type="text/javascript">
-		$("#all1").click(function () {
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$("#all1").click(function() {
 			$("#dropdown1").slideUp()
 		})
-		$("#search1").click(function () {
+		$("#search1").click(function() {
 			$("#dropdown1").slideDown()
 		})
-			
-		</script>
+	</script>
+	<script src="/js/climbing/mateList.js"></script>
 </body>
 </html>

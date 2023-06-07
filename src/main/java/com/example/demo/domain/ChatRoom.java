@@ -11,4 +11,6 @@ public class ChatRoom {
 	private String creater;
 	private String invited;
 	private LocalDateTime inserted;
+	private Integer createrChatCount;
+	private Integer invitedChatCount;
 }

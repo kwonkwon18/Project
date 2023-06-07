@@ -16,8 +16,8 @@ import com.example.demo.domain.RunningParty;
 public interface RunningMapper {
 
 	@Insert("""
-			INSERT INTO RunningBoard (title, body, writer, Lat, Lng, people, time)
-			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{people}, #{time})
+			INSERT INTO RunningBoard (title, body, writer, Lat, Lng, people, time, address)
+			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{people}, #{time}, #{address})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(RunningBoard runningBoard);
@@ -38,6 +38,7 @@ public interface RunningMapper {
 			    r.Lng,
 			    r.people,
 			    r.time,
+			    r.address,
 			    m.userId,
 			    COUNT(rp.boardId) AS currentNum
 			FROM
@@ -54,8 +55,9 @@ public interface RunningMapper {
 			    r.writer,
 			    r.Lat,
 			    r.Lng,
-			    r.people
-			    
+			    r.people,
+			    r.address
+
 						""")
 	@ResultMap("boardResultMap")
 	RunningBoard selectById(Integer id);
@@ -70,7 +72,8 @@ public interface RunningMapper {
 			   b.Lat,
 			   b.Lng,
 			   b.people,
-			   b.time
+			   b.time,
+			   b.address
 			   FROM RunningBoard b
 			   where b.writer = #{writer}
 					""")
@@ -85,9 +88,9 @@ public interface RunningMapper {
 	List<RunningParty> selectMemberId(String writer);
 
 	@Select("""
-			         select boardId ,memberId
+			select boardId ,memberId
 			from RunningParty p left join RunningBoard b ON p.boardId = b.id
-			where userId = #{writer} and boardId = #{boardId}
+			where boardId = #{boardId} and userId = #{writer}
 			""")
 	List<RunningParty> selectMemberIdByBoardId(Integer boardId, String writer);
 
@@ -102,6 +105,7 @@ public interface RunningMapper {
 			    r.Lng,
 			    r.people,
 			    r.time,
+			    r.address,
 			    COUNT(rp.boardId) AS currentNum
 			FROM
 			    RunningBoard r
@@ -115,25 +119,41 @@ public interface RunningMapper {
 			    r.Lat,
 			    r.Lng,
 			    r.people,
-			    r.time
-			    
+			    r.time,
+			    r.address
 						""")
 	@ResultMap("boardResultMap")
 	List<RunningBoard> selectMate();
 
-	
-	
-	
 	@Select("""
-	         select boardId ,memberId
-	from RunningParty p left join RunningBoard b ON p.boardId = b.id
-	""")
+			         select boardId ,memberId
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id
+			""")
 	List<RunningParty> selectMember();
 
-	
 	@Select("""
 			select * from Member where userId = #{userId}
 			""")
 	Member selectMemberById(String userId);
+
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	List<Member> selectUserId(String userId);
+
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} group by p.boardId, p.memberId;
+						""")
+	@ResultMap("boardResultMap2")
+	List<RunningParty> selectForMemberIdByBoardId(Integer boardId);
+
+	
+	
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	Member getNickName(String userId);
 
 }

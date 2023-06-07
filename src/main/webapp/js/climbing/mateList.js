@@ -8,7 +8,7 @@ function handleListUpButtonClick() {
 	console.log(today);
 
 
-	$.ajax("/running/getRunningDetail?boardId=" + boardId, {
+	$.ajax("/climbing/getClimbingDetail?boardId=" + boardId, {
 		success: function(data) {
 			let latNum = `${data.board.lat}`;
 			let lngNum = `${data.board.lng}`;
@@ -64,7 +64,7 @@ function handleListUpButtonClick() {
 
 				$("#resMate").append(`<span>${memberId}</span> <br />`);
 			}
-			
+
 			console.log(isMine)
 
 			// 필요한 경우에 각각의 memberId 값을 가져올 수 있음
@@ -156,7 +156,7 @@ $(document).on('click', '.joinPartyBtn', function() {
 	const data = { boardId, userId };
 	console.log(data)
 
-	$.ajax("/running/joinParty", {
+	$.ajax("/climbing/joinParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -164,7 +164,7 @@ $(document).on('click', '.joinPartyBtn', function() {
 		success: function(data) {
 			if (data.join) {
 				alert("신청되었습니다.");
-				location.href = "/running/id/" + boardId;
+				location.href = "/climbing/id/" + boardId;
 			} else {
 				alert("취소되었습니다.");
 				location.reload();
@@ -179,11 +179,4 @@ $(document).on('click', '.joinPartyBtn', function() {
 	});
 });
 
-
-$("#all1").click(function() {
-	$("#dropdown1").slideUp()
-})
-$("#search1").click(function() {
-	$("#dropdown1").slideDown()
-})
 

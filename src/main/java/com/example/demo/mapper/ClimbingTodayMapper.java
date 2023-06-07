@@ -77,4 +77,6 @@ public interface ClimbingTodayMapper {
 			""")
 	int deleteById(Integer id);
 
+	
+
 }

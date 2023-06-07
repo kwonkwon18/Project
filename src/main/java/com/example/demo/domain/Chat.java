@@ -12,4 +12,5 @@ public class Chat {
 	private String recipientId;
 	private String message;
 	private LocalDateTime inserted;
+	private String time;
 }

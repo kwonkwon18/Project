@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.*;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,7 @@ import com.example.demo.service.*;
 @Controller
 @RequestMapping("climbing")
 public class ClimbingController {
-
+	
 	@Autowired
 	private ClimbingMateService mateService;
 
@@ -24,6 +26,10 @@ public class ClimbingController {
 
 	@Autowired
 	private ClimbingCourseService courseService;
+	
+	@Autowired
+	private ClimbingPartyService partyService;
+
 
 	@GetMapping("list")
 	public void list(Model model) {
@@ -58,12 +64,13 @@ public class ClimbingController {
 	}
 
 	@GetMapping("todayList")
-	public void todayList(Model model,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "search", defaultValue = "") String search,
-			@RequestParam(value = "type", required = false) String type) {
+	public void todayList(Model model
+//			@RequestParam(value = "page", defaultValue = "1") Integer page,
+//			@RequestParam(value = "search", defaultValue = "") String search,
+//			@RequestParam(value = "type", required = false) String type) 
+			) {
 		
-		Map<String, Object> listMap = todayService.listBoard(page, search, type);		
+		Map<String, Object> listMap = new HashMap<>();		
 		// 오늘의 등산
 		List<ClimbingToday> today = todayService.listBoard(); // 페이지 처리 전
 		listMap.put("climbingTodayList", today);
@@ -156,6 +163,74 @@ public class ClimbingController {
 			return "redirect:/mateId/" + id;
 		}
 	}
+	
+	@GetMapping("/mateMap")
+	public void mateMap(Model model) {
+		Map<String, Object> listMap = new HashMap<>();
+
+		// 메이트 구하기
+		List<ClimbingMate> mate = mateService.listBoard(); // 페이지 처리 전
+		listMap.put("climbingMateList", mate);
+		
+		model.addAllAttributes(listMap);
+	}
+	
+	@GetMapping("/climbingMate")
+	public void climbingMatePage(Model model) {
+		
+		Map<String, Object> getMemberList = new HashMap<>();
+		
+		List<ClimbingMate> climbingMates = mateService.getMateBoard();
+		getMemberList.put("climbingMates", climbingMates);
+
+		/* model.addAttribute("board", climbingMates); */
+		System.out.println(climbingMates);
+		
+		List<ClimbingParty> members = mateService.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+		System.out.println(members);
+		model.addAllAttributes(getMemberList);
+	}
+	
+	@GetMapping("/search")
+	@ResponseBody
+	public Map<String, Object> mateSearch(@RequestParam("search") String searchTerm) {
+	    Map<String, Object> listSearch = new HashMap<>();
+	    
+	    
+	    // 검색어를 이용하여 필요한 처리를 수행하고 결과를 listSearch에 저장합니다.
+	    // 예: DB에서 검색 쿼리를 수행하거나 다른 로직을 수행합니다.
+	    
+	    
+	    // 결과를 listSearch에 저장하여 클라이언트로 전달합니다.
+	    listSearch.put("result", mateService.searchMate(searchTerm));
+	    
+	    System.out.println(listSearch.get("result"));
+	    return listSearch;
+	}
+
+	@GetMapping("/getClimbingDetail")
+	@ResponseBody
+	public ResponseEntity<Object> detailForModal(Integer boardId, Authentication authentication) {
+		
+		return ResponseEntity.ok().body(mateService.getBoardForModal(boardId, authentication));
+		
+	}
+	
+	@PostMapping("joinParty")
+	public ResponseEntity<Map<String, Object>> joinParty(@RequestBody ClimbingParty climbingParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.join(climbingParty, authentication));
+
+	}
+
+	@PostMapping("rejectParty")
+	public ResponseEntity<Map<String, Object>> rejectParty(@RequestBody ClimbingParty climbingParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.reject(climbingParty, authentication));
+
+	}
+	
 
 	@GetMapping("/todayAdd")
 	public void todayProcess() {

@@ -61,15 +61,6 @@
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">종류🌄</button>
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">전체</a></li>
-						<li><a class="dropdown-item" href="#">번개</a></li>
-						<li><a class="dropdown-item" href="#">소모임</a></li>
-					</ul>
-				</ul>
-				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -91,48 +82,48 @@
 			</div>
 		</ul>
 
-			<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
-			<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
-			<div id="mateListData" class="row">
-				<c:forEach items="${climbingMateList}" var="board">
-					<div class="col-md-4">
-						<div class="card" style="width: 18rem;">
-							<div class="card-body">
-								<h5 class="card-title">🌄${board.title}</h5>
-								<p class="card-text">작성자: ${board.writer}</p>
-								<p class="card-text">작성일자: ${board.inserted}</p>
-								<p class="card-text">모임장소: ${board.address}</p>
-								<p class="card-text">모임시간: ${board.time}</p>
-								${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}
+		<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
+		<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
+		<div id="mateListData" class="row">
+			<c:forEach items="${climbingMateList}" var="board">
+				<div class="col-md-4">
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title">🌄${board.title}</h5>
+							<p class="card-text">작성자: ${board.writer}</p>
+							<p class="card-text">작성일자: ${board.inserted}</p>
+							<p class="card-text">모임장소: ${board.address}</p>
+							<p class="card-text">모임시간: ${board.time}</p>
+							${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}
 
-								<c:set var="isMember" value="false" />
-								<c:forEach items="${memberList}" var="memberList">
-									<c:if test="${memberList.nickName eq board.writer}">
-										<c:set var="isMember" value="true" />
-									</c:if>
-								</c:forEach>
+							<c:set var="isMember" value="false" />
+							<c:forEach items="${memberList}" var="memberList">
+								<c:if test="${memberList.nickName eq board.writer}">
+									<c:set var="isMember" value="true" />
+								</c:if>
+							</c:forEach>
 
-								<c:if test="${openDate <= nowDate }">
-									<button>마감된 등산</button>
+							<c:if test="${openDate <= nowDate }">
+								<button>마감된 등산</button>
+							</c:if>
+
+							<c:if test="${openDate > nowDate }">
+								<c:if test="${isMember}">
+									<button type="button" onclick="location.href='/climbing/id/${board.id}' ">지원 사항 상세보기</button>
 								</c:if>
 
-								<c:if test="${openDate > nowDate }">
-									<c:if test="${isMember}">
-										<button type="button" onclick="location.href='/climbing/id/${board.id}' ">지원 사항 상세보기</button>
-									</c:if>
-
-									<c:if test="${not isMember}">
-										<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-									</c:if>
+								<c:if test="${not isMember}">
+									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 								</c:if>
-								<div style="text-align: right">
-									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-								</div>
+							</c:if>
+							<div style="text-align: right">
+								<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 							</div>
 						</div>
 					</div>
-				</c:forEach>
-			</div>
+				</div>
+			</c:forEach>
+		</div>
 	</div>
 
 	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -159,12 +150,16 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 
 	<script type="text/javascript">
-		$("#all1").click(function() {
-			$("#dropdown1").slideUp()
-		})
+		// 		$("#all1").click(function() {
+		// 			$("#dropdown1").slideUp()
+		// 		})
 		$("#search1").click(function() {
-			$("#dropdown1").slideDown()
-		})
+			if ($("#dropdown1").is(":hidden")) {
+				$("#dropdown1").slideDown();
+			} else {
+				$("#dropdown1").slideUp();
+			}
+		});
 	</script>
 	<script src="/js/climbing/mateList.js"></script>
 </body>

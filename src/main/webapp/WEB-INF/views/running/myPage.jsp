@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,7 @@
 </head>
 <body>
 
+<my:navBar></my:navBar>
 	<h1>마이페이지</h1>
 
 	<div class="row row-cols-1 row-cols-md-3 g-4">

@@ -63,6 +63,42 @@ public interface RunningMapper {
 						""")
 	@ResultMap("boardResultMap")
 	RunningBoard selectById(Integer id);
+	
+	@Select("""
+			SELECT
+			    r.id,
+			    r.title,
+			    r.body,
+			    r.inserted,
+			    r.writer,
+			    r.Lat,
+			    r.Lng,
+			    r.people,
+			    r.time,
+			    r.address,
+			    m.userId,
+			    COUNT(rp.boardId) AS currentNum
+			FROM
+			    RunningBoard r
+			    LEFT JOIN RunningParty rp ON r.id = rp.boardId
+			    LEFT JOIN Member m ON r.writer = m.nickName
+			WHERE
+			    r.id = #{id}
+			GROUP BY
+			    r.id,
+			    r.title,
+			    r.body,
+			    r.inserted,
+			    r.writer,
+			    r.Lat,
+			    r.Lng,
+			    r.people,
+			    r.address
+			    
+
+						""")
+	@ResultMap("boardResultMap")
+	RunningBoard selectByIdForMate(Integer id);
 
 	@Select("""
 			select
@@ -167,6 +203,7 @@ public interface RunningMapper {
 			    r.people,
 			    r.time,
 			    r.address
+			    ORDER BY r.inserted desc
 			    </script>
 					""")
 	List<RunningBoard> selectMateByDistance(List<String> addressList, String type);
@@ -244,6 +281,13 @@ public interface RunningMapper {
 			WHERE id = #{id}
 			""")
 	boolean deleteById(Integer id);
+
+	
+	@Select("""
+			SELECT * FROM RunningBoard
+			WHERE title LIKE '%${searchTerm}%'
+			""")
+	Object selectBySearchTerm(String searchTerm);
 
 //	@Select("""
 //			<scipt>

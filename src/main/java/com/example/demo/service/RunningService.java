@@ -71,6 +71,9 @@ public class RunningService {
 	
 	public List<RunningBoard> getMateBoardByAddress(Authentication authentication, String type) {
 
+		if(authentication != null) {
+
+		
 		// 유저 정보 가져옴 Member member =
 		Member member = mapper.selectMemberById(authentication.getName()); // 유저 정보 중 주소 정보 변수 저장
 		String userAddress = member.getAddress();
@@ -90,6 +93,9 @@ public class RunningService {
 		System.out.println("addressList" + addressList);
 
 		return mapper.selectMateByDistance(addressList, type);
+	}
+		
+		return null;
 
 	}
 
@@ -152,6 +158,11 @@ public class RunningService {
 		int cnt = partyMapper.deleteByBoardId(id);
 
 		return mapper.deleteById(id);
+	}
+
+	public Object searchMate(String searchTerm) {
+		// TODO Auto-generated method stub
+		return mapper.selectBySearchTerm(searchTerm);
 	}
 
 }

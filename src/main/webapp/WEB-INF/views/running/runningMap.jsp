@@ -47,8 +47,8 @@
 				</div>
 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
 				<div style="float: right; margin-right: 100px;">
-					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
+					<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
+					<!-- <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 				</div>
 			</ul>
 			<div id="dropdown1" style="display: none">
@@ -77,29 +77,29 @@
 			</div>
 		</nav>
 
-		<!-- 				<div class="row" id="all3"> -->
-		<%-- 					<c:forEach items="${climbingMateList}" var="board"> --%>
-		<!-- 						<div class="col-md-4"> -->
-		<!-- 							<div class="card" style="width: 18rem;"> -->
-		<!-- 								<div class="card-body"> -->
-		<%-- 									<h5 class="card-title">🌄${board.title}</h5> --%>
-		<%-- 									<p class="card-text">작성자: ${board.writer}</p> --%>
-		<%-- 									<p class="card-text">작성일자: ${board.inserted}</p> --%>
-		<!-- 									<div style="text-align: right"> -->
-		<%-- 										<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a> --%>
-		<!-- 									</div> -->
-		<!-- 								</div> -->
+		<!-- 		<div class="row" id="all3"> -->
+		<%-- 			<c:forEach items="${climbingMateList}" var="board"> --%>
+		<!-- 				<div class="col-md-4"> -->
+		<!-- 					<div class="card" style="width: 18rem;"> -->
+		<!-- 						<div class="card-body"> -->
+		<%-- 							<h5 class="card-title">🌄${board.title}</h5> --%>
+		<%-- 							<p class="card-text">작성자: ${board.writer}</p> --%>
+		<%-- 							<p class="card-text">작성일자: ${board.inserted}</p> --%>
+		<!-- 							<div style="text-align: right"> -->
+		<%-- 								<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a> --%>
 		<!-- 							</div> -->
 		<!-- 						</div> -->
-		<%-- 					</c:forEach> --%>
+		<!-- 					</div> -->
 		<!-- 				</div> -->
+		<%-- 			</c:forEach> --%>
+		<!-- 		</div> -->
 
 		<br /> <br />
 
 		<div style="display: flex;">
 			<div style="flex: 1; margin-left: 70px;" id="mateMapBox">
 				<ul style="display: flex; align-items: left;">
-					<form action="/search" class="d-flex" role="search">
+					<form action="/runningMate1" class="d-flex" role="search">
 						<input id="searchInput" value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
 						<button id="search" class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
@@ -108,22 +108,22 @@
 				</ul>
 
 
-				<!-- 				<div style="margin-left: 40px;"> -->
-				<!-- 					<a id="all2" href="#" style="text-decoration-line: none;">전체</a> <a id="bungae" href="#" style="text-decoration-line: none;">번개</a> <a id="somoim" href="#" style="text-decoration-line: none;">소모임</a> -->
-				<!-- 				</div> -->
+				<div style="margin-left: 40px;">
+					<a id="all2" href="#" style="text-decoration-line: none;">전체</a> 
+					<a id="bungae" href="#" style="text-decoration-line: none;">번개</a>
+					<a id="somoim" href="#" style="text-decoration-line: none;">소모임</a>
+				</div>
 
 				<br />
 				<div id="mateMapData">
 					<c:forEach items="${climbingMateList}" var="board" varStatus="loop">
 						<c:if test="${loop.index < 3}">
 							<div class="col-md-4">
-								<div class="card" style="width: 18rem; margin-left: 40px; margin-bottom: 14px;">
+								<div class="card" style="width: 18rem; margin-left: 40px;">
 									<div class="card-body">
 										<h5 class="card-title">🌄${board.title}</h5>
 										<p class="card-text">작성자: ${board.writer}</p>
 										<p class="card-text">작성일자: ${board.inserted}</p>
-										<p class="card-text">모임장소: ${board.address}</p>
-										<p class="card-text">모임시간: ${board.time}</p>
 										<div style="text-align: right">
 											<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
 										</div>
@@ -134,7 +134,7 @@
 					</c:forEach>
 				</div>
 			</div>
-			<div id="map" style="width: 60%; height: 900px;"></div>
+			<div id="map" style="width: 60%; height: 655px;"></div>
 		</div>
 	</div>
 
@@ -143,7 +143,7 @@
 
 	<br />
 	<br />
-
+	
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -152,42 +152,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
-
-	<script type="text/javascript">
-		$("#all1").click(function() {
-			$("#dropdown1").slideUp()
-		})
-		$("#search1").click(function() {
-			$("#dropdown1").slideDown()
-		})
-	</script>
-	<script src="/js/climbing/mateMap.js"></script>
-
-	<!-- ******************************************************************  -->
-
-	<script>
-		$(document).ready(function() {
-			var latNum = 37.566736219721896;
-			var lngNum = 126.9779137163515;
-
-			var mapContainer = document.getElementById('map');
-			var mapOption = {
-				center : new kakao.maps.LatLng(latNum, lngNum),
-				level : 1
-			};
-
-			var map = new kakao.maps.Map(mapContainer, mapOption);
-
-			var markerPosition = new kakao.maps.LatLng(latNum, lngNum);
-			var marker = new kakao.maps.Marker({
-				position : markerPosition
-			});
-
-			marker.setMap(map);
-
-		});
-	</script>
+	
+	<script src = "/js/running/runningMap.js"></script>
+		
 
 
 </body>
-</html>
+</html> 

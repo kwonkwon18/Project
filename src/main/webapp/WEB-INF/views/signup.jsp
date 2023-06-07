@@ -12,7 +12,7 @@ window.onload = function(){
 	var gu = [
 		"강남구"
 		, "노원구"
-		, "방구"
+		, "마포구"
 	];
 	
 	let optionText = "";

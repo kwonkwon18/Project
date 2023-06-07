@@ -39,14 +39,13 @@
 		<br />
 		<nav>
 			<ul>
-				<span style="margin-left: 50px;"></span>
 				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 				<div class="dropdown-menu" aria-labelledby="search1">
 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-				<span style="margin-left: 480px;"></span>
+				<span style="margin-left: 700px;"></span>
 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
 			</ul>
@@ -55,18 +54,18 @@
 					<button type="button" class="btn btn-success" style="pointer-events: none;">종류🌄</button>
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
+						<li><a class="dropdown-item" href="#">전체</a></li>
+						<li><a class="dropdown-item" href="#">번개</a></li>
+						<li><a class="dropdown-item" href="#">소모임</a></li>
 					</ul>
 				</ul>
 				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
+						<li><a class="dropdown-item" href="#">제목</a></li>
+						<li><a class="dropdown-item" href="#">작성자</a></li>
+						<li><a class="dropdown-item" href="#">내용</a></li>
 					</ul>
 					<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
 					<button class="btn btn-outline-success" type="submit">
@@ -90,8 +89,12 @@
 							<h5 class="card-title">🌄${board.title}</h5>
 							<p class="card-text">작성자: ${board.writer}</p>
 							<p class="card-text">작성일자: ${board.inserted}</p>
+							<p class="card-text">모임장소: ${board.address}</p>
+							<p class="card-text">모임시간: ${board.time}</p>
+							${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}
+
 							<div style="text-align: right">
-								<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
+								<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button"  class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 							</div>
 						</div>
 					</div>
@@ -99,6 +102,21 @@
 			</c:forEach>
 		</div>
 	</div>
+
+	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">게시물 상세 보기</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="resMate">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>

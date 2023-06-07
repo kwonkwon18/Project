@@ -41,6 +41,20 @@
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${climbingMate.body }</textarea>
 					</div>
+					<div class="mb-3">
+						<label for="dateInput" class="form-label">장소</label>
+						<input required id="addressInput" name="address" type="text" readonly />
+					</div>
+
+					<div class="mb-3">
+						<label for="" class="form-label">인원수</label>
+						<input id="peopleInput" type="number" required class="form-control" name="people" value="${runningBoard.people }" placeholder="숫자를 입력해주세요 ex) 1" />
+					</div>
+
+					<div class="mb-3">
+						<label for="dateInput" class="form-label">모이는 시간</label>
+						<input required id="dateInput" name="time" type="datetime-local" />
+					</div>
 					<input id="LatSubmit" type="hidden" name="Lat" value="" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="" />
 					<input class="btn btn-primary" type="submit" value="등록" />
@@ -175,7 +189,11 @@
 
 		});
 	</script>
+	<!-- ******************************************************************  -->
 
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+
+	<script src="/js/climbing/mateAdd.js"></script>
 
 
 </body>

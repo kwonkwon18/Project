@@ -19,7 +19,7 @@
 	<br />
 	<input id="inputValue" type="text" placeholder="예)서울숲" />
 	<br />
-	<!-- <button id="searchPlace" onclick="doSearch()">검색</button> -->
+	
 
 	<div id="clickLatlng"></div>
 

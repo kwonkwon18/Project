@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+
+<my:navBar></my:navBar>
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -101,8 +104,9 @@
 
 		<ul>
 			<div style="text-align: right;">
-				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a>
+				<a href="/running/runningMate?type=distance" style="text-decoration-line: none;">거리순</a>
 				<a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
+				<a href="/running/runningMate" style="text-decoration-line: none;">정렬초기화</a>
 			</div>
 		</ul>
 
@@ -132,6 +136,10 @@
 								<div class="mb-3">
 									<label for="" class="form-label">작성자</label>
 									<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
+								</div>
+								<div class="mb-3">
+									<label for="" class="form-label">모임장소</label>
+									<input id="addressText" type="text" class="form-control" value="${board.address }" readonly />
 								</div>
 								<div class="mb-3">
 									<label for="" class="form-label">모임시간</label>

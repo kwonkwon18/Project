@@ -89,8 +89,12 @@
 							<h5 class="card-title">🌄${board.title}</h5>
 							<p class="card-text">작성자: ${board.writer}</p>
 							<p class="card-text">작성일자: ${board.inserted}</p>
+							<p class="card-text">모임장소: ${board.address}</p>
+							<p class="card-text">모임시간: ${board.time}</p>
+							${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}
+
 							<div style="text-align: right">
-								<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
+								<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button"  class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 							</div>
 						</div>
 					</div>
@@ -98,6 +102,21 @@
 			</c:forEach>
 		</div>
 	</div>
+
+	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">게시물 상세 보기</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="resMate">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>

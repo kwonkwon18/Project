@@ -1,6 +1,6 @@
 package com.example.demo.domain;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.util.List;
 
 import lombok.Data;
@@ -13,6 +13,8 @@ public class ClimbingMate {
 	private String body;
 	private LocalDate inserted;
 	private String writer;
+	private String address;
+	private LocalDateTime time;
 	private List<String> fileName;
 	private double Lat;
 	private double Lng;

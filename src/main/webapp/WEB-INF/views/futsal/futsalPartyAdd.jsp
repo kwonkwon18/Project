@@ -39,10 +39,9 @@
 						<label for="titleInput" class="form-label">모집인원</label>
 						<input id="titleInput" class="form-control" type="Number" name="memberNum" value="${party.memberNum }" />
 					</div>
-					<div class="mb-3">
-						<label for="wirterInput" class="form-label">글쓴이</label>
-						<input id="wirterInput" class="form-control" type="text" name="writer" value="${party.writer }" />
-					</div>
+					
+					<input id="wirterInput" type="hidden" name="writer" value="${party.writer }" />
+					
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${party.body }</textarea>

@@ -253,9 +253,9 @@ public class ClimbingController {
 	public String TodayResult(
 			ClimbingToday climbingToday,
 			RedirectAttributes rttr,
-			@RequestParam("files") MultipartFile[] files) throws Exception {
+			@RequestParam("files") MultipartFile[] files, Authentication authentication) throws Exception {
 
-		boolean ok = todayService.addClimbingToday(climbingToday, files);
+		boolean ok = todayService.addClimbingToday(climbingToday, files, authentication);
 
 		if (ok) {
 			return "redirect:/climbing/todayList";

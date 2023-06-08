@@ -64,11 +64,9 @@
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">제목</a></li>
-						<li><a class="dropdown-item" href="#">작성자</a></li>
-						<li><a class="dropdown-item" href="#">내용</a></li>
+						<li><a class="dropdown-item" href="#" onclick="changeDropdownItem('제목')">제목</a> <a class="dropdown-item" href="#" onclick="changeDropdownItem('작성자')">작성자</a> <a class="dropdown-item" href="#" onclick="changeDropdownItem('내용')">내용</a></li>
 					</ul>
-					<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+					<input value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
 					<button class="btn btn-outline-success" type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</button>
@@ -150,9 +148,6 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 
 	<script type="text/javascript">
-		// 		$("#all1").click(function() {
-		// 			$("#dropdown1").slideUp()
-		// 		})
 		$("#search1").click(function() {
 			if ($("#dropdown1").is(":hidden")) {
 				$("#dropdown1").slideDown();
@@ -162,5 +157,11 @@
 		});
 	</script>
 	<script src="/js/climbing/mateList.js"></script>
+	<script>
+		function changeDropdownItem(item) {
+			var dropdownButton = document.getElementById("dropdownMenuButton1");
+			dropdownButton.innerHTML = item;
+		}
+	</script>
 </body>
 </html>

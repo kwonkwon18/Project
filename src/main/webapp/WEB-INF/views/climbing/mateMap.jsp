@@ -12,7 +12,7 @@
 <body>
 
 	<div class="container-lg">
-		<h2>메이트구하기</h2>
+		<!-- 		<h2>메이트구하기</h2> -->
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -40,16 +40,16 @@
 		<nav>
 			<ul>
 				<!-- 				<a id="all1" href="/climbing/mateList" style="text-decoration-line: none;">전체</a> -->
-				<button type="button" class="btn btn-warning" onclick="location.href='mateList'">전체 보기</button>
+				<button type="button" class="btn btn-warning" style="margin-left: 70px;" onclick="location.href='mateList'">전체 보기</button>
 
 				<!-- 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a> -->
 				<!-- 				<div class="dropdown-menu" aria-labelledby="search1"> -->
 				<!-- 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a> -->
 				<!-- 				</div> -->
 				<!-- 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a> -->
-				<div style="float: right; margin-right: 100px;">
+				<div style="float: right;">
 					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-<!-- 					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
+					<!-- 					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 				</div>
 			</ul>
 			<div id="dropdown1" style="display: none">
@@ -68,7 +68,6 @@
 				</ul>
 			</div>
 		</nav>
-
 		<!-- 				<div class="row" id="all3"> -->
 		<%-- 					<c:forEach items="${climbingMateList}" var="board"> --%>
 		<!-- 						<div class="col-md-4"> -->
@@ -109,16 +108,16 @@
 					<c:forEach items="${climbingMateList}" var="board" varStatus="loop">
 						<c:if test="${loop.index < 3}">
 							<div class="col-md-4">
-								<div class="card" style="width: 18rem; margin-left: 40px; margin-bottom: 14px;">
+								<div class="card" style="width: 18rem; margin-left: 40px; margin-bottom: 15px;">
 									<div class="card-body">
 										<h5 class="card-title">🌄${board.title}</h5>
 										<p class="card-text">작성자: ${board.writer}</p>
 										<p class="card-text">작성일자: ${board.inserted}</p>
 										<p class="card-text">모임장소: ${board.address}</p>
 										<p class="card-text">모임시간: ${board.time}</p>
-										<div style="text-align: right">
-											<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
-										</div>
+									</div>
+									<div class="card-footer" style="text-align: right">
+										<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
 									</div>
 								</div>
 							</div>

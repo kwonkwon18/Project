@@ -57,7 +57,8 @@
 					</form>
 				</ul>
 			</div>
-		</div>	
+		</div>
+		<br />
 		<div id="todayListData" class="row">
 			<c:forEach items="${climbingTodayList}" var="board">
 				<div class="col-md-4">
@@ -66,37 +67,44 @@
 							<h5 class="card-title">🌄${board.writer}</h5>
 							<p class="card-text">${board.inserted}</p>
 							<p class="card-text">${board.title}</p>
-							<p class="card-text">사진들어갈자리:${board.body}</p>
-							
+							<p class="card-text">${board.body}</p>
 						</div>
+<!-- 							<p class="card-text"> -->
+								<c:forEach items="${board.fileName }" var="fileName">
+									<div>
+										<img class="img-thumbnail" src="${bucketUrl}/climbingToday/${board.id}/${fileName}" alt=""  style="width: 285px; height: 260px !important;"  />
+									</div>
+								</c:forEach>
+<!-- 							</p> -->
+
 					</div>
 				</div>
 			</c:forEach>
-		<!-- 		<table class="table"> -->
-		<!-- 			<thead> -->
-		<!-- 				<tr> -->
-		<!-- 					<th>#</th> -->
-		<!-- 					<th>제목</i></th> -->
-		<!-- 					<th>작성자</th> -->
-		<!-- 					<th>작성일자</th> -->
-		<!-- 				</tr> -->
-		<!-- 			</thead> -->
-		<!-- 			<tbody> -->
-		<!-- 				todayList를 받았다.  -->
-		<%-- 				<c:forEach items="${climbingTodayList }" var="board"> --%>
+			<!-- 		<table class="table"> -->
+			<!-- 			<thead> -->
+			<!-- 				<tr> -->
+			<!-- 					<th>#</th> -->
+			<!-- 					<th>제목</i></th> -->
+			<!-- 					<th>작성자</th> -->
+			<!-- 					<th>작성일자</th> -->
+			<!-- 				</tr> -->
+			<!-- 			</thead> -->
+			<!-- 			<tbody> -->
+			<!-- 				todayList를 받았다.  -->
+			<%-- 				<c:forEach items="${climbingTodayList }" var="board"> --%>
 
-		<!-- 					<tr> -->
-		<%-- 						<td>${board.id }</td> --%>
-		<%-- 						<td><a href="/climbing/todayId/${board.id }"> ${board.title }</a> --%>
-		<%-- 						<td>${board.writer }</td> --%>
-		<%-- 						<td>${board.inserted }</td> --%>
-		<!-- 					</tr> -->
-		<%-- 				</c:forEach> --%>
-		<!-- 			</tbody> -->
-		<!-- 		</table> -->
-	</div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="/js/chat.js"></script>
+			<!-- 					<tr> -->
+			<%-- 						<td>${board.id }</td> --%>
+			<%-- 						<td><a href="/climbing/todayId/${board.id }"> ${board.title }</a> --%>
+			<%-- 						<td>${board.writer }</td> --%>
+			<%-- 						<td>${board.inserted }</td> --%>
+			<!-- 					</tr> -->
+			<%-- 				</c:forEach> --%>
+			<!-- 			</tbody> -->
+			<!-- 		</table> <--></-->
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="/js/chat.js"></script>
 </body>
 </html>

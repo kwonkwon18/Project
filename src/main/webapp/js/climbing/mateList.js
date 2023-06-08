@@ -43,7 +43,7 @@ function handleListUpButtonClick() {
         <div class="mb-3">
           <label for="" class="form-label">작성자</label>
           <br />
-           <button type="button" class="chatRoomCheckBtn">${data.board.writer}</button>
+          <span>${data.board.writer}</span>
 		  <button style="display: none;"type="hidden" class="createChatRoomCheckBtn" data-bs-toggle="modal" data-bs-target="#createChatRoom">${data.board.writer}</button>
         </div>
         <div class="mb-3">
@@ -54,6 +54,65 @@ function handleListUpButtonClick() {
         <div id="map" class="map-container"></div>
         <label for="" class="form-label">신청자</label><br />
       `);
+
+			let memberIds = [];
+			let isMine = false;
+
+			for (let i = 0; i < data.members.length; i++) {
+				let memberId = data.members[i].memberId;
+				memberIds.push(memberId); // 배열에 memberId 추가
+
+				if (nickName === data.members[i].memberId) {
+					isMine = true;
+				}
+
+				$("#resMate").append(`<span>${memberId}</span> <br />`);
+			}
+
+			console.log(isMine)
+
+			// 필요한 경우에 각각의 memberId 값을 가져올 수 있음
+			console.log(memberIds[0]); // 첫 번째 memberId 값
+			console.log(memberIds[1]); // 두 번째 memberId 값
+
+			if (today < compareTime) {
+
+				if (people > currentNum && isMine) {
+					$("#resMate").append(`</div>
+			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+			
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			`);
+				} else if (people > currentNum && !isMine) {
+					$("#resMate").append(`</div>
+			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+			
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			`);
+				} else if (people <= currentNum && !isMine) {
+					$("#resMate").append(`
+				</div>
+			<button   data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">마감되었습니다.</button>
+			
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			`);
+
+				} else {
+					$("#resMate").append(`</div>
+			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+			
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			`);
+
+				}
+			} else {
+				$("#resMate").append(`</div>
+			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">종료된 러닝</button>
+			
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			`);
+			}
+			
       		$(".chatRoomCheckBtn").click(function() {
 				const yourNickName = $(this).text();
 				console.log(yourNickName);
@@ -67,6 +126,10 @@ function handleListUpButtonClick() {
 							$("#chatButton").hide();
 							$("#chatList").hide();
 							$("#chatBox").show();
+							$(".chatNameTag").remove();
+							$(`#returnBtn`).after(`
+								<span style="white-space: nowrap; position: absolute; left: 50%; transform: translateX(-50%);" class="chatNameTag">${yourNickName}님과의 채팅방</span>
+							`);
 							$.ajax("/chat/roomOpen", {
 								data: { yourNickName: yourNickName },
 								contentType: "application/json",
@@ -107,65 +170,6 @@ function handleListUpButtonClick() {
 					}
 				})
 			})
-      
-
-			let memberIds = [];
-			let isMine = false;
-
-			for (let i = 0; i < data.members.length; i++) {
-				let memberId = data.members[i].memberId;
-				memberIds.push(memberId); // 배열에 memberId 추가
-
-				if (nickName === data.members[i].memberId) {
-					isMine = true;
-				}
-
-				$("#resMate").append(`<span>${memberId}</span> <br />`);
-			}
-
-			console.log(isMine)
-
-			// 필요한 경우에 각각의 memberId 값을 가져올 수 있음
-			console.log(memberIds[0]); // 첫 번째 memberId 값
-			console.log(memberIds[1]); // 두 번째 memberId 값
-
-			if (today < compareTime) {
-
-				if (people > currentNum && isMine) {
-					$("#resMate").append(`</div>
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			
-			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
-			`);
-				} else if (people > currentNum && !isMine) {
-					$("#resMate").append(`</div>
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			
-			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
-			`);
-				} else if (people <= currentNum && !isMine) {
-					$("#resMate").append(`
-				</div>
-			<button   data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">마감되었습니다.</button>
-			
-			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
-			`);
-
-				} else {
-					$("#resMate").append(`</div>
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			
-			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
-			`);
-
-				}
-			} else {
-				$("#resMate").append(`</div>
-			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">종료된 러닝</button>
-			
-			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
-			`);
-			}
 
 
 			//*********** 지도 관련 ***************/

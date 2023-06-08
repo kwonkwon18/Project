@@ -82,8 +82,8 @@ $(".chatClose").click(function() {
 	$("#chatButton").show();
 	$("#chatList").hide();
 	$("#chatBox").hide();
-	$("#chatListContainer").remove("");
-	$("#chatContainer").remove("");
+	$("#chatListContainer").remove();
+	$("#chatContainer").remove();
 	clearInterval(repeat);
 })
 
@@ -91,17 +91,21 @@ $(".chatClose").click(function() {
 $("#returnBtn").click(function() {
 	$("#chatBox").hide();
 	$("#chatList").show();
-	$("#chatListContainer").remove("");
-	$("#chatContainer").remove("");
+	$("#chatListContainer").remove();
+	$("#chatContainer").remove();
 	clearInterval(repeat);
 	showList();
 })
 
 $("#chatList").on("click", ".openChatRoomBtn", function() {
+	var nickName = $(this).find(".nickNameSpan").text();
 	$("#chatList").hide();
 	$("#chatBox").show();
+	$(".chatNameTag").remove();
+	$(`#returnBtn`).after(`
+		<span style="white-space: nowrap; position: absolute; left: 50%; transform: translateX(-50%);" class="chatNameTag">${nickName}님과의 채팅방</span>
+	`);
 	var inserted = $(this).find(".inserted").val();
-	//	var nickName = $(this).find(".nickNameSpan").text();
 	$.ajax("/chat/room", {
 		data: { inserted: inserted },
 		contentType: "application/json",
@@ -171,6 +175,7 @@ function currentChatId(lastChatIdParam, chatRoomId, chatContainer) {
 				}
 			}
 			lastChatId = chatList[chatList.length - 1].id;
+			scrollToBottom();
 		}
 	})
 }

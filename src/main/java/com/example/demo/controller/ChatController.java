@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.net.*;
+import java.nio.charset.*;
 import java.time.*;
 import java.util.*;
 
@@ -78,8 +80,6 @@ public class ChatController {
 	@PreAuthorize("authenticated")
 	public Map<String, Object> chatRoom(Authentication authentication, LocalDateTime inserted) {
 		
-		System.out.println(inserted.getClass().getName());
-		System.out.println(authentication.getName());
 		Map<String, Object> map = new HashMap<>();
 		String myUserId = authentication.getName();
 		Integer chatRoomId = service.getChatRoomId(myUserId, inserted);
@@ -94,7 +94,14 @@ public class ChatController {
 	@ResponseBody
 	@PreAuthorize("authenticated")
 	public Map<String, Object> chatRoomOpen(Authentication authentication, String yourNickName) {
-		
+		Map<String, Object> map = new HashMap<>();
+		String yourId = memberService.getUserId(yourNickName);
+		Integer chatRoomId = service.getChatRoomId(yourId, authentication.getName());
+		service.resetCount(chatRoomId, authentication.getName());
+		map.put("chatList", service.getChat(authentication.getName(), yourId));
+		map.put("chatRoomId", chatRoomId);
+		map.put("myId", authentication.getName());
+		return map;
 	}
 	
 	@PostMapping("add")
@@ -126,9 +133,17 @@ public class ChatController {
 	
 	@GetMapping("roomCheck")
 	@ResponseBody
-	public Map<String, Object> checkRoom(@RequestBody String yourNickName, Authentication authentication) {
+	public Map<String, Object> checkRoom(@RequestParam("yourNickName") String yourNickName, Authentication authentication) {
 		String yourId = memberService.getUserId(yourNickName);
 		boolean check = service.checkChatRoom(yourId, authentication.getName());
 		return Map.of("check", check);
+	}
+	
+	@PostMapping("roomCreate")
+	@ResponseBody
+	public void roomCreate(@RequestBody String yourNickName, Authentication authentication) {
+		String myId = authentication.getName();
+		String decodeYourNickName = URLDecoder.decode(yourNickName, StandardCharsets.UTF_8);
+		service.createChatRoom(myId, decodeYourNickName.substring(decodeYourNickName.indexOf("=") + 1));
 	}
 }

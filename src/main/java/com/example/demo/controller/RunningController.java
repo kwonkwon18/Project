@@ -85,7 +85,7 @@ public class RunningController {
 
 		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
-		System.out.println(members);
+//		System.out.println(members);
 
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
@@ -128,14 +128,14 @@ public class RunningController {
 	public void runningMyPage(Authentication authentication, Model model) {
 
 		Member member = service.getMembertUserId(authentication.getName());
-		System.out.println("접근함");
+//		System.out.println("접근함");
 
 		Map<String, Object> myPageList = new HashMap<>();
 
 		myPageList.put("MyNickName", member.getNickName());
 
 		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
-		System.out.println("***" + totalMyData);
+//		System.out.println("***" + totalMyData);
 		myPageList.put("totalMyData", totalMyData);
 
 		// id 기준으로 리스트업
@@ -146,7 +146,7 @@ public class RunningController {
 		// 참여자들 리스트업
 		List<RunningParty> members = service.getJoinMember(member.getNickName());
 		myPageList.put("members", members);
-		System.out.println("멤버스 : " + members);
+//		System.out.println("멤버스 : " + members);
 
 		model.addAllAttributes(myPageList);
 
@@ -157,7 +157,7 @@ public class RunningController {
 	public void runningMatePage(Model model, Authentication authentication,
 			@RequestParam(value = "type", required = false) String type) {
 
-		System.err.println("접근 1");
+//		System.err.println("접근 1");
 
 		Map<String, Object> getMemberList = new HashMap<>();
 
@@ -165,7 +165,7 @@ public class RunningController {
 		getMemberList.put("runningMates", runningMates);
 
 		/* model.addAttribute("board", runningMates); */
-		System.out.println(runningMates);
+//		System.out.println(runningMates);
 
 		List<RunningParty> members = service.selectMemberIdByBoardId();
 		getMemberList.put("members", members);
@@ -186,7 +186,7 @@ public class RunningController {
 		getMemberList.put("runningMates", runningMates);
 
 		/* model.addAttribute("board", runningMates); */
-		System.out.println(runningMates);
+//		System.out.println(runningMates);
 
 		List<RunningParty> members = service.selectMemberIdByBoardId();
 		getMemberList.put("members", members);
@@ -209,7 +209,7 @@ public class RunningController {
 
 		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
-		System.out.println(members);
+//		System.out.println(members);
 
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
@@ -292,7 +292,7 @@ public class RunningController {
 		// 결과를 listSearch에 저장하여 클라이언트로 전달합니다.
 		listSearch.put("result", service.searchMate(searchTerm));
 			
-		System.out.println("****" + searchTerm);
+//		System.out.println("****" + searchTerm);
 		return listSearch;
 	}
 

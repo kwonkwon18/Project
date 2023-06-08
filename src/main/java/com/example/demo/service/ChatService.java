@@ -28,7 +28,7 @@ public class ChatService {
 	}
 
 	public List<Chat> getChat(LocalDateTime inserted, String myUserId) {
-		int chatRoomId = mapper.getChatRoomId(inserted, myUserId);
+		int chatRoomId = mapper.getChatRoomIdByInserted(inserted, myUserId);
 		List<Chat> list = mapper.getChatSelectByChatRoomId(chatRoomId);
 		List<LocalDateTime> dateTimeList = mapper.getinsertedByChatRoomId(chatRoomId);
 		for(int i = 0; i < dateTimeList.size(); i++) {
@@ -77,7 +77,7 @@ public class ChatService {
 	}
 
 	public Integer getChatRoomId(String myUserId, LocalDateTime dateInserted) {
-		return mapper.getChatRoomId(dateInserted, myUserId);
+		return mapper.getChatRoomIdByInserted(dateInserted, myUserId);
 	}
 
 	public void resetCount(Integer chatRoomId, String myUserId) {
@@ -92,13 +92,42 @@ public class ChatService {
 
 	public boolean checkChatRoom(String yourId, String myId) {
 		int cnt = 0;
-		cnt += mapper.checkChatRoom(yourId, myId);
+		for(int i : mapper.checkChatRoom(yourId, myId)) {
+			cnt += i;
+		}
 		return cnt == 1;
 	}
 
 	public LocalDateTime getChatLastInserted(Integer id) {
-		// TODO Auto-generated method stub
-		return mapper.getChatLastInserted(id);
+		if(mapper.getChatLastInserted(id) == null) {
+			LocalDateTime time = LocalDateTime.now();
+			return time;
+		} else {
+			return mapper.getChatLastInserted(id);
+		}
+	}
+
+	public List<Chat> getChat(String myId, String yourId) {
+		Integer chatRoomId = mapper.getChatRoomIdByYourId(myId, yourId);
+		List<Chat> list = mapper.getChatSelectByChatRoomId(chatRoomId);
+		List<LocalDateTime> dateTimeList = mapper.getinsertedByChatRoomId(chatRoomId);
+		for(int i = 0; i < dateTimeList.size(); i++) {
+			LocalTime time = dateTimeList.get(i).toLocalTime();
+			list.get(i).setTime(time.getHour() + ":" + time.getMinute());
+		}
+		return list;
+	}
+
+	public Integer getChatRoomId(String yourId, String myId) {
+		return mapper.getChatRoomIdByYourId(myId, yourId);
+	}
+
+	public void createChatRoom(String myId, String yourNickName) {
+		System.out.println(yourNickName);
+		String yourId = memberMapper.getUserIdSelectByNickName(yourNickName);
+		System.out.println(yourId);
+		mapper.createChatRoom(myId, yourId);
+		
 	}
 
 

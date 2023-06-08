@@ -12,7 +12,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<my:navBar></my:navBar>
+	<%
+	java.util.Date now = new java.util.Date();
+	java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+	String nowString = dateFormat.format(now);
+	%>
+
+	<my:navBar></my:navBar>
 	<div id="map" style="width: 100%; height: 500px;"></div>
 
 
@@ -20,7 +26,7 @@
 	<br />
 	<input id="inputValue" type="text" placeholder="예)서울숲" />
 	<br />
-	
+
 
 	<div id="clickLatlng"></div>
 
@@ -35,7 +41,7 @@
 						<input id="titleInput" class="form-control" type="text" name="title" value="${runningBoard.title }" required />
 					</div>
 
-					<%-- 				<div class="mb-3">
+					<%--<div class="mb-3">
 						<label for="wirterInput" class="form-label">글쓴이</label>
 						<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningBoard.writer }" />
 					</div>  --%>
@@ -57,7 +63,7 @@
 
 					<div class="mb-3">
 						<label for="dateInput" class="form-label">모이는 시간</label>
-						<input required id="dateInput" name="time" type="datetime-local" />
+						<input required id="dateInput" name="time" type="datetime-local" min="<%=nowString%>" />
 					</div>
 
 					<input id="LatSubmit" type="text" name="Lat" value="" />

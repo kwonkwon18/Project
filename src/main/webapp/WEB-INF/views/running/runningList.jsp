@@ -13,7 +13,6 @@
 </head>
 <body>
 
-
 	<div class="container-lg">
 		<h1>러닝 게시판 게시물 목록</h1>
 		<table class="table">

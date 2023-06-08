@@ -1,5 +1,3 @@
-
-
 function handleListUpButtonClick() {
 	// 아이디 얻는 코드 
 	const boardId = $(this).attr("data-board-id");
@@ -248,4 +246,5 @@ $("#all1").click(function() {
 $("#search1").click(function() {
 	$("#dropdown1").slideDown()
 })
+
 

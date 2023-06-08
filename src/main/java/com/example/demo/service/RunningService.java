@@ -8,13 +8,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
+import com.example.demo.domain.RunningToday;
 import com.example.demo.mapper.RunningMapper;
 import com.example.demo.mapper.RunningPartyMapper;
 import com.example.demo.mapper.RunningTodayMapper;
+
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 
 @Service
 public class RunningService {
@@ -69,7 +73,7 @@ public class RunningService {
 
 	}
 	
-	public List<RunningBoard> getMateBoardByAddress(Authentication authentication, String type) {
+	public List<RunningBoard> getMateBoardByAddress(Authentication authentication, String type, String search) {
 
 		if(authentication != null) {
 
@@ -83,16 +87,137 @@ public class RunningService {
 
 		if (userAddress != "") {
 			if (userAddress.equals("은평구")) {
-				addressList.add("서대문구");
-				addressList.add("관악구");
 				addressList.add("은평구");
+				addressList.add("마포구");
+				addressList.add("서대문구");
+			} else if (userAddress.equals("마포구")) {
+				addressList.add("마포구");
+				addressList.add("서대문구");
+				addressList.add("은평구");
+				addressList.add("용산구");
+			} else if (userAddress.equals("종로구")) {
+				addressList.add("종로구");
+				addressList.add("성북구");
+				addressList.add("중구");
+				addressList.add("서대문구");
+			} else if (userAddress.equals("중구")) {
+				addressList.add("중구");
+				addressList.add("종로구");
+				addressList.add("성동구");
+				addressList.add("용산구");
+			} else if (userAddress.equals("용산구")) {
+				addressList.add("용산구");
+				addressList.add("마포구");
+				addressList.add("중구");
+				addressList.add("성동구");
+			} else if (userAddress.equals("성동구")) {
+				addressList.add("성동구");
+				addressList.add("중구");
+				addressList.add("동대문구");
+				addressList.add("광진구");
+			} else if (userAddress.equals("광진구")) {
+				addressList.add("광진구");
+				addressList.add("성동구");
+				addressList.add("동대문구");
+				addressList.add("중랑구");
+			} else if (userAddress.equals("동대문구")) {
+				addressList.add("동대문구");
+				addressList.add("성북구");
+				addressList.add("중랑구");
+				addressList.add("성동구");
+			} else if (userAddress.equals("중랑구")) {
+				addressList.add("중랑구");
+				addressList.add("노원구");
+				addressList.add("동대문구");
+				addressList.add("광진구");
+			} else if (userAddress.equals("성북구")) {
+				addressList.add("성북구");
+				addressList.add("강북구");
+				addressList.add("동대문구");
+				addressList.add("종로구");
+			} else if (userAddress.equals("강북구")) {
+				addressList.add("강북구");
+				addressList.add("도봉구");
+				addressList.add("노원구");
+				addressList.add("성북구");
+			} else if (userAddress.equals("도봉구")) {
+				addressList.add("도봉구");
+				addressList.add("노원구");
+				addressList.add("강북구");
+				addressList.add("성북구");
+			} else if (userAddress.equals("노원구")) {
+				addressList.add("노원구");
+				addressList.add("도봉구");
+				addressList.add("강북구");
+				addressList.add("중랑구");
+			} else if (userAddress.equals("서대문구")) {
+				addressList.add("서대문구");
+				addressList.add("은평구");
+				addressList.add("종로구");
+				addressList.add("마포구");
+			} else if (userAddress.equals("양천구")) {
+				addressList.add("양천구");
+				addressList.add("강서구");
+				addressList.add("영등포구");
+				addressList.add("구로구");
+			} else if (userAddress.equals("강서구")) {
+				addressList.add("강서구");
+				addressList.add("양천구");
+				addressList.add("구로구");
+				addressList.add("영등포구");
+			} else if (userAddress.equals("구로구")) {
+				addressList.add("구로구");
+				addressList.add("양천구");
+				addressList.add("영등포구");
+				addressList.add("금천구");
+			} else if (userAddress.equals("금천구")) {
+				addressList.add("금천구");
+				addressList.add("구로구");
+				addressList.add("관악구");
+				addressList.add("영등포구");
+			} else if (userAddress.equals("영등포구")) {
+				addressList.add("영등포구");
+				addressList.add("양천구");
+				addressList.add("구로구");
+				addressList.add("동작구");
+			} else if (userAddress.equals("동작구")) {
+				addressList.add("동작구");
+				addressList.add("영등포구");
+				addressList.add("관악구");
+				addressList.add("서초구");
+			} else if (userAddress.equals("관악구")) {
+				addressList.add("관악구");
+				addressList.add("금천구");
+				addressList.add("동작구");
+				addressList.add("서초구");
+			} else if (userAddress.equals("서초구")) {
+				addressList.add("서초구");
+				addressList.add("강남구");
+				addressList.add("동작구");
+				addressList.add("관악구");
+			} else if (userAddress.equals("강남구")) {
+				addressList.add("강남구");
+				addressList.add("서초구");
+				addressList.add("송파구");
+				addressList.add("성동구");
+			} else if (userAddress.equals("송파구")) {
+				addressList.add("송파구");
+				addressList.add("강남구");
+				addressList.add("강동구");
+				addressList.add("광진구");
+			} else if (userAddress.equals("강동구")) {
+				addressList.add("강동구");
+				addressList.add("송파구");
+				addressList.add("광진구");
+				addressList.add("강남구");
 			}
+		
 
 		}// 마지막 괄호임
 		
 		System.out.println("addressList" + addressList);
 
-		return mapper.selectMateByDistance(addressList, type);
+		return mapper.selectMateByDistance(addressList, type, search);
 	}
 		
 		return null;
@@ -148,7 +273,7 @@ public class RunningService {
 	}
 
 	public boolean modify(RunningBoard runningBoard) {
-		// TODO Auto-generated method stub
+		System.out.println(1234);
 		return mapper.updateBoardById(runningBoard);
 	}
 
@@ -164,5 +289,8 @@ public class RunningService {
 		// TODO Auto-generated method stub
 		return mapper.selectBySearchTerm(searchTerm);
 	}
+
+
+
 
 }

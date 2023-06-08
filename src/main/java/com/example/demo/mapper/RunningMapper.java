@@ -63,7 +63,7 @@ public interface RunningMapper {
 						""")
 	@ResultMap("boardResultMap")
 	RunningBoard selectById(Integer id);
-	
+
 	@Select("""
 			SELECT
 			    r.id,
@@ -94,7 +94,7 @@ public interface RunningMapper {
 			    r.Lng,
 			    r.people,
 			    r.address
-			   
+
 						""")
 	@ResultMap("boardResultMap")
 	RunningBoard selectByIdForMate(Integer id);
@@ -165,6 +165,7 @@ public interface RunningMapper {
 	// 주소 반영한 것
 	@Select("""
 			<script>
+			<bind name="pattern" value="'%' + search + '%'" />
 			SELECT
 			    r.id,
 			    r.title,
@@ -181,15 +182,30 @@ public interface RunningMapper {
 			    RunningBoard r
 			    LEFT JOIN RunningParty rp ON r.id = rp.boardId
 
+				<where>
+
+				<if test = "(type eq 'all') or (type eq 'title')">
+				title LIKE #{pattern}
+				</if>
+
+
+				<if test = "(type eq 'all') or (type eq 'address')">
+				OR address LIKE #{pattern}
+				</if>
+
+
 
 				<if test = "(type eq 'distance')">
-				WHERE address IN (
-
+				address IN (
 				<foreach collection="addressList" item="item" separator=", ">
 					#{item}
 				</foreach>
 				)
 				</if>
+				
+				 AND time > DATE_SUB(NOW(), INTERVAL 3 DAY) -- 수정된 부분
+
+				</where>
 
 			GROUP BY
 			    r.id,
@@ -205,7 +221,7 @@ public interface RunningMapper {
 			    ORDER BY r.inserted desc
 			    </script>
 					""")
-	List<RunningBoard> selectMateByDistance(List<String> addressList, String type);
+	List<RunningBoard> selectMateByDistance(List<String> addressList, String type, String search);
 
 	@Select("""
 			         select boardId ,memberId
@@ -281,12 +297,17 @@ public interface RunningMapper {
 			""")
 	boolean deleteById(Integer id);
 
-	
 	@Select("""
 			SELECT * FROM RunningBoard
 			WHERE address LIKE '%${searchTerm}%'
 			""")
 	List<RunningBoard> selectBySearchTerm(String searchTerm);
+
+	@Delete("""
+			delete from RunningFileName
+			where boardId = #{id} AND fileName = #{fileName}
+			""")
+	void deleteFileNameByBoardIdAndFileName(Integer id, String fileName);
 
 //	@Select("""
 //			<scipt>

@@ -54,14 +54,14 @@
 		<nav>
 			<ul>
 				<span style="margin-left: 50px;"></span>
-				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
+				<a id="all1" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 				<div class="dropdown-menu" aria-labelledby="search1">
 					<a class="dropdown-item" href="#">메뉴 항목 1</a>
 					<a class="dropdown-item" href="#">메뉴 항목 2</a>
 					<a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
-				
+
 				<a href="runningMap" style="text-decoration-line: none;">지도로 보기</a>
 				<span style="margin-left: 480px;"></span>
 				<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
@@ -69,41 +69,23 @@
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">종류🌄</button>
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li>
-							<a class="dropdown-item" href="#">Action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Another action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Something else here</a>
-						</li>
-					</ul>
-				</ul>
-				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li>
-							<a class="dropdown-item" href="#">Action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Another action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Something else here</a>
-						</li>
-					</ul>
-					<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
+					<form action="/running/runningMate" class="d-flex" role="search">
+						<select class="form-select" name="type" id="">
+							<option value="all">전체</option>
+							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
+							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
+							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
+						</select>
+						<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</form>
 				</ul>
 			</div>
 		</nav>
+
 
 		<ul>
 			<div style="text-align: right;">
@@ -119,10 +101,10 @@
 				<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 				<div class="col">
 					<div class="card">
-						<div class="card-body">     
-							<h5 class="card-title"> 🏃‍♀️🏃‍♂️ ${board.title}</h5>
+						<div class="card-body">
+							<h5 class="card-title">🏃‍♀️🏃‍♂️ ${board.title}</h5>
 							<div>
-							
+
 								<div class="mb-3">
 									<label for="" class="form-label">작성자</label>
 									<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
@@ -135,7 +117,6 @@
 									<label for="" class="form-label">모임시간</label>
 									<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
 								</div>
-								${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}
 
 								<c:set var="isMember" value="false" />
 								<c:forEach items="${memberList}" var="memberList">
@@ -146,11 +127,12 @@
 
 								<c:if test="${openDate <= nowDate }">
 									<button>마감된 러닝</button>
+									
 								</c:if>
 
 								<c:if test="${openDate > nowDate }">
 									<c:if test="${isMember}">
-										<button type="button" onclick="location.href='/climbing/id/${board.id}' ">지원 사항 상세보기</button>
+										<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
 									</c:if>
 
 									<c:if test="${not isMember}">

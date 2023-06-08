@@ -12,10 +12,12 @@
 </head>
 <body>
 
+
 	<my:navBar></my:navBar>
 	<br />
 	<br />
 	<br />
+
 	<my:chatBtn></my:chatBtn>
 
 

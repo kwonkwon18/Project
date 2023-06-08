@@ -69,7 +69,7 @@ public class RunningService {
 
 	}
 	
-	public List<RunningBoard> getMateBoardByAddress(Authentication authentication, String type) {
+	public List<RunningBoard> getMateBoardByAddress(Authentication authentication, String type, String search) {
 
 		if(authentication != null) {
 
@@ -92,7 +92,7 @@ public class RunningService {
 		
 		System.out.println("addressList" + addressList);
 
-		return mapper.selectMateByDistance(addressList, type);
+		return mapper.selectMateByDistance(addressList, type, search);
 	}
 		
 		return null;

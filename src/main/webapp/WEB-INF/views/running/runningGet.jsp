@@ -145,7 +145,7 @@
 
 								<c:choose>
 									<c:when test="${isMember}">
-										<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
+										<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
 									</c:when>
 									<c:otherwise>
 										<c:if test="${board.people > board.currentNum }">

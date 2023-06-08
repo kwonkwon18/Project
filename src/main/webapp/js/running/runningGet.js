@@ -50,7 +50,7 @@ $("#joinPartyBtn").click(function() {
 					$("#joinPartyBtn").attr('disabled', 'disabled');
 				}
 			} else {
-				alert(data.message); // "신청 불가능합니다." 메시지 표시
+				alert("취소되었습니다" ); // "신청 불가능합니다." 메시지 표시
 			}
 			location.reload();
 		},

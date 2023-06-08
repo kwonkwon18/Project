@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 import org.springframework.web.multipart.*;
@@ -127,6 +128,38 @@ public class ClimbingMateService {
 	public List<ClimbingParty> selectMemberIdByBoardId() {
 
 		return mateMapper.selectMember();
+	}
+
+	public List<ClimbingMate> searchMate(String searchTerm) {
+		// TODO Auto-generated method stub
+		return mateMapper.selectBySearchTerm(searchTerm);
+	}
+	
+	public List<Member> getUserId(String userId) {
+		// TODO Auto-generated method stub
+		return mateMapper.selectUserId(userId);
+	}
+
+	public Object getBoardForModal(Integer boardId, Authentication authentication) {
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		// board에 대한 정보가 들어감
+		ClimbingMate getList = mateMapper.selectById(boardId);
+		getMemberList.put("board", getList);
+
+		// 신청자가 들어감
+		List<ClimbingParty> members = mateMapper.selectForMemberIdByBoardId(boardId);
+		getMemberList.put("members", members);
+
+		// 중복 신청 방지용
+		List<Member> memberList = getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+
+		// 로그인한 사람 확인용 (닉네임)
+		Member myNickName = mateMapper.getNickName(authentication.getName());
+		getMemberList.put("myNickName", myNickName);
+
+		return getMemberList;
 	}
 
 }

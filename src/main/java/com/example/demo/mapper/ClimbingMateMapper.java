@@ -10,14 +10,15 @@ import com.example.demo.domain.*;
 public interface ClimbingMateMapper {
 
 	@Insert("""
-			INSERT INTO ClimbingMate (title, body, writer, Lat, Lng)
-			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng})
+			INSERT INTO ClimbingMate (title, body, writer, Lat, Lng, time, address, people)
+			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{time}, #{address}, #{people})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(ClimbingMate climbingMate);
 
 	@Select("""
-			SELECT * FROM ClimbingMate;
+			SELECT * FROM ClimbingMate
+			ORDER BY Id DESC;
 			""")
 	List<ClimbingMate> selectList();
 
@@ -31,8 +32,10 @@ public interface ClimbingMateMapper {
 			    c.Lat,
 			    c.Lng,
 			    c.people,
+			    c.address,
+			    c.time,
 			    m.userId,
-			    COUNT(rp.boardId) AS currentNum
+			    COUNT(cp.boardId) AS currentNum
 			FROM
 			    ClimbingMate c
 			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
@@ -47,7 +50,8 @@ public interface ClimbingMateMapper {
 			    c.writer,
 			    c.Lat,
 			    c.Lng,
-			    c.people;
+			    c.people,
+			    c.address;
 			""")
 	@ResultMap("climbingMateResultMap")
 	ClimbingMate selectById(Integer id);
@@ -61,7 +65,9 @@ public interface ClimbingMateMapper {
 			   c.inserted,
 			   c.Lat,
 			   c.Lng,
-			   c.people
+			   c.people,
+			   c.time,
+			   c.address
 			   FROM ClimbingMate c
 			   where b.writer = #{writer}
 			""")
@@ -92,7 +98,7 @@ public interface ClimbingMateMapper {
 			    c.Lat,
 			    c.Lng,
 			    c.people,
-			    COUNT(rp.boardId) AS currentNum
+			    COUNT(cp.boardId) AS currentNum
 			FROM
 			    ClimbingMate c
 			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
@@ -169,5 +175,31 @@ public interface ClimbingMateMapper {
 	from ClimbingParty p left join ClimbingBoard b ON p.boardId = b.id
 	""")
 	List<ClimbingParty> selectMember();
+
+	@Select("""
+			SELECT * FROM ClimbingMate
+			WHERE title LIKE '%${searchTerm}%'
+			""")
+	List<ClimbingMate> selectBySearchTerm(String searchTerm);
+
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	List<Member> selectUserId(String userId);
+
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from ClimbingParty p left join ClimbingMate b ON p.boardId = b.id
+			where boardId = #{boardId} group by p.boardId, p.memberId;
+						""")
+	@ResultMap("climbingMateResultMap2")
+	List<ClimbingParty> selectForMemberIdByBoardId(Integer boardId);
+
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	Member getNickName(String name);
+
+
 
 }

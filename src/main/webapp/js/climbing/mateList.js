@@ -8,7 +8,7 @@ function handleListUpButtonClick() {
 	console.log(today);
 
 
-	$.ajax("/running/getRunningDetail?boardId=" + boardId, {
+	$.ajax("/climbing/getClimbingDetail?boardId=" + boardId, {
 		success: function(data) {
 			let latNum = `${data.board.lat}`;
 			let lngNum = `${data.board.lng}`;
@@ -19,16 +19,13 @@ function handleListUpButtonClick() {
 			let compareTime = new Date(time);
 
 
-//			console.log(data);
-//			console.log(latNum);
-//			console.log(lngNum);
-//			console.log(people);
-//			console.log(currentNum);
-//			console.log(nickName);
-//			console.log(compareTime);
-			
-			$(".chatRoomModalBody").remove();
-			$("#chatRoomModalBefore").after('<div class="modal-body chatRoomModalBody">' + data.board.writer + '님과의 대화방을 생성하시겠습니까?</div>');
+			console.log(data);
+			console.log(latNum);
+			console.log(lngNum);
+			console.log(people);
+			console.log(currentNum);
+			console.log(nickName);
+			console.log(compareTime);
 
 			$("#resMate").empty();
 
@@ -43,8 +40,7 @@ function handleListUpButtonClick() {
         <div class="mb-3">
           <label for="" class="form-label">작성자</label>
           <br />
-		  <button type="button" class="chatRoomCheckBtn">${data.board.writer}</button>
-		  <button style="display: none;"type="hidden" class="createChatRoomCheckBtn" data-bs-toggle="modal" data-bs-target="#createChatRoom">${data.board.writer}</button>
+          <span>${data.board.writer}</span>
         </div>
         <div class="mb-3">
           <label for="" class="form-label">모임 시간</label>
@@ -66,9 +62,7 @@ function handleListUpButtonClick() {
 					isMine = true;
 				}
 
-				$("#resMate").append(`
-				<span>${memberId}</span> <br />
-				`);
+				$("#resMate").append(`<span>${memberId}</span> <br />`);
 			}
 
 			console.log(isMine)
@@ -80,7 +74,6 @@ function handleListUpButtonClick() {
 			if (today < compareTime) {
 
 				if (people > currentNum && isMine) {
-	
 					$("#resMate").append(`</div>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
 			
@@ -149,7 +142,6 @@ function handleListUpButtonClick() {
 }
 
 
-
 $(".listUpButton").click(handleListUpButtonClick);
 
 
@@ -164,7 +156,7 @@ $(document).on('click', '.joinPartyBtn', function() {
 	const data = { boardId, userId };
 	console.log(data)
 
-	$.ajax("/running/joinParty", {
+	$.ajax("/climbing/joinParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -172,7 +164,7 @@ $(document).on('click', '.joinPartyBtn', function() {
 		success: function(data) {
 			if (data.join) {
 				alert("신청되었습니다.");
-				location.href = "/running/id/" + boardId;
+				location.href = "/climbing/id/" + boardId;
 			} else {
 				alert("취소되었습니다.");
 				location.reload();
@@ -188,11 +180,4 @@ $(document).on('click', '.joinPartyBtn', function() {
 });
 
 
-$("#search1").click(function() {
-	if ($("#dropdown1").is(":hidden")) {
-		$("#dropdown1").slideDown();
-	} else {
-		$("#dropdown1").slideUp();
-	}
-});
 

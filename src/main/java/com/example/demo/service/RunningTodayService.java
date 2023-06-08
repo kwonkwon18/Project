@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.domain.RunningBoard;
+import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningToday;
+import com.example.demo.mapper.RunningMapper;
 import com.example.demo.mapper.RunningTodayMapper;
 
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -27,6 +29,9 @@ public class RunningTodayService {
 	
 	@Autowired
 	private RunningTodayMapper todayMapper;
+	
+	@Autowired
+	private RunningMapper mapper;
 
 	public List<RunningToday> listBoard() {
 		
@@ -34,8 +39,10 @@ public class RunningTodayService {
 
 	}
 	
-	public boolean addRunningToday(RunningToday runningToday, MultipartFile[] files) throws Exception {
+	public boolean addRunningToday(Authentication authentication, RunningToday runningToday, MultipartFile[] files) throws Exception {
 
+		
+		
 		Integer cnt = todayMapper.insertRunningToday(runningToday);
 
 		for (MultipartFile file : files) {
@@ -62,7 +69,9 @@ public class RunningTodayService {
 	}
 
 	public RunningToday getBoard(Integer id) {
-		
+		System.out.println("***" + todayMapper.selectFileNameById(id));
 		return todayMapper.selectFileNameById(id);
 	}
+
+
 }

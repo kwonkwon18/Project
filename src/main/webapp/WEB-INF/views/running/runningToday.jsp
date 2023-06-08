@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
+    <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+
+<my:navBar></my:navBar>
 
 	<div class="container-lg">
 
@@ -24,15 +26,17 @@
 						<input id="titleInput" class="form-control" type="text" name="title" value="${runningToday.title }" />
 					</div>
 					
-					<div class="mb-3">
+<%-- 					<div class="mb-3">
 						<label for="wirterInput" class="form-label">글쓴이</label>
 						<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningToday.writer }" />
-					</div>
+					</div> --%>
 					
 					<div class="mb-3">
 						<label for="fileInput" class="form-label"></label> 
 						<input type="file" multiple name="files" accept="image/*" id="fileInput" />
 					</div>
+					
+					<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title }" />
 					
 					<!-- application property에서 작업 하는 내용 
 					spring.servlet.multipart.max-file-size=1MB
@@ -45,6 +49,8 @@
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${runningToday.body }</textarea>
 					</div>
+					
+					
 
 					<input id="addButton" class="btn btn-primary" type="submit" value="등록" />
 			</div>

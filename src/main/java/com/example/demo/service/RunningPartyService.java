@@ -24,8 +24,9 @@ public class RunningPartyService {
 
 	public Map<String, Object> join(RunningParty runningParty, Authentication authentication) {
 
+		
 		Member member = mapper.selectMemberById(authentication.getName());
-		System.out.println(authentication.getName());
+		
 
 		RunningBoard board = mapper.selectById(runningParty.getBoardId());
 		int currentNum = partyMapper.countByBoardId(runningParty.getBoardId());
@@ -77,9 +78,9 @@ public class RunningPartyService {
 		Map<String, Object> result = new HashMap<>();
 
 		result.put("join", false);
-
+		System.out.println("runningParty" + runningParty);
 		Integer deleteCnt = partyMapper.delete(runningParty);
-		System.out.println(deleteCnt);
+		System.out.println("deleteCnt" + deleteCnt);
 
 		// 참여인원갯수 넘겨주기
 		Integer count = partyMapper.countByBoardId(runningParty.getBoardId());

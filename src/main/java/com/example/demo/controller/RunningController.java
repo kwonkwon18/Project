@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,13 +64,15 @@ public class RunningController {
 	}
 
 	@PostMapping("/runningAdd")
-	public String addResult(RunningBoard runningBoard, RedirectAttributes trrt, Authentication authentication) {
+	public String addResult(RunningBoard runningBoard, RedirectAttributes rttr, Authentication authentication) {
 
 		boolean ok = service.addBoard(runningBoard, authentication);
 
 		if (ok) {
-			return "redirect:/running/runningList";
+			rttr.addFlashAttribute("message", runningBoard.getTitle() + "  게시물이 등록되었습니다.");
+			return "redirect:/running/runningMate";
 		} else {
+			rttr.addFlashAttribute("message", "게시물 등록 실패 !! ");
 			return "redirect:/running/runningAdd";
 		}
 	}
@@ -97,8 +100,10 @@ public class RunningController {
 	@GetMapping("/runningToday")
 	public void addrunningShare(Authentication authentication, Model model) {
 
+		
 	}
 
+	
 	@PostMapping("/runningToday")
 	public String addrunningShareResult(@RequestParam("files") MultipartFile[] files, RunningToday runningToday,
 			RedirectAttributes rttr, Authentication authentication) throws Exception {
@@ -117,7 +122,7 @@ public class RunningController {
 	public String detailToday(@PathVariable("id") Integer id, Model model) {
 
 		RunningToday getList = todayService.getBoard(id);
-		
+
 		System.out.println("getList" + getList);
 
 		model.addAttribute("board", getList);
@@ -157,7 +162,7 @@ public class RunningController {
 	// 여기서 List<String> Mapper 써줄 것임
 	@GetMapping("/runningMate")
 	public void runningMatePage(Model model, Authentication authentication,
-			@RequestParam(value = "type", required = false) String type, 
+			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "search", defaultValue = "") String search) {
 
 		System.err.println("접근 1");
@@ -259,6 +264,69 @@ public class RunningController {
 	public void runningMapProcess() {
 
 	}
+	
+	// ******* TODAY
+	
+	@GetMapping("/runningTodayModify/{id}")
+	public String modifyForm(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("board", todayService.getBoard(id));
+		return "/running/runningTodayModify";
+	}
+	
+	@PostMapping("/runningTodayModify/{id}")
+	// 수정하려는 게시물 id : board.getId()
+	public String modifyProcess(RunningToday runningToday, RedirectAttributes rttr,
+			// requestParam을 통해서 jsp로 넘어오는 인자를 value 로 처래해줌을 표시해준다.
+			// 파일 이름을 인자로 받아서 삭제해줄 파일들을 지정해줌
+			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
+			// 파일들을 실제로 받아서 (MultipartFile[]) 인자로 넣어줌
+			@RequestParam(value = "files", required = false) MultipartFile[] addFiles) throws Exception {
+//		System.out.println(removeFileNames); 확인용
+
+		// removeFileNames 로 넘어온 파일명을 찾아서 삭제 해줌
+
+		// 새로 입력받은 file 폴더를 만들어줌
+
+		// 변경된 것들을 테이블에 수정해줌
+
+		boolean ok = todayService.todayModify(runningToday, removeFileNames, addFiles);
+
+		if (ok) {
+			// 해당 게시물 보기로 리디렉션 ==> 다시 화면을 작성해줘야하기 때문에
+//			rttr.addAttribute("success", "success");
+			// addFlashAttribute 는 attibute를 전달해줄 수 있다.
+			rttr.addFlashAttribute("message", runningToday.getId() + "번 게시물이 수정되었습니다.");
+			return "redirect:/id/" + runningToday.getId();
+		} else {
+			// 수정 form 으로 리디렉션
+//			rttr.addAttribute("fail", "fail");
+			rttr.addFlashAttribute("message", runningToday.getId() + "번 게시물이 수정되지 않았습니다.");
+			return "redirect:/modify/" + runningToday.getId();
+		}
+	}
+
+	@PostMapping("remove")
+	@PreAuthorize("isAuthenticated() and @customSecurityChecker.checkBoardWriter(authentication, #id)")
+	public String remove(Integer id, RedirectAttributes rttr) {
+		boolean ok = service.remove(id);
+		if (ok) {
+			// query string에 추가
+//			rttr.addAttribute("success", "remove");
+
+			// 모델에 추가
+			rttr.addFlashAttribute("message", id + "번 게시물이 삭제되었습니다.");
+
+			return "redirect:/list";
+		} else {
+			return "redirect:/id/" + id;
+		}
+	}
+	
+	// *********
+	
+	
+	
+	
 
 	// ******************** AJAX
 

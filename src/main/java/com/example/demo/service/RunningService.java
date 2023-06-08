@@ -8,13 +8,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
+import com.example.demo.domain.RunningToday;
 import com.example.demo.mapper.RunningMapper;
 import com.example.demo.mapper.RunningPartyMapper;
 import com.example.demo.mapper.RunningTodayMapper;
+
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 
 @Service
 public class RunningService {
@@ -285,5 +289,8 @@ public class RunningService {
 		// TODO Auto-generated method stub
 		return mapper.selectBySearchTerm(searchTerm);
 	}
+
+
+
 
 }

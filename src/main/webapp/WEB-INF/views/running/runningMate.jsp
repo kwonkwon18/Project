@@ -54,7 +54,7 @@
 		<nav>
 			<ul>
 				<span style="margin-left: 50px;"></span>
-				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
+				<a id="all1" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 				<div class="dropdown-menu" aria-labelledby="search1">
 					<a class="dropdown-item" href="#">메뉴 항목 1</a>
@@ -85,11 +85,6 @@
 				</ul>
 			</div>
 		</nav>
-
-
-
-
-
 
 
 		<ul>
@@ -132,6 +127,7 @@
 
 								<c:if test="${openDate <= nowDate }">
 									<button>마감된 러닝</button>
+									
 								</c:if>
 
 								<c:if test="${openDate > nowDate }">

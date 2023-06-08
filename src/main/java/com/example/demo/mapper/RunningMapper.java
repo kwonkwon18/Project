@@ -193,16 +193,19 @@ public interface RunningMapper {
 				OR address LIKE #{pattern}
 				</if>
 
-				</where>
 
 
 				<if test = "(type eq 'distance')">
-				WHERE address IN (
+				address IN (
 				<foreach collection="addressList" item="item" separator=", ">
 					#{item}
 				</foreach>
 				)
 				</if>
+				
+				 AND time > DATE_SUB(NOW(), INTERVAL 3 DAY) -- 수정된 부분
+
+				</where>
 
 			GROUP BY
 			    r.id,
@@ -299,6 +302,12 @@ public interface RunningMapper {
 			WHERE address LIKE '%${searchTerm}%'
 			""")
 	List<RunningBoard> selectBySearchTerm(String searchTerm);
+
+	@Delete("""
+			delete from RunningFileName
+			where boardId = #{id} AND fileName = #{fileName}
+			""")
+	void deleteFileNameByBoardIdAndFileName(Integer id, String fileName);
 
 //	@Select("""
 //			<scipt>

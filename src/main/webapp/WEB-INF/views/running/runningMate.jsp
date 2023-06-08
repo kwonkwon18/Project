@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<my:chatBtn></my:chatBtn>
 
 	<my:navBar></my:navBar>
 
@@ -127,7 +126,7 @@
 
 								<c:if test="${openDate <= nowDate }">
 									<button>마감된 러닝</button>
-									
+
 								</c:if>
 
 								<c:if test="${openDate > nowDate }">
@@ -157,21 +156,9 @@
 				</div>
 			</div>
 		</div>
-		
-	<div class="modal fade" id="createChatRoom" tabindex="-1" aria-labelledby="chatRoomModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header" id="chatRoomModalBefore">
-					<h1 class="modal-title fs-5" id="chatRoomModalLabel">대화방 생성</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-footer">
-					<button type="button" id="createChatRoomBtn" class="btn btn-primary">예</button>
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니요</button>
-				</div>
-			</div>
-		</div>
 	</div>
+
+	<my:chatBtn></my:chatBtn>
 
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -110,7 +110,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 			var myId = data.myId;
 			lastChatRoomId = data.chatRoomId;
 			$("#chatBox").append(`
-                <div id="chatContainer" style="padding-bottom:40px;"></div> 
+                <div id="chatContainer"></div> 
             `)
 			for (const chat of chatList) {
 				if (chat.senderId === myId) {
@@ -129,11 +129,16 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
                     `)
 				}
 			}
-			lastChatId = chatList[chatList.length - 1].id;
+			scrollToBottom();
+			if(chatList[chatList.length - 1] === undefined) {
+				lastChatId = 0;				
+			} else {
+				lastChatId = chatList[chatList.length - 1].id;
+			}
+			console.log(lastChatId);
 			repeat = setInterval(function() {
 				currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
 			}, 3000);
-
 		}
 	})
 })
@@ -170,7 +175,6 @@ function currentChatId(lastChatIdParam, chatRoomId, chatContainer) {
 	})
 }
 
-
 $("#sendChatBtn").click(function() {
 	const message = $("#chatTextArea").val();
 	const chatRoomId = lastChatRoomId;
@@ -181,9 +185,16 @@ $("#sendChatBtn").click(function() {
 		data: JSON.stringify(data),
 		complete: function() {
 			$("#chatTextArea").val("");
+			scrollToBottom();
 		}
 	})
 })
+
+document.addEventListener('keyup', function(event) {
+  if (event.key === 'Enter') {
+    document.getElementById('sendChatBtn').click();
+  }
+});
 
 $("#deleteChatRoomModalButton").click(function() {
 	$("#chatBox").hide();
@@ -269,3 +280,8 @@ $("#createChatRoomBtn").click(function() {
 		}
 	})
 })
+
+function scrollToBottom() {
+  var chatBox = document.getElementById("chatBox");
+  chatBox.scrollTop = chatBox.scrollHeight;
+}

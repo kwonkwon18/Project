@@ -1,14 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script type="text/javascript">
+window.onload = function(){
+	var gu = [
+		"강남구", "강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구",
+		"도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구",
+		"양천구","영등포구","용산구","은평구","종로구","중구","중랑구"
+	];
+	
+	let optionText = "";
+	for(var text of gu){
+		optionText += "<option value='" + text + "'>" + text + "</option>";
+	}
+	
+	document.getElementById("address").innerHTML = optionText;
+};
+</script>
 </head>
 <body>
-
+	<my:navBar> </my:navBar>
 	<div class="container-lg">
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
@@ -53,7 +70,9 @@
 					
 					<div class="mb-3">
 						<label for="inputEmail" class=form-label">주소</label>
-						<input id="inputEmail" type="text" class="form-control" name="address" value="${member.address }" />
+						<%-- <input id="inputEmail" type="text" class="form-control" name="address" value="${member.address }" /> --%>
+						<select class="form-control" id="address">
+						</select>
 					</div>
 					
 					<div class="mb-3">

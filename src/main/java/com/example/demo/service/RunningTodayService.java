@@ -85,13 +85,6 @@ public class RunningTodayService {
 				DeleteObjectRequest dor = DeleteObjectRequest.builder().bucket(bucketName).key(objectKey).build();
 
 				s3.deleteObject(dor);
-///////////////////////////
-				// 로컬 하드디스크에서 삭제
-//				String path = "C:\\study\\upload\\" + board.getId() + "\\" + fileName;
-//				File file = new File(path);
-//				if (file.exists()) {
-//					file.delete();
-//				}
 
 				// 먼저 파일을 지우고 테이블을 지워준다.
 				mapper.deleteFileNameByBoardIdAndFileName(runningToday.getId(), fileName);
@@ -123,5 +116,12 @@ public class RunningTodayService {
 		int cnt = todayMapper.update(runningToday);
 
 		return cnt == 1;
+	}
+
+	public boolean removeById(Integer id) {
+		
+		Integer cnt = todayMapper.deletefileNameById(id);
+		
+		return todayMapper.deleteTodayById(id);
 	}
 }

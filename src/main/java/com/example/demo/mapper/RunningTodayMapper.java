@@ -2,6 +2,7 @@ package com.example.demo.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -14,8 +15,6 @@ import com.example.demo.domain.RunningToday;
 @Mapper
 public interface RunningTodayMapper {
 
-	
-	
 	@Insert("""
 			INSERT INTO RunningToday (title, body, writer)
 			VALUES (#{title}, #{body}, #{writer})
@@ -23,29 +22,21 @@ public interface RunningTodayMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer insertRunningToday(RunningToday runningToday);
 
-	
-	
-	
 	@Insert("""
 			insert into RunningFileName (boardId, fileName)
 			values (#{boardId}, #{fileName})
 			""")
 	void insertFileName(Integer boardId, String fileName);
 
-
-
 	@Select("""
 			select * from RunningToday;
 			""")
 	List<RunningToday> selectList();
 
-
-
 	@Select("""
 			select * from RunningToday where id = #{id};
 			""")
 	RunningToday selectById(Integer id);
-
 
 	@Select("""
 			SELECT
@@ -66,8 +57,6 @@ public interface RunningTodayMapper {
 	@ResultMap("boardResultMap")
 	RunningToday selectFileNameById(Integer id);
 
-
-
 	@Update("""
 			UPDATE RunningToday
 			SET
@@ -79,8 +68,16 @@ public interface RunningTodayMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int update(RunningToday runningToday);
 
-	
-	
-	
+	@Delete("""
+			DELETE FROM RunningFileName
+			WHERE boardId = #{boardId}
+			""")
+	Integer deletefileNameById(Integer id);
+
+	@Delete("""
+			DELETE FROM RunningToday
+			WHERE id = #{id}
+			""")
+	boolean deleteTodayById(Integer id);
 
 }

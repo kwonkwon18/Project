@@ -32,8 +32,7 @@ function showList() {
 				`);
 			for (var i = 1; i < nickNameList.length; i++) {
 				for (var j = i - 1; j >= 0; j--) {
-					console.log($("#chatListContainer").find("div:first"));
-					if (chatInsertedList[i] > $("#chatListContainer").find("div:first").find("input.chatInserted").val()) {
+					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
 						$(`#button${j}`).before(`
 							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
@@ -101,8 +100,8 @@ $("#returnBtn").click(function() {
 $("#chatList").on("click", ".openChatRoomBtn", function() {
 	$("#chatList").hide();
 	$("#chatBox").show();
-	//	var nickName = $(this).find(".nickNameSpan").text();
 	var inserted = $(this).find(".inserted").val();
+	//	var nickName = $(this).find(".nickNameSpan").text();
 	$.ajax("/chat/room", {
 		data: { inserted: inserted },
 		contentType: "application/json",
@@ -204,7 +203,45 @@ $(".chatRoomCheckBtn").click(function() {
 		data: { yourNickName : yourNickName },
 		success: function(data) {
 			if(data.check) {
-				
+				$("#chatListContainer").remove("");
+				$("#chatContainer").remove("");
+				$("#chatButton").hide();
+				$("#chatList").hide();
+				$("#chatBox").show();
+				$.ajax("/chat/roomOpen", {
+					data: { yourNickName : yourNickName },
+					contentType: "application/json",
+					success: function(data) {
+						var chatList = data.chatList;
+						var myId = data.myId;
+						lastChatRoomId = data.chatRoomId;
+						$("#chatBox").append(`
+			                <div id="chatContainer" style="padding-bottom:40px;"></div> 
+			            `)
+						for (const chat of chatList) {
+							if (chat.senderId === myId) {
+								$("#chatContainer").append(`
+			                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+			                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+			                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
+			                        </div>
+			                    `)
+							} else {
+								$("#chatContainer").append(`
+			                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+			                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+			                            <div>${chat.time}</div>
+			                        </div>
+			                    `)
+							}
+						}
+						lastChatId = chatList[chatList.length - 1].id;
+						repeat = setInterval(function() {
+							currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
+						}, 3000);
+			
+					}
+				})
 			} else {
 				$("#createChatRoomCheckBtn").click();
 			}

@@ -43,7 +43,8 @@ function handleListUpButtonClick() {
         <div class="mb-3">
           <label for="" class="form-label">작성자</label>
           <br />
-          <span>${data.board.writer}</span>
+		  <button type="button" class="chatRoomCheckBtn">${data.board.writer}</button>
+		  <button style="display: none;"type="hidden" class="createChatRoomCheckBtn" data-bs-toggle="modal" data-bs-target="#createChatRoom">${data.board.writer}</button>
         </div>
         <div class="mb-3">
           <label for="" class="form-label">모임 시간</label>
@@ -66,8 +67,7 @@ function handleListUpButtonClick() {
 				}
 
 				$("#resMate").append(`
-				<button type="button" class="chatRoomCheckBtn">${memberId}</button> <br />
-				<button type="hidden" class="createChatRoomCheckBtn" data-bs-toggle="modal" data-bs-target="#createChatRoom">${memberId}</button> <br />
+				<span>${memberId}</span> <br />
 				`);
 			}
 

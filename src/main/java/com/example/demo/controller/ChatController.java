@@ -90,6 +90,13 @@ public class ChatController {
 		return map;
 	}
 	
+	@GetMapping("roomOpen")
+	@ResponseBody
+	@PreAuthorize("authenticated")
+	public Map<String, Object> chatRoomOpen(Authentication authentication, String yourNickName) {
+		
+	}
+	
 	@PostMapping("add")
 	@ResponseBody
 	@PreAuthorize("authenticated")

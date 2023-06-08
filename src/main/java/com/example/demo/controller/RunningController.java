@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.domain.ClimbingToday;
 import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
@@ -111,9 +112,9 @@ public class RunningController {
 		boolean ok = todayService.addRunningToday(authentication, runningToday, files);
 
 		if (ok) {
-			return "redirect:/running/runningList";
+			return "redirect:/running/runningTodayList";
 		} else {
-			return "redirect:/running/runningToday";
+			return "redirect:/running/runningTodayList";
 		}
 
 	}
@@ -322,6 +323,23 @@ public class RunningController {
 			return "redirect:/running/runningTodayModify/" + id;
 		}
 	}
+	
+	@GetMapping("runningTodayList")
+	public void todayList(Model model
+//			@RequestParam(value = "page", defaultValue = "1") Integer page,
+//			@RequestParam(value = "search", defaultValue = "") String search,
+//			@RequestParam(value = "type", required = false) String type) 
+			) {
+		
+		Map<String, Object> todayList = new HashMap<>();		
+		
+		List<RunningToday> today = todayService.listBoard();
+		todayList.put("runningTodayList", today);
+		
+		model.addAllAttributes(todayList);
+
+	}
+	
 	
 	// *********
 	

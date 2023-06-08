@@ -29,8 +29,19 @@ public interface RunningTodayMapper {
 	void insertFileName(Integer boardId, String fileName);
 
 	@Select("""
-			select * from RunningToday;
-			""")
+			SELECT
+			    r.id,
+			    r.title,
+			    r.body,
+			    r.inserted,
+			    r.writer,
+			    f.fileName
+			FROM
+			    RunningToday r
+			    LEFT JOIN RunningFileName f ON r.id = f.boardId
+			    order by r.inserted desc
+						""")
+	@ResultMap("boardResultMap")
 	List<RunningToday> selectList();
 
 	@Select("""

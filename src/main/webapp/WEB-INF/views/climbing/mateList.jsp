@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +14,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<my:navBar></my:navBar>
+	<my:chatBtn></my:chatBtn>
 
+	<my:navBar></my:navBar>
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -57,26 +59,29 @@
 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
 				<span style="margin-left: 700px;"></span>
 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
+<!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#" onclick="changeDropdownItem('제목')">제목</a> <a class="dropdown-item" href="#" onclick="changeDropdownItem('작성자')">작성자</a> <a class="dropdown-item" href="#" onclick="changeDropdownItem('내용')">내용</a></li>
-					</ul>
-					<input value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
+					<form action="/climbing/mateList" class="d-flex" role="search">
+						<select class="form-select" name="type" id="" style="width: 150px">
+							<option value="all">전체</option>
+							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
+							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
+							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
+						</select> <input value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</form>	
 				</ul>
 			</div>
 		</nav>
 
 		<ul>
 			<div style="text-align: right;">
-				<a href="/climbing/climbingMate?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/climbingMate" style="text-decoration-line: none;">최신순</a>
+				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
 			</div>
 		</ul>
 
@@ -157,6 +162,8 @@
 		});
 	</script>
 	<script src="/js/climbing/mateList.js"></script>
+	<script src="/js/chat.js"></script>
+
 	<script>
 		function changeDropdownItem(item) {
 			var dropdownButton = document.getElementById("dropdownMenuButton1");

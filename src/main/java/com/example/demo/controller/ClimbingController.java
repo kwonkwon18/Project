@@ -53,12 +53,24 @@ public class ClimbingController {
 	}
 	
 	@GetMapping("mateList")
-	public void mateList(Model model) {
+	public void mateList(Model model, Authentication authentication,
+			@RequestParam(value = "type", required = false) String type, 
+			@RequestParam(value = "search", defaultValue = "") String search) {
+		
+		System.err.println("접근 1");
+
 		Map<String, Object> listMap = new HashMap<>();
 
 		// 메이트 구하기
-		List<ClimbingMate> mate = mateService.listBoard(); // 페이지 처리 전
+		List<ClimbingMate> mate = mateService.getMateBoardByAddress(authentication, type, search); // 페이지 처리 전
 		listMap.put("climbingMateList", mate);
+		
+		List<ClimbingParty> members = mateService.selectMemberIdByBoardId();
+		listMap.put("members", members);
+
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+		List<Member> memberList = mateService.getUserId(authentication.getName());
+		listMap.put("memberList", memberList);
 		
 		model.addAllAttributes(listMap);
 	}
@@ -175,22 +187,22 @@ public class ClimbingController {
 		model.addAllAttributes(listMap);
 	}
 	
-	@GetMapping("/climbingMate")
-	public void climbingMatePage(Model model) {
-		
-		Map<String, Object> getMemberList = new HashMap<>();
-		
-		List<ClimbingMate> climbingMates = mateService.getMateBoard();
-		getMemberList.put("climbingMates", climbingMates);
-
-		/* model.addAttribute("board", climbingMates); */
-		System.out.println(climbingMates);
-		
-		List<ClimbingParty> members = mateService.selectMemberIdByBoardId();
-		getMemberList.put("members", members);
-		System.out.println(members);
-		model.addAllAttributes(getMemberList);
-	}
+//	@GetMapping("/climbingMate")
+//	public void climbingMatePage(Model model) {
+//		
+//		Map<String, Object> getMemberList = new HashMap<>();
+//		
+//		List<ClimbingMate> climbingMates = mateService.getMateBoard();
+//		getMemberList.put("climbingMates", climbingMates);
+//
+//		/* model.addAttribute("board", climbingMates); */
+//		System.out.println(climbingMates);
+//		
+//		List<ClimbingParty> members = mateService.selectMemberIdByBoardId();
+//		getMemberList.put("members", members);
+//		System.out.println(members);
+//		model.addAllAttributes(getMemberList);
+//	}
 	
 	@GetMapping("/search")
 	@ResponseBody

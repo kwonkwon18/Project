@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,9 @@ public class FutsalService {
 
 	@Autowired
 	private FutsalMapper futsalMapper;
+	
+	@Autowired
+	private FutsalLikeMapper futsalLikeMapper;
 
 	public List<FutsalBoard> listBoard() {
 		List<FutsalBoard> list = futsalMapper.selectAll();
@@ -154,5 +158,24 @@ public class FutsalService {
 		
 		return cnt == 1;
 
+	}
+
+	public Map<String, Object> like(FutsalLike like, Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+		
+		result.put("like", false);
+		
+		like.setMemberId(authentication.getName());
+		Integer deleteCnt = futsalLikeMapper.delete(like);
+		
+		if (deleteCnt != 1) {
+			Integer insertCnt = futsalLikeMapper.insert(like);
+			result.put("like", true);
+		}
+		
+		Integer count = futsalLikeMapper.countByBoardId(like.getBoardId());
+		result.put("count", count);
+		
+		return result;
 	}
 }

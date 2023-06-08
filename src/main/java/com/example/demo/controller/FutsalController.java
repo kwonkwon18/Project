@@ -1,18 +1,29 @@
 package com.example.demo.controller;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.http.*;
-import org.springframework.security.core.*;
-import org.springframework.stereotype.*;
-import org.springframework.ui.*;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.*;
-import org.springframework.web.servlet.mvc.support.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.domain.*;
-import com.example.demo.service.*;
+import com.example.demo.domain.FutsalBoard;
+import com.example.demo.domain.FutsalLike;
+import com.example.demo.domain.FutsalParty;
+import com.example.demo.domain.FutsalPartyMember;
+import com.example.demo.service.FutsalPartyService;
+import com.example.demo.service.FutsalService;
 
 
 @Controller
@@ -166,6 +177,23 @@ public class FutsalController {
 			return ResponseEntity
 					.ok()
 					.body(futsalPartyService.futsalPartyMember(futsalPartyMember, authentication));						
+		}
+	}
+	
+	@PostMapping("/like")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> futsalLike(
+			@RequestBody FutsalLike like,
+			Authentication authentication) {
+		
+		if(authentication == null) {
+			return ResponseEntity
+					.status(403)
+					.body(Map.of("message", "로그인 후 좋아요 클릭해주세요"));
+		} else {
+			return ResponseEntity
+					.ok()
+					.body(futsalService.like(like, authentication));
 		}
 	}
 	

@@ -134,24 +134,27 @@ function handleListUpButtonClick() {
 				if (people > currentNum && isMine) {
 					$("#resMate").append(`</div>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-//			<button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button>			
+			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} 
       <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 				} else if (people > currentNum && !isMine) {
 					$("#resMate").append(`</div>
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			<div><button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button></div>
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 				} else if (people <= currentNum && !isMine) {
 					$("#resMate").append(`
 				</div>
+			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
 			<button   data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">마감되었습니다.</button>
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 
 				} else {
 					$("#resMate").append(`</div>
+			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
@@ -159,11 +162,12 @@ function handleListUpButtonClick() {
 				}
 			} else {
 				$("#resMate").append(`</div>
+			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
 			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">종료된 러닝</button>
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 			}
-			
+
 			$(".chatRoomCheckBtn").click(function() {
 				const yourNickName = $(this).text();
 				console.log(yourNickName);

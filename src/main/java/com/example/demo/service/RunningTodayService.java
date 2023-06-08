@@ -44,6 +44,9 @@ public class RunningTodayService {
 	public boolean addRunningToday(Authentication authentication, RunningToday runningToday, MultipartFile[] files)
 			throws Exception {
 
+		Member member = mapper.selectMemberById(authentication.getName());
+		runningToday.setWriter(member.getNickName());
+		
 		Integer cnt = todayMapper.insertRunningToday(runningToday);
 
 		for (MultipartFile file : files) {

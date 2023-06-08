@@ -106,7 +106,7 @@ function handleListUpButtonClick() {
 					}
 				})
 			})
-		
+
 
 			let memberIds = [];
 			let isMine = false;
@@ -135,27 +135,27 @@ function handleListUpButtonClick() {
 				if (people > currentNum && isMine) {
 					$("#resMate").append(`</div>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			
+			<button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button>
 			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
 			`);
 				} else if (people > currentNum && !isMine) {
 					$("#resMate").append(`</div>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			
+			<button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button>
 			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
 			`);
 				} else if (people <= currentNum && !isMine) {
 					$("#resMate").append(`
 				</div>
 			<button   data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">마감되었습니다.</button>
-			
+			<button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button>
 			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
 			`);
 
 				} else {
 					$("#resMate").append(`</div>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			
+			<button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button>
 			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
 			`);
 
@@ -163,7 +163,7 @@ function handleListUpButtonClick() {
 			} else {
 				$("#resMate").append(`</div>
 			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">종료된 러닝</button>
-			
+			<button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button>
 			<div>모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum}</div>
 			`);
 			}

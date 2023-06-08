@@ -162,6 +162,154 @@ public class ClimbingMateService {
 		return getMemberList;
 	}
 
+	public List<ClimbingMate> getMateBoardByAddress(Authentication authentication, String type, String search) {
+		
+		if(authentication != null) {
+
+		// 유저 정보 가져옴 Member member =
+		Member member = mateMapper.selectMemberById(authentication.getName()); // 유저 정보 중 주소 정보 변수 저장
+		String userAddress = member.getAddress();
+		System.out.println(userAddress);
+		// 주소가 들어갈 ArrayList
+		List<String> addressList = new ArrayList<>();
+
+		if (userAddress != "") {
+			if (userAddress.equals("은평구")) {
+				addressList.add("은평구");
+				addressList.add("마포구");
+				addressList.add("서대문구");
+			} else if (userAddress.equals("마포구")) {
+				addressList.add("마포구");
+				addressList.add("서대문구");
+				addressList.add("은평구");
+				addressList.add("용산구");
+			} else if (userAddress.equals("종로구")) {
+				addressList.add("종로구");
+				addressList.add("성북구");
+				addressList.add("중구");
+				addressList.add("서대문구");
+			} else if (userAddress.equals("중구")) {
+				addressList.add("중구");
+				addressList.add("종로구");
+				addressList.add("성동구");
+				addressList.add("용산구");
+			} else if (userAddress.equals("용산구")) {
+				addressList.add("용산구");
+				addressList.add("마포구");
+				addressList.add("중구");
+				addressList.add("성동구");
+			} else if (userAddress.equals("성동구")) {
+				addressList.add("성동구");
+				addressList.add("중구");
+				addressList.add("동대문구");
+				addressList.add("광진구");
+			} else if (userAddress.equals("광진구")) {
+				addressList.add("광진구");
+				addressList.add("성동구");
+				addressList.add("동대문구");
+				addressList.add("중랑구");
+			} else if (userAddress.equals("동대문구")) {
+				addressList.add("동대문구");
+				addressList.add("성북구");
+				addressList.add("중랑구");
+				addressList.add("성동구");
+			} else if (userAddress.equals("중랑구")) {
+				addressList.add("중랑구");
+				addressList.add("노원구");
+				addressList.add("동대문구");
+				addressList.add("광진구");
+			} else if (userAddress.equals("성북구")) {
+				addressList.add("성북구");
+				addressList.add("강북구");
+				addressList.add("동대문구");
+				addressList.add("종로구");
+			} else if (userAddress.equals("강북구")) {
+				addressList.add("강북구");
+				addressList.add("도봉구");
+				addressList.add("노원구");
+				addressList.add("성북구");
+			} else if (userAddress.equals("도봉구")) {
+				addressList.add("도봉구");
+				addressList.add("노원구");
+				addressList.add("강북구");
+				addressList.add("성북구");
+			} else if (userAddress.equals("노원구")) {
+				addressList.add("노원구");
+				addressList.add("도봉구");
+				addressList.add("강북구");
+				addressList.add("중랑구");
+			} else if (userAddress.equals("서대문구")) {
+				addressList.add("서대문구");
+				addressList.add("은평구");
+				addressList.add("종로구");
+				addressList.add("마포구");
+			} else if (userAddress.equals("양천구")) {
+				addressList.add("양천구");
+				addressList.add("강서구");
+				addressList.add("영등포구");
+				addressList.add("구로구");
+			} else if (userAddress.equals("강서구")) {
+				addressList.add("강서구");
+				addressList.add("양천구");
+				addressList.add("구로구");
+				addressList.add("영등포구");
+			} else if (userAddress.equals("구로구")) {
+				addressList.add("구로구");
+				addressList.add("양천구");
+				addressList.add("영등포구");
+				addressList.add("금천구");
+			} else if (userAddress.equals("금천구")) {
+				addressList.add("금천구");
+				addressList.add("구로구");
+				addressList.add("관악구");
+				addressList.add("영등포구");
+			} else if (userAddress.equals("영등포구")) {
+				addressList.add("영등포구");
+				addressList.add("양천구");
+				addressList.add("구로구");
+				addressList.add("동작구");
+			} else if (userAddress.equals("동작구")) {
+				addressList.add("동작구");
+				addressList.add("영등포구");
+				addressList.add("관악구");
+				addressList.add("서초구");
+			} else if (userAddress.equals("관악구")) {
+				addressList.add("관악구");
+				addressList.add("금천구");
+				addressList.add("동작구");
+				addressList.add("서초구");
+			} else if (userAddress.equals("서초구")) {
+				addressList.add("서초구");
+				addressList.add("강남구");
+				addressList.add("동작구");
+				addressList.add("관악구");
+			} else if (userAddress.equals("강남구")) {
+				addressList.add("강남구");
+				addressList.add("서초구");
+				addressList.add("송파구");
+				addressList.add("성동구");
+			} else if (userAddress.equals("송파구")) {
+				addressList.add("송파구");
+				addressList.add("강남구");
+				addressList.add("강동구");
+				addressList.add("광진구");
+			} else if (userAddress.equals("강동구")) {
+				addressList.add("강동구");
+				addressList.add("송파구");
+				addressList.add("광진구");
+				addressList.add("강남구");
+			}
+
+		}// 마지막 괄호임
+		
+		System.out.println("addressList" + addressList);
+
+		return mateMapper.selectMateByDistance(addressList, type, search);
+	}
+		
+		return null;
+	}
+
 }
 
 

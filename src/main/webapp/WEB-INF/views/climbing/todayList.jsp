@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,33 +10,83 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-		<div class="container-lg">
+	<div class="container-lg">
+		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+			</div>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block w-100" height="500px" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block w-100" height="500px" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" height="500px" alt="...">
+				</div>
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+			</button>
+		</div>
 		<h2>오늘의 등산</h2>
 		<!-- 새로 작성된 코드, 변경된 코드  -->
 		<!-- table.table>thead>tr>th*4^^tbody -->
-		<table class="table">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>제목</i></th>
-					<th>작성자</th>
-					<th>작성일자</th>
-				</tr>
-			</thead>
-			<tbody>
-			<!-- todayList를 받았다.  -->
-				<c:forEach items="${climbingTodayList }" var="board">
-					<tr>
-						<td>${board.id }</td>
-						<td><a href="/climbing/todayId/${board.id }"> ${board.title }</a>
-						<td>${board.writer }</td>
-						<td>${board.inserted }</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<div style="display: flex;">
+			<div style="flex: 1; margin-left: 800px;" id="mateMapBox">
+				<ul style="display: flex; align-items: left;">
+					<form action="/search" class="d-flex" role="search">
+						<input id="searchInput" value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
+						<button id="search" class="btn btn-outline-success" type="submit">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+						<button type="button" class="btn btn-success" onclick="location.href='mateAdd'" style="margin-left: 10px;">번개 글작성</button>
+					</form>
+				</ul>
+			</div>
+		</div>
+		<!-- 		<table class="table"> -->
+		<!-- 			<thead> -->
+		<!-- 				<tr> -->
+		<!-- 					<th>#</th> -->
+		<!-- 					<th>제목</i></th> -->
+		<!-- 					<th>작성자</th> -->
+		<!-- 					<th>작성일자</th> -->
+		<!-- 				</tr> -->
+		<!-- 			</thead> -->
+		<!-- 			<tbody> -->
+		<!-- 				todayList를 받았다.  -->
+		<%-- 				<c:forEach items="${climbingTodayList }" var="board"> --%>
+
+		<!-- 					<tr> -->
+		<%-- 						<td>${board.id }</td> --%>
+		<%-- 						<td><a href="/climbing/todayId/${board.id }"> ${board.title }</a> --%>
+		<%-- 						<td>${board.writer }</td> --%>
+		<%-- 						<td>${board.inserted }</td> --%>
+		<!-- 					</tr> -->
+		<%-- 				</c:forEach> --%>
+		<!-- 			</tbody> -->
+		<!-- 		</table> -->
+		<c:forEach items="${climbingTodayList}" var="board">
+			<div class="col-md-4">
+				<div class="card" style="width: 18rem;">
+					<div class="card-body">
+						<p class="card-title">작성자: ${board.writer}</p>
+						<p class="card-text">작성일자: ${board.inserted}</p>
+						<h5 class="card-text">🌄${board.title}</h5>
+						<p class="card-text">모임장소: ${board.body}</p>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+
+					<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

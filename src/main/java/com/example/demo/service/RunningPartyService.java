@@ -78,9 +78,9 @@ public class RunningPartyService {
 		Map<String, Object> result = new HashMap<>();
 
 		result.put("join", false);
-
+		System.out.println("runningParty" + runningParty);
 		Integer deleteCnt = partyMapper.delete(runningParty);
-		System.out.println(deleteCnt);
+		System.out.println("deleteCnt" + deleteCnt);
 
 		// 참여인원갯수 넘겨주기
 		Integer count = partyMapper.countByBoardId(runningParty.getBoardId());

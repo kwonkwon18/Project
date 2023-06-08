@@ -70,7 +70,7 @@ function handleListUpButtonClick() {
 				<span>${memberId}</span> <br />
 				`);
 			}
-			
+
 			console.log(isMine)
 
 			// 필요한 경우에 각각의 memberId 값을 가져올 수 있음
@@ -80,6 +80,7 @@ function handleListUpButtonClick() {
 			if (today < compareTime) {
 
 				if (people > currentNum && isMine) {
+	
 					$("#resMate").append(`</div>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
 			
@@ -187,10 +188,11 @@ $(document).on('click', '.joinPartyBtn', function() {
 });
 
 
-$("#all1").click(function() {
-	$("#dropdown1").slideUp()
-})
 $("#search1").click(function() {
-	$("#dropdown1").slideDown()
-})
+	if ($("#dropdown1").is(":hidden")) {
+		$("#dropdown1").slideDown();
+	} else {
+		$("#dropdown1").slideUp();
+	}
+});
 

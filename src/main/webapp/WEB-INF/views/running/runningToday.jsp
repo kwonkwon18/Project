@@ -26,15 +26,17 @@
 						<input id="titleInput" class="form-control" type="text" name="title" value="${runningToday.title }" />
 					</div>
 					
-					<div class="mb-3">
+<%-- 					<div class="mb-3">
 						<label for="wirterInput" class="form-label">글쓴이</label>
 						<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningToday.writer }" />
-					</div>
+					</div> --%>
 					
 					<div class="mb-3">
 						<label for="fileInput" class="form-label"></label> 
 						<input type="file" multiple name="files" accept="image/*" id="fileInput" />
 					</div>
+					
+					<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title }" />
 					
 					<!-- application property에서 작업 하는 내용 
 					spring.servlet.multipart.max-file-size=1MB
@@ -47,6 +49,8 @@
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${runningToday.body }</textarea>
 					</div>
+					
+					
 
 					<input id="addButton" class="btn btn-primary" type="submit" value="등록" />
 			</div>

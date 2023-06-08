@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.domain.ClimbingMate;
 import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
 import com.example.demo.domain.RunningParty;
@@ -96,15 +95,15 @@ public class RunningController {
 	}
 
 	@GetMapping("/runningToday")
-	public void addrunningShare() {
+	public void addrunningShare(Authentication authentication, Model model) {
 
 	}
 
 	@PostMapping("/runningToday")
 	public String addrunningShareResult(@RequestParam("files") MultipartFile[] files, RunningToday runningToday,
-			RedirectAttributes rttr) throws Exception {
+			RedirectAttributes rttr, Authentication authentication) throws Exception {
 
-		boolean ok = todayService.addRunningToday(runningToday, files);
+		boolean ok = todayService.addRunningToday(authentication, runningToday, files);
 
 		if (ok) {
 			return "redirect:/running/runningList";
@@ -118,6 +117,8 @@ public class RunningController {
 	public String detailToday(@PathVariable("id") Integer id, Model model) {
 
 		RunningToday getList = todayService.getBoard(id);
+		
+		System.out.println("getList" + getList);
 
 		model.addAttribute("board", getList);
 
@@ -127,6 +128,7 @@ public class RunningController {
 	@GetMapping("/myPage")
 	public void runningMyPage(Authentication authentication, Model model) {
 
+		// 로그인 닉네임 확인
 		Member member = service.getMembertUserId(authentication.getName());
 		System.out.println("접근함");
 
@@ -155,13 +157,14 @@ public class RunningController {
 	// 여기서 List<String> Mapper 써줄 것임
 	@GetMapping("/runningMate")
 	public void runningMatePage(Model model, Authentication authentication,
-			@RequestParam(value = "type", required = false) String type) {
+			@RequestParam(value = "type", required = false) String type, 
+			@RequestParam(value = "search", defaultValue = "") String search) {
 
 		System.err.println("접근 1");
 
 		Map<String, Object> getMemberList = new HashMap<>();
 
-		List<RunningBoard> runningMates = service.getMateBoardByAddress(authentication, type);
+		List<RunningBoard> runningMates = service.getMateBoardByAddress(authentication, type, search);
 		getMemberList.put("runningMates", runningMates);
 
 		/* model.addAttribute("board", runningMates); */
@@ -266,12 +269,14 @@ public class RunningController {
 
 	}
 
-	@PostMapping("rejectParty")
-	public ResponseEntity<Map<String, Object>> rejectParty(@RequestBody RunningParty runningParty,
-			Authentication authentication) {
-		return ResponseEntity.ok().body(partyService.reject(runningParty, authentication));
-
-	}
+	/*
+	 * @PostMapping("rejectParty") public ResponseEntity<Map<String, Object>>
+	 * rejectParty(@RequestBody RunningParty runningParty, Authentication
+	 * authentication) { return
+	 * ResponseEntity.ok().body(partyService.reject(runningParty, authentication));
+	 * 
+	 * }
+	 */
 
 	@GetMapping("/getRunningDetail")
 	@ResponseBody
@@ -291,7 +296,7 @@ public class RunningController {
 
 		// 결과를 listSearch에 저장하여 클라이언트로 전달합니다.
 		listSearch.put("result", service.searchMate(searchTerm));
-			
+
 		System.out.println("****" + searchTerm);
 		return listSearch;
 	}

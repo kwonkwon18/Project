@@ -35,7 +35,7 @@
 						<input id="titleInput" class="form-control" type="text" name="title" value="${runningBoard.title }" required />
 					</div>
 
-					<%-- 				<div class="mb-3">
+					<%--<div class="mb-3">
 						<label for="wirterInput" class="form-label">글쓴이</label>
 						<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningBoard.writer }" />
 					</div>  --%>

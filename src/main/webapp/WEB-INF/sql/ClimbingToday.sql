@@ -11,3 +11,4 @@ CREATE TABLE ClimbingToday (
 
 SELECT * FROM ClimbingToday;
 
+

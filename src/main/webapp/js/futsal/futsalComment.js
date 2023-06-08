@@ -5,7 +5,7 @@ $("#sendCommentBtn").click(function() {
 	const content = $("#commentTextArea").val();
 	const data = {boardId, content};
 	
-	$.ajax("/comment/add", {
+	$.ajax("/futsalComment/add", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -26,7 +26,7 @@ $("#updateCommentBtn").click(function() {
 		id : commentId,
 		content : content
 	}
-	$.ajax("/comment/update", {
+	$.ajax("/futsalComment/update", {
 		method: "put",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -39,8 +39,8 @@ $("#updateCommentBtn").click(function() {
 })
 
 $("#deleteCommentModalButton").click(function() {
-	const commentId = $(this).attr("data-comment-id");
-	$.ajax("/comment/id/" + commentId, {
+	const commentId = $(this).attr("data-futsalComment-id");
+	$.ajax("/futsalComment/id/" + commentId, {
 		method: "delete",
 		complete: function(jqXHR) {
 			listComment();
@@ -52,45 +52,45 @@ $("#deleteCommentModalButton").click(function() {
 
 function listComment() {
 	const boardId = $("#boardIdText").text().trim();
-	$.ajax("/comment/list?board=" + boardId, {
+	$.ajax("/futsalComment/list?board=" + boardId, {
 		method: "get", // 생략 가능
 		success: function(comments) {
 			// console.log(data);
 			$("#commentListContainer").empty();
-			for (const comment of comments) {
+			for (const futsalComment of comments) {
 				const editButtons = `
 					<button 
-						id="commentDeleteBtn${comment.id}" 
+						id="commentDeleteBtn${futsalComment.id}" 
 						class="commentDeleteButton"
 						data-bs-toggle="modal"
 						data-bs-target="#deleteCommentConfirmModal" 
-						data-comment-id="${comment.id}"><i class="fa-regular fa-trash-can"></i></button>
+						data-futsalComment-id="${futsalComment.id}"><i class="fa-regular fa-trash-can"></i></button>
 						:
 						<button
-							id="commentUpdateBtn${comment.id}"
+							id="commentUpdateBtn${futsalComment.id}"
 							class="commentUpdateButton btn btn-secondary"
 							data-bs-toggle="modal" data-bs-target="#commentUpdateModal"
-							data-comment-id="${comment.id}"><i class="fa-regular fa-pen-to-square"></i></button>
+							data-futsalComment-id="${futsalComment.id}"><i class="fa-regular fa-pen-to-square"></i></button>
 				`;
 				// console.log(comment);
 				$("#commentListContainer").append(`
 					<li class="list-groupp-item d-flex justify-content-between align-items-start">
 						<div class="ms-2 me-auto">
-							<div class="fw-bold"> <i class="fa-regular fa-user"></i> ${comment.memberId}</div>
-							<div style="white-space: pre-wrap;">${comment.content}</div>
+							<div class="fw-bold"> <i class="fa-regular fa-user"></i> ${futsalComment.memberId}</div>
+							<div style="white-space: pre-wrap;">${futsalComment.content}</div>
 						</div>
 						<div>
-							<span class="badge bg-primary rounded-pill">${comment.inserted}</span>
+							<span class="badge bg-primary rounded-pill">${futsalComment.inserted}</span>
 							<div class="text-end mt-2">
-								${comment.editable ? editButtons : ''}
+								${futsalComment.editable ? editButtons : ''}
 							</div>
 						</div>
 					</li>
 				`);
 			};
 			$(".commentUpdateButton").click(function() {
-				const id = $(this).attr("data-comment-id");
-				$.ajax("/comment/id/" + id, {
+				const id = $(this).attr("data-futsalComment-id");
+				$.ajax("/futsalComment/id/" + id, {
 					success: function(data) {
 						$("#commentUpdateIdInput").val(data.id);
 						$("#commentUpdateTextArea").val(data.content);
@@ -99,8 +99,8 @@ function listComment() {
 			});
 			
 			$(".commentDeleteButton").click(function() {
-				const commentId = $(this).attr("data-comment-id");
-				$("#deleteCommentModalButton").attr("data-comment-id", commentId);
+				const commentId = $(this).attr("data-futsalComment-id");
+				$("#deleteCommentModalButton").attr("data-futsalComment-id", commentId);
 			});
 		}
 	});

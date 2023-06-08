@@ -25,7 +25,7 @@
 					<div class="d-flex">
 						<div class="me-auto">
 							<div class="mb-3">
-								<label for="" class="form-label"># ${board.id }</label>
+								<label id="boardIdText" for="" class="form-label">${board.id }</label>
 								<input type="text" class="form-control" value="${board.title }" readonly />
 							</div>
 							<div id="map" style="width: 500px; height: 350px;"></div>

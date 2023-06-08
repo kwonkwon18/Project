@@ -53,6 +53,60 @@ function handleListUpButtonClick() {
         <label for="" class="form-label">신청자</label><br />
       `);
 
+			$(".chatRoomCheckBtn").click(function() {
+				const yourNickName = $(this).text();
+				console.log(yourNickName);
+				$.ajax("/chat/roomCheck?yourNickName=" + yourNickName, {
+					success: function(data) {
+						console.log(data.check);
+						if (data.check) {
+							$(".btn-close").click();
+							$("#chatListContainer").remove("");
+							$("#chatContainer").remove("");
+							$("#chatButton").hide();
+							$("#chatList").hide();
+							$("#chatBox").show();
+							$.ajax("/chat/roomOpen", {
+								data: { yourNickName: yourNickName },
+								contentType: "application/json",
+								success: function(data) {
+									var chatList = data.chatList;
+									var myId = data.myId;
+									lastChatRoomId = data.chatRoomId;
+									$("#chatBox").append(`
+			                			<div id="chatContainer"></div> 
+			            			`)
+									for (const chat of chatList) {
+										if (chat.senderId === myId) {
+											$("#chatContainer").append(`
+						                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+						                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
+						                        </div>
+			                    			`)
+										} else {
+											$("#chatContainer").append(`
+						                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+						                            <div>${chat.time}</div>
+						                        </div>
+			                    			`)
+										}
+									}
+									scrollToBottom();
+									lastChatId = chatList[chatList.length - 1].id;
+									repeat = setInterval(function() {
+										currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
+									}, 3000);
+
+								}
+							})
+						} else {
+							$(".createChatRoomCheckBtn").trigger("click");
+						}
+					}
+				})
+			})
 			let memberIds = [];
 			let isMine = false;
 
@@ -80,27 +134,25 @@ function handleListUpButtonClick() {
 				if (people > currentNum && isMine) {
 					$("#resMate").append(`</div>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+//			<button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button>			
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} 
+      <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 				} else if (people > currentNum && !isMine) {
 					$("#resMate").append(`</div>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 				} else if (people <= currentNum && !isMine) {
 					$("#resMate").append(`
 				</div>
 			<button   data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">마감되었습니다.</button>
-			
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 
 				} else {
 					$("#resMate").append(`</div>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 
@@ -108,7 +160,6 @@ function handleListUpButtonClick() {
 			} else {
 				$("#resMate").append(`</div>
 			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">종료된 러닝</button>
-			
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 			}

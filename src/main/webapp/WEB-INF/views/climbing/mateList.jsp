@@ -89,7 +89,7 @@
 		<div id="mateListData" class="row">
 			<c:forEach items="${climbingMateList}" var="board">
 				<div class="col-md-4">
-					<div class="card" style="width: 18rem;">
+					<div class="card" style="width: 18rem; margin-bottom: 20px; height: 350px;">
 						<div class="card-body">
 							<h5 class="card-title">🌄${board.title}</h5>
 							<p class="card-text">작성자: ${board.writer}</p>
@@ -118,9 +118,9 @@
 									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 								</c:if>
 							</c:if>
-							<div style="text-align: right">
-								<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-							</div>
+						</div>
+						<div class="card-footer" style="text-align: right">
+							<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 						</div>
 					</div>
 				</div>

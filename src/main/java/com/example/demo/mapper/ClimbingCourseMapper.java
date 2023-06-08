@@ -17,7 +17,8 @@ public interface ClimbingCourseMapper {
 	int insert(ClimbingCourse climbingCourse);
 	
 	@Select("""
-			SELECT * FROM ClimbingCourse;
+			SELECT * FROM ClimbingCourse
+			ORDER BY ID DESC;
 			""")
 	List<ClimbingCourse> selectList();
 

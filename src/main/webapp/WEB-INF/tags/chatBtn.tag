@@ -6,7 +6,6 @@
 		<button type="button" id="returnBtn" style="background-color: white; position: absolute; top: 0; left: 0; border-color: white; height: 40px; width: 40px;">
 			<i class="fa-solid fa-arrow-left-long"></i>
 		</button>
-		<span style="position: absolute; left: 50%; transform: translateX(-50%);">나의 채팅방</span>
 		<button type="button" class="chatClose" style="background-color: white; position: absolute; top: 0; right: 0; border-color: white; height: 40px; width: 40px;">
 			<i class="fa-solid fa-x"></i>
 		</button>

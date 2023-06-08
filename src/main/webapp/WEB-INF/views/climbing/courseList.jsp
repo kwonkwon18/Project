@@ -81,7 +81,7 @@
 							<p class="card-text">작성자: ${board.writer}</p>
 							<p class="card-text">작성일자: ${board.inserted}</p>
 							<div style="text-align: right">
-								<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
+								<a href="/climbing/courseId/${board.id}" class="btn btn-primary">더보기</a>
 							</div>
 						</div>
 					</div>

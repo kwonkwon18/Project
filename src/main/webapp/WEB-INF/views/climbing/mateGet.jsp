@@ -45,7 +45,6 @@
 						<input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
 
-
 					<div class="mb-3">
 						<label for="" class="form-label">본문</label>
 						<textarea class="form-control" readonly rows="10">${board.body }</textarea>
@@ -149,8 +148,8 @@
 									</c:when>
 									<c:otherwise>
 										<c:if test="${board.people > board.currentNum }">
-											<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
-               </c:if>
+											<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+            						   </c:if>
 									</c:otherwise>
 								</c:choose>
 

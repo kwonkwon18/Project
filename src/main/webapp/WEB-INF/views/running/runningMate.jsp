@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,13 @@
 </head>
 <body>
 	<my:chatBtn></my:chatBtn>
+
+	<my:navBar></my:navBar>
+
+	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
+	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
+	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
+
 
 	<div class="container-lg">
 		<h2>메이트구하기</h2>
@@ -53,10 +61,11 @@
 					<a class="dropdown-item" href="#">메뉴 항목 2</a>
 					<a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
-				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
+				
+				<a href="runningMap" style="text-decoration-line: none;">지도로 보기</a>
 				<span style="margin-left: 480px;"></span>
 				<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
-				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
+				<!-- <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
@@ -98,35 +107,29 @@
 
 		<ul>
 			<div style="text-align: right;">
-				<a href="menu1.jsp" style="text-decoration-line: none;">거리순</a>
-				<a href="menu2.jsp" style="text-decoration-line: none;">최신순</a>
+				<a href="/running/runningMate?type=distance" style="text-decoration-line: none;">거리순</a>
+				<a href="/running/runningMate" style="text-decoration-line: none;">최신순</a>
 			</div>
 		</ul>
 
 
-
-
-
-
-
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach items="${runningMates}" var="board" varStatus="status">
+				<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
+				<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 				<div class="col">
 					<div class="card">
-						<img src="..." class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">
-								<span id="boardIdText${status.index + 1}">${board.id}</span>
-								번게시물
-							</h5>
+						<div class="card-body">     
+							<h5 class="card-title"> 🏃‍♀️🏃‍♂️ ${board.title}</h5>
 							<div>
-								<div class="mb-3">
-									<label for="" class="form-label">제목</label>
-									<input type="text" class="form-control" value="${board.title}" readonly />
-								</div>
+							
 								<div class="mb-3">
 									<label for="" class="form-label">작성자</label>
 									<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
+								</div>
+								<div class="mb-3">
+									<label for="" class="form-label">모임장소</label>
+									<input id="addressText" type="text" class="form-control" value="${board.address }" readonly />
 								</div>
 								<div class="mb-3">
 									<label for="" class="form-label">모임시간</label>
@@ -141,14 +144,19 @@
 									</c:if>
 								</c:forEach>
 
-								<c:if test="${isMember}">
-									<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+								<c:if test="${openDate <= nowDate }">
+									<button>마감된 러닝</button>
 								</c:if>
 
-								<c:if test="${not isMember}">
-									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-								</c:if>
+								<c:if test="${openDate > nowDate }">
+									<c:if test="${isMember}">
+										<button type="button" onclick="location.href='/climbing/id/${board.id}' ">지원 사항 상세보기</button>
+									</c:if>
 
+									<c:if test="${not isMember}">
+										<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+									</c:if>
+								</c:if>
 							</div>
 						</div>
 					</div>

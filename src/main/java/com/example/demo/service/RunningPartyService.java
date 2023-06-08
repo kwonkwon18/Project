@@ -24,6 +24,7 @@ public class RunningPartyService {
 
 	public Map<String, Object> join(RunningParty runningParty, Authentication authentication) {
 
+		
 		Member member = mapper.selectMemberById(authentication.getName());
 		
 

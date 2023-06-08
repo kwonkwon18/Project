@@ -16,7 +16,7 @@ import com.example.demo.service.*;
 
 
 @Controller
-@RequestMapping("futsal/")
+@RequestMapping("futsal")
 public class FutsalController {
 
 	// 매치 후기 게시판
@@ -58,10 +58,11 @@ public class FutsalController {
 	}
 	
 	
-	@GetMapping("id/{id}")
+	@GetMapping("/id/{id}")
 	public String board(
 			@PathVariable("id") Integer id,
-			Model model) {
+			Model model,
+			Authentication authentication) {
 		FutsalBoard board = futsalService.getFutsalBoard(id);
 		
 		model.addAttribute("board", board);
@@ -69,13 +70,13 @@ public class FutsalController {
 		return "futsal/get";
 	}
 	
-	@GetMapping("modify/{id}")
+	@GetMapping("/modify/{id}")
 	public String moifyForm(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("board", futsalService.getFutsalBoard(id));
 		return "futsal/modify";
 	}
 	
-	@PostMapping("modify/{id}")
+	@PostMapping("/modify/{id}")
 	public String modifyProcess(FutsalBoard futsalBoard,
 			@RequestParam(value = "files", required = false) MultipartFile[] addFiles,
 			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
@@ -108,7 +109,7 @@ public class FutsalController {
 	
 	
 	// 매치 구하기
-	@GetMapping("futsalPartyList")
+	@GetMapping("/futsalPartyList")
 	public void futsalPartyList(Model model) {
 		
 		List<FutsalParty> list = futsalPartyService.partyList();
@@ -116,7 +117,7 @@ public class FutsalController {
 		model.addAttribute("partyList", list);
 	}
 	
-	@GetMapping("partyId/{id}")
+	@GetMapping("/partyId/{id}")
 	public String futsalPartyBoard(
 			@PathVariable("id") Integer id,
 			Model model) {
@@ -134,9 +135,11 @@ public class FutsalController {
 	
 	@PostMapping("futsalPartyAdd")
 	public String futsalPartyAddProcess(
-			FutsalParty futsalParty, RedirectAttributes rttr) throws Exception {
+			FutsalParty futsalParty, 
+			RedirectAttributes rttr,
+			Authentication authentication) throws Exception {
 		
-		
+		futsalParty.setWriter(authentication.getName());
 		boolean ok = futsalPartyService.addFutsalParty(futsalParty);
 		if (ok) {
 			rttr.addFlashAttribute("message", "매치가 등록되었습니다.");
@@ -145,17 +148,25 @@ public class FutsalController {
 			rttr.addFlashAttribute("message", "매치 등록 중 문제가 발생하였습니다.");
 			return "redirect:/futsal/futsalPartyAdd";
 		}
-		
 	}
 	
 
 	@PostMapping("futsalPartyMember")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> futsalPartyMember (
-			@RequestBody FutsalPartyMember futsalPartyMember) {
+			@RequestBody FutsalPartyMember futsalPartyMember,
+			Authentication authentication) {
+			
+		System.out.println(authentication);
+		if (authentication == null) {
+			return ResponseEntity
+					.status(403)
+					.body(Map.of("message", "로그인 후 참여해주세여."));
+		} else {
 			return ResponseEntity
 					.ok()
-					.body(futsalPartyService.futsalPartyMember(futsalPartyMember));			
+					.body(futsalPartyService.futsalPartyMember(futsalPartyMember, authentication));						
+		}
 	}
 	
 }

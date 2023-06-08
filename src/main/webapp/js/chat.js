@@ -15,7 +15,7 @@ function showList() {
 			$("#chatList").append(`
 			<div id="chatListContainer"></div>
 			`)
-				$("#chatListContainer").append(`
+			$("#chatListContainer").append(`
 					<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button0">
 						<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 							<span class="nickNameSpan">${nickNameList[0]}</span>
@@ -196,66 +196,76 @@ $("#deleteChatRoomModalButton").click(function() {
 	})
 })
 
-$(".chatRoomCheckBtn").click(function() {
-	var yourNickName = $(this).val();
-	$.ajax("/chat/roomCheck", {
-		contentType: "application/json",
-		data: { yourNickName : yourNickName },
-		success: function(data) {
-			if(data.check) {
-				$("#chatListContainer").remove("");
-				$("#chatContainer").remove("");
-				$("#chatButton").hide();
-				$("#chatList").hide();
-				$("#chatBox").show();
-				$.ajax("/chat/roomOpen", {
-					data: { yourNickName : yourNickName },
-					contentType: "application/json",
-					success: function(data) {
-						var chatList = data.chatList;
-						var myId = data.myId;
-						lastChatRoomId = data.chatRoomId;
-						$("#chatBox").append(`
-			                <div id="chatContainer" style="padding-bottom:40px;"></div> 
-			            `)
-						for (const chat of chatList) {
-							if (chat.senderId === myId) {
-								$("#chatContainer").append(`
-			                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
-			                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
-			                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
-			                        </div>
-			                    `)
-							} else {
-								$("#chatContainer").append(`
-			                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
-			                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-			                            <div>${chat.time}</div>
-			                        </div>
-			                    `)
-							}
-						}
-						lastChatId = chatList[chatList.length - 1].id;
-						repeat = setInterval(function() {
-							currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
-						}, 3000);
-			
-					}
-				})
-			} else {
-				$("#createChatRoomCheckBtn").click();
-			}
-		} 
-	})
-})
+//$(".chatRoomCheckBtn").click(function() {
+//	var yourNickName = $(this).val();
+//	$.ajax("/chat/roomCheck", {
+//		contentType: "application/json",
+//		data: { yourNickName : yourNickName },
+//		success: function(data) {
+//			console.log(data.check);
+//			if(data.check) {
+//				$("#chatListContainer").remove("");
+//				$("#chatContainer").remove("");
+//				$("#chatButton").hide();
+//				$("#chatList").hide();
+//				$("#chatBox").show();
+//				$.ajax("/chat/roomOpen", {
+//					data: { yourNickName : yourNickName },
+//					contentType: "application/json",
+//					success: function(data) {
+//						var chatList = data.chatList;
+//						var myId = data.myId;
+//						lastChatRoomId = data.chatRoomId;
+//						$("#chatBox").append(`
+//			                <div id="chatContainer" style="padding-bottom:40px;"></div> 
+//			            `)
+//						for (const chat of chatList) {
+//							if (chat.senderId === myId) {
+//								$("#chatContainer").append(`
+//			                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+//			                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+//			                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
+//			                        </div>
+//			                    `)
+//							} else {
+//								$("#chatContainer").append(`
+//			                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+//			                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+//			                            <div>${chat.time}</div>
+//			                        </div>
+//			                    `)
+//							}
+//						}
+//						lastChatId = chatList[chatList.length - 1].id;
+//						repeat = setInterval(function() {
+//							currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
+//						}, 3000);
+//			
+//					}
+//				})
+//			} else {
+//				$("#createChatRoomCheckBtn").click();
+//			}
+//		} 
+//	})
+//})
 
 $("#createChatRoomBtn").click(function() {
-	var yourNickName = $(this).val();
+	var modalBodyText = $(".chatRoomModalBody").text();
+	var yourNickName = modalBodyText.substring(0, modalBodyText.indexOf("님과의"));
+	console.log(yourNickName);
 	$.ajax("/chat/roomCreate", {
+		method: "POST",
 		contentType: "application/json",
-		data: { yourNickName : yourNickName },
-		success: function(data) {
-			
+		data: { yourNickName: yourNickName },
+		success: function() {
+			$(".btn-close").click();
+			$("#chatListContainer").remove("");
+			$("#chatContainer").remove("");
+			$("#chatButton").hide();
+			$("#chatList").show();
+			$("#chatBox").hide();
+			showList();
 		}
 	})
 })

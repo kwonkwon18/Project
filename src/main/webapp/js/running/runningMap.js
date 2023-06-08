@@ -56,10 +56,6 @@ $(document).ready(function() {
 					});
 
 
-					console.log("숭문" + mapInfo[0].content)
-					console.log("숭문" + mapInfo[0].lat)
-					console.log("숭문" + mapInfo[0].lng)
-
 
 					$("#mateMapBoxItem").append(`
             <div class="col-md-4">

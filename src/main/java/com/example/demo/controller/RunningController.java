@@ -63,13 +63,15 @@ public class RunningController {
 	}
 
 	@PostMapping("/runningAdd")
-	public String addResult(RunningBoard runningBoard, RedirectAttributes trrt, Authentication authentication) {
+	public String addResult(RunningBoard runningBoard, RedirectAttributes rttr, Authentication authentication) {
 
 		boolean ok = service.addBoard(runningBoard, authentication);
 
 		if (ok) {
-			return "redirect:/running/runningList";
+			rttr.addFlashAttribute("message", runningBoard.getTitle() + "  게시물이 등록되었습니다.");
+			return "redirect:/running/runningMate";
 		} else {
+			rttr.addFlashAttribute("message", "게시물 등록 실패 !! ");
 			return "redirect:/running/runningAdd";
 		}
 	}
@@ -99,6 +101,7 @@ public class RunningController {
 
 	}
 
+	
 	@PostMapping("/runningToday")
 	public String addrunningShareResult(@RequestParam("files") MultipartFile[] files, RunningToday runningToday,
 			RedirectAttributes rttr, Authentication authentication) throws Exception {
@@ -117,7 +120,7 @@ public class RunningController {
 	public String detailToday(@PathVariable("id") Integer id, Model model) {
 
 		RunningToday getList = todayService.getBoard(id);
-		
+
 		System.out.println("getList" + getList);
 
 		model.addAttribute("board", getList);
@@ -157,7 +160,7 @@ public class RunningController {
 	// 여기서 List<String> Mapper 써줄 것임
 	@GetMapping("/runningMate")
 	public void runningMatePage(Model model, Authentication authentication,
-			@RequestParam(value = "type", required = false) String type, 
+			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "search", defaultValue = "") String search) {
 
 		System.err.println("접근 1");

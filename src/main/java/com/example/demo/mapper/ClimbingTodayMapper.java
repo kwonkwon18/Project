@@ -17,7 +17,8 @@ public interface ClimbingTodayMapper {
 	int insert(ClimbingToday climbingToday);
 
 	@Select("""
-			SELECT * FROM ClimbingToday;
+			SELECT * FROM ClimbingToday
+			ORDER BY Id DESC;
 			""")
 	List<ClimbingToday> selectList();
 

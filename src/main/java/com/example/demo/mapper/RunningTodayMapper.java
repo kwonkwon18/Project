@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.domain.RunningToday;
 
@@ -53,15 +54,30 @@ public interface RunningTodayMapper {
 			    r.body,
 			    r.inserted,
 			    r.writer,
-			    f.fileName
+			    f.fileName,
+			    m.userId
 			FROM
 			    RunningToday r
 			    LEFT JOIN RunningFileName f ON r.id = f.boardId
+			    LEFT JOIN Member m on r.writer = m.nickName
 			WHERE
 			    r.id = #{id}
 						""")
 	@ResultMap("boardResultMap")
 	RunningToday selectFileNameById(Integer id);
+
+
+
+	@Update("""
+			UPDATE RunningToday
+			SET
+				title = #{title},
+				body = #{body}
+			WHERE
+				id = #{id}
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	int update(RunningToday runningToday);
 
 	
 	

@@ -303,6 +303,12 @@ public interface RunningMapper {
 			""")
 	List<RunningBoard> selectBySearchTerm(String searchTerm);
 
+	@Delete("""
+			delete from RunningFileName
+			where boardId = #{id} AND fileName = #{fileName}
+			""")
+	void deleteFileNameByBoardIdAndFileName(Integer id, String fileName);
+
 //	@Select("""
 //			<scipt>
 //			   SELECT *

@@ -14,6 +14,7 @@ public class RunningToday {
 	private String body;
 	private LocalDateTime inserted;
 	private String writer;
+	private String userId;
 	
 	private List<String> fileName;
 

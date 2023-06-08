@@ -11,6 +11,7 @@
 		<result column="body" property="body" />
 		<result column="inserted" property="inserted" />
 		<result column="writer" property="writer" />
+		<result column="userId" property="userId" />
 		<collection property="fileName" ofType="String">
 			<result column="fileName" />
 		</collection>

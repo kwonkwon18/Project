@@ -23,10 +23,6 @@
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
 					<div class="me-auto">
-						<h1>
-							<span id="boardIdText"> ${board.id } 번게시물</span>
-
-						</h1>
 					</div>
 				</div>
 
@@ -35,6 +31,10 @@
 						<label for="" class="form-label">제목</label>
 						<input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
+					<h1>
+						<span id="boardIdText"> ${board.id } 번게시물</span>
+
+					</h1>
 
 
 					<!-- 그림 파일 출력  -->
@@ -72,7 +72,7 @@
 					<!-- 보안 넣어줘야함   -->
 					<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
 						<div class="d-none">
-							<form action="/remove" method="post" id="removeForm">
+							<form action="/running/todayRemove" method="post" id="removeForm">
 								<input id="inputId" type="text" name="id" value="${board.id }" />
 							</form>
 						</div>

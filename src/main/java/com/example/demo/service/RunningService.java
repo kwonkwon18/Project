@@ -273,7 +273,7 @@ public class RunningService {
 	}
 
 	public boolean modify(RunningBoard runningBoard) {
-		// TODO Auto-generated method stub
+		System.out.println(1234);
 		return mapper.updateBoardById(runningBoard);
 	}
 

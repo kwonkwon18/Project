@@ -36,7 +36,7 @@ public class RunningPartyService {
 		System.out.println(board.getPeople() + "총인원");
 		System.out.println(currentNum + "현재인원");
 
-		if (board.getPeople() > currentNum) {
+		if (board.getPeople() >= currentNum) {
 
 			runningParty.setMemberId(member.getNickName());
 

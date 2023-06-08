@@ -232,11 +232,12 @@ public class RunningController {
 
 		boolean ok = service.modify(runningBoard);
 
+
 		if (ok) {
 			// 해당 게시물 보기로 리디렉션
 //			rttr.addAttribute("success", "success");
 			rttr.addFlashAttribute("message", runningBoard.getId() + "번 게시물이 수정되었습니다.");
-			return "redirect:/running/id/" + runningBoard.getId();
+			return "redirect:/running/runningList";
 		} else {
 			// 수정 form 으로 리디렉션
 //			rttr.addAttribute("fail", "fail");
@@ -268,10 +269,11 @@ public class RunningController {
 	// ******* TODAY
 	
 	@GetMapping("/runningTodayModify/{id}")
-	public String modifyForm(@PathVariable("id") Integer id, Model model) {
+	public String todayModifyForm(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("board", todayService.getBoard(id));
-		return "/running/runningTodayModify";
+		return "running/runningTodayModify";
 	}
+	
 	
 	@PostMapping("/runningTodayModify/{id}")
 	// 수정하려는 게시물 id : board.getId()
@@ -296,19 +298,18 @@ public class RunningController {
 //			rttr.addAttribute("success", "success");
 			// addFlashAttribute 는 attibute를 전달해줄 수 있다.
 			rttr.addFlashAttribute("message", runningToday.getId() + "번 게시물이 수정되었습니다.");
-			return "redirect:/id/" + runningToday.getId();
+			return "redirect:/running/todayId/" + runningToday.getId();
 		} else {
 			// 수정 form 으로 리디렉션
 //			rttr.addAttribute("fail", "fail");
 			rttr.addFlashAttribute("message", runningToday.getId() + "번 게시물이 수정되지 않았습니다.");
-			return "redirect:/modify/" + runningToday.getId();
+			return "redirect:/running/todayId/" + runningToday.getId();
 		}
 	}
 
-	@PostMapping("remove")
-	@PreAuthorize("isAuthenticated() and @customSecurityChecker.checkBoardWriter(authentication, #id)")
+	@PostMapping("/todayRemove")
 	public String remove(Integer id, RedirectAttributes rttr) {
-		boolean ok = service.remove(id);
+		boolean ok = todayService.removeById(id);
 		if (ok) {
 			// query string에 추가
 //			rttr.addAttribute("success", "remove");
@@ -316,9 +317,9 @@ public class RunningController {
 			// 모델에 추가
 			rttr.addFlashAttribute("message", id + "번 게시물이 삭제되었습니다.");
 
-			return "redirect:/list";
+			return "redirect:/running/runningList";
 		} else {
-			return "redirect:/id/" + id;
+			return "redirect:/running/runningTodayModify/" + id;
 		}
 	}
 	

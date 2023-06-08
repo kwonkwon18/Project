@@ -117,6 +117,19 @@ public interface ChatMapper {
 			WHERE chatRoomId = #{chatRoomId}
 			""")
 	List<LocalDateTime> getinsertedByChatRoomId(int chatRoomId);
+
+	@Select("""
+			SELECT IF((creater = {yourId} AND invited = {myId}) OR (creater = {myId} AND invited = {yourId}), 1, 0) FROM ChatRoom
+			""")
+	int checkChatRoom(String yourId, String myId);
+
+	@Select("""
+			SELECT inserted FROM Chat
+			WHERE chatRoomId = #{chatRoomId}
+			ORDER BY id DESC
+			LIMIT 1
+			""")
+	LocalDateTime getChatLastInserted(Integer chatRoomId);
 	
 
 }

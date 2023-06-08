@@ -90,5 +90,16 @@ public class ChatService {
 		
 	}
 
+	public boolean checkChatRoom(String yourId, String myId) {
+		int cnt = 0;
+		cnt += mapper.checkChatRoom(yourId, myId);
+		return cnt == 1;
+	}
+
+	public LocalDateTime getChatLastInserted(Integer id) {
+		// TODO Auto-generated method stub
+		return mapper.getChatLastInserted(id);
+	}
+
 
 }

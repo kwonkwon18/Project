@@ -27,6 +27,9 @@ function handleListUpButtonClick() {
 			console.log(nickName);
 			console.log(compareTime);
 
+			$(".chatRoomModalBody").remove();
+			$("#chatRoomModalBefore").after('<div class="modal-body chatRoomModalBody">' + data.board.writer + '님과의 대화방을 생성하시겠습니까?</div>');
+
 			$("#resMate").empty();
 
 			$("#resMate").append(`
@@ -40,7 +43,8 @@ function handleListUpButtonClick() {
         <div class="mb-3">
           <label for="" class="form-label">작성자</label>
           <br />
-          <span>${data.board.writer}</span>
+           <button type="button" class="chatRoomCheckBtn">${data.board.writer}</button>
+		  <button style="display: none;"type="hidden" class="createChatRoomCheckBtn" data-bs-toggle="modal" data-bs-target="#createChatRoom">${data.board.writer}</button>
         </div>
         <div class="mb-3">
           <label for="" class="form-label">모임 시간</label>
@@ -50,6 +54,60 @@ function handleListUpButtonClick() {
         <div id="map" class="map-container"></div>
         <label for="" class="form-label">신청자</label><br />
       `);
+      		$(".chatRoomCheckBtn").click(function() {
+				const yourNickName = $(this).text();
+				console.log(yourNickName);
+				$.ajax("/chat/roomCheck?yourNickName=" + yourNickName, {
+					success: function(data) {
+						console.log(data.check);
+						if (data.check) {
+							$(".btn-close").click();
+							$("#chatListContainer").remove("");
+							$("#chatContainer").remove("");
+							$("#chatButton").hide();
+							$("#chatList").hide();
+							$("#chatBox").show();
+							$.ajax("/chat/roomOpen", {
+								data: { yourNickName: yourNickName },
+								contentType: "application/json",
+								success: function(data) {
+									var chatList = data.chatList;
+									var myId = data.myId;
+									lastChatRoomId = data.chatRoomId;
+									$("#chatBox").append(`
+			                			<div id="chatContainer"></div> 
+			            			`)
+									for (const chat of chatList) {
+										if (chat.senderId === myId) {
+											$("#chatContainer").append(`
+						                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+						                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
+						                        </div>
+			                    			`)
+										} else {
+											$("#chatContainer").append(`
+						                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+						                            <div>${chat.time}</div>
+						                        </div>
+			                    			`)
+										}
+									}
+									lastChatId = chatList[chatList.length - 1].id;
+									repeat = setInterval(function() {
+										currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
+									}, 3000);
+
+								}
+							})
+						} else {
+							$(".createChatRoomCheckBtn").trigger("click");
+						}
+					}
+				})
+			})
+      
 
 			let memberIds = [];
 			let isMine = false;

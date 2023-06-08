@@ -50,7 +50,11 @@ public class ChatService {
 			} else {
 				data.setRecipientId(map.get("invited"));
 		}
-		mapper.addChat(data);
+		if(data.getMessage().trim().isEmpty()) {
+			return;
+		} else {
+			mapper.addChat(data);
+		}
 	}
 
 	public List<Chat> checkId(Integer lastChatId, Integer chatRoomId) {
@@ -123,10 +127,12 @@ public class ChatService {
 	}
 
 	public void createChatRoom(String myId, String yourNickName) {
-		System.out.println(yourNickName);
 		String yourId = memberMapper.getUserIdSelectByNickName(yourNickName);
-		System.out.println(yourId);
-		mapper.createChatRoom(myId, yourId);
+		if(yourId == null) {
+			return;
+		} else {
+			mapper.createChatRoom(myId, yourId);
+		}
 		
 	}
 

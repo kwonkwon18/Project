@@ -74,7 +74,7 @@ function handleListUpButtonClick() {
 									var myId = data.myId;
 									lastChatRoomId = data.chatRoomId;
 									$("#chatBox").append(`
-			                			<div id="chatContainer" style="padding-bottom:40px;"></div> 
+			                			<div id="chatContainer"></div> 
 			            			`)
 									for (const chat of chatList) {
 										if (chat.senderId === myId) {
@@ -93,6 +93,7 @@ function handleListUpButtonClick() {
 			                    			`)
 										}
 									}
+									scrollToBottom();
 									lastChatId = chatList[chatList.length - 1].id;
 									repeat = setInterval(function() {
 										currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));

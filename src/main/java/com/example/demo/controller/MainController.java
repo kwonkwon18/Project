@@ -19,21 +19,20 @@ public class MainController {
 
 	@Autowired
 	private ChatService chatService;
-	
+
 	@Autowired
 	private MemberService memberService;
-	
-	@GetMapping({"/", "main"})
+
+	@GetMapping({ "/", "main" })
 	public void main() {
 
 	}
-	
-	//  서재권 작업 내용***********************
+
+	// 서재권 작업 내용***********************
 	@GetMapping("login")
 	public void loginForm() {
 
 	}
-	
 
 	@GetMapping("signup")
 	public void signupForm() {
@@ -45,24 +44,24 @@ public class MainController {
 
 		try {
 			memberService.signup(member);
-			// 정보 제공을 위한 것 
+			// 정보 제공을 위한 것
 			rttr.addFlashAttribute("member", member);
-			// alert를 위한 것 
+			// alert를 위한 것
 			rttr.addFlashAttribute("message", "회원 가입되었습니다 ⭕⭕");
 			return "redirect:/login";
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			rttr.addFlashAttribute("member", member);
+	 		rttr.addFlashAttribute("member", member);
 			rttr.addFlashAttribute("message", "회원 가입 실패 ❌❌");
 			return "redirect:/login";
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@GetMapping("list")
+	public void list(Model model) {
+		List<Member> list = memberService.listMember();
+		model.addAttribute("memberList",list);
+	}
+
 }

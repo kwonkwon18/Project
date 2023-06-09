@@ -1,5 +1,7 @@
 package com.example.demo.mapper;
 
+import java.util.*;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -26,8 +28,8 @@ public interface MemberMapper {
 	
 	@Insert("""
 			insert into Member
-			(userId, password, name, nickName, birth, gender, career, address, phone, email, introduce)
-			values (#{userId}, #{password}, #{name} ,#{nickName}, #{birth}, #{gender}, #{career}, #{address}, #{phone}, #{email}, #{introduce})
+			(userId, password, name, nickName, birth, gender, address, phone, email, introduce)
+			values (#{userId}, #{password}, #{name} ,#{nickName}, #{birth}, #{gender}, #{address}, #{phone}, #{email}, #{introduce})
 			""")
 	Integer insertMember(Member member);
 	////////////////
@@ -38,4 +40,8 @@ public interface MemberMapper {
 			""")
 	String getUserIdSelectByNickName(String invitedNickName);
 	
+	@Select("""
+			SELECT * FROM Member ORDER BY inserted DESC
+			""")
+	List<Member> selectAll();
 }

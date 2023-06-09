@@ -16,7 +16,7 @@
 </style>
 </head>
 <body>
-
+	<my:navBarclimbing> </my:navBarclimbing>
 	<div class="container-lg">
 
 		<div class="row justify-content-center">

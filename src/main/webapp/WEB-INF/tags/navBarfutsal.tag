@@ -2,7 +2,7 @@
 <%@ attribute name="current" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary mb-5 fixed-top" >
 	<div class="container-fluid">
@@ -15,14 +15,12 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/runningMate">러닝</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/futsal/list">풋살</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/mateList">등산</a></li>
+				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/main">홈으로</a></li>
+				<li class="nav-item"><a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/futsal/futsalPartyList">메이트 구하기</a></li>
+				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/futsal/list">오늘의 풋살</a></li>
+				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/futsal/myPage">마이페이지</a></li>
 				<sec:authorize access="isAuthenticated()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/logout">로그아웃</a></li></sec:authorize>
 				<sec:authorize access="isAnonymous()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/login">로그인</a></li></sec:authorize>
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/signup">회원가입</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/my_page">마이페이지</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/list">회원목록</a></li>
 			</ul>
 			
 		</div>

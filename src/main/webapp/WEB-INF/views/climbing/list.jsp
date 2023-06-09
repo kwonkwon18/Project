@@ -13,7 +13,6 @@
 </head>
 <body>
 
-
 	<div class="container-lg">
 		<h2>메이트구하기</h2>
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">

@@ -158,4 +158,48 @@ public class ChatController {
 		String decodeYourNickName = URLDecoder.decode(yourNickName, StandardCharsets.UTF_8);
 		service.createChatRoom(myId, decodeYourNickName.substring(decodeYourNickName.indexOf("=") + 1));
 	}
+	
+	@GetMapping("findRoom")
+	@ResponseBody
+	public Map<String, Object> findRoom(Authentication authentication, @RequestParam String search) {
+		var myName = authentication.getName();
+		List<ChatRoom> chatRoomList = service.findRoomSelectBySearch(search, authentication.getName());
+		List<String> nickNameList = new ArrayList<>();
+		List<String> lastMessageList = new ArrayList<>();
+		List<LocalDateTime> insertedList = new ArrayList<>();
+		List<String> timeList = new ArrayList<>();
+		List<Integer> chatCount = new ArrayList<>();
+		List<LocalDateTime> chatInsertedList = new ArrayList<>();
+		LocalTime time;
+		for (ChatRoom chatRoom : chatRoomList) {
+			if(memberService.getNickName(authentication.getName()).equals(chatRoom.getInvited())) {
+				nickNameList.add(memberService.getNickName(chatRoom.getCreater()));
+				chatCount.add(chatRoom.getCreaterChatCount());
+			} else {
+				nickNameList.add(memberService.getNickName(chatRoom.getInvited()));
+				chatCount.add(chatRoom.getInvitedChatCount());
+			}
+			if(service.lastMessageSelectById(chatRoom.getId()) == null) {
+				lastMessageList.add("");
+			} else {
+				if(service.lastMessageSelectById(chatRoom.getId()).length() > 15) {
+					lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()).substring(0, 13) + "...");
+				} else {
+					lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()));
+				}
+			}
+			insertedList.add(chatRoom.getInserted());
+			chatInsertedList.add(service.getChatLastInserted(chatRoom.getId()));
+			time = service.getChatLastInserted(chatRoom.getId()).toLocalTime();
+			timeList.add(time.getHour() + ":" + time.getMinute());
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("nickNameList", nickNameList);
+		map.put("lastMessageList", lastMessageList);
+		map.put("insertedList", insertedList);
+		map.put("timeList", timeList);
+		map.put("chatCount", chatCount);
+		map.put("chatInsertedList", chatInsertedList);
+		return map;
+	}
 }

@@ -149,5 +149,11 @@ public interface ChatMapper {
 			""")
 	void insertFileChat(Chat chat);
 
+	@Select("""
+	        SELECT * FROM ChatRoom
+	        WHERE (creater = #{yourId} AND invited = #{myId}) OR (creater = #{myId} AND invited = #{yourId})
+	        """)
+	ChatRoom findRoomSelectBySearch(String yourId, String myId);
+
 
 }

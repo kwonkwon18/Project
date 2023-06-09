@@ -79,6 +79,7 @@ $("#chatButton").click(function() {
 });
 
 $(".chatClose").click(function() {
+	document.removeEventListener('keyup', keyupHandler);
 	$("#chatButton").show();
 	$("#chatList").hide();
 	$("#chatBox").hide();
@@ -89,6 +90,7 @@ $(".chatClose").click(function() {
 
 
 $("#returnBtn").click(function() {
+	document.removeEventListener('keyup', keyupHandler);
 	$("#chatBox").hide();
 	$("#chatList").show();
 	$("#chatListContainer").remove();
@@ -99,6 +101,7 @@ $("#returnBtn").click(function() {
 
 $("#chatList").on("click", ".openChatRoomBtn", function() {
 	var nickName = $(this).find(".nickNameSpan").text();
+	document.addEventListener('keyup', keyupHandler);
 	$("#chatList").hide();
 	$("#chatBox").show();
 	$(".chatNameTag").remove();
@@ -163,13 +166,13 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 			}
 			console.log(lastChatId);
 			repeat = setInterval(function() {
-				currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
+				currentChatId(lastChatId, lastChatRoomId);
 			}, 3000);
 		}
 	})
 })
 
-function currentChatId(lastChatIdParam, chatRoomId, chatContainer) {
+function currentChatId(lastChatIdParam, chatRoomId) {
 	$.ajax("/chat/check?chatRoomId=" + chatRoomId + "&lastChatId=" + lastChatIdParam, {
 		success: function(chatList1) {
 			const chatList = chatList1.chatList;
@@ -262,11 +265,11 @@ $("#sendChatBtn").click(function() {
 	})
 })
 
-document.addEventListener('keyup', function(event) {
+function keyupHandler(event) {
 	if (event.key === 'Enter') {
 		document.getElementById('sendChatBtn').click();
 	}
-});
+};
 
 $("#deleteChatRoomModalButton").click(function() {
 	$("#chatBox").hide();
@@ -336,7 +339,6 @@ $("#deleteChatRoomModalButton").click(function() {
 $("#createChatRoomBtn").click(function() {
 	var modalBodyText = $(".chatRoomModalBody").text();
 	var yourNickName = modalBodyText.substring(0, modalBodyText.indexOf("님과의"));
-	console.log(yourNickName);
 	$.ajax("/chat/roomCreate", {
 		method: "POST",
 		contentType: "application/json",
@@ -351,6 +353,84 @@ $("#createChatRoomBtn").click(function() {
 			showList();
 		}
 	})
+})
+
+$("#chatListSearchBtn").click(function(){
+	var search = $("#chatListSearchText").val();
+	$.ajax("/chat/findRoom?search=" + search, {
+		success: function(data) {
+			var nickNameList = data.nickNameList;
+			var lastMessageList = data.lastMessageList;
+			var insertedList = data.insertedList;
+			var timeList = data.timeList;
+			var chatCount = data.chatCount;
+			var chatInsertedList = data.chatInsertedList;
+			$("#chatListContainer").remove("");
+			$("#chatList").append(`
+			<div id="chatListContainer"></div>
+			`)
+			$("#chatListContainer").append(`
+					<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button0">
+						<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+							<span class="nickNameSpan">${nickNameList[0]}</span>
+							<span>님과의 대화방</span>
+							<span class="ms-auto">${timeList[0]}</span>
+						</div>
+						<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+							<span>${lastMessageList[0]}</span>
+							<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[0]}</span>
+						</div>
+						<input type="hidden" class="inserted" value="${insertedList[0]}">
+						<input type="hidden" class="chatInserted" value="${chatInsertedList[0]}">
+					</button>
+				`);
+			for (var i = 1; i < nickNameList.length; i++) {
+				for (var j = i - 1; j >= 0; j--) {
+					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
+						$(`#button${j}`).before(`
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span class="nickNameSpan">${nickNameList[i]}</span>
+									<span>님과의 대화방</span>
+									<span class="ms-auto">${timeList[i]}</span>
+								</div>
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span>${lastMessageList[i]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+								</div>
+								<input type="hidden" class="inserted" value="${insertedList[i]}">
+								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
+							</button>
+						`);
+						break;
+					} else if (chatInsertedList[i] < chatInsertedList[j]) {
+						$(`#button${j}`).after(`
+							<button type="button	" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span class="nickNameSpan">${nickNameList[i]}</span>
+									<span>님과의 대화방</span>
+									<span class="ms-auto">${timeList[i]}</span>
+								</div>
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span>${lastMessageList[i]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+								</div>
+								<input type="hidden" class="inserted" value="${insertedList[i]}">
+								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
+							</button>
+						`);
+						break;
+					}
+				}
+			}
+		}
+	})
+})
+
+$("#searchRemove").click(function(){
+	$("#chatListSearchText").val("");
+	$("#chatListContainer").remove();
+	showList();
 })
 
 function scrollToBottom() {

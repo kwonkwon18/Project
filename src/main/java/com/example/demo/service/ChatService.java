@@ -117,7 +117,7 @@ public class ChatService {
 		for (int i : mapper.checkChatRoom(yourId, myId)) {
 			cnt += i;
 		}
-		return cnt == 1;
+		return cnt > 0;
 	}
 
 	public LocalDateTime getChatLastInserted(Integer id) {
@@ -136,6 +136,7 @@ public class ChatService {
 		for (int i = 0; i < dateTimeList.size(); i++) {
 			LocalTime time = dateTimeList.get(i).toLocalTime();
 			list.get(i).setTime(time.getHour() + ":" + time.getMinute());
+			list.get(i).setImgUrl(bucketUrl + "/ChatRoom/" + chatRoomId + "/" + list.get(i).getFileName());
 		}
 		return list;
 	}
@@ -181,6 +182,17 @@ public class ChatService {
 				mapper.insertFileChat(chat);
 			}
 		}
+	}
+
+	public List<ChatRoom> findRoomSelectBySearch(String search, String myId) {
+		List<String> searchId = memberMapper.UserIdSelectBySearch(search);
+		List<ChatRoom> list = new ArrayList<>();
+		for(String s : searchId) {
+			if(mapper.findRoomSelectBySearch(s, myId) != null) {
+				list.add(mapper.findRoomSelectBySearch(s, myId));
+			} 
+		}
+		return list;
 	}
 
 }

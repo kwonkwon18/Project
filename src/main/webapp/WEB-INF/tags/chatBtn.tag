@@ -36,6 +36,13 @@
 	</button>
 	<br />
 	<br />
+	<div class="mb-3" style="display: flex;">
+		<input type="text" style="width: 200px; border: 0px;" id="chatListSearchText"/>
+		<button type="button" id="searchRemove" style="background-color: white; border-color: white; border: 0px;">
+			<i class="fa-solid fa-x"></i>
+		</button>
+		<button type="button" style="margin-left: auto; border: 0px;" id="chatListSearchBtn">검색</button>
+	</div>
 
 </div>
 

@@ -180,6 +180,16 @@ function currentChatId(lastChatIdParam, chatRoomId, chatContainer) {
 	})
 }
 
+$("#fileInputBtn").on("change", function() {
+	var files = $(this)[0].files;
+	$("#dropupBtn").click();
+	if(files.length > 1) {
+		$("#chatTextArea").val(files[0].name + "....");		
+	} else {
+		$("#chatTextArea").val(files[0].name);		
+	}
+})
+
 $("#sendChatBtn").click(function() {
 	const message = $("#chatTextArea").val();
 	const chatRoomId = lastChatRoomId;

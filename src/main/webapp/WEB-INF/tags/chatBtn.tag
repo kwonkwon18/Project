@@ -13,11 +13,11 @@
 
 	<div class="input-group" style="position: fixed; bottom: 10px; width: 300px;">
 		<div class="btn-group dropup">
-			<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+			<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="dropupBtn">
 				<i class="fa-solid fa-bars"></i>
 			</button>
 			<div class="dropdown-menu">
-				<a class="dropdown-item" href="#">링크 1</a>
+				<input type="file" multiple name="files" accept="image/*" id="fileInputBtn" />
 				<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteChatRoomConfirmModal">방 나가기</button>
 			</div>
 		</div>

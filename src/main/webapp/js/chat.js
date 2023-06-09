@@ -118,24 +118,46 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
             `)
 			for (const chat of chatList) {
 				if (chat.senderId === myId) {
-					$("#chatContainer").append(`
-                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
-                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
-                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
-                        </div>
-                    `)
+					if(chat.fileName !== null) {
+						$("#chatContainer").append(`
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+          						<div>
+									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
+								</div>
+    	                    </div>
+	                    `)
+					} else {
+						$("#chatContainer").append(`
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+        	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
+    	                    </div>
+	                    `)
+					}
 				} else {
-					$("#chatContainer").append(`
-                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
-                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-                            <div>${chat.time}</div>
-                        </div>
-                    `)
+					if(chat.fileName !== null) {
+						$("#chatContainer").append(`
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+          						<div>
+									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
+								</div>
+	                            <div>${chat.time}</div>
+	                        </div>
+	                    `)
+					} else {
+						$("#chatContainer").append(`
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+	                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+	                            <div>${chat.time}</div>
+	                        </div>
+	                    `)
+					}
 				}
 			}
 			scrollToBottom();
-			if(chatList[chatList.length - 1] === undefined) {
-				lastChatId = 0;				
+			if (chatList[chatList.length - 1] === undefined) {
+				lastChatId = 0;
 			} else {
 				lastChatId = chatList[chatList.length - 1].id;
 			}
@@ -159,19 +181,41 @@ function currentChatId(lastChatIdParam, chatRoomId, chatContainer) {
 			}
 			for (const chat of chatList) {
 				if (chat.senderId === chatList1.myUserId) {
-					chatContainer.append(`
-                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
-                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
-                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
-                        </div>
-                    `)
+					if(chat.fileName !== null) {
+						$("#chatContainer").append(`
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+          						<div>
+									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
+								</div>
+    	                    </div>
+	                    `)
+					} else {
+						$("#chatContainer").append(`
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+        	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
+    	                    </div>
+	                    `)
+					}
 				} else {
-					chatContainer.append(`
-                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
-                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
-                        </div>
-                    `)
+					if(chat.fileName !== null) {
+						$("#chatContainer").append(`
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+          						<div>
+									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
+								</div>
+	                            <div>${chat.time}</div>
+	                        </div>
+	                    `)
+					} else {
+						$("#chatContainer").append(`
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+	                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+	                            <div>${chat.time}</div>
+	                        </div>
+	                    `)
+					}
 				}
 			}
 			lastChatId = chatList[chatList.length - 1].id;
@@ -183,21 +227,34 @@ function currentChatId(lastChatIdParam, chatRoomId, chatContainer) {
 $("#fileInputBtn").on("change", function() {
 	var files = $(this)[0].files;
 	$("#dropupBtn").click();
-	if(files.length > 1) {
-		$("#chatTextArea").val(files[0].name + "....");		
+	if (files.length > 1) {
+		$("#chatTextArea").val(files[0].name + "....");
 	} else {
-		$("#chatTextArea").val(files[0].name);		
+		$("#chatTextArea").val(files[0].name);
 	}
 })
 
 $("#sendChatBtn").click(function() {
 	const message = $("#chatTextArea").val();
 	const chatRoomId = lastChatRoomId;
-	const data = { message, chatRoomId };
+
+	// 파일 정보를 FormData에 추가
+	const formData = new FormData();
+	formData.append("message", message);
+	formData.append("chatRoomId", chatRoomId);
+
+	// 파일 선택된 경우 FormData에 파일 추가
+	const files = $("#fileInputBtn")[0].files;
+	if (files.length > 0) {
+		for (let i = 0; i < files.length; i++) {
+			formData.append("files", files[i]);
+		}
+	}
 	$.ajax("/chat/add", {
-		contentType: "application/json",
-		method: "post",
-		data: JSON.stringify(data),
+		method: "POST",
+		data: formData,
+		processData: false,
+		contentType: false,
 		complete: function() {
 			$("#chatTextArea").val("");
 			scrollToBottom();
@@ -206,9 +263,9 @@ $("#sendChatBtn").click(function() {
 })
 
 document.addEventListener('keyup', function(event) {
-  if (event.key === 'Enter') {
-    document.getElementById('sendChatBtn').click();
-  }
+	if (event.key === 'Enter') {
+		document.getElementById('sendChatBtn').click();
+	}
 });
 
 $("#deleteChatRoomModalButton").click(function() {
@@ -297,6 +354,6 @@ $("#createChatRoomBtn").click(function() {
 })
 
 function scrollToBottom() {
-  var chatBox = document.getElementById("chatBox");
-  chatBox.scrollTop = chatBox.scrollHeight;
+	var chatBox = document.getElementById("chatBox");
+	chatBox.scrollTop = chatBox.scrollHeight;
 }

@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.*;
 import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.*;
 
 import com.example.demo.domain.*;
 import com.example.demo.service.*;
@@ -107,9 +108,20 @@ public class ChatController {
 	@PostMapping("add")
 	@ResponseBody
 	@PreAuthorize("authenticated")
-	public void chatAdd(@RequestBody Chat data, Authentication authentication) {
-		data.setSenderId(authentication.getName());
-		service.addChat(data);
+	public void chatAdd(
+			@RequestParam String message,
+			@RequestParam Integer chatRoomId,
+			@RequestParam(required = false) MultipartFile[] files, 
+			Authentication authentication) throws Exception {
+		Chat chat = new Chat(); 
+		chat.setSenderId(authentication.getName());
+		chat.setMessage(message);
+		chat.setChatRoomId(chatRoomId);
+		if(files != null) {
+			service.addFiles(chat, files);
+		} else {
+			service.addChat(chat);
+		}
 	}
 	
 	@GetMapping("check")

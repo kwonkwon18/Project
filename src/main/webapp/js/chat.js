@@ -130,8 +130,8 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 				}
 			}
 			scrollToBottom();
-			if(chatList[chatList.length - 1] === undefined) {
-				lastChatId = 0;				
+			if (chatList[chatList.length - 1] === undefined) {
+				lastChatId = 0;
 			} else {
 				lastChatId = chatList[chatList.length - 1].id;
 			}
@@ -191,9 +191,9 @@ $("#sendChatBtn").click(function() {
 })
 
 document.addEventListener('keyup', function(event) {
-  if (event.key === 'Enter') {
-    document.getElementById('sendChatBtn').click();
-  }
+	if (event.key === 'Enter') {
+		document.getElementById('sendChatBtn').click();
+	}
 });
 
 $("#deleteChatRoomModalButton").click(function() {
@@ -282,6 +282,7 @@ $("#createChatRoomBtn").click(function() {
 })
 
 function scrollToBottom() {
-  var chatBox = document.getElementById("chatBox");
-  chatBox.scrollTop = chatBox.scrollHeight;
+	var chatBox = document.getElementById("chatBox");
+	chatBox.scrollTop = chatBox.scrollHeight;
 }
+

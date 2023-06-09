@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.Member;
+import com.example.demo.domain.RunningLike;
 import com.example.demo.domain.RunningToday;
+import com.example.demo.mapper.RunningLikeMapper;
 import com.example.demo.mapper.RunningMapper;
 import com.example.demo.mapper.RunningTodayMapper;
 
@@ -35,6 +36,9 @@ public class RunningTodayService {
 	@Autowired
 	private RunningMapper mapper;
 
+	@Autowired
+	private RunningLikeMapper likeMapper;
+
 	public List<RunningToday> listBoard() {
 
 		return todayMapper.selectList();
@@ -46,7 +50,7 @@ public class RunningTodayService {
 
 		Member member = mapper.selectMemberById(authentication.getName());
 		runningToday.setWriter(member.getNickName());
-		
+
 		Integer cnt = todayMapper.insertRunningToday(runningToday);
 
 		for (MultipartFile file : files) {
@@ -72,12 +76,21 @@ public class RunningTodayService {
 
 	}
 
-	public RunningToday getBoard(Integer id) {
-		System.out.println("***" + todayMapper.selectFileNameById(id));
-		return todayMapper.selectFileNameById(id);
+	public RunningToday getBoard(Integer id, Authentication authentication) {
+		RunningToday runningToday = todayMapper.selectFileNameById(id);
+
+		// like 여부가 표시되게 하기 위함 
+		if (authentication != null) {
+			RunningLike like = likeMapper.select(id, authentication.getName());
+			if (like != null) {
+				runningToday.setLiked(true);
+			}
+		}
+		return runningToday;
 	}
 
-	public boolean todayModify(RunningToday runningToday, List<String> removeFileNames, MultipartFile[] addFiles) throws Exception {
+	public boolean todayModify(RunningToday runningToday, List<String> removeFileNames, MultipartFile[] addFiles)
+			throws Exception {
 		// FileName 테이블 삭제
 		// List<String> removeFileNamse에 뭐라도 있다면..
 		if (removeFileNames != null && !removeFileNames.isEmpty()) {
@@ -122,9 +135,9 @@ public class RunningTodayService {
 	}
 
 	public boolean removeById(Integer id) {
-		
+
 		Integer cnt = todayMapper.deletefileNameById(id);
-		
+
 		return todayMapper.deleteTodayById(id);
 	}
 }

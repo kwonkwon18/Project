@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.domain.ClimbingToday;
 import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
+import com.example.demo.domain.RunningLike;
 import com.example.demo.domain.RunningParty;
 import com.example.demo.domain.RunningToday;
 import com.example.demo.service.RunningPartyService;
@@ -96,39 +95,6 @@ public class RunningController {
 		model.addAllAttributes(getMemberList);
 
 		return "running/runningGet";
-	}
-
-	@GetMapping("/runningToday")
-	public void addrunningShare(Authentication authentication, Model model) {
-
-		
-	}
-
-	
-	@PostMapping("/runningToday")
-	public String addrunningShareResult(@RequestParam("files") MultipartFile[] files, RunningToday runningToday,
-			RedirectAttributes rttr, Authentication authentication) throws Exception {
-
-		boolean ok = todayService.addRunningToday(authentication, runningToday, files);
-
-		if (ok) {
-			return "redirect:/running/runningTodayList";
-		} else {
-			return "redirect:/running/runningTodayList";
-		}
-
-	}
-
-	@GetMapping("/todayId/{id}")
-	public String detailToday(@PathVariable("id") Integer id, Model model) {
-
-		RunningToday getList = todayService.getBoard(id);
-
-		System.out.println("getList" + getList);
-
-		model.addAttribute("board", getList);
-
-		return "running/runningTodayGet";
 	}
 
 	@GetMapping("/myPage")
@@ -233,7 +199,6 @@ public class RunningController {
 
 		boolean ok = service.modify(runningBoard);
 
-
 		if (ok) {
 			// 해당 게시물 보기로 리디렉션
 //			rttr.addAttribute("success", "success");
@@ -266,16 +231,46 @@ public class RunningController {
 	public void runningMapProcess() {
 
 	}
-	
+
 	// ******* TODAY
-	
+
+	@GetMapping("/runningToday")
+	public void addrunningShare(Authentication authentication, Model model) {
+
+	}
+
+	@PostMapping("/runningToday")
+	public String addrunningShareResult(@RequestParam("files") MultipartFile[] files, RunningToday runningToday,
+			RedirectAttributes rttr, Authentication authentication) throws Exception {
+
+		boolean ok = todayService.addRunningToday(authentication, runningToday, files);
+
+		if (ok) {
+			return "redirect:/running/runningTodayList";
+		} else {
+			return "redirect:/running/runningTodayList";
+		}
+
+	}
+
+	@GetMapping("/todayId/{id}")
+	public String detailToday(@PathVariable("id") Integer id, Model model, Authentication authentication) {
+
+		RunningToday getList = todayService.getBoard(id, authentication);
+
+		System.out.println("getList" + getList);
+
+		model.addAttribute("board", getList);
+
+		return "running/runningTodayGet";
+	}
+
 	@GetMapping("/runningTodayModify/{id}")
 	public String todayModifyForm(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("board", todayService.getBoard(id));
+		model.addAttribute("board", todayService.getBoard(id, null));
 		return "running/runningTodayModify";
 	}
-	
-	
+
 	@PostMapping("/runningTodayModify/{id}")
 	// 수정하려는 게시물 id : board.getId()
 	public String modifyProcess(RunningToday runningToday, RedirectAttributes rttr,
@@ -318,34 +313,30 @@ public class RunningController {
 			// 모델에 추가
 			rttr.addFlashAttribute("message", id + "번 게시물이 삭제되었습니다.");
 
-			return "redirect:/running/runningList";
+			return "redirect:/running/runningTodayList";
 		} else {
 			return "redirect:/running/runningTodayModify/" + id;
 		}
 	}
-	
+
 	@GetMapping("runningTodayList")
 	public void todayList(Model model
 //			@RequestParam(value = "page", defaultValue = "1") Integer page,
 //			@RequestParam(value = "search", defaultValue = "") String search,
 //			@RequestParam(value = "type", required = false) String type) 
-			) {
-		
-		Map<String, Object> todayList = new HashMap<>();		
-		
+	) {
+
+		Map<String, Object> todayList = new HashMap<>();
+
 		List<RunningToday> today = todayService.listBoard();
+		System.out.println("%%%" + today);
 		todayList.put("runningTodayList", today);
-		
+
 		model.addAllAttributes(todayList);
 
 	}
-	
-	
+
 	// *********
-	
-	
-	
-	
 
 	// ******************** AJAX
 
@@ -385,6 +376,28 @@ public class RunningController {
 		listSearch.put("result", service.searchMate(searchTerm));
 
 		return listSearch;
+	}
+
+	@PostMapping("/runningLike")
+	// responseEntitiy를 해주는 이유는 에러 메시지를 함께 보내주기 위함이다.
+	// @RequestBody Like like를 해준 것은 like에 있는 인자들을 json으로 보내주기 위함
+	// 또한 등록 된 사람들만 like를 할 수 있게 하게 위해서 Authentication 을 인자로 추가해주었다.
+	// 홈페이지의 대부분의 정보는 nickName 활용하였지만, like는 userId를 쓰기로 함
+	public ResponseEntity<Map<String, Object>> like(@RequestBody RunningLike like, Authentication auth) {
+		System.out.println(like);
+		System.out.println(auth);
+
+		if (auth == null) {
+			// 만약에 인증되지 않은 사용자가 들어왔으면...
+			return ResponseEntity.status(403) // 상태값 반환
+					.body(Map.of("message", "로그인 후 좋아요 클릭 해주세요")); // body에 해당 Map을 담아서
+			// 넘긴다. 이때 넘길 때는 js에 넘겨서 비동기 처리가 된다.
+
+		} else {
+
+			return ResponseEntity.ok().body(service.like(like, auth));
+		}
+
 	}
 
 }

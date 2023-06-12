@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 import org.springframework.web.multipart.*;
@@ -37,7 +38,7 @@ public class ClimbingCourseService {
 	}
 
 
-	public boolean addClimbingCourse(ClimbingCourse climbingCourse, MultipartFile[] files) throws Exception {
+	public boolean addClimbingCourse(ClimbingCourse climbingCourse, MultipartFile[] files, Authentication authentication) throws Exception {
 
 		int cnt = courseMapper.insert(climbingCourse);
 		for(MultipartFile file : files) {

@@ -124,10 +124,18 @@ public interface RunningMapper {
 			""")
 	List<RunningParty> selectMemberId(String writer);
 
+	/*
+	 * @Select(""" select boardId ,memberId from RunningParty p left join
+	 * RunningBoard b ON p.boardId = b.id where boardId = #{boardId} and userId =
+	 * #{writer} """) List<RunningParty> selectMemberIdByBoardId(Integer boardId,
+	 * String writer);
+	 */
+	
 	@Select("""
 			select boardId ,memberId
-			from RunningParty p left join RunningBoard b ON p.boardId = b.id
-			where boardId = #{boardId} and userId = #{writer}
+			from RunningParty p 
+				left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} and userId = #{writer} and participation = 1
 			""")
 	List<RunningParty> selectMemberIdByBoardId(Integer boardId, String writer);
 

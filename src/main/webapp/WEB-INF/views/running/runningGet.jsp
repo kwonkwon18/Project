@@ -170,6 +170,8 @@
 
 						<c:if test="${isUser}">
 							<button>내가 올린 게시물</button>
+							<input type="text" id="totalPeople" value="${board.people }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
 						</c:if>
 					</div>
 

@@ -15,15 +15,22 @@ public interface ClimbingCourseMapper {
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(ClimbingCourse climbingCourse);
-	
+
 	@Select("""
-			SELECT * FROM ClimbingCourse
-			ORDER BY ID DESC;
+			SELECT
+				c.id,
+				c.title,
+				c.body,
+				c.writer,
+				c.inserted,
+				f.fileName
+			FROM ClimbingCourse c LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId
 			""")
+	@ResultMap("climbingCourseResultMap")
 	List<ClimbingCourse> selectList();
 
 	@Select("""
-			SELECT 
+			SELECT
 				c.id,
 				c.title,
 				c.body,
@@ -42,6 +49,4 @@ public interface ClimbingCourseMapper {
 			""")
 	Integer insertFileName(Integer courseId, String fileName);
 
-
-	
 }

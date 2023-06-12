@@ -87,7 +87,7 @@ public class RunningController {
 
 		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
-//		System.out.println(members);
+		System.out.println("*** 멤버 " + members);
 
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);

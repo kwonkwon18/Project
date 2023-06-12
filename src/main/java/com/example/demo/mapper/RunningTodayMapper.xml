@@ -12,6 +12,8 @@
 		<result column="inserted" property="inserted" />
 		<result column="writer" property="writer" />
 		<result column="userId" property="userId" />
+		<result column = "likeCount" property = "likeCount"/>
+		<result column = "commentCount" property = "commentCount"/>
 		<collection property="fileName" ofType="String">
 			<result column="fileName" />
 		</collection>

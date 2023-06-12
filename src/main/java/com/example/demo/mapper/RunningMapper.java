@@ -45,7 +45,7 @@ public interface RunningMapper {
 			    COUNT(rp.boardId) AS currentNum
 			FROM
 			    RunningBoard r
-			    LEFT JOIN RunningParty rp ON r.id = rp.boardId
+			    LEFT JOIN RunningParty rp ON r.id = rp.boardId and participation = 1
 			    LEFT JOIN Member m ON r.writer = m.nickName
 			WHERE
 			    r.id = #{id}

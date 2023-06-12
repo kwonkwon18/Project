@@ -27,10 +27,10 @@ public interface RunningPartyMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer insert(RunningParty runningParty);
 
-	
+	// 숫자가 perticipate 가 1인 것들만 해줘야함
 	@Select("""
-			select count(*) from RunningParty
-			where boardId = #{boardId}
+			SELECT COUNT(*) FROM RunningParty
+			WHERE boardId = #{boardId} AND participation = 1;
 			""")
 	Integer countByBoardId(Integer boardId);
 

@@ -24,13 +24,15 @@ public class RunningPartyService {
 
 	public Map<String, Object> join(RunningParty runningParty, Authentication authentication) {
 
-		
+		// 현재 접속한 로그인 아이디 찾기
 		Member member = mapper.selectMemberById(authentication.getName());
 		
-
+		// 총 인원 파악용
 		RunningBoard board = mapper.selectById(runningParty.getBoardId());
+		
+		// 0일 때와 2일 때는 카운트 해주면 안되므로 수정 해줘야함 
 		int currentNum = partyMapper.countByBoardId(runningParty.getBoardId());
-
+		
 		Map<String, Object> result = new HashMap<>();
 
 		System.out.println(board.getPeople() + "총인원");
@@ -46,6 +48,8 @@ public class RunningPartyService {
 
 			Integer deleteCnt = partyMapper.delete(runningParty);
 
+			
+			
 			if (deleteCnt != 1) {
 				Integer insertCnt = partyMapper.insert(runningParty);
 				result.put("join", true);
@@ -53,6 +57,8 @@ public class RunningPartyService {
 
 			// 참여인원갯수 넘겨주기
 			Integer count = partyMapper.countByBoardId(runningParty.getBoardId());
+			
+			System.out.println("************" + count);
 
 			result.put("count", count);
 			System.out.println("****" + result);

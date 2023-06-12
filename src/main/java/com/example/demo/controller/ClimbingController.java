@@ -332,9 +332,9 @@ public class ClimbingController {
 	public String CourseResult(
 			ClimbingCourse climbingCourse,
 			RedirectAttributes rttr,
-			@RequestParam("files") MultipartFile[] files) throws Exception {
+			@RequestParam("files") MultipartFile[] files, Authentication authentication) throws Exception {
 
-		boolean ok = courseService.addClimbingCourse(climbingCourse, files);
+		boolean ok = courseService.addClimbingCourse(climbingCourse, files, authentication);
 
 		if (ok) {
 			return "redirect:/climbing/courseList";

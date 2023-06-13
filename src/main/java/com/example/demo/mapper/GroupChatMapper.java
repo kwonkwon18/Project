@@ -25,7 +25,7 @@ public interface GroupChatMapper {
 	List<Integer> getBoardIdByMyName(String myName);
 
 	@Select("""
-			SELECT * FROM RuuningBoard
+			SELECT * FROM RunningBoard
 			WHERE id = #{id}
 			""")
 	RunningBoard groupChatRoomSelectByBoardId(Integer id);
@@ -39,10 +39,104 @@ public interface GroupChatMapper {
 	LocalDateTime getChatLastInserted(Integer id);
 
 	@Select("""
-			SELECT SUM(chatCount) FROM RunningParty
-			WHERE boardId = #{id} AND guest != #{myUserId}  
+			SELECT chatCount FROM RunningParty
+			WHERE boardId = #{id} AND guest = #{myUserId}  
 			""")
 	Integer getChatCount(Integer id, String myUserId);
+
+	@Update("""
+			UPDATE RunningParty
+			SET
+				chatCount = 0
+			WHERE
+				boardId = #{chatRoomId} AND guest = #{myUserId}
+			""")
+	void resetCount(Integer chatRoomId, String myUserId);
+
+	@Select("""
+			SELECT id FROM RunningBoard
+			WHERE inserted = #{inserted}
+			""")
+	Integer getChatRoomId(LocalDateTime inserted);
+
+	@Select("""
+			SELECT * FROM GroupChatMessage
+			WHERE chatRoomId = #{chatRoomId} 
+			""")
+	List<GroupChatMessage> getChatSelectByChatRoomId(Integer chatRoomId);
+
+	@Select("""
+			SELECT * FROM GroupChatMessage
+			WHERE id > #{lastChatId} AND chatRoomId = #{chatRoomId} 
+			""")
+	List<GroupChatMessage> checkId(Integer lastChatId, Integer chatRoomId);
+
+	@Insert("""
+			INSERT INTO GroupChatMessage(chatRoomId, senderId, message)
+			VALUES(#{chatRoomId}, #{senderId}, #{message})
+			""")
+	void addChat(GroupChatMessage chat);
+
+	@Insert("""
+			INSERT INTO GroupChatMessage(chatRoomId, senderId, message, fileName)
+			VALUES(#{chatRoomId}, #{senderId}, #{message}, #{fileName})
+			""")
+	void insertFileChat(GroupChatMessage chat);
+
+	@Select("""
+			SELECT COUNT(guest) FROM RunningParty
+			WHERE boardId = #{chatRoomId}
+			""")
+	Integer countMember(Integer chatRoomId);
+
+	@Delete("""
+			DELETE FROM GroupChatMessage
+			WHERE chatRoomId = #{chatRoomId}
+			""")
+	void chatDeleteByChatRoomId(Integer chatRoomId);
+
+	@Delete("""
+			DELETE FROM RunningParty
+			WHERE boardId = #{chatRoomId}
+			""")
+	void runningPartyDeleteByChatRoomId(Integer chatRoomId);
+
+	@Delete("""
+			DELETE FROM RunningBoard
+			WHERE id = #{chatRoomId}
+			""")
+	void chatRoomDeleteByChatRoomId(Integer chatRoomId);
+
+	@Delete("""
+			DELETE FROM RunningParty
+			WHERE boardId = #{chatRoomId} AND guest = #{myUserId}
+			""")
+	void runningPartyDeleteMemberByChatRoomId(Integer chatRoomId, String myUserId);
+
+	@Select("""
+			SELECT host FROM RunningParty
+			WHERE boardId = #{chatRoomId}
+			LIMIT 1
+			""")
+	String getHostByChatRoomId(Integer chatRoomId);
+
+	@Select("""
+		    SELECT id FROM RunningBoard
+		    WHERE title LIKE CONCAT('%', #{search}, '%')
+		    """)
+		List<Integer> boardIdSelectBySearch(String search);
+
+	@Select("""
+			SELECT boardId FROM RunningParty
+			WHERE boardId = #{id} AND guest = #{myId} 
+			""")
+	Integer getMyRoom(int id, String myId);
+
+	@Select("""
+			SELECT * FROM RunningBoard
+			WHERE id = #{i}
+			""")
+	RunningBoard getRunningBoard(int i);
 
 	
 }

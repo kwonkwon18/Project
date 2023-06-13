@@ -7,6 +7,10 @@ function showList() {
 	$("#chatButton").hide();
 	$("#chatList").show();
 	$("#chatBox").hide();
+	$("#chatListSearchBtn").show();
+	$("#groupChatListSearchBtn").hide();
+	$("#searchRemove").show();
+	$("#groupSearchRemove").hide();
 	$.ajax("/chat/open", {
 		contentType: "application/json",
 		success: function(data) {
@@ -20,8 +24,8 @@ function showList() {
 			<div id="chatListContainer"></div>
 			`)
 			for (var i = 0; i < nickNameList.length; i++) {
-					if(i === 0) {
-						$("#chatListContainer").append(`
+				if (i === 0) {
+					$("#chatListContainer").append(`
 							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button0">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[0]}</span>
@@ -36,7 +40,7 @@ function showList() {
 								<input type="hidden" class="chatInserted" value="${chatInsertedList[0]}">
 							</button>
 						`);
-					}
+				}
 				for (var j = i - 1; j >= 0; j--) {
 					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
 						$(`#button${j}`).before(`
@@ -55,85 +59,12 @@ function showList() {
 							</button>
 						`);
 						break;
-					} else if (chatInsertedList[i] < chatInsertedList[j]) {
+					} else {
 						$(`#button${j}`).after(`
-							<button type="button	" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>
-									<span class="ms-auto">${timeList[i]}</span>
-								</div>
-								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span>${lastMessageList[i]}</span>
-									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
-								</div>
-								<input type="hidden" class="inserted" value="${insertedList[i]}">
-								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
-							</button>
-						`);
-						break;
-					}
-				}
-			}
-		}
-	});
-}
-
-function showGroupList() {
-	$("#chatListContainer").remove();
-	$("#chatButton").hide();
-	$("#chatList").show();
-	$("#chatBox").hide();
-	$.ajax("/chat/groupOpen", {
-		contentType: "application/json",
-		success: function(data) {
-			var titleList = data.titleList;
-			var lastMessageList = data.lastMessageList;
-			var insertedList = data.insertedList;
-			var timeList = data.timeList;
-			var chatCount = data.chatCount;
-			var chatInsertedList = data.chatInsertedList;
-			$("#chatList").append(`
-			<div id="chatListContainer"></div>
-			`)
-			for (var i = 1; i < nickNameList.length; i++) {
-				for (var j = i - 1; j >= 0; j--) {
-					if(i === 0) {
-						$("#chatListContainer").append(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button0">
-								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span>${titleList[0]}</span>
-									<span class="ms-auto">${timeList[0]}</span>
-								</div>
-								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span>${lastMessageList[0]}</span>
-									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[0]}</span>
-								</div>
-								<input type="hidden" class="inserted" value="${insertedList[0]}">
-								<input type="hidden" class="chatInserted" value="${chatInsertedList[0]}">
-							</button>
-						`);
-					} else if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
-						$(`#button${j}`).before(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
-								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span>${titleList[i]}</span>
-									<span class="ms-auto">${timeList[i]}</span>
-								</div>
-								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span>${lastMessageList[i]}</span>
-									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
-								</div>
-								<input type="hidden" class="inserted" value="${insertedList[i]}">
-								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
-							</button>
-						`);
-						break;
-					} else if (chatInsertedList[i] < chatInsertedList[j]) {
-						$(`#button${j}`).after(`
-							<button type="button	" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
-								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span>${titleList[i]}</span>
 									<span class="ms-auto">${timeList[i]}</span>
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
@@ -181,6 +112,10 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 	$("#chatList").hide();
 	$("#chatBox").show();
 	$(".chatNameTag").remove();
+	$("#sendGroupChatBtn").hide();
+	$("#sendChatBtn").show();
+	$("#dChat").show();
+	$("#dGroupChat").hide();
 	$(`#returnBtn`).after(`
 		<span style="white-space: nowrap; position: absolute; left: 50%; transform: translateX(-50%);" class="chatNameTag">${nickName}님과의 채팅방</span>
 	`);
@@ -197,7 +132,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
             `)
 			for (const chat of chatList) {
 				if (chat.senderId === myId) {
-					if(chat.fileName !== null) {
+					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
                 	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
             	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
@@ -215,7 +150,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 	                    `)
 					}
 				} else {
-					if(chat.fileName !== null) {
+					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
 	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
           						<div>
@@ -260,7 +195,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 			}
 			for (const chat of chatList) {
 				if (chat.senderId === chatList1.myUserId) {
-					if(chat.fileName !== null) {
+					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
                 	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
             	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
@@ -278,7 +213,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 	                    `)
 					}
 				} else {
-					if(chat.fileName !== null) {
+					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
 	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
           						<div>
@@ -341,13 +276,11 @@ $("#sendChatBtn").click(function() {
 	})
 })
 
-
 function keyupHandler(event) {
 	if (event.key === 'Enter') {
 		document.getElementById('sendChatBtn').click();
 	}
 };
-
 
 $("#deleteChatRoomModalButton").click(function() {
 	$("#chatContainer").remove("");
@@ -426,7 +359,7 @@ $("#createChatRoomBtn").click(function() {
 	})
 })
 
-$("#chatListSearchBtn").click(function(){
+$("#chatListSearchBtn").click(function() {
 	var search = $("#chatListSearchText").val();
 	$.ajax("/chat/findRoom?search=" + search, {
 		success: function(data) {
@@ -440,22 +373,24 @@ $("#chatListSearchBtn").click(function(){
 			$("#chatList").append(`
 			<div id="chatListContainer"></div>
 			`)
-			$("#chatListContainer").append(`
-					<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button0">
-						<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-							<span class="nickNameSpan">${nickNameList[0]}</span>
-							<span>님과의 대화방</span>
-							<span class="ms-auto">${timeList[0]}</span>
-						</div>
-						<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-							<span>${lastMessageList[0]}</span>
-							<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[0]}</span>
-						</div>
-						<input type="hidden" class="inserted" value="${insertedList[0]}">
-						<input type="hidden" class="chatInserted" value="${chatInsertedList[0]}">
-					</button>
-				`);
-			for (var i = 1; i < nickNameList.length; i++) {
+			for (var i = 0; i < nickNameList.length; i++) {
+				if (i === 0) {
+					$("#chatListContainer").append(`
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button0">
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span class="nickNameSpan">${nickNameList[0]}</span>
+									<span>님과의 대화방</span>
+									<span class="ms-auto">${timeList[0]}</span>
+								</div>
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span>${lastMessageList[0]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[0]}</span>
+								</div>
+								<input type="hidden" class="inserted" value="${insertedList[0]}">
+								<input type="hidden" class="chatInserted" value="${chatInsertedList[0]}">
+							</button>
+						`);
+				}
 				for (var j = i - 1; j >= 0; j--) {
 					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
 						$(`#button${j}`).before(`
@@ -474,9 +409,9 @@ $("#chatListSearchBtn").click(function(){
 							</button>
 						`);
 						break;
-					} else if (chatInsertedList[i] < chatInsertedList[j]) {
+					} else {
 						$(`#button${j}`).after(`
-							<button type="button	" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>
@@ -498,7 +433,7 @@ $("#chatListSearchBtn").click(function(){
 	})
 })
 
-$("#searchRemove").click(function(){
+$("#searchRemove").click(function() {
 	$("#chatListSearchText").val("");
 	showList();
 })
@@ -508,14 +443,8 @@ function scrollToBottom() {
 	chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-  $("#personalChatRoomListBtn").click(function() {
+$("#personalChatRoomListBtn").click(function() {
 	showList();
-    $(this).addClass("active");
-    $("#groupChatRoomListBtn").removeClass("active");
-  });
-  $("#groupChatRoomListBtn").click(function() {
-	  showGroupList();
-  	$(this).addClass("active");
-    $("#personalChatRoomListBtn").removeClass("active");
-  })
-
+	$(this).addClass("active");
+	$("#groupChatRoomListBtn").removeClass("active");
+});

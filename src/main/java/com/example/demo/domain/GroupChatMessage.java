@@ -11,4 +11,7 @@ public class GroupChatMessage {
 	private String senderId;
 	private String message;
 	private LocalDateTime inserted;
+	private String time;
+	private String ImgUrl;
+	private String fileName;
 }

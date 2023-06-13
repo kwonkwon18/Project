@@ -19,14 +19,15 @@
 
 	<br />
 	<br />
+	<br />
 
+	
 	<button id="alarmList">알람 목록 보기</button>
-	<div id="HostAlarm"></div>
-	<div id="MemberAlarm"></div>
+   <div id="HostAlarm"></div>
+   <div id="MemberAlarm"></div>'
 
 
 	<h1>마이페이지</h1>
-
 
 	<div class="row row-cols-1 row-cols-md-3 g-4">
 		<c:forEach items="${totalMyData}" var="board" varStatus="status">
@@ -37,43 +38,40 @@
 
 	<div class="row row-cols-1 row-cols-md-3 g-4">
 		</c:if>
-
-
-			<div class="col">
-				<div class="card text-white bg-primary mb-3" style="max-width: 21rem;">
-					<h3>내가 올린 게시물</h3>
-					<img src="..." class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">
-							<span id="boardIdText${status.index + 1}">${board.id}</span>
-							번게시물
-						</h5>
-						<div id="map${status.index + 1}" class="map-container" style="width: 300px; height: 300px;"></div>
-						<div>
-							<div class="mb-3">
-								<label for="" class="form-label">제목</label>
-								<input type="text" class="form-control" value="${board.title}" readonly />
-							</div>
-							<div class="mb-3">
-								<label for="" class="form-label">작성자</label>
-								<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
-							</div>
-							<div class="mb-3">
-								<label for="" class="form-label">모임시간</label>
-								<input id="timeText" type="text" class="form-control" value="${board.time}" readonly />
-							</div>
-
-							<button type="button" onclick="location.href='/running/id/${board.id}'">내 게시물 상세 보기</button>
-							<input class="LatSubmit${status.index + 1}" type="hidden" name="Lat" value="${board.lat}" />
-							<input class="LngSubmit${status.index + 1}" type="hidden" name="Lng" value="${board.lng}" />
-							<c:set var="latNum" value="${board.lat}" />
-							<c:set var="lngNum" value="${board.lng}" />
+		<div class="col">
+			<div class="card text-white bg-primary mb-3" style="max-width: 21rem;">
+				<h3>내가 올린 게시물</h3>
+				<img src="..." class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">
+						<span id="boardIdText${status.index + 1}">${board.id}</span>
+						번게시물
+					</h5>
+					<div id="map${status.index + 1}" class="map-container" style="width: 300px; height: 300px;"></div>
+					<div>
+						<div class="mb-3">
+							<label for="" class="form-label">제목</label>
+							<input type="text" class="form-control" value="${board.title}" readonly />
 						</div>
+						<div class="mb-3">
+							<label for="" class="form-label">작성자</label>
+							<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
+						</div>
+						<div class="mb-3">
+							<label for="" class="form-label">모임시간</label>
+							<input id="timeText" type="text" class="form-control" value="${board.time}" readonly />
+						</div>
+
+						<button type="button" onclick="location.href='/running/id/${board.id}'">내 게시물 상세 보기</button>
+						<input class="LatSubmit${status.index + 1}" type="hidden" name="Lat" value="${board.lat}" />
+						<input class="LngSubmit${status.index + 1}" type="hidden" name="Lng" value="${board.lng}" />
+						<c:set var="latNum" value="${board.lat}" />
+						<c:set var="lngNum" value="${board.lng}" />
 					</div>
 				</div>
 			</div>
+		</div>
 		</c:if>
-
 
 
 		<c:if test="${MyNickName eq board.memberId}">
@@ -120,22 +118,22 @@
 
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script>
-		<c:forEach items="${totalMyData}" var="board" varStatus="status">
-			var latNum${status.index + 1} = ${board.lat};
-			var lngNum${status.index + 1} = ${board.lng};
-			var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
-			var mapOption${status.index + 1} = {
-				center: new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
-				level: 3
-			};
-			var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
-			var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
-			var marker${status.index + 1} = new kakao.maps.Marker({
-				position: markerPosition${status.index + 1}
-			});
-			marker${status.index + 1}.setMap(map${status.index + 1});
-		</c:forEach>
-	</script>
+      <c:forEach items="${totalMyData}" var="board" varStatus="status">
+         var latNum${status.index + 1} = ${board.lat};
+         var lngNum${status.index + 1} = ${board.lng};
+         var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
+         var mapOption${status.index + 1} = {
+            center: new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
+            level: 3
+         };
+         var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
+         var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
+         var marker${status.index + 1} = new kakao.maps.Marker({
+            position: markerPosition${status.index + 1}
+         });
+         marker${status.index + 1}.setMap(map${status.index + 1});
+      </c:forEach>
+   </script>
 	<script src="/js/running/myPage.js"></script>
 </body>
 </html>

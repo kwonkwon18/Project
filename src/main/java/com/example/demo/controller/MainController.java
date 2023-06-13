@@ -52,7 +52,7 @@ public class MainController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-	 		rttr.addFlashAttribute("member", member);
+			rttr.addFlashAttribute("member", member);
 			rttr.addFlashAttribute("message", "회원 가입 실패 ❌❌");
 			return "redirect:/login";
 		}
@@ -61,7 +61,41 @@ public class MainController {
 	@GetMapping("list")
 	public void list(Model model) {
 		List<Member> list = memberService.listMember();
-		model.addAttribute("memberList",list);
+		model.addAttribute("memberList", list);
 	}
 
+	// 경로 : /member/info?id=asdf
+	@GetMapping("info")
+	public void info(String userId, Model model) {
+		Member member = memberService.get(userId);
+		System.out.println(member);
+		model.addAttribute("member", member);
+	}
+
+	@PostMapping("remove")
+	public String remove(Member member,RedirectAttributes rttr) {
+		boolean ok = memberService.remove(member);
+		if(ok) {
+			rttr.addFlashAttribute("message", "회원 탈퇴되었습니다.");
+			return "redirect:/list";
+		}
+		else {
+			rttr.addFlashAttribute("message", "회원 탈퇴에 문제가 생겼습니다.");
+			return "redirect:/info?userId"+member.getUserId();
+		}
+	}
+	// 1.
+	
+	@GetMapping("modify")
+		public void modifyForm(String userId,Model model) {
+		Member member=memberService.get(userId);
+		model.addAttribute("member",member);
+//		model.addAttribute(memberService.get(userId));
+	}
+	
+	//2.
+	@PostMapping("modify")
+	public void modifyProcess(Member member, String oldPassword, RedirectAttributes rttr) {
+		boolean ok = memberService.modify(member,oldPassword);
+	}
 }

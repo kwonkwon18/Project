@@ -52,4 +52,33 @@ public class MemberService {
 
 		return mapper.selectAll();
 	}
+
+	public Member get(String userId) {
+		return mapper.selectById(userId);
+	}
+
+
+
+	public boolean modify(Member member, String oldPassword) {
+		Member oldMember = mapper.selectById(member.getId());
+
+		int cnt = 0;
+		if (oldMember.getPassword().equals(oldPassword)) {
+			
+			cnt = mapper.update(member);
+		}
+		
+		return cnt = 1 ;
+	}
+	
+	public boolean remove(Member member) {
+		Member oldMember = mapper.selectById(member.getUserId());
+		int cnt=0;
+		// 도메인이 어떤 형식으로 어떤 타입으로 되어 있는지는 알아야한다.
+		if(passwordEncoder.matches(member.getPassword(),oldMember.getPassword())) {
+			cnt= mapper.deleteById(member.getUserId());
+		}
+		return cnt ==1;
+		
+	}
 }

@@ -19,7 +19,7 @@
 				<li class="nav-item"><a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/climbing/mateList">메이트 구하기</a></li>
 				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/todayList">오늘의 등산</a></li>
 				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/courseList">추천 코스</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/myPage">마이페이지</a></li>
+				<sec:authorize access="isAuthenticated()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/myPage">마이페이지</a></li></sec:authorize>
 				<sec:authorize access="isAuthenticated()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/logout">로그아웃</a></li></sec:authorize>
 				<sec:authorize access="isAnonymous()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/login">로그인</a></li></sec:authorize>
 			</ul>

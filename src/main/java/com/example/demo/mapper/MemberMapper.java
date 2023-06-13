@@ -2,9 +2,7 @@ package com.example.demo.mapper;
 
 import java.util.*;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import com.example.demo.domain.Member;
 
@@ -33,15 +31,46 @@ public interface MemberMapper {
 			""")
 	Integer insertMember(Member member);
 	////////////////
-
 	@Select("""
-			SELECT userId FROM Member
-			WHERE nickName = #{invitedNickName}
-			""")
-	String getUserIdSelectByNickName(String invitedNickName);
-	
-	@Select("""
-			SELECT * FROM Member ORDER BY inserted DESC
+			SELECT *
+			FROM Member
+			ORDER BY inserted DESC
 			""")
 	List<Member> selectAll();
+
+	@Select("""
+			SELECT *
+			FROM Member
+			WHERE userId = #{userId}
+			""")
+	Member selectById(String integer);
+	
+	String getUserIdSelectByNickName(String yourNickName);	
+
+	@Delete("""
+			DELETE FROM Member
+			WHERE id=#{id}
+			""")
+
+	Member deleteById(String integer);
+	@Update("""
+			UPDATE Member
+			SET password = #{password},
+				name 	 = #{name},
+				nickName = #{nickName},
+				birth 	 = #{birth},
+				gender 	 = #{gender},
+				address  = #{address},
+				phone	 = #{phone},
+				email	 = #{email},
+				introduce= #{introduce}
+			WHERE
+				userId = #{userId};
+			""")
+	Integer update(Member member);
+
+	Member selectById(Integer id);
+
+	
 }
+

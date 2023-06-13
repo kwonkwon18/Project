@@ -64,12 +64,20 @@ public class RunningController {
 	}
 
 	@PostMapping("/runningAdd")
-	public String addResult(RunningBoard runningBoard, RedirectAttributes rttr, Authentication authentication) {
+	public String addResult(RunningParty runningParty, RunningBoard runningBoard, RedirectAttributes rttr,
+			Authentication authentication) {
 
 		boolean ok = service.addBoard(runningBoard, authentication);
 
 		if (ok) {
 			rttr.addFlashAttribute("message", runningBoard.getTitle() + "  게시물이 등록되었습니다.");
+			runningParty.setBoardId(runningBoard.getId());
+			Integer boardId = runningParty.getBoardId();
+			runningParty.setUserId(runningBoard.getWriter());
+			String userId = runningParty.getUserId();
+
+			System.out.println(runningParty);
+			int cnt = partyService.makeMate(boardId, userId, authentication);
 			return "redirect:/running/runningMate";
 		} else {
 			rttr.addFlashAttribute("message", "게시물 등록 실패 !! ");
@@ -87,7 +95,7 @@ public class RunningController {
 
 		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
-//		System.out.println(members);
+		System.out.println("*** 멤버 " + members);
 
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
@@ -397,6 +405,29 @@ public class RunningController {
 
 			return ResponseEntity.ok().body(service.like(like, auth));
 		}
+
+	}
+
+	@GetMapping("alarm")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> alarm(RunningParty runningParty, Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.alarm(runningParty, authentication));
+
+	}
+
+	@PostMapping("agreeParty")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> agreeParty(@RequestBody RunningParty runningParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.agreeParty(runningParty, authentication));
+
+	}
+
+	@PostMapping("disagreeParty")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> disagreeParty(@RequestBody RunningParty runningParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.disagreeParty(runningParty, authentication));
 
 	}
 

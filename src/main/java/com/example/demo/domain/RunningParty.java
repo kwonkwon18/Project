@@ -10,7 +10,11 @@ public class RunningParty {
 	private String userId; // 호스트 ==> get 화면에서 가져올 수 있음
 	private String memberId; // 게스트 
 	
-	private Integer participation;
 	
+	private Integer participation;
+	private String title;
+	
+	private String host;
+	private String guest;
 	
 }

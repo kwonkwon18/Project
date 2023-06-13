@@ -10,6 +10,8 @@ function showList() {
 	$("#chatListSearchBtn").show();
 	$("#groupChatListSearchBtn").hide();
 	$("#searchRemove").show();
+	$("#groupChatRoomListBtn").removeClass("active");
+	$("#personalChatRoomListBtn").addClass("active");
 	$("#groupSearchRemove").hide();
 	$.ajax("/chat/open", {
 		contentType: "application/json",

@@ -83,7 +83,7 @@ function showGroupList() {
 
 $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 	var title = $(this).find(".titleSpan").text();
-	document.addEventListener('keyup', keyupHandler);
+	document.addEventListener('keyup', groupKeyupHandler);
 	$("#chatList").hide();
 	$("#chatBox").show();
 	$(".chatNameTag").remove();
@@ -214,6 +214,8 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 				return;
 			}
 			for (const chat of chatList) {
+				console.log(lastSenderId);
+				console.log(chat.senderId);
 				if (lastSenderId === chat.senderId) {
 					if (chat.senderId === chatList1.myUserId) {
 						if (chat.fileName !== null) {
@@ -414,6 +416,12 @@ $("#groupSearchRemove").click(function() {
 	$("#chatListSearchText").val("");
 	showGroupList();
 })
+
+function groupKeyupHandler(event) {
+	if (event.key === 'Enter') {
+		document.getElementById('sendGroupChatBtn').click();
+	}
+};
 
 $("#groupChatRoomListBtn").click(function() {
 	showGroupList();

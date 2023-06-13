@@ -142,7 +142,7 @@ public interface GroupChatMapper {
 			SELECT senderId FROM GroupChatMessage
 			WHERE chatRoomId = #{chatRoomId}
 			ORDER BY id DESC
-			LIMIT 1
+			LIMIT 1 OFFSET 1
 			""")
 	String lastSenderIdSelectByChatRoomId(Integer chatRoomId);
 

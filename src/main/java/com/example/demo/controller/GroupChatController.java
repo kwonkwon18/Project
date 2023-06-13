@@ -89,6 +89,7 @@ public class GroupChatController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("chatList", service.checkId(lastChatId, chatRoomId));
 		map.put("myUserId", authentication.getName());
+		map.put("lastSenderId", service.lastSenderIdSelectByChatRoomId(chatRoomId));
 		return map;
 	}
 	

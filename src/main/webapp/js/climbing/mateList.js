@@ -114,12 +114,14 @@ function handleListUpButtonClick() {
 			}
 			
       		$(".chatRoomCheckBtn").click(function() {
-				const yourNickName = $(this).text();
+				var yourNickNameLong = $(this).text();
+				var yourNickName = yourNickNameLong.substring(0, yourNickNameLong.indexOf("님과의")); 
 				console.log(yourNickName);
 				$.ajax("/chat/roomCheck?yourNickName=" + yourNickName, {
 					success: function(data) {
 						console.log(data.check);
 						if (data.check) {
+							document.addEventListener('keyup', keyupHandler);
 							$(".btn-close").click();
 							$("#chatListContainer").remove("");
 							$("#chatContainer").remove("");
@@ -142,19 +144,41 @@ function handleListUpButtonClick() {
 			            			`)
 									for (const chat of chatList) {
 										if (chat.senderId === myId) {
-											$("#chatContainer").append(`
-						                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
-						                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
-						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
-						                        </div>
-			                    			`)
+											if(chat.fileName !== null) {
+												$("#chatContainer").append(`
+						                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+						            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+						          						<div>
+															<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
+														</div>
+						    	                    </div>
+							                    `)
+											} else {
+												$("#chatContainer").append(`
+						                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+						            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+						        	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
+						    	                    </div>
+							                    `)
+											}
 										} else {
-											$("#chatContainer").append(`
-						                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
-						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-						                            <div>${chat.time}</div>
-						                        </div>
-			                    			`)
+											if(chat.fileName !== null) {
+												$("#chatContainer").append(`
+							                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+						          						<div>
+															<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
+														</div>
+							                            <div>${chat.time}</div>
+							                        </div>
+							                    `)
+											} else {
+												$("#chatContainer").append(`
+							                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+							                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+							                            <div>${chat.time}</div>
+							                        </div>
+							                    `)
+											}
 										}
 									}
 									lastChatId = chatList[chatList.length - 1].id;

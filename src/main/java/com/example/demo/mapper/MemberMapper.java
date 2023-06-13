@@ -1,5 +1,7 @@
 package com.example.demo.mapper;
 
+import java.util.*;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -37,5 +39,11 @@ public interface MemberMapper {
 			WHERE nickName = #{invitedNickName}
 			""")
 	String getUserIdSelectByNickName(String invitedNickName);
+
+	@Select("""
+			SELECT userId FROM Member
+			WHERE nickName LIKE CONCAT('%', #{search}, '%')
+			""")
+	List<String> UserIdSelectBySearch(String search);
 	
 }

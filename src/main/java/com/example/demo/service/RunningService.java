@@ -256,6 +256,14 @@ public class RunningService {
 		// 신청자가 들어감
 		List<RunningParty> members = mapper.selectForMemberIdByBoardId(boardId);
 		getMemberList.put("members", members);
+		
+		// 대기자가 들어감
+		List<RunningParty> waitingMembers = mapper.selectWaitingMemberIdByBoardIdForModal(boardId);
+		getMemberList.put("waitingMembers", waitingMembers);
+		
+		// 거절멤버
+		List<RunningParty> rejectMembers = mapper.selectRejectMemberIdByBoardIdForModal(boardId);
+		getMemberList.put("rejectMembers", rejectMembers);
 
 		// 중복 신청 방지용
 		List<Member> memberList = getUserId(authentication.getName());
@@ -319,6 +327,18 @@ public class RunningService {
 
 		return result;
 	}
+
+	public List<RunningParty> selectWaitingMemberIdByBoardId(Integer id, String writer) {
+		// TODO Auto-generated method stub
+		return mapper.selectWaitingMemberIdByBoardId(id, writer);
+	}
+
+	public List<RunningParty> selectRejectMemberIdByBoardId(Integer id, String writer) {
+		// TODO Auto-generated method stub
+		return mapper.selectRejectMemberIdByBoardId(id, writer);
+	}
+
+
 
 
 

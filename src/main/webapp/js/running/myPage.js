@@ -8,10 +8,13 @@ $("#alarmList").click(function() {
 			// data.boardId[0], data.memberId[0] ...
 			// boardId 별, participation이 0인 리스트를 줘야함
 			var alarmList = data.alarmList;
+			var memberAlarmList = data.memberAlarmList;
+			
 
 			// 기존 내용 삭제
-			$("#alarm").empty();
+			$("#HostAlarm").empty();
 
+			
 			alarmList.forEach(function(item) {
 				var boardId = item.boardId; // 보드아이디
 				var memberId = item.memberId; // 멤버 닉네임
@@ -25,9 +28,35 @@ $("#alarmList").click(function() {
 				console.log(title)
 				console.log(userId)
 
-				$("#alarm").append(`
+				$("#HostAlarm").append(`
             <div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
               ${title} 에 ${memberId} 님이 신청하셨습니다. 
+              <button class="agreeParty" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >수락</button>
+              <button class="disagreeParty" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >거절</button>   
+            </div>
+          `);
+
+			});
+			
+			// 멤버별 알람
+			memberAlarmList.forEach(function(item) {
+				var boardId = item.boardId; // 보드아이디
+				var memberId = item.memberId; // 멤버 닉네임
+				var title = item.title; // 제목
+				var userId = item.userId; // 유저 닉네임
+				var userId = item.participation; // 참여여부
+				// 유저 아이디
+				// 멤버 아이디 
+				
+				console.log("&&" + boardId)
+				console.log("&&" +memberId)
+				console.log("&&" +title)
+				console.log("&&" +userId)
+				console.log("&&" +participation)
+
+				$("#MemberAlarm").append(`
+            <div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+              *** ${title} 에 ${memberId} 님이 신청하셨습니다. 
               <button class="agreeParty" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >수락</button>
               <button class="disagreeParty" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >거절</button>   
             </div>

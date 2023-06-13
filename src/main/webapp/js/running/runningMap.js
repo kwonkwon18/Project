@@ -40,14 +40,10 @@ $(document).ready(function() {
         `);
 
 				for (let i = 0; i < 3; i++) {
-
-
 					const runningMate = runningMateList[i];
-
 					if (runningMate == null) {
 						break;
 					}
-
 
 					mapInfo.push({
 						content: runningMate.title,

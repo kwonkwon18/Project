@@ -35,7 +35,7 @@ public class RunningPartyService {
 		String hostNickName = board.getWriter();
 		String host = mapper.findHost(hostNickName);
 
-		// 0일 때와 2일 때는 카운트 해주면 안되므로 수정 해줘야함
+		
 		int currentNum = partyMapper.countByBoardId(runningParty.getBoardId());
 		Integer boardId = runningParty.getBoardId();
 		String userId = runningParty.getUserId();
@@ -85,18 +85,19 @@ public class RunningPartyService {
 		// 현재 접속한 로그인 아이디 찾기
 		Member member = mapper.selectMemberById(authentication.getName());
 		
-		
-
 		Map<String, Object> result = new HashMap<>();
 
 		runningParty.setUserId(member.getNickName());
 
 		// System.out.println("%%" + runningParty);
 
+		// 호스트 마이페이지 
 		List<RunningParty> alarmList = partyMapper.selectAlarmList(runningParty);
-
-		// System.out.println("####" + alarmList);
 		result.put("alarmList", alarmList);
+		
+		// 게스트 마이페이지
+		List<RunningParty> memberAlarmList = partyMapper.selectMemberAlarmList(runningParty);
+		result.put("memberAlarmList", memberAlarmList);
 
 		return result;
 

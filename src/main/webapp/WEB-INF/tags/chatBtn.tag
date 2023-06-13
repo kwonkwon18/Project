@@ -21,11 +21,15 @@
 			</button>
 			<div class="dropdown-menu">
 				<input type="file" multiple name="files" accept="image/*" id="fileInputBtn" />
-				<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteChatRoomConfirmModal">방 나가기</button>
+				<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteChatRoomConfirmModal" id="dChat">방 나가기</button>
+				<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteGroupChatRoomConfirmModal" id="dGroupChat" style="display: none;">방 나가기</button>
 			</div>
 		</div>
 		<input type="text" style="height: 40px;" placeholder="채팅을 입력해주세요" id="chatTextArea" class="form-control" />
 		<button id="sendChatBtn" class="btn btn-outline-danger">
+			<i class="fa-regular fa-paper-plane"></i>
+		</button>
+		<button id="sendGroupChatBtn" class="btn btn-outline-danger" style="display:none;">
 			<i class="fa-regular fa-paper-plane"></i>
 		</button>
 	</div>
@@ -50,7 +54,11 @@
 		<button type="button" id="searchRemove" style="background-color: white; border-color: white; border: 0px;">
 			<i class="fa-solid fa-x"></i>
 		</button>
+		<button type="button" id="groupSearchRemove" style="display: none; background-color: white; border-color: white; border: 0px;">
+			<i class="fa-solid fa-x"></i>
+		</button>
 		<button type="button" style="margin-left: auto; border: 0px;" id="chatListSearchBtn">검색</button>
+		<button type="button" style="display: none; margin-left: auto; border: 0px;" id="groupChatListSearchBtn">검색</button>
 	</div>
 
 </div>
@@ -81,6 +89,22 @@
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">닫기</button>
 				<button id="deleteChatRoomModalButton" data-bs-dismiss="modal" type="button" class="btn btn-danger">방 나가기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="deleteGroupChatRoomConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5">방 나가기</h1>
+				<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">방에서 나가시겠습니까?</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-bs-dismiss="modal">닫기</button>
+				<button id="deleteGrouupChatRoomModalButton" data-bs-dismiss="modal" type="button" class="btn btn-danger">방 나가기</button>
 			</div>
 		</div>
 	</div>

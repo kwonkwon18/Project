@@ -45,9 +45,7 @@ public interface MemberMapper {
 			FROM Member
 			WHERE userId = #{userId}
 			""")
-	Member selectById(String integer);
-	
-	String getUserIdSelectByNickName(String yourNickName);	
+	Member selectById(String integer);	
 
 	@Delete("""
 			DELETE FROM Member
@@ -85,4 +83,3 @@ public interface MemberMapper {
 
 	
 }
-

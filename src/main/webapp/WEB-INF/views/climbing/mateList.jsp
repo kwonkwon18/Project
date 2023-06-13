@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+	<my:chatBtn></my:chatBtn>
 
 	<my:navBar></my:navBar>
 
@@ -50,26 +51,27 @@
 		<br />
 		<nav>
 			<ul>
-				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
+				<a id="all1" href="mateList" style="text-decoration-line: none;">전체</a>
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 				<div class="dropdown-menu" aria-labelledby="search1">
 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-				<span style="margin-left: 700px;"></span>
-				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
+				<span style="margin-left: 840px;">
+					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
+				</span>
 <!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<form action="/climbing/mateList" class="d-flex" role="search">
+					<form action="/climbing/mateList" class="d-flex" role="mateSearch">
 						<select class="form-select" name="type" id="" style="width: 150px">
 							<option value="all">전체</option>
 							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
 							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
 							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
-						</select> <input value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+						</select> <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
 						<button class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>

@@ -131,12 +131,12 @@ public class ClimbingMateService {
 	}
 
 	public List<ClimbingMate> searchMate(String searchTerm) {
-		// TODO Auto-generated method stub
+
 		return mateMapper.selectBySearchTerm(searchTerm);
 	}
 	
 	public List<Member> getUserId(String userId) {
-		// TODO Auto-generated method stub
+
 		return mateMapper.selectUserId(userId);
 	}
 
@@ -162,7 +162,7 @@ public class ClimbingMateService {
 		return getMemberList;
 	}
 
-	public List<ClimbingMate> getMateBoardByAddress(Authentication authentication, String type, String search) {
+	public List<ClimbingMate> getMateBoardByAddress(Authentication authentication, String type, String mateSearch) {
 		
 		if(authentication != null) {
 
@@ -304,7 +304,7 @@ public class ClimbingMateService {
 		
 		System.out.println("addressList" + addressList);
 
-		return mateMapper.selectMateByDistance(addressList, type, search);
+		return mateMapper.selectMateByDistance(addressList, type, mateSearch);
 	}
 		
 		return null;

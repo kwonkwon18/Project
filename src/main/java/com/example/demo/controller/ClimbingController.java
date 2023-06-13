@@ -55,14 +55,14 @@ public class ClimbingController {
 	@GetMapping("mateList")
 	public void mateList(Model model, Authentication authentication,
 			@RequestParam(value = "type", required = false) String type, 
-			@RequestParam(value = "search", defaultValue = "") String search) {
+			@RequestParam(value = "mateSearch", defaultValue = "") String mateSearch) {
 		
 		System.err.println("접근 1");
 
 		Map<String, Object> listMap = new HashMap<>();
 
 		// 메이트 구하기
-		List<ClimbingMate> mate = mateService.getMateBoardByAddress(authentication, type, search); // 페이지 처리 전
+		List<ClimbingMate> mate = mateService.getMateBoardByAddress(authentication, type, mateSearch); // 페이지 처리 전
 		listMap.put("climbingMateList", mate);
 		
 		List<ClimbingParty> members = mateService.selectMemberIdByBoardId();
@@ -76,15 +76,15 @@ public class ClimbingController {
 	}
 
 	@GetMapping("todayList")
-	public void todayList(Model model
-//			@RequestParam(value = "page", defaultValue = "1") Integer page,
-//			@RequestParam(value = "search", defaultValue = "") String search,
-//			@RequestParam(value = "type", required = false) String type) 
-			) {
+	public void todayList(Model model, Authentication authentication,
+			@RequestParam(value = "todaySearch", defaultValue = "") String todaySearch) {
+		
+		System.err.println("접근 2");
 		
 		Map<String, Object> listMap = new HashMap<>();		
+		
 		// 오늘의 등산
-		List<ClimbingToday> today = todayService.listBoard(); // 페이지 처리 전
+		List<ClimbingToday> today = todayService.listBoard(todaySearch); // 페이지 처리 전
 		listMap.put("climbingTodayList", today);
 		
 		model.addAllAttributes(listMap);
@@ -92,11 +92,15 @@ public class ClimbingController {
 	}
 	
 	@GetMapping("courseList")
-	public void courseList(Model model) {
+	public void courseList(Model model, Authentication authentication,
+			@RequestParam(value = "courseSearch", defaultValue = "") String courseSearch) {
+		
+		System.err.println("접근 3");
+		
 		Map<String, Object> listMap = new HashMap<>();
 		
 		// 추천 코스
-		List<ClimbingCourse> course = courseService.listBoard(); // 페이지 처리 전
+		List<ClimbingCourse> course = courseService.listBoard(courseSearch); // 페이지 처리 전
 		listMap.put("climbingCourseList", course);
 
 		model.addAllAttributes(listMap);
@@ -204,9 +208,9 @@ public class ClimbingController {
 //		model.addAllAttributes(getMemberList);
 //	}
 	
-	@GetMapping("/search")
+	@GetMapping("/mateSearch")
 	@ResponseBody
-	public Map<String, Object> mateSearch(@RequestParam("search") String searchTerm) {
+	public Map<String, Object> mateSearch(@RequestParam("mateSearch") String searchTerm) {
 	    Map<String, Object> listSearch = new HashMap<>();
 	    
 	    
@@ -321,6 +325,23 @@ public class ClimbingController {
 			return "redirect:/todayId/" + id;
 		}
 	}
+	
+	@GetMapping("/todaySearch")
+	@ResponseBody
+	public Map<String, Object> todaySearch(@RequestParam("todaySearch") String searchTerm) {
+	    Map<String, Object> listSearch = new HashMap<>();
+	    
+	    
+	    // 검색어를 이용하여 필요한 처리를 수행하고 결과를 listSearch에 저장합니다.
+	    // 예: DB에서 검색 쿼리를 수행하거나 다른 로직을 수행합니다.
+	    
+	    
+	    // 결과를 listSearch에 저장하여 클라이언트로 전달합니다.
+	    listSearch.put("result", todayService.searchToday(searchTerm));
+	    
+	    System.out.println(listSearch.get("result"));
+	    return listSearch;
+	}
 
 
 	@GetMapping("/courseAdd")
@@ -346,7 +367,7 @@ public class ClimbingController {
 	@GetMapping("/courseId/{id}")
 	public String Coursedetail(@PathVariable("id") Integer id, Model model) {
 
-		ClimbingCourse courseList = courseService.getBoard(id);
+		ClimbingCourse courseList = courseService.getClimbingCourse(id);
 
 		model.addAttribute("board", courseList);
 
@@ -354,4 +375,55 @@ public class ClimbingController {
 
 	}
 
+	@GetMapping("/courseModify/{id}")
+	public String courseModifyForm(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("board", courseService.getClimbingCourse(id));
+		return "climbing/courseModify";
+	}
+
+//	@RequestMapping(value = "/modify/{id}", method = RequestMethod.POST)
+	@PostMapping("/courseModify/{id}")
+	
+	// 수정하려는 게시물 id : mate.id
+	public String courseModifyProcess(ClimbingCourse climbingCourse,
+			@RequestParam(value = "files", required = false) MultipartFile[] addFiles,
+			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
+			RedirectAttributes rttr) throws Exception {
+		
+		boolean ok = courseService.modify(climbingCourse, addFiles, removeFileNames);
+
+		if (ok) {
+			// 해당 게시물 보기로 리디렉션
+//			rttr.addAttribute("success", "success");
+			rttr.addFlashAttribute("message", climbingCourse.getId() + "번 게시물이 수정되었습니다.");
+			return "redirect:/id/" + climbingCourse.getId();
+		} else {
+			// 수정 form 으로 리디렉션
+//			rttr.addAttribute("fail", "fail");
+			rttr.addFlashAttribute("message", climbingCourse.getId() + "번 게시물이 수정되지 않았습니다.");
+			return "redirect:/todayModify/" + climbingCourse.getId();
+		}
+	}
+	
+	
+	@PostMapping("/courseRemove")
+	public String courseRemove(Integer id, RedirectAttributes rttr) {
+		boolean ok = todayService.remove(id);
+		if (ok) {
+			// query string에 추가
+//			rttr.addAttribute("success", "remove");
+
+			// 모델에 추가
+			rttr.addFlashAttribute("message", id + "번 게시물이 삭제되었습니다.");
+
+			return "redirect:/climbing/todayList";
+		} else {
+			return "redirect:/todayId/" + id;
+		}
+	}
+	
+	@GetMapping("/courseListArea")
+	public void courseListArea() {
+		
+	}
 }

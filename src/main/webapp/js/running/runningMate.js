@@ -171,6 +171,8 @@ function handleListUpButtonClick() {
 							$("#chatList").hide();
 							$("#chatBox").show();
 							$(".chatNameTag").remove();
+							$("#dChat").show();
+							$("#dGroupChat").hide();
 							$(`#returnBtn`).after(`
 								<span style="white-space: nowrap; position: absolute; left: 50%; transform: translateX(-50%);" class="chatNameTag">${yourNickName}님과의 채팅방</span>
 							`);

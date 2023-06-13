@@ -48,8 +48,8 @@
 		<div style="display: flex;">
 			<div style="flex: 1; margin-left: 800px;" id="mateMapBox">
 				<ul style="display: flex; align-items: left;">
-					<form action="/search" class="d-flex" role="search">
-						<input id="searchInput" value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
+					<form action="/climbing/todayList" class="d-flex" role="todaySearch">
+						<input id="searchInput" value="${param.todaySearch}" name="todaySearch" class="form-control" type="todaySearch" aria-label="todaySearch" style="width: 300px" >
 						<button id="search" class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
@@ -63,20 +63,23 @@
 			<c:forEach items="${climbingTodayList}" var="board">
 				<div class="col-md-4">
 					<div class="card" style="width: 18rem; margin-bottom: 20px;">
-						<div class="card-body">
-							<h5 class="card-title">🌄${board.writer}</h5>
-							<p class="card-text">${board.inserted}</p>
-							<p class="card-text">${board.title}</p>
-							<p class="card-text">${board.body}</p>
+						<div onclick="location.href='todayId/${board.id}'">
+							<div class="card-body">
+								<h5 class="card-title d-flex justify-content-between">
+									<span>🌄 ${board.writer}</span>
+									<p style="font-size: medium;">${board.inserted}</p>
+								</h5>
+								<p class="card-text">${board.title}</p>
+								<%-- 							<p class="card-text">${board.body}</p> --%>
+							</div>
+							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+								<c:if test="${status.count lt 2 }">
+									<div>
+										<img class="img-thumbnail" src="${bucketUrl}/climbingToday/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
+									</div>
+								</c:if>
+							</c:forEach>
 						</div>
-						<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
-							<c:if test="${status.count lt 2 }">
-								<div>
-									<img class="img-thumbnail" src="${bucketUrl}/climbingToday/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
-								</div>
-							</c:if>
-						</c:forEach>
-
 					</div>
 				</div>
 			</c:forEach>

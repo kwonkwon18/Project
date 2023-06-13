@@ -208,7 +208,7 @@ public interface ClimbingMateMapper {
 	// 주소 반영한 것
 		@Select("""
 				<script>
-				<bind name="pattern" value="'%' + search + '%'" />
+				<bind name="pattern" value="'%' + mateSearch + '%'" />
 				SELECT
 				    c.id,
 				    c.title,
@@ -261,7 +261,7 @@ public interface ClimbingMateMapper {
 				    ORDER BY c.inserted desc
 				    </script>
 						""")
-	List<ClimbingMate> selectMateByDistance(List<String> addressList, String type, String search);
+	List<ClimbingMate> selectMateByDistance(List<String> addressList, String type, String mateSearch);
 
 
 

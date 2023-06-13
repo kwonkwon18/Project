@@ -25,6 +25,8 @@ public interface ClimbingCourseMapper {
 				c.inserted,
 				f.fileName
 			FROM ClimbingCourse c LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId
+			WHERE c.title LIKE '%${courseSearch}%'
+			ORDER BY inserted DESC
 			""")
 	@ResultMap("climbingCourseResultMap")
 	List<ClimbingCourse> selectList();
@@ -48,5 +50,62 @@ public interface ClimbingCourseMapper {
 			VALUES (#{courseId}, #{fileName})
 			""")
 	Integer insertFileName(Integer courseId, String fileName);
+
+	@Select("""
+			SELECT * FROM Member
+			WHERE userId = #{userId}
+			""")
+	Member selectMemberById(String name);
+	
+	@Delete("""
+			DELETE FROM ClimbingCourseFileName
+			WHERE courseId = #{courseId}
+				AND fileName = #{fileName}
+			""")
+	void deleteFileNameByBoardIdAndFileName(Integer id, String fileName);
+
+	@Update("""
+			UPDATE ClimbingCourse
+			SET
+				title = #{title},
+				body = #{body}
+			WHERE
+				id = #{id}
+			""")
+	int update(ClimbingCourse climbingCourse);
+
+	@Select("""
+			SELECT fileName FROM ClimbingCourseFileName
+			WHERE courseId = #{courseId}
+			""")
+	List<String> selectFileNamesByBoardId(Integer id);
+
+	@Delete("""
+			DELETE FROM ClimbingCourseFileName
+			WHERE courseId = #{courseId}
+				AND fileName = #{fileName}
+			""")
+	void deleteFileNameByCourseId(Integer id);
+
+	@Delete("""
+			DELETE FROM ClimbingCourse
+			WHERE id = #{id}
+			""")
+	int deleteById(Integer id);
+	
+	@Select("""
+			SELECT
+				c.id,
+				c.title,
+				c.body,
+				c.writer,
+				c.inserted,
+				f.fileName
+			FROM ClimbingCourse c LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId
+			WHERE c.title LIKE '%${courseSearch}%'
+			ORDER BY Id DESC;
+			""")
+	@ResultMap("climbingCourseResultMap")
+	List<ClimbingCourse> selectListByCourseSearch(String courseSearch);
 
 }

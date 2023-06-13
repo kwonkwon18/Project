@@ -33,7 +33,23 @@ public interface ClimbingTodayMapper {
 				c.inserted,
 				f.fileName
 			FROM ClimbingToday c LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
-			ORDER BY Id DESC;
+			WHERE c.title LIKE '%${todaySearch}%'
+			ORDER BY Id DESC
+			""")
+	@ResultMap("climbingTodayResultMap")
+	List<ClimbingToday> selectListByTodaySearch(String todaySearch);
+	
+	@Select("""
+			SELECT
+				c.id,
+				c.title,
+				c.body,
+				c.writer,
+				c.inserted,
+				f.fileName
+			FROM ClimbingToday c LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+			WHERE c.title LIKE '%${todaySearch}%'
+			ORDER BY Id DESC
 			""")
 	@ResultMap("climbingTodayResultMap")
 	List<ClimbingToday> selectListForList();
@@ -100,7 +116,11 @@ public interface ClimbingTodayMapper {
 			""")
 	Member selectMemberById(String userId);
 
-
+	@Select("""
+			SELECT * FROM ClimbingToday
+			WHERE title LIKE '%${searchTerm}%'
+			""")	
+	List<ClimbingToday> selectBySearchTerm(String searchTerm);
 	
 
 }

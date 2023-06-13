@@ -93,10 +93,18 @@ public class RunningController {
 		RunningBoard getList = service.getBoard(id);
 		getMemberList.put("board", getList);
 
+		// 초대 수락된 멤버
 		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
-		System.out.println("*** 멤버 " + members);
-
+		
+		// 초대 대기멤버
+		List<RunningParty> waitingMembers = service.selectWaitingMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("waitingMembers", waitingMembers);
+		
+		// 거절 멤버
+		List<RunningParty> rejectMembers = service.selectRejectMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("rejectMembers", rejectMembers);
+		
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
 

@@ -35,7 +35,7 @@ public class RunningPartyService {
 		String hostNickName = board.getWriter();
 		String host = mapper.findHost(hostNickName);
 
-		// 0일 때와 2일 때는 카운트 해주면 안되므로 수정 해줘야함
+		
 		int currentNum = partyMapper.countByBoardId(runningParty.getBoardId());
 		Integer boardId = runningParty.getBoardId();
 		String userId = runningParty.getUserId();

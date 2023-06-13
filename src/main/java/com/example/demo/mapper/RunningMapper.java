@@ -138,6 +138,7 @@ public interface RunningMapper {
 			where boardId = #{boardId} and userId = #{writer} and participation = 1
 			""")
 	List<RunningParty> selectMemberIdByBoardId(Integer boardId, String writer);
+	
 
 	@Select("""
 			SELECT
@@ -254,8 +255,8 @@ public interface RunningMapper {
 
 	@Select("""
 			select p.boardId , p.memberId, p.userId
-			from RunningParty p left join RunningBoard b ON p.boardId = b.id and participation = 1
-			where boardId = #{boardId} group by p.boardId, p.memberId;
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id 
+			where boardId = #{boardId} and participation = 1 group by p.boardId, p.memberId;
 						""")
 	@ResultMap("boardResultMap2")
 	List<RunningParty> selectForMemberIdByBoardId(Integer boardId);
@@ -341,6 +342,40 @@ public interface RunningMapper {
 			Select userId from Member where nickName = #{hostNickName}
 			""")
 	String findHost(String hostNickName);
+
+	
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id 
+			where boardId = #{boardId} and participation = 0 group by p.boardId, p.memberId;
+						""")
+	@ResultMap("boardResultMap2")
+	List<RunningParty> selectWaitingMemberIdByBoardIdForModal(Integer boardId);
+	
+	@Select("""
+			select boardId ,memberId
+			from RunningParty p
+				left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} and userId = #{writer} and participation = 0
+			""")
+	List<RunningParty> selectWaitingMemberIdByBoardId(Integer boardId, String writer);
+
+	@Select("""
+			select boardId ,memberId
+			from RunningParty p
+				left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} and userId = #{writer} and participation = 2
+			""")
+	List<RunningParty> selectRejectMemberIdByBoardId(Integer boardId, String writer);
+
+	
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id 
+			where boardId = #{boardId} and participation = 2 group by p.boardId, p.memberId;
+						""")
+	@ResultMap("boardResultMap2")
+	List<RunningParty> selectRejectMemberIdByBoardIdForModal(Integer boardId);
 
 //	@Select("""
 //			<scipt>

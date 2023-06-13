@@ -49,10 +49,22 @@ $("#alarmList").click(function() {
 				var message = "";
 
 				// 참여여부(participation) 값에 따라 메시지 설정
-				if (participation === 1) {
-					message = `수락되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
+				if (participation === 1 && userId != memberId) {
+					message = ` ${userId} 수락되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
+					$("#MemberAlarm").append(`
+    <div id="alarmDiv${boardId}" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+        *** ${title} 신청이 ${message} == ${boardId}
+    </div>
+`);
 				} else if (participation === 2) {
-					message = `반려되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
+					message = ` ${userId} 반려되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
+					$("#MemberAlarm").append(`
+    <div id="alarmDiv${boardId}" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+        *** ${title} 신청이 ${message} == ${boardId}
+    </div>
+`);
+				} else if (participation === 0) {
+
 				}
 
 				console.log("&&" + boardId);
@@ -61,12 +73,7 @@ $("#alarmList").click(function() {
 				console.log("&&" + userId);
 				console.log("&&" + participation);
 
-				$("#MemberAlarm").append(`
-    <div id="alarmDiv${boardId}" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-        *** ${title} 신청이 ${message} == ${boardId}
-        
-    </div>
-`);
+
 			});
 
 			// 삭제 버튼에 대한 클릭 이벤트 처리

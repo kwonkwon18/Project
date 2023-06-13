@@ -1,5 +1,8 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+	button.active {font-weight: bold; text-decoration: underline;}
+</style>
 
 <div style="position: relative; display: none; border: 1fx solid #ccc; overflow-y: auto; float: left; height: 85vh; width: 300px; background-color: blue; border-radius: 3%; margin-bottom: 50px; margin-left: 15px; z-index: 1;" id="chatBox" class="position-fixed bottom-0 start-0">
 	<div style="padding-top: 10px; position: sticky; top: 0px; background-color: red; height: 40px; width: 100%;">
@@ -36,8 +39,14 @@
 	</button>
 	<br />
 	<br />
+	<div class="mb-3 container text-center">
+		<div class="row">
+			<button class="col active" type="button" id="personalChatRoomListBtn">1:1 채팅방</button>
+			<button class="col" type="button" id="groupChatRoomListBtn">그룹 채팅방</button>
+		</div>
+	</div>
 	<div class="mb-3" style="display: flex;">
-		<input type="text" style="width: 200px; border: 0px;" id="chatListSearchText"/>
+		<input type="text" style="width: 200px; border: 0px;" id="chatListSearchText" />
 		<button type="button" id="searchRemove" style="background-color: white; border-color: white; border: 0px;">
 			<i class="fa-solid fa-x"></i>
 		</button>
@@ -80,3 +89,4 @@
 <button type="button" id="chatButton" class="btn btn-lg btn-primary position-fixed bottom-0 start-0" style="border-radius: 50%; margin-bottom: 15px; margin-left: 15px; z-index: 1;">
 	<i class="fa-regular fa-comments"></i>
 </button>
+

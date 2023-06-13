@@ -202,4 +202,7 @@ public class ChatController {
 		map.put("chatInsertedList", chatInsertedList);
 		return map;
 	}
+	
+
+	
 }

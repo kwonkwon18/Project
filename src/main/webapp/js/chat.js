@@ -96,12 +96,14 @@ $(".chatClose").click(function() {
 	$("#chatListContainer").remove();
 	$("#chatContainer").remove();
 	clearInterval(repeat);
+	clearInterval(groupRepeat);
 })
 
 
 $("#returnBtn").click(function() {
 	document.removeEventListener('keyup', keyupHandler);
 	$("#chatContainer").remove();
+	clearInterval(groupRepeat);
 	clearInterval(repeat);
 	showList();
 })

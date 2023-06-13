@@ -1,5 +1,6 @@
 var lastChatRoomId;
 var repeat;
+var groupRepeat;
 var lastChatId;
 
 function showGroupList() {
@@ -196,7 +197,7 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 				lastChatId = chatList[chatList.length - 1].id;
 			}
 			console.log(lastChatId);
-			repeat = setInterval(function() {
+			groupRepeat = setInterval(function() {
 				currentGroupChatId(lastChatId, lastChatRoomId);
 			}, 3000);
 		}
@@ -207,13 +208,14 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 	$.ajax("/groupChat/check?chatRoomId=" + chatRoomId + "&lastChatId=" + lastChatIdParam, {
 		success: function(chatList1) {
 			const chatList = chatList1.chatList;
-			var lastSenderId;
+			console.log(chatList);
+			var lastSenderId = chatList1.lastSenderId;
 			if (chatList.length === 0) {
 				return;
 			}
 			for (const chat of chatList) {
 				if (lastSenderId === chat.senderId) {
-					if (chat.senderId === myId) {
+					if (chat.senderId === chatList1.myUserId) {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
@@ -251,7 +253,7 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 						}
 					}
 				} else {
-					if (chat.senderId === myId) {
+					if (chat.senderId === chatList1.myUserId) {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">${chat.senderId}</div>
@@ -293,7 +295,7 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 						}
 					}
 				}
-					lastSenderId = chat.senderId;
+			lastSenderId = chat.senderId;
 			}
 			lastChatId = chatList[chatList.length - 1].id;
 			scrollToBottom();
@@ -331,7 +333,7 @@ $("#sendGroupChatBtn").click(function() {
 
 $("#deleteGroupChatRoomModalButton").click(function() {
 	$("#chatContainer").remove("");
-	clearInterval(repeat);
+	clearInterval(groupRepeat);
 	$.ajax("/groupChat/deleteRoom/" + lastChatRoomId, {
 		success: showList()
 	})

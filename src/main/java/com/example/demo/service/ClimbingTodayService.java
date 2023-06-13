@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 import org.springframework.web.multipart.*;
@@ -14,31 +15,41 @@ import software.amazon.awssdk.core.sync.*;
 import software.amazon.awssdk.services.s3.*;
 import software.amazon.awssdk.services.s3.model.*;
 
-
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ClimbingTodayService {
-	
+
 	@Autowired
 	private S3Client s3;
-	
+
 	@Value("${aws.s3.bucketName}")
 	private String bucketName;
-	
+
 	@Autowired
 	private ClimbingTodayMapper todayMapper;
 
 	public List<ClimbingToday> listBoard() {
 		
-		return todayMapper.selectList();
+		return todayMapper.selectListForList();
+	}
+
+	public List<ClimbingToday> listBoard(String todaySearch) {
+
+		return todayMapper.selectListByTodaySearch(todaySearch);
 	}
 
 	public ClimbingToday getClimbingToday(Integer id) {
 
 		return todayMapper.selectById(id);
 	}
+	
+	public List<ClimbingToday> searchToday(String searchTerm) {
 
-	public boolean modify(ClimbingToday climbingToday, MultipartFile[] addFiles, List<String> removeFileNames) throws Exception {
+		return todayMapper.selectBySearchTerm(searchTerm);
+	}
+
+	public boolean modify(ClimbingToday climbingToday, MultipartFile[] addFiles, List<String> removeFileNames)
+			throws Exception {
 
 		// FileName 테이블 삭제
 		if (removeFileNames != null && !removeFileNames.isEmpty()) {
@@ -63,7 +74,8 @@ public class ClimbingTodayService {
 				todayMapper.insertFileName(climbingToday.getId(), newFile.getOriginalFilename());
 
 				// s3에 파일(객체) 업로드
-				String objectKey = "project/climbingToday/" + climbingToday.getId() + "/" + newFile.getOriginalFilename();
+				String objectKey = "project/climbingToday/" + climbingToday.getId() + "/"
+						+ newFile.getOriginalFilename();
 				PutObjectRequest por = PutObjectRequest.builder()
 						.acl(ObjectCannedACL.PUBLIC_READ)
 						.bucket(bucketName)
@@ -82,32 +94,37 @@ public class ClimbingTodayService {
 
 	public boolean remove(Integer id) {
 
-	// 파일명 조회
-	List<String> fileNames = todayMapper.selectFileNamesByBoardId(id);
-	
-	// FileName 테이블의 데이터 지우기
-	todayMapper.deleteFileNameByTodayId(id);
-	
-	// s3 bucket의 파일(객체) 지우기
-	for (String fileName : fileNames) {
-		String objectKey = "project/climbingToday/" + id + "/" + fileName;
-		DeleteObjectRequest dor = DeleteObjectRequest.builder()
-				.bucket(bucketName)
-				.key(objectKey)
-				.build();
-		s3.deleteObject(dor);
+		// 파일명 조회
+		List<String> fileNames = todayMapper.selectFileNamesByBoardId(id);
 
-	}
+		// FileName 테이블의 데이터 지우기
+		todayMapper.deleteFileNameByTodayId(id);
+
+		// s3 bucket의 파일(객체) 지우기
+		for (String fileName : fileNames) {
+			String objectKey = "project/climbingToday/" + id + "/" + fileName;
+			DeleteObjectRequest dor = DeleteObjectRequest.builder()
+					.bucket(bucketName)
+					.key(objectKey)
+					.build();
+			s3.deleteObject(dor);
+
+		}
 		// 게시물 테이블의 데이터 지우기
 		int cnt = todayMapper.deleteById(id);
-	
+
 		return cnt == 1;
 	}
 
-	public boolean addClimbingToday(ClimbingToday climbingToday, MultipartFile[] files) throws Exception {
+	public boolean addClimbingToday(ClimbingToday climbingToday, MultipartFile[] files, Authentication authentication)
+			throws Exception {
+
+		Member member = todayMapper.selectMemberById(authentication.getName());
+		climbingToday.setWriter(member.getNickName());
+
 		int cnt = todayMapper.insert(climbingToday);
-		for(MultipartFile file : files) {
-			if(file.getSize() > 0) {
+		for (MultipartFile file : files) {
+			if (file.getSize() > 0) {
 				String objectKey = "project/climbingToday/" + climbingToday.getId() + "/" + file.getOriginalFilename();
 				PutObjectRequest por = PutObjectRequest.builder()
 						.acl(ObjectCannedACL.PUBLIC_READ)
@@ -115,15 +132,15 @@ public class ClimbingTodayService {
 						.key(objectKey)
 						.build();
 				RequestBody rb = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
-				
+
 				s3.putObject(por, rb);
 				todayMapper.insertFileName(climbingToday.getId(), file.getOriginalFilename());
-				
+
 			}
 		}
 		return cnt == 1;
 	}
-	
+
 //	public Map<String, Object> listBoard(Integer page, String search, String type) {
 //		// 페이지당 행의 수
 //		Integer rowPerPage = 15;

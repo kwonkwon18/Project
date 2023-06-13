@@ -24,11 +24,6 @@ public interface ChatMapper {
 			""")
 	String lastMessageSelectById(Integer id);
 
-	@Select("""
-			SELECT id FROM ChatRoom
-			WHERE (invited = #{myUserId} OR creater = #{myUserId}) AND inserted = #{inserted}
-			""")
-	Integer getChatRoomId(LocalDateTime inserted, String myUserId);
 
 	@Select("""
 			SELECT * FROM Chat
@@ -39,7 +34,6 @@ public interface ChatMapper {
 	@Insert("""
 			INSERT INTO Chat(chatRoomId, senderId, recipientId, message)
 			VALUES(#{chatRoomId}, #{senderId}, #{recipientId}, #{message})
-			
 			""")
 	void addChat(Chat data);
 
@@ -119,9 +113,9 @@ public interface ChatMapper {
 	List<LocalDateTime> getinsertedByChatRoomId(int chatRoomId);
 
 	@Select("""
-			SELECT IF((creater = {yourId} AND invited = {myId}) OR (creater = {myId} AND invited = {yourId}), 1, 0) FROM ChatRoom
+			SELECT IF((creater = #{yourId} AND invited = #{myId}) OR (creater = #{myId} AND invited = #{yourId}), 1, 0) FROM ChatRoom
 			""")
-	int checkChatRoom(String yourId, String myId);
+	List<Integer> checkChatRoom(String yourId, String myId);
 
 	@Select("""
 			SELECT inserted FROM Chat
@@ -130,6 +124,36 @@ public interface ChatMapper {
 			LIMIT 1
 			""")
 	LocalDateTime getChatLastInserted(Integer chatRoomId);
+
+	@Select("""
+			SELECT id FROM ChatRoom
+			WHERE (creater = #{myId} AND invited = #{yourId}) OR (creater = #{yourId} AND invited = #{myId})
+			""")
+	Integer getChatRoomIdByYourId(String myId, String yourId);
 	
+	@Select("""
+			SELECT id FROM ChatRoom
+			WHERE (invited = #{myUserId} OR creater = #{myUserId}) AND inserted = #{inserted}
+			""")
+	Integer getChatRoomIdByInserted(LocalDateTime inserted, String myUserId);
+
+	@Insert("""
+			INSERT INTO ChatRoom(creater, invited)
+			VALUES(#{myId}, #{yourId})
+			""")
+	void createChatRoom(String myId, String yourId);
+
+	@Insert("""
+			INSERT INTO Chat(chatRoomId, senderId, recipientId, message, fileName)
+			VALUES(#{chatRoomId}, #{senderId}, #{recipientId}, #{fileName}, #{fileName})
+			""")
+	void insertFileChat(Chat chat);
+
+	@Select("""
+	        SELECT * FROM ChatRoom
+	        WHERE (creater = #{yourId} AND invited = #{myId}) OR (creater = #{myId} AND invited = #{yourId})
+	        """)
+	ChatRoom findRoomSelectBySearch(String yourId, String myId);
+
 
 }

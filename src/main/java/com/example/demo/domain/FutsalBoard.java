@@ -15,4 +15,7 @@ public class FutsalBoard {
 	private List<String> fileName;
 	private double Lat;
 	private double Lng;
+	
+	private Boolean liked;
+	private Integer likeCount;
 }

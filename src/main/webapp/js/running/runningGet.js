@@ -41,6 +41,7 @@ $("#joinPartyBtn").click(function() {
 		success: function(data) {
 			if (data.join) {
 				alert("신청되었습니다.");
+				console.log("갯수 보여주기 " +  data.count);
 				$("#currentPeople").text(data.count);
 
 				var currentNumber = parseInt($("#currentPeople").text().trim());

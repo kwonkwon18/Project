@@ -6,12 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.domain.FutsalBoard;
+import com.example.demo.domain.FutsalComment;
 import com.example.demo.domain.RunningParty;
+import com.example.demo.mapper.FutsalCommentMapper;
 import com.example.demo.mapper.RunningMapper;
 
 @Component
 public class CustomSecurityChecker {
 
+	@Autowired
+	private FutsalCommentMapper commentMapper;
+	
 	@Autowired
 	private RunningMapper mapper;
 
@@ -32,5 +38,14 @@ public class CustomSecurityChecker {
 		return false;
 
 	}
+	
+	// 진명 추가
+	public boolean checkCommentWriter(Authentication authentication,
+			Integer commentId) {
+		FutsalComment comment = commentMapper.selectById(commentId);
+		
+		return comment.getMemberId().equals(authentication.getName());
+	}
+	
 
 }

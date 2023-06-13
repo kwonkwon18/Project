@@ -14,7 +14,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+
 	<my:navBarclimbing> </my:navBarclimbing>
+
+	<my:chatBtn></my:chatBtn>
+
+
 
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
@@ -50,34 +55,38 @@
 		<br />
 		<nav>
 			<ul>
-				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
+				<a id="all1" href="mateList" style="text-decoration-line: none;">전체</a>
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 				<div class="dropdown-menu" aria-labelledby="search1">
 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-				<span style="margin-left: 700px;"></span>
-				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
+				<span style="margin-left: 840px;">
+					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
+				</span>
+<!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#" onclick="changeDropdownItem('제목')">제목</a> <a class="dropdown-item" href="#" onclick="changeDropdownItem('작성자')">작성자</a> <a class="dropdown-item" href="#" onclick="changeDropdownItem('내용')">내용</a></li>
-					</ul>
-					<input value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-					<button class="btn btn-outline-success" type="submit">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
+					<form action="/climbing/mateList" class="d-flex" role="mateSearch">
+						<select class="form-select" name="type" id="" style="width: 150px">
+							<option value="all">전체</option>
+							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
+							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
+							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
+						</select> <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+						<button class="btn btn-outline-success" type="submit">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</form>	
 				</ul>
 			</div>
 		</nav>
 
 		<ul>
 			<div style="text-align: right;">
-				<a href="/climbing/climbingMate?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/climbingMate" style="text-decoration-line: none;">최신순</a>
+				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
 			</div>
 		</ul>
 
@@ -86,7 +95,7 @@
 		<div id="mateListData" class="row">
 			<c:forEach items="${climbingMateList}" var="board">
 				<div class="col-md-4">
-					<div class="card" style="width: 18rem;">
+					<div class="card" style="width: 18rem; margin-bottom: 20px; height: 350px;">
 						<div class="card-body">
 							<h5 class="card-title">🌄${board.title}</h5>
 							<p class="card-text">작성자: ${board.writer}</p>
@@ -115,9 +124,9 @@
 									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 								</c:if>
 							</c:if>
-							<div style="text-align: right">
-								<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-							</div>
+						</div>
+						<div class="card-footer" style="text-align: right">
+							<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 						</div>
 					</div>
 				</div>
@@ -139,6 +148,7 @@
 
 
 
+	<my:chatBtn></my:chatBtn>
 	<!-- 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script> -->
 	<!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 	<!-- 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
@@ -158,6 +168,8 @@
 		});
 	</script>
 	<script src="/js/climbing/mateList.js"></script>
+	<script src="/js/chat.js"></script>
+
 	<script>
 		function changeDropdownItem(item) {
 			var dropdownButton = document.getElementById("dropdownMenuButton1");

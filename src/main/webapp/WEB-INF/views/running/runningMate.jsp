@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<my:chatBtn></my:chatBtn>
 
 	<my:navBarRunning></my:navBarRunning>
 
@@ -54,7 +53,7 @@
 		<nav>
 			<ul>
 				<span style="margin-left: 50px;"></span>
-				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
+				<a id="all1" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 				<div class="dropdown-menu" aria-labelledby="search1">
 					<a class="dropdown-item" href="#">메뉴 항목 1</a>
@@ -85,11 +84,6 @@
 				</ul>
 			</div>
 		</nav>
-
-
-
-
-
 
 
 		<ul>
@@ -132,6 +126,7 @@
 
 								<c:if test="${openDate <= nowDate }">
 									<button>마감된 러닝</button>
+
 								</c:if>
 
 								<c:if test="${openDate > nowDate }">
@@ -140,7 +135,7 @@
 									</c:if>
 
 									<c:if test="${not isMember}">
-										<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+										<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 									</c:if>
 								</c:if>
 							</div>
@@ -161,28 +156,18 @@
 				</div>
 			</div>
 		</div>
-		
-	<div class="modal fade" id="createChatRoom" tabindex="-1" aria-labelledby="chatRoomModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header" id="chatRoomModalBefore">
-					<h1 class="modal-title fs-5" id="chatRoomModalLabel">대화방 생성</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body chatRoomModalBody">님과의 대화방을 생성하시겠습니까?</div>
-				<div class="modal-footer">
-					<button type="button" id="createChatRoomBtn" class="btn btn-primary">예</button>
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니요</button>
-				</div>
-			</div>
-		</div>
 	</div>
 
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
-		<script src="/js/running/runningMate.js"></script>
-		<script src="/js/chat.js"></script>
+
+	<!-- 맨밑 고정  -->
+	<my:chatBtn></my:chatBtn>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+	<script src="/js/running/runningMate.js" charset="UTF-8"></script>
+	<script src="/js/chat.js" charset="UTF-8"></script>
 </body>
 </html>

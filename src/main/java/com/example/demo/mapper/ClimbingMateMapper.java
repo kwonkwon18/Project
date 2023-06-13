@@ -199,6 +199,69 @@ public interface ClimbingMateMapper {
 			select * from Member where userId = #{userId}
 			""")
 	Member getNickName(String name);
+	
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	Member selectMemberById(String name);
+
+	// 주소 반영한 것
+		@Select("""
+				<script>
+				<bind name="pattern" value="'%' + mateSearch + '%'" />
+				SELECT
+				    c.id,
+				    c.title,
+				    c.body,
+				    c.inserted,
+				    c.writer,
+				    c.Lat,
+				    c.Lng,
+				    c.people,
+				    c.time,
+				    c.address,
+				    COUNT(cp.boardId) AS currentNum
+				FROM
+				    ClimbingMate c
+				    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
+
+					<where>
+
+					<if test = "(type eq 'all') or (type eq 'title')">
+					title LIKE #{pattern}
+					</if>
+
+
+					<if test = "(type eq 'all') or (type eq 'address')">
+					OR address LIKE #{pattern}
+					</if>
+
+					</where>
+
+
+					<if test = "(type eq 'distance')">
+					WHERE address IN (
+					<foreach collection="addressList" item="item" separator=", ">
+						#{item}
+					</foreach>
+					)
+					</if>
+
+				GROUP BY
+				    c.id,
+				    c.title,
+				    c.body,
+				    c.inserted,
+				    c.writer,
+				    c.Lat,
+				    c.Lng,
+				    c.people,
+				    c.time,
+				    c.address
+				    ORDER BY c.inserted desc
+				    </script>
+						""")
+	List<ClimbingMate> selectMateByDistance(List<String> addressList, String type, String mateSearch);
 
 
 

@@ -14,7 +14,12 @@
 <body>
 	<my:navBarclimbing> </my:navBarclimbing>
 	<div id="map" style="width: 100%; height: 350px;"></div>
-
+  
+   <%
+   java.util.Date now = new java.util.Date();
+   java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+   String nowString = dateFormat.format(now);
+   %>
 
 	모일 장소를 찍어주세요 !
 	<br />
@@ -54,11 +59,12 @@
 
 					<div class="mb-3">
 						<label for="dateInput" class="form-label">모이는 시간</label>
-						<input required id="dateInput" name="time" type="datetime-local" />
+						<input required id="dateInput" name="time" type="datetime-local" min="<%=nowString%>" />
 					</div>
 					<input id="LatSubmit" type="hidden" name="Lat" value="" />
 					<input id="LngSubmit" type="hidden" name="Lng" value="" />
 					<input class="btn btn-primary" type="submit" value="등록" />
+					
 			</div>
 			</form>
 		</div>

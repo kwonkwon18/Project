@@ -13,4 +13,6 @@ public class Chat {
 	private String message;
 	private LocalDateTime inserted;
 	private String time;
+	private String fileName;
+	private String imgUrl;
 }

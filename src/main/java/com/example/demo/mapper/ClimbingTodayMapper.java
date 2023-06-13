@@ -16,10 +16,43 @@ public interface ClimbingTodayMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(ClimbingToday climbingToday);
 
+	// ****
+//	@Select("""
+//			SELECT * FROM ClimbingToday
+//			ORDER BY Id DESC;
+//			""")
+//	List<ClimbingToday> selectList();
+	
+	
 	@Select("""
-			SELECT * FROM ClimbingToday;
+			SELECT
+				c.id,
+				c.title,
+				c.body,
+				c.writer,
+				c.inserted,
+				f.fileName
+			FROM ClimbingToday c LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+			WHERE c.title LIKE '%${todaySearch}%'
+			ORDER BY Id DESC
 			""")
-	List<ClimbingToday> selectList();
+	@ResultMap("climbingTodayResultMap")
+	List<ClimbingToday> selectListByTodaySearch(String todaySearch);
+	
+	@Select("""
+			SELECT
+				c.id,
+				c.title,
+				c.body,
+				c.writer,
+				c.inserted,
+				f.fileName
+			FROM ClimbingToday c LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+			WHERE c.title LIKE '%${todaySearch}%'
+			ORDER BY Id DESC
+			""")
+	@ResultMap("climbingTodayResultMap")
+	List<ClimbingToday> selectListForList();
 
 	@Select("""
 			SELECT
@@ -77,6 +110,17 @@ public interface ClimbingTodayMapper {
 			""")
 	int deleteById(Integer id);
 
+	@Select("""
+			SELECT * FROM Member
+			WHERE userId = #{userId}
+			""")
+	Member selectMemberById(String userId);
+
+	@Select("""
+			SELECT * FROM ClimbingToday
+			WHERE title LIKE '%${searchTerm}%'
+			""")	
+	List<ClimbingToday> selectBySearchTerm(String searchTerm);
 	
 
 }

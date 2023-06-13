@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +13,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+
 	<my:navBarclimbing> </my:navBarclimbing>
+
+	<my:chatBtn></my:chatBtn>
+
 	<div class="container-lg">
-		<h2>메이트구하기</h2>
+		<!-- 		<h2>메이트구하기</h2> -->
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -39,27 +46,20 @@
 		</div>
 		<nav>
 			<ul>
-				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
-				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
-				<div class="dropdown-menu" aria-labelledby="search1">
-					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
-				</div>
-				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-				<div style="float: right; margin-right: 100px;">
+				<!-- 				<a id="all1" href="/climbing/mateList" style="text-decoration-line: none;">전체</a> -->
+				<button type="button" class="btn btn-warning" style="margin-left: 70px;" onclick="location.href='mateList'">전체 보기</button>
+
+				<!-- 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a> -->
+				<!-- 				<div class="dropdown-menu" aria-labelledby="search1"> -->
+				<!-- 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a> -->
+				<!-- 				</div> -->
+				<!-- 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a> -->
+				<div style="float: right;">
 					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
+					<!-- 					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 				</div>
 			</ul>
 			<div id="dropdown1" style="display: none">
-				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">종류🌄</button>
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item" href="#">Action</a></li>
-						<li><a class="dropdown-item" href="#">Another action</a></li>
-						<li><a class="dropdown-item" href="#">Something else here</a></li>
-					</ul>
-				</ul>
 				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
@@ -75,7 +75,6 @@
 				</ul>
 			</div>
 		</nav>
-
 		<!-- 				<div class="row" id="all3"> -->
 		<%-- 					<c:forEach items="${climbingMateList}" var="board"> --%>
 		<!-- 						<div class="col-md-4"> -->
@@ -93,7 +92,7 @@
 		<%-- 					</c:forEach> --%>
 		<!-- 				</div> -->
 
-		<br /> <br />
+		<br />
 
 		<div style="display: flex;">
 			<div style="flex: 1; margin-left: 70px;" id="mateMapBox">
@@ -116,16 +115,16 @@
 					<c:forEach items="${climbingMateList}" var="board" varStatus="loop">
 						<c:if test="${loop.index < 3}">
 							<div class="col-md-4">
-								<div class="card" style="width: 18rem; margin-left: 40px; margin-bottom: 14px;">
+								<div class="card" style="width: 18rem; margin-left: 40px; margin-bottom: 15px;">
 									<div class="card-body">
 										<h5 class="card-title">🌄${board.title}</h5>
 										<p class="card-text">작성자: ${board.writer}</p>
 										<p class="card-text">작성일자: ${board.inserted}</p>
 										<p class="card-text">모임장소: ${board.address}</p>
 										<p class="card-text">모임시간: ${board.time}</p>
-										<div style="text-align: right">
-											<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
-										</div>
+									</div>
+									<div class="card-footer" style="text-align: right">
+										<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a>
 									</div>
 								</div>
 							</div>
@@ -150,13 +149,13 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 
 	<script type="text/javascript">
-	$("#search1").click(function() {
-		if ($("#dropdown1").is(":hidden")) {
-			$("#dropdown1").slideDown();
-		} else {
-			$("#dropdown1").slideUp();
-		}
-	});
+		$("#search1").click(function() {
+			if ($("#dropdown1").is(":hidden")) {
+				$("#dropdown1").slideDown();
+			} else {
+				$("#dropdown1").slideUp();
+			}
+		});
 	</script>
 	<script src="/js/climbing/mateMap.js"></script>
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.domain.*;
 import com.example.demo.service.*;
 
-@Controller
+@RestController
 @RequestMapping("futsalComment")
 public class FutsalCommentController {
 

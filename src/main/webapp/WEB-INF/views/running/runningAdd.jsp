@@ -13,6 +13,13 @@
 </head>
 <body>
 <my:navBarRunning></my:navBarRunning>
+
+	<%
+	java.util.Date now = new java.util.Date();
+	java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+	String nowString = dateFormat.format(now);
+	%>
+
 	<div id="map" style="width: 100%; height: 500px;"></div>
 
 
@@ -20,7 +27,7 @@
 	<br />
 	<input id="inputValue" type="text" placeholder="예)서울숲" />
 	<br />
-	
+
 
 	<div id="clickLatlng"></div>
 
@@ -57,7 +64,7 @@
 
 					<div class="mb-3">
 						<label for="dateInput" class="form-label">모이는 시간</label>
-						<input required id="dateInput" name="time" type="datetime-local" />
+						<input required id="dateInput" name="time" type="datetime-local" min="<%=nowString%>" />
 					</div>
 
 					<input id="LatSubmit" type="text" name="Lat" value="" />
@@ -74,6 +81,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 
 	<script src="/js/running/runningAdd.js"></script>
+	<script src="/js/chat.js"></script>
 
 
 </body>

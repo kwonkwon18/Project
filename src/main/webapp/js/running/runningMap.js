@@ -40,14 +40,10 @@ $(document).ready(function() {
         `);
 
 				for (let i = 0; i < 3; i++) {
-
-
 					const runningMate = runningMateList[i];
-
 					if (runningMate == null) {
 						break;
 					}
-
 
 					mapInfo.push({
 						content: runningMate.title,
@@ -55,10 +51,6 @@ $(document).ready(function() {
 						lng: runningMate.lng
 					});
 
-
-					console.log("숭문" + mapInfo[0].content)
-					console.log("숭문" + mapInfo[0].lat)
-					console.log("숭문" + mapInfo[0].lng)
 
 
 					$("#mateMapBoxItem").append(`

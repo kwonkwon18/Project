@@ -2,7 +2,9 @@ package com.example.demo.mapper;
 
 import java.util.*;
 
+
 import org.apache.ibatis.annotations.*;
+
 
 import com.example.demo.domain.Member;
 
@@ -69,7 +71,17 @@ public interface MemberMapper {
 			""")
 	Integer update(Member member);
 
-	Member selectById(Integer id);
+	 @Select("""
+         SELECT userId FROM Member
+         WHERE nickName = #{invitedNickName}
+         """)
+   String getUserIdSelectByNickName(String invitedNickName);
+
+	@Select("""
+			SELECT userId FROM Member
+			WHERE nickName LIKE CONCAT('%', #{search}, '%')
+			""")
+	List<String> UserIdSelectBySearch(String search);
 
 	
 }

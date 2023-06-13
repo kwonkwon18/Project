@@ -80,6 +80,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 
 	<script src="/js/running/runningAdd.js"></script>
+	<script src="/js/chat.js"></script>
 
 
 </body>

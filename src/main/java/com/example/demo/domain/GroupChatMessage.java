@@ -5,14 +5,10 @@ import java.time.*;
 import lombok.*;
 
 @Data
-public class Chat {
+public class GroupChatMessage {
 	private Integer id;
 	private Integer chatRoomId;
 	private String senderId;
-	private String recipientId;
 	private String message;
 	private LocalDateTime inserted;
-	private String time;
-	private String fileName;
-	private String imgUrl;
 }

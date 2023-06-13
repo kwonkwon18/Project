@@ -15,9 +15,9 @@ public interface ClimbingCourseMapper {
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(ClimbingCourse climbingCourse);
-	
+
 	@Select("""
-			SELECT 
+			SELECT
 				c.id,
 				c.title,
 				c.body,
@@ -32,7 +32,7 @@ public interface ClimbingCourseMapper {
 	List<ClimbingCourse> selectList();
 
 	@Select("""
-			SELECT 
+			SELECT
 				c.id,
 				c.title,
 				c.body,
@@ -108,6 +108,4 @@ public interface ClimbingCourseMapper {
 	@ResultMap("climbingCourseResultMap")
 	List<ClimbingCourse> selectListByCourseSearch(String courseSearch);
 
-
-	
 }

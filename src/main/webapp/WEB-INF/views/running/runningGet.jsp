@@ -74,7 +74,9 @@
 
 					<label for="" class="form-label">신청한 사람 </label>
 					<c:forEach items="${members}" var="member">
-						<c:if test="${board.id eq member.boardId}">
+					<!-- 보드아이디와 멤버의 보드아이디가 같은 경우 -->
+					<!-- 멤버의 아이디와 작성자가 같은 경우는 해주면 안됨  -->
+						<c:if test="${board.id eq member.boardId && board.writer ne member.memberId}">
 							<div class="mb-3">
 								<input type="text" readonly class="form-control" value="${member.memberId}" />
 							</div>
@@ -145,6 +147,8 @@
 
 							<c:if test="${openDate > nowDate }">
 
+
+								<!-- 실제로 신청 되기 전에도 취소하기가 보여야함   -->
 								<c:choose>
 									<c:when test="${isMember}">
 										<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
@@ -163,7 +167,7 @@
 
 
 							<input type="text" id="totalPeople" value="${board.people }" />
-							<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
 							<p id="currentPeople"></p>
 							<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
 						</c:if>
@@ -171,7 +175,7 @@
 						<c:if test="${isUser}">
 							<button>내가 올린 게시물</button>
 							<input type="text" id="totalPeople" value="${board.people }" />
-							<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
 						</c:if>
 					</div>
 

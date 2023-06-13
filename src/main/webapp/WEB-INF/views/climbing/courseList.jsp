@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 
 <!DOCTYPE html>
@@ -45,29 +46,45 @@
 		<h2>추천 코스</h2>
 		<br />
 		<ul>
-			<button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button>
-			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button>
-			<button type="button" class="btn btn-success" style="float: right; margin-right: 200px;" onclick="location.href='courseAdd'">코스 등록하기</button>
+			<!-- 			<button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
+			<!-- 			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button> -->
+			<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
+				<button type="button" class="btn btn-success" style="margin-right: 10px; pointer-events: none;">🌄지역별 보기</button>
+				<form action="/climbing/courseList" class="d-flex" role="courseSearch">
+					<input id="searchInput" value="${param.courseSearch}" name="courseSearch" class="form-control" type="courseSearch" aria-label="courseSearch" style="width: 300px">
+					<button id="search" class="btn btn-outline-success" type="submit">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</form>
+			</div>
+
+			<div style="text-align: right;">
+				<button type="button" class="btn btn-success" onclick="location.href='courseAdd'">코스 등록하기</button>
+			</div>
 		</ul>
 		<br />
 		<!-- 새로 작성된 코드, 변경된 코드  -->
 		<!-- table.table>thead>tr>th*4^^tbody -->
-		<div id ="courseListData" class="row">
+		<div id="courseListData" class="row">
 			<c:forEach items="${climbingCourseList}" var="board">
 				<div class="col-md-4">
 					<div class="card" style="width: 18rem; margin-bottom: 20px;">
-						<div class="card-body">
-							<h5 class="card-title">🌄${board.title}</h5>
-							<p class="card-text">작성자: ${board.writer}</p>
-							<p class="card-text">작성일자: ${board.inserted}</p>
+						<div onclick="location.href='courseId/${board.id}'">
+							<div class="card-body">
+								<h5 class="card-text d-flex justify-content-between">
+									<span>🌄 ${board.writer}</span>
+									<p style="font-size: medium;">${board.inserted}</p>
+								</h5>
+								<p class="card-title">${board.title}</p>
+							</div>
+							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+								<c:if test="${status.count lt 2 }">
+									<div>
+										<img class="img-thumbnail" src="${bucketUrl}/climbingCourse/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
+									</div>
+								</c:if>
+							</c:forEach>
 						</div>
-						<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
-							<c:if test="${status.count lt 2 }">
-								<div>
-									<img class="img-thumbnail" src="${bucketUrl}/climbingCourse/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
-								</div>
-							</c:if>
-						</c:forEach>
 					</div>
 				</div>
 			</c:forEach>

@@ -29,13 +29,23 @@ public class ClimbingTodayService {
 	private ClimbingTodayMapper todayMapper;
 
 	public List<ClimbingToday> listBoard() {
-
+		
 		return todayMapper.selectListForList();
+	}
+
+	public List<ClimbingToday> listBoard(String todaySearch) {
+
+		return todayMapper.selectListByTodaySearch(todaySearch);
 	}
 
 	public ClimbingToday getClimbingToday(Integer id) {
 
 		return todayMapper.selectById(id);
+	}
+	
+	public List<ClimbingToday> searchToday(String searchTerm) {
+
+		return todayMapper.selectBySearchTerm(searchTerm);
 	}
 
 	public boolean modify(ClimbingToday climbingToday, MultipartFile[] addFiles, List<String> removeFileNames)

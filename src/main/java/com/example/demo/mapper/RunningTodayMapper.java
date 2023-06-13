@@ -35,10 +35,14 @@ public interface RunningTodayMapper {
 			    r.body,
 			    r.inserted,
 			    r.writer,
-			    f.fileName
+			    f.fileName,
+			    (select count(*) from RunningLike where boardId = r.id) likeCount,
+			    (SELECT COUNT(*) FROM RunningComment WHERE boardId = r.id) commentCount
 			FROM
 			    RunningToday r
 			    LEFT JOIN RunningFileName f ON r.id = f.boardId
+			    LEFT JOIN RunningLike rl on r.id = rl.boardId
+			    LEFT JOIN RunningComment rc on r.id = rc.boardId
 			    order by r.inserted desc
 						""")
 	@ResultMap("boardResultMap")
@@ -57,11 +61,13 @@ public interface RunningTodayMapper {
 			    r.inserted,
 			    r.writer,
 			    f.fileName,
-			    m.userId
+			    m.userId,
+			    (select count(*) from RunningLike where boardId = r.id) likeCount
 			FROM
 			    RunningToday r
 			    LEFT JOIN RunningFileName f ON r.id = f.boardId
 			    LEFT JOIN Member m on r.writer = m.nickName
+			    LEFT JOIN RunningLike rl on r.id = rl.boardId
 			WHERE
 			    r.id = #{id}
 						""")

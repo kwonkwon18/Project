@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,23 @@ public class RunningPartyService {
 	@Autowired
 	private RunningMapper mapper;
 
+	// 여기서 auth 는 신청하는 사람이 됨
 	public Map<String, Object> join(RunningParty runningParty, Authentication authentication) {
 
-		
+		// 현재 접속한 로그인 아이디 찾기
 		Member member = mapper.selectMemberById(authentication.getName());
-		
 
+		// 총 인원 파악용
 		RunningBoard board = mapper.selectById(runningParty.getBoardId());
+
+		String hostNickName = board.getWriter();
+		String host = mapper.findHost(hostNickName);
+
+		// 0일 때와 2일 때는 카운트 해주면 안되므로 수정 해줘야함
 		int currentNum = partyMapper.countByBoardId(runningParty.getBoardId());
+		Integer boardId = runningParty.getBoardId();
+		String userId = runningParty.getUserId();
+		String memberId = member.getNickName();
 
 		Map<String, Object> result = new HashMap<>();
 
@@ -39,20 +49,23 @@ public class RunningPartyService {
 		if (board.getPeople() >= currentNum) {
 
 			runningParty.setMemberId(member.getNickName());
-
+			
 			System.out.println(runningParty);
 
 			result.put("join", false);
 
 			Integer deleteCnt = partyMapper.delete(runningParty);
+			System.out.println("deleteCnt @!#!@#" + deleteCnt);
 
 			if (deleteCnt != 1) {
-				Integer insertCnt = partyMapper.insert(runningParty);
+				Integer insertCnt = partyMapper.insert(boardId, userId, memberId, host, authentication.getName());
 				result.put("join", true);
 			}
 
 			// 참여인원갯수 넘겨주기
 			Integer count = partyMapper.countByBoardId(runningParty.getBoardId());
+
+			System.out.println("************" + count);
 
 			result.put("count", count);
 			System.out.println("****" + result);
@@ -65,31 +78,91 @@ public class RunningPartyService {
 			System.out.println(result);
 			return result;
 		}
-		
-		
 
 	}
 
-	public Map<String, Object> reject(RunningParty runningParty, Authentication authentication) {
-
-		runningParty.setMemberId(authentication.getName());
-		System.out.println(runningParty.getMemberId());
+	public Map<String, Object> alarm(RunningParty runningParty, Authentication authentication) {
+		// 현재 접속한 로그인 아이디 찾기
+		Member member = mapper.selectMemberById(authentication.getName());
+		
+		
 
 		Map<String, Object> result = new HashMap<>();
 
-		result.put("join", false);
-		System.out.println("runningParty" + runningParty);
-		Integer deleteCnt = partyMapper.delete(runningParty);
-		System.out.println("deleteCnt" + deleteCnt);
+		runningParty.setUserId(member.getNickName());
 
-		// 참여인원갯수 넘겨주기
-		Integer count = partyMapper.countByBoardId(runningParty.getBoardId());
+		// System.out.println("%%" + runningParty);
 
-		System.out.println(runningParty.getBoardId());
-		System.out.println(count);
-		result.put("count", count);
+		List<RunningParty> alarmList = partyMapper.selectAlarmList(runningParty);
+
+		// System.out.println("####" + alarmList);
+		result.put("alarmList", alarmList);
 
 		return result;
+
 	}
+
+	public Map<String, Object> agreeParty(RunningParty runningParty, Authentication authentication) {
+
+		Map<String, Object> result = new HashMap<>();
+		// System.out.println("접근 1");
+		Integer agreeMember = partyMapper.updateMember(runningParty);
+		// System.out.println("접근 2");
+
+		System.out.println(runningParty);
+
+		if (agreeMember == 1) {
+			result.put("join", true);
+			return result;
+		} else {
+			result.put("join", false);
+			return result;
+		}
+
+	}
+
+	public Map<String, Object> disagreeParty(RunningParty runningParty, Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+
+		Integer agreeMember = partyMapper.updateMemberDisagree(runningParty);
+
+		System.out.println(runningParty);
+
+		if (agreeMember == 1) {
+			result.put("out", true);
+			return result;
+		} else {
+			result.put("out", false);
+			return result;
+		}
+	}
+
+	public Integer makeMate(Integer boardId, String userId, Authentication authentication) {
+		// TODO Auto-generated method stub
+		Integer cnt = partyMapper.makeMate(boardId, userId, authentication.getName());
+		return cnt;
+	}
+
+	/*
+	 * public Map<String, Object> reject(RunningParty runningParty, Authentication
+	 * authentication) {
+	 * 
+	 * runningParty.setMemberId(authentication.getName());
+	 * System.out.println(runningParty.getMemberId());
+	 * 
+	 * Map<String, Object> result = new HashMap<>();
+	 * 
+	 * result.put("join", false); System.out.println("runningParty" + runningParty);
+	 * Integer deleteCnt = partyMapper.delete(runningParty);
+	 * System.out.println("deleteCnt" + deleteCnt);
+	 * 
+	 * // 참여인원갯수 넘겨주기 Integer count =
+	 * partyMapper.countByBoardId(runningParty.getBoardId());
+	 * 
+	 * System.out.println(runningParty.getBoardId()); System.out.println(count);
+	 * result.put("count", count);
+	 * 
+	 * return result; }
+	 */
 
 }

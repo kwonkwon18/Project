@@ -341,11 +341,13 @@ $("#sendChatBtn").click(function() {
 	})
 })
 
+
 function keyupHandler(event) {
 	if (event.key === 'Enter') {
 		document.getElementById('sendChatBtn').click();
 	}
 };
+
 
 $("#deleteChatRoomModalButton").click(function() {
 	$("#chatContainer").remove("");
@@ -516,3 +518,4 @@ function scrollToBottom() {
   	$(this).addClass("active");
     $("#personalChatRoomListBtn").removeClass("active");
   })
+

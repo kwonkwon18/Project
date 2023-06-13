@@ -16,14 +16,7 @@
 <body>
 
 	<my:navBar></my:navBar>
-
-	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
-	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
-	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
-
-
 	<div class="container-lg">
-		<h2>메이트구하기</h2>
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -50,77 +43,85 @@
 				<span class="visually-hidden">Next</span>
 			</button>
 		</div>
-
-		<%-- <nav>
-			<ul>
-				<span style="margin-left: 50px;"></span>
-				<a id="all1" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
-				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
-				<div class="dropdown-menu" aria-labelledby="search1">
-					<a class="dropdown-item" href="#">메뉴 항목 1</a>
-					<a class="dropdown-item" href="#">메뉴 항목 2</a>
-					<a class="dropdown-item" href="#">메뉴 항목 3</a>
-				</div>
-
-				<a href="runningMap" style="text-decoration-line: none;">지도로 보기</a> -->
-				<span style="margin-left: 480px;"></span>
-				<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
-				 <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
-			</ul>
-			<div id="dropdown1" style="display: none">
-				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<form action="/running/runningMate" class="d-flex" role="search">
-						<select class="form-select" name="type" id="">
-							<option value="all">전체</option>
-							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
-							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
-						</select>
-						<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">
+		<h2>오늘의 러닝</h2>
+		<!-- 새로 작성된 코드, 변경된 코드  -->
+		<!-- table.table>thead>tr>th*4^^tbody -->
+		<div style="display: flex;">
+			<div style="flex: 1; margin-left: 800px;" id="mateMapBox">
+				<ul style="display: flex; align-items: left;">
+					<form action="/search" class="d-flex" role="search">
+						<input id="searchInput" value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
+						<button id="search" class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
+						<button type="button" class="btn btn-success" onclick="location.href='runningToday'" style="margin-left: 10px;">번개 글작성</button>
 					</form>
 				</ul>
 			</div>
-		</nav>
-
-
-	<ul>
-			<div style="text-align: right;">
-				<a href="/running/runningMate?type=distance" style="text-decoration-line: none;">거리순</a>
-				<a href="/running/runningMate" style="text-decoration-line: none;">최신순</a>
-			</div>
-		</ul>  --%>
-
-
-		<div id="todayListData" class="row">
+		</div>
+		<br />
+		<div class="row">
 			<c:forEach items="${runningTodayList}" var="board">
-				<div class="col-md-4">
+				<div class="col-md-4 todayListData" data-board-boardId="${board.id }" onclick='newPage(${board.id })'>
 					<div class="card" style="width: 18rem; margin-bottom: 20px;">
 						<div class="card-body">
 							<h5 class="card-title">🌄${board.title}</h5>
 							<p class="card-text">${board.writer}</p>
+							<p class="card-text">${board.body}</p>
 							<p class="card-text">${board.inserted}</p>
+							<p class="card-text">
+								<i class="fa-solid fa-heart"></i>
+								${board.likeCount }
+								<i class="fa-regular fa-comments"></i>
+								${board.commentCount }
+							</p>
 
-							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
-								<c:if test="${status.count lt 2 }">
-									<div>
-										<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${board.id }/${fileName}" alt="" height="300" width="300" />
-									</div>
-								</c:if>
-							</c:forEach>
-
-							<a class="btn btn-secondary" href="/running/todayId/${board.id }">상세보기</a>
-
+							<input type="hidden" class="idValue" value="${board.id }" />
 						</div>
+						<!-- 							<p class="card-text"> -->
+						<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+							<c:if test="${status.count lt 2 }">
+								<div>
+									<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${board.id }/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
+								</div>
+							</c:if>
+						</c:forEach>
+
+						<!-- 							</p> -->
+
 					</div>
 				</div>
 			</c:forEach>
+			<!-- 		<table class="table"> -->
+			<!-- 			<thead> -->
+			<!-- 				<tr> -->
+			<!-- 					<th>#</th> -->
+			<!-- 					<th>제목</i></th> -->
+			<!-- 					<th>작성자</th> -->
+			<!-- 					<th>작성일자</th> -->
+			<!-- 				</tr> -->
+			<!-- 			</thead> -->
+			<!-- 			<tbody> -->
+			<!-- 				todayList를 받았다.  -->
+			<%-- 				<c:forEach items="${climbingTodayList }" var="board"> --%>
+
+			<!-- 					<tr> -->
+			<%-- 						<td>${board.id }</td> --%>
+			<%-- 						<td><a href="/climbing/todayId/${board.id }"> ${board.title }</a> --%>
+			<%-- 						<td>${board.writer }</td> --%>
+			<%-- 						<td>${board.inserted }</td> --%>
+			<!-- 					</tr> -->
+			<%-- 				</c:forEach> --%>
+			<!-- 			</tbody> -->
+			<!-- 		</table> <-->
+			</-->
 		</div>
+
 	<my:chatBtn></my:chatBtn>
+
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="/js/chat.js"></script>
+		<script src="/js/running/runningTodayList.js" charset="UTF-8"></script>
 </body>
 </html>

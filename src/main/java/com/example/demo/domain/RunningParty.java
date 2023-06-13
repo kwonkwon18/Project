@@ -15,4 +15,10 @@ public class RunningParty {
 	private Integer chatCount;
 	
 	
+	private Integer participation;
+	private String title;
+	
+	private String host;
+	private String guest;
+	
 }

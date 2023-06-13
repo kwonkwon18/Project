@@ -45,7 +45,7 @@ public interface RunningMapper {
 			    COUNT(rp.boardId) AS currentNum
 			FROM
 			    RunningBoard r
-			    LEFT JOIN RunningParty rp ON r.id = rp.boardId
+			    LEFT JOIN RunningParty rp ON r.id = rp.boardId and participation = 1
 			    LEFT JOIN Member m ON r.writer = m.nickName
 			WHERE
 			    r.id = #{id}
@@ -124,10 +124,18 @@ public interface RunningMapper {
 			""")
 	List<RunningParty> selectMemberId(String writer);
 
+	/*
+	 * @Select(""" select boardId ,memberId from RunningParty p left join
+	 * RunningBoard b ON p.boardId = b.id where boardId = #{boardId} and userId =
+	 * #{writer} """) List<RunningParty> selectMemberIdByBoardId(Integer boardId,
+	 * String writer);
+	 */
+
 	@Select("""
 			select boardId ,memberId
-			from RunningParty p left join RunningBoard b ON p.boardId = b.id
-			where boardId = #{boardId} and userId = #{writer}
+			from RunningParty p
+				left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} and userId = #{writer} and participation = 1
 			""")
 	List<RunningParty> selectMemberIdByBoardId(Integer boardId, String writer);
 
@@ -202,7 +210,7 @@ public interface RunningMapper {
 				</foreach>
 				)
 				</if>
-				
+
 				 AND time > DATE_SUB(NOW(), INTERVAL 3 DAY) -- 수정된 부분
 
 				</where>
@@ -246,7 +254,7 @@ public interface RunningMapper {
 
 	@Select("""
 			select p.boardId , p.memberId, p.userId
-			from RunningParty p left join RunningBoard b ON p.boardId = b.id
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id and participation = 1
 			where boardId = #{boardId} group by p.boardId, p.memberId;
 						""")
 	@ResultMap("boardResultMap2")
@@ -258,21 +266,41 @@ public interface RunningMapper {
 	Member getNickName(String userId);
 
 	@Select("""
-			 select
-			   b.id,
-			   b.title,
-			   b.body,
-			   b.writer,
-			   b.inserted,
-			   b.Lat,
-			   b.Lng,
-			   b.people,
-			   b.time,
-			   b.address,
-			   memberId
-			   FROM RunningBoard b left join RunningParty p on b.id = p.boardId
-			   where b.writer = #{nickName} or p.memberId = #{nickName2};
-			""")
+			SELECT
+			    b.id,
+			    b.title,
+			    b.body,
+			    b.writer,
+			    b.inserted,
+			    b.Lat,
+			    b.Lng,
+			    b.people,
+			    b.time,
+			    b.address,
+			    p.memberId
+			FROM
+			    RunningBoard b
+			LEFT JOIN
+			    RunningParty p ON b.id = p.boardId
+			WHERE
+			    (b.writer = #{nickName} AND p.memberId IS NULL)
+			    OR
+			    (b.writer <> #{nickName} AND (p.memberId = #{nickName2} OR p.memberId IS NULL))
+			GROUP BY
+			    b.id,
+			    b.title,
+			    b.body,
+			    b.inserted,
+			    b.writer,
+			    b.Lat,
+			    b.Lng,
+			    b.people,
+			    b.time,
+			    b.address
+			ORDER BY
+			    b.inserted DESC;
+
+						""")
 	List<RunningBoard> selectTotalMyPageInfo(String nickName, String nickName2);
 
 	@Update("""
@@ -308,6 +336,11 @@ public interface RunningMapper {
 			where boardId = #{id} AND fileName = #{fileName}
 			""")
 	void deleteFileNameByBoardIdAndFileName(Integer id, String fileName);
+
+	@Select("""
+			Select userId from Member where nickName = #{hostNickName}
+			""")
+	String findHost(String hostNickName);
 
 //	@Select("""
 //			<scipt>

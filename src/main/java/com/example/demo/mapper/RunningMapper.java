@@ -212,7 +212,7 @@ public interface RunningMapper {
 				)
 				</if>
 
-				 AND time > DATE_SUB(NOW(), INTERVAL 3 DAY) -- 수정된 부분
+				 AND time > DATE_SUB(NOW(), INTERVAL 3 DAY)
 
 				</where>
 

@@ -420,7 +420,6 @@ public class RunningController {
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> alarm(RunningParty runningParty, Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.alarm(runningParty, authentication));
-
 	}
 
 	@PostMapping("agreeParty")
@@ -428,7 +427,6 @@ public class RunningController {
 	public ResponseEntity<Map<String, Object>> agreeParty(@RequestBody RunningParty runningParty,
 			Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.agreeParty(runningParty, authentication));
-
 	}
 
 	@PostMapping("disagreeParty")
@@ -436,7 +434,6 @@ public class RunningController {
 	public ResponseEntity<Map<String, Object>> disagreeParty(@RequestBody RunningParty runningParty,
 			Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.disagreeParty(runningParty, authentication));
-
 	}
 
 }

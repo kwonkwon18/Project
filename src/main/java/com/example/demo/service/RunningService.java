@@ -300,33 +300,7 @@ public class RunningService {
 	}
 
 	
-	// ** After Like
-	public Map<String, Object> like(RunningLike like, Authentication auth) {
 
-		// json을 보내줄 때는 ResponseEntity와 Map의 타입을 활용한다.
-		Map<String, Object> result = new HashMap<>();
-
-		// 기본 값으로 key = like, value = false를 넣어준다. 
-		result.put("like", false);
-			
-		// memberid를 인증된 사람의 id로 바꿔준다.
-		like.setMemberId(auth.getName());
-		
-		// 로직은 먼저 삭제를 하고 삭제가 만약 삭제가 안되었으면 
-		// like 에 해당 정보를 insert 하고 json { "like" : true} 를 반환해준다.
-		Integer deleteCnt = likeMapper.delete(like);
-
-		if (deleteCnt != 1) {
-			Integer insertCnt = likeMapper.insert(like);
-			result.put("like", true);
-		}
-		
-		// 좋아요 갯수 넘겨주기
-		Integer count = likeMapper.countByBoardId(like.getBoardId());
-		result.put("count", count);
-
-		return result;
-	}
 
 	public List<RunningParty> selectWaitingMemberIdByBoardId(Integer id, String writer) {
 		// TODO Auto-generated method stub

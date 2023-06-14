@@ -12,13 +12,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+<my:navBarRunning></my:navBarRunning>
+
 	<%
 	java.util.Date now = new java.util.Date();
 	java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 	String nowString = dateFormat.format(now);
 	%>
 
-	<my:navBar></my:navBar>
 	<div id="map" style="width: 100%; height: 500px;"></div>
 
 

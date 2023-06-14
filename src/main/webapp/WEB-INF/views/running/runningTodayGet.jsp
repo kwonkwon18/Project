@@ -13,12 +13,15 @@
 </head>
 <body>
 	<div>
-		<my:navBar></my:navBar>
+		<my:navBarRunning></my:navBarRunning>
 	</div>
 	<br />
 	<br />
 	<br />
 	<br />
+
+
+
 
 	<!-- toast  -->
 	<div class="toast-container top-0 start-50 translate-middle-x">
@@ -29,6 +32,7 @@
 			<div class="toast-body"></div>
 		</div>
 	</div>
+
 
 	<div class="container-lg">
 

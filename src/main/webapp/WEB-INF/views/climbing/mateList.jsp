@@ -14,9 +14,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+
+	<my:navBarclimbing> </my:navBarclimbing>
+
 	<my:chatBtn></my:chatBtn>
 
-	<my:navBar></my:navBar>
+
+
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->

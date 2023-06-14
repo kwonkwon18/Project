@@ -139,4 +139,8 @@ public class GroupChatService {
 		}
 		return chatRoomList;
 	}
+
+	public String lastSenderIdSelectByChatRoomId(Integer chatRoomId) {
+		return mapper.lastSenderIdSelectByChatRoomId(chatRoomId);
+	}
 }

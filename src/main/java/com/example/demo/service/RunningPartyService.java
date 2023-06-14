@@ -35,7 +35,6 @@ public class RunningPartyService {
 		String hostNickName = board.getWriter();
 		String host = mapper.findHost(hostNickName);
 
-		
 		int currentNum = partyMapper.countByBoardId(runningParty.getBoardId());
 		Integer boardId = runningParty.getBoardId();
 		String userId = runningParty.getUserId();
@@ -49,7 +48,7 @@ public class RunningPartyService {
 		if (board.getPeople() >= currentNum) {
 
 			runningParty.setMemberId(member.getNickName());
-			
+
 			System.out.println(runningParty);
 
 			result.put("join", false);
@@ -84,23 +83,30 @@ public class RunningPartyService {
 	public Map<String, Object> alarm(RunningParty runningParty, Authentication authentication) {
 		// 현재 접속한 로그인 아이디 찾기
 		Member member = mapper.selectMemberById(authentication.getName());
-		
+
 		Map<String, Object> result = new HashMap<>();
 
 		runningParty.setUserId(member.getNickName());
 
 		// System.out.println("%%" + runningParty);
 
-		// 호스트 마이페이지 
+		// 호스트 마이페이지
 		List<RunningParty> alarmList = partyMapper.selectAlarmList(runningParty);
 		result.put("alarmList", alarmList);
-		
+
 		// 게스트 마이페이지
 		List<RunningParty> memberAlarmList = partyMapper.selectMemberAlarmList(runningParty);
 		result.put("memberAlarmList", memberAlarmList);
+		System.out.println("^^" + memberAlarmList);
 
 		return result;
 
+	}
+
+	public Integer makeMate(Integer boardId, String userId, Authentication authentication) {
+		// TODO Auto-generated method stub
+		Integer cnt = partyMapper.makeMate(boardId, userId, authentication.getName());
+		return cnt;
 	}
 
 	public Map<String, Object> agreeParty(RunningParty runningParty, Authentication authentication) {
@@ -109,6 +115,7 @@ public class RunningPartyService {
 		// System.out.println("접근 1");
 		Integer agreeMember = partyMapper.updateMember(runningParty);
 		// System.out.println("접근 2");
+		Integer confirmation = partyMapper.confirmationHost(runningParty);
 
 		System.out.println(runningParty);
 
@@ -126,6 +133,9 @@ public class RunningPartyService {
 		Map<String, Object> result = new HashMap<>();
 
 		Integer agreeMember = partyMapper.updateMemberDisagree(runningParty);
+		System.out.println("^^^^" + runningParty);
+
+		Integer confirmation = partyMapper.confirmationHost(runningParty);
 
 		System.out.println(runningParty);
 
@@ -138,11 +148,38 @@ public class RunningPartyService {
 		}
 	}
 
-	public Integer makeMate(Integer boardId, String userId, Authentication authentication) {
-		// TODO Auto-generated method stub
-		Integer cnt = partyMapper.makeMate(boardId, userId, authentication.getName());
-		return cnt;
+	public Map<String, Object> confirmation(RunningParty runningParty, Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+		System.out.println("asdjfasdklf" +  runningParty);
+		Integer confirmation = partyMapper.confirmationGuest(runningParty);
+
+		if (confirmation == 1) {
+			result.put("confirmation", true);
+			return result;
+		} else {
+			result.put("confirmation", false);
+			return result;
+		}
 	}
+
+//	public Map<String, Object> confirmationBad(RunningParty runningParty, Authentication authentication) {
+//		Map<String, Object> result = new HashMap<>();
+//
+//		Integer agreeMember = partyMapper.updateMemberDisagree(runningParty);
+//
+//		Integer confirmation = partyMapper.confirmation(runningParty);
+//
+//		System.out.println(runningParty);
+//
+//		if (agreeMember == 1) {
+//			result.put("out", true);
+//			return result;
+//		} else {
+//			result.put("out", false);
+//			return result;
+//		}
+//	}
+//	
 
 	/*
 	 * public Map<String, Object> reject(RunningParty runningParty, Authentication

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<my:navBar></my:navBar>
+<my:navBarRunning></my:navBarRunning>
 
 	<div class="container-lg">
 

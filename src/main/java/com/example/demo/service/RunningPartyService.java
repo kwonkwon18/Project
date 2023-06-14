@@ -150,7 +150,7 @@ public class RunningPartyService {
 
 	public Map<String, Object> confirmation(RunningParty runningParty, Authentication authentication) {
 		Map<String, Object> result = new HashMap<>();
-		System.out.println("asdjfasdklf" +  runningParty);
+		System.out.println("asdjfasdklf" + runningParty);
 		Integer confirmation = partyMapper.confirmationGuest(runningParty);
 
 		if (confirmation == 1) {
@@ -160,6 +160,29 @@ public class RunningPartyService {
 			result.put("confirmation", false);
 			return result;
 		}
+	}
+
+	public Map<String, Object> countOfAlarm(RunningParty runningParty, Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+
+		// 현재 접속한 로그인 아이디 찾기
+		Member member = mapper.selectMemberById(authentication.getName());
+		runningParty.setUserId(member.getNickName());
+		System.out.println("");
+		Integer confirmationHost = partyMapper.countOfAlarmHost(runningParty) -1 ;
+
+		if (confirmationHost < 0) {
+			confirmationHost = 0;
+		}
+
+		Integer confirmationGuest = partyMapper.countOfAlarmGuest(runningParty);
+
+		Integer confirmationTotal = confirmationHost + confirmationHost;
+
+		result.put("confirmationTotal", confirmationTotal);
+
+		return result;
+
 	}
 
 //	public Map<String, Object> confirmationBad(RunningParty runningParty, Authentication authentication) {

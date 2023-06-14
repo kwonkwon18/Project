@@ -169,5 +169,6 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script src="/js/running/runningMate.js" charset="UTF-8"></script>
 	<script src="/js/chat.js" charset="UTF-8"></script>
+	<script src = "/js/navBar.js"></script>
 </body>
 </html>

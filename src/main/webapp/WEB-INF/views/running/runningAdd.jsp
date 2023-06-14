@@ -82,7 +82,7 @@
 
 	<script src="/js/running/runningAdd.js"></script>
 	<script src="/js/chat.js"></script>
-
+<script src = "/js/navBar.js"></script>
 
 </body>
 </html>

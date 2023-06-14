@@ -352,7 +352,7 @@ public class RunningController {
 
 	}
 
-	// *********
+	
 
 	// ******************** AJAX
 
@@ -418,8 +418,8 @@ public class RunningController {
 
 	@GetMapping("alarm")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> alarm(RunningParty runningParty, Authentication authentication) {
-		return ResponseEntity.ok().body(partyService.alarm(runningParty, authentication));
+	public ResponseEntity<Map<String, Object>> alarm(Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.alarm(authentication));
 	}
 
 	@PostMapping("agreeParty")
@@ -442,6 +442,13 @@ public class RunningController {
 			Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.confirmation(runningParty, authentication));
 	}
+	
+	@GetMapping("countOfAlarm")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> countOfAlarm(Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.countOfAlarm(authentication));
+	}
+	
 	
 //	@PostMapping("confirmationBad")
 //	@ResponseBody

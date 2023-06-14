@@ -22,7 +22,7 @@
 	<br />
 
 	
-	<button id="alarmList">알람 목록 보기</button>
+<!-- 	<button id="alarmList">알람 목록 보기</button> -->
    <div id="HostAlarm"></div>
    <div id="MemberAlarm"></div>'
 

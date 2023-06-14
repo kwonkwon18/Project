@@ -80,22 +80,22 @@ public class RunningPartyService {
 
 	}
 
-	public Map<String, Object> alarm(RunningParty runningParty, Authentication authentication) {
-		// 현재 접속한 로그인 아이디 찾기
-		Member member = mapper.selectMemberById(authentication.getName());
+	public Map<String, Object> alarm(Authentication authentication) {
+//		// 현재 접속한 로그인 아이디 찾기
+//		Member member = mapper.selectMemberById(authentication.getName());
 
 		Map<String, Object> result = new HashMap<>();
 
-		runningParty.setUserId(member.getNickName());
+//		runningParty.setUserId(member.getNickName());
 
 		// System.out.println("%%" + runningParty);
 
 		// 호스트 마이페이지
-		List<RunningParty> alarmList = partyMapper.selectAlarmList(runningParty);
+		List<RunningParty> alarmList = partyMapper.selectAlarmList(authentication.getName());
 		result.put("alarmList", alarmList);
 
 		// 게스트 마이페이지
-		List<RunningParty> memberAlarmList = partyMapper.selectMemberAlarmList(runningParty);
+		List<RunningParty> memberAlarmList = partyMapper.selectMemberAlarmList(authentication.getName());
 		result.put("memberAlarmList", memberAlarmList);
 		System.out.println("^^" + memberAlarmList);
 
@@ -150,7 +150,7 @@ public class RunningPartyService {
 
 	public Map<String, Object> confirmation(RunningParty runningParty, Authentication authentication) {
 		Map<String, Object> result = new HashMap<>();
-		System.out.println("asdjfasdklf" +  runningParty);
+		System.out.println("asdjfasdklf" + runningParty);
 		Integer confirmation = partyMapper.confirmationGuest(runningParty);
 
 		if (confirmation == 1) {
@@ -160,6 +160,34 @@ public class RunningPartyService {
 			result.put("confirmation", false);
 			return result;
 		}
+	}
+
+	public Map<String, Object> countOfAlarm(Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+		
+		// host와 guest
+		
+		// 1 빼줄수 있는데.. 봐야함 
+		Integer confirmationHost = partyMapper.countOfAlarmHost(authentication.getName()) ;
+		System.out.println("confirmationHost ==" + confirmationHost);
+
+		if (confirmationHost < 0) {
+			confirmationHost = 0;
+		}
+
+		Integer confirmationGuest = partyMapper.countOfAlarmGuest(authentication.getName());
+		if (confirmationGuest < 0) {
+			confirmationGuest = 0;
+		}
+		
+		
+		System.out.println("confirmationGuest == " + confirmationGuest);
+		Integer confirmationTotal = confirmationHost + confirmationGuest;
+
+		result.put("confirmationTotal", confirmationTotal);
+
+		return result;
+
 	}
 
 //	public Map<String, Object> confirmationBad(RunningParty runningParty, Authentication authentication) {

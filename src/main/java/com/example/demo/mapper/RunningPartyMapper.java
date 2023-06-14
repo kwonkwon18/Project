@@ -89,10 +89,10 @@ public interface RunningPartyMapper {
 			    r.title
 			  FROM RunningParty p
 			  LEFT JOIN RunningBoard r on r.id = p.boardId
-			WHERE memberId = #{userId} AND (participation = 1 or participation = 2) and confirmation = 1 ;
+			WHERE guest = #{userId} AND (participation = 1 or participation = 2) and confirmation = 1 ;
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	List<RunningParty> selectMemberAlarmList(RunningParty runningParty);
+	List<RunningParty> selectMemberAlarmList(String userId);
 	
 	@Select("""
 			SELECT
@@ -102,10 +102,10 @@ public interface RunningPartyMapper {
 			    r.title
 			  FROM RunningParty p
 			  LEFT JOIN RunningBoard r on r.id = p.boardId
-			WHERE userId = #{userId} AND participation = 0 and confirmation = 1
+			WHERE host = #{userId} AND participation = 0 and confirmation = 1
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	List<RunningParty> selectAlarmList(RunningParty runningParty);
+	List<RunningParty> selectAlarmList(String userId);
 
 	@Update("""
 			UPDATE RunningParty

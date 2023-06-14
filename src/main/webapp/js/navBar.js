@@ -1,13 +1,13 @@
 // 페이지가 로드될 때마다 호출해줄것임
-$(document).ready(function(){
+$(document).ready(function() {
 	console.log("작동은됨")
 	$.ajax("/running/countOfAlarm", {
-		contentType : "application/json",
-		success : function(data) {
+		contentType: "application/json",
+		success: function(data) {
 			console.log(data.confirmationTotal)
-			$("#NumberOfAlarm").html(data.confirmationTotal);	
+			$("#NumberOfAlarm").html(data.confirmationTotal);
 		}
-	})	
+	})
 });
 
 
@@ -69,7 +69,15 @@ $("#alarmList").click(function() {
         *** ${title} 신청이 ${message} == ${boardId}
     </div>
 `);
-				} else if (participation === 2) {
+				} else if (participation === 1 && userId == memberId) {
+					$("#MemberAlarm").append(`
+    <div id="" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+        *** ' ${title} ' 게시물이 올라갔습니다.
+    </div>
+`);
+				}
+
+				else if (participation === 2) {
 					message = ` ${userId} 반려되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
 					$("#MemberAlarm").append(`
     <div id="alarmDiv${boardId}" class="d-flex" style="padding-right: 10px; padding-left: 10px;">

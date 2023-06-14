@@ -58,5 +58,6 @@
 		</div>
 	</div>
 	</div>
+	<script src = "/js/navBar.js"></script>
 </body>
 </html>

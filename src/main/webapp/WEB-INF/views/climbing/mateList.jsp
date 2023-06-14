@@ -14,9 +14,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  
-	<my:navBar> </my:navBar>
 
+	<my:navBarClimbing></my:navBarClimbing>
+	
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
 	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
@@ -59,7 +59,7 @@
 				<span style="margin-left: 840px;">
 					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
 				</span>
-<!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
+				<!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
@@ -74,7 +74,7 @@
 						<button class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
-					</form>	
+					</form>
 				</ul>
 			</div>
 		</nav>

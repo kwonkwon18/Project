@@ -162,22 +162,22 @@ public class RunningPartyService {
 		}
 	}
 
-	public Map<String, Object> countOfAlarm(RunningParty runningParty, Authentication authentication) {
+	public Map<String, Object> countOfAlarm(Authentication authentication) {
 		Map<String, Object> result = new HashMap<>();
+		
+		// host와 guest
+		
+		// 1 빼줄수 있는데.. 봐야함 
+		Integer confirmationHost = partyMapper.countOfAlarmHost(authentication.getName()) -1 ;
+		System.out.println("confirmationHost ==" + confirmationHost);
 
-		// 현재 접속한 로그인 아이디 찾기
-		Member member = mapper.selectMemberById(authentication.getName());
-		runningParty.setUserId(member.getNickName());
-		System.out.println("");
-		Integer confirmationHost = partyMapper.countOfAlarmHost(runningParty) -1 ;
-
-		if (confirmationHost < 0) {
+		if (confirmationHost -1 < 0) {
 			confirmationHost = 0;
 		}
 
-		Integer confirmationGuest = partyMapper.countOfAlarmGuest(runningParty);
-
-		Integer confirmationTotal = confirmationHost + confirmationHost;
+		Integer confirmationGuest = partyMapper.countOfAlarmGuest(authentication.getName());
+		System.out.println("confirmationGuest == " + confirmationGuest);
+		Integer confirmationTotal = confirmationHost + confirmationGuest;
 
 		result.put("confirmationTotal", confirmationTotal);
 

@@ -1,9 +1,8 @@
 package com.example.demo.domain;
 
 import java.time.*;
-import java.util.List;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
 public class ClimbingMate {

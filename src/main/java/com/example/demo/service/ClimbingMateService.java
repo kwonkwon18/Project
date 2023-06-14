@@ -29,7 +29,11 @@ public class ClimbingMateService {
 	@Autowired
 	private ClimbingMateMapper mateMapper;
 	
-	public boolean addClimbingMate(ClimbingMate climbingMate) {
+	@Autowired
+	private MemberMapper memberMapper;
+	
+	public boolean addClimbingMate(ClimbingMate climbingMate, String myId) {
+		climbingMate.setWriter(memberMapper.getNickNameByUserId(myId));
 		int cnt = mateMapper.insert(climbingMate);
 		return cnt == 1;
 	}
@@ -309,6 +313,32 @@ public class ClimbingMateService {
 		
 		return null;
 	}
+
+	public Member getMemberUserId(String userId) {
+
+		return mateMapper.selecMemberUserId(userId);
+	}
+
+	public List<ClimbingMate> getTotalMyPageInfo(String nickName) {
+
+		return mateMapper.selectTotalMyPageInfo(nickName);
+	}
+
+	public List<ClimbingParty> getJoinMember(String writer) {
+
+		return mateMapper.selectMemberId(writer);
+	}
+
+	public List<ClimbingParty> selectWaitingMemberIdByBoardId(Integer id, String writer) {
+		// TODO Auto-generated method stub
+		return mateMapper.selectWaitingMemberIdByBoardId(id, writer);
+	}
+
+	public List<ClimbingParty> selectRejectMemberIdByBoardId(Integer id, String writer) {
+
+		return mateMapper.selectRejectMemberIdByBoardId(id, writer);
+	}
+
 
 }
 

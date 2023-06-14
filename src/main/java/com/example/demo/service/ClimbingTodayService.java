@@ -30,6 +30,9 @@ public class ClimbingTodayService {
 	
 	@Autowired
 	private ClimbingLikeMapper likeMapper;
+	
+	@Autowired
+	private ClimbingCommentMapper commentMapper;
 
 	public List<ClimbingToday> listBoard() {
 		
@@ -120,6 +123,8 @@ public class ClimbingTodayService {
 			s3.deleteObject(dor);
 
 		}
+		likeMapper.deleteByBoardId(id);
+		commentMapper.deleteByBoardId(id);
 		// 게시물 테이블의 데이터 지우기
 		int cnt = todayMapper.deleteById(id);
 
@@ -176,6 +181,10 @@ public class ClimbingTodayService {
 		result.put("count", count);
 
 		return result;
+	}
+
+	public List<ClimbingToday> todayListBoard() {
+		return todayMapper.selectTodayList();
 	}
 
 //	public Map<String, Object> listBoard(Integer page, String search, String type) {

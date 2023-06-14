@@ -72,7 +72,7 @@ $("#alarmList").click(function() {
 				} else if (participation === 1 && userId == memberId) {
 					$("#MemberAlarm").append(`
     <div id="" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-        *** ' ${title} ' 게시물이 올라갔습니다.
+        *** ' ${title} ' 게시물이 올라갔습니다
     </div>
 `);
 				}

@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<my:navBar></my:navBar>
+	<my:navBarRunning></my:navBarRunning>
 	<div class="container-lg">
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">

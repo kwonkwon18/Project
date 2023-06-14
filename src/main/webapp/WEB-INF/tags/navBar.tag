@@ -22,14 +22,30 @@
 				<sec:authorize access="isAnonymous()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/login">로그인</a></li></sec:authorize>
 				<sec:authorize access="isAnonymous()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/signup">회원가입</a></li></sec:authorize>
 				<sec:authorize access="isAuthenticated()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/my_page">마이페이지</a></li></sec:authorize>
-<button type="button" class="btn btn-primary position-relative">
+<button id = "alarmList" class="btn btn-primary position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
   <i class="fa-regular fa-bell"></i>
   <span id = "NumberOfAlarm" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
   </span>
 </button>
+
+
 				 <%-- <li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/list">회원목록</a></li> --%>
 			</ul>
 			
 		</div>
 	</div>
 </nav>
+
+
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">알림 목록 🏄‍♂️ </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+   <div id="HostAlarm"></div>
+   <div id="MemberAlarm"></div>'
+  </div>
+</div>

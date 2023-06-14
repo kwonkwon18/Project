@@ -61,8 +61,14 @@ public interface ClimbingTodayMapper {
 				c.body,
 				c.writer,
 				c.inserted,
-				f.fileName
-			FROM ClimbingToday c LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+				f.fileName,
+				m.userId,
+				(select count(*) from ClimbingLike where boardId = c.id) likeCount
+			FROM 
+				ClimbingToday c 
+				LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+				LEFT JOIN Member m ON c.writer = m.nickName
+				LEFT JOIN ClimbingLike cl on c.id = cl.boardId
 			WHERE c.id = #{id}
 			""")
 	@ResultMap("climbingTodayResultMap")

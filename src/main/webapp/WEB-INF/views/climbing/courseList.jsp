@@ -48,14 +48,16 @@
 		</div>
 
 		<h2>추천 코스</h2>
-		<br />
 		<ul>
 			<!-- 			<button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
 			<!-- 			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button> -->
 			<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
-				<button type="button" class="btn btn-success" style="margin-right: 10px; pointer-events: none;">🌄지역별 보기</button>
+				<a href="courseList">
+					<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
+				</a>
+				<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
 				<form action="/climbing/courseList" class="d-flex" role="courseSearch">
-					<input id="searchInput" value="${param.courseSearch}" name="courseSearch" class="form-control" type="courseSearch" aria-label="courseSearch" style="width: 300px">
+					<input id="searchInput" value="${param.courseSearch}" name="courseSearch" class="form-control" type="courseSearch" placeholder="Search" aria-label="courseSearch" style="width: 300px">
 					<button id="search" class="btn btn-outline-success" type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</button>

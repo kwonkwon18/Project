@@ -269,9 +269,9 @@ public class ClimbingController {
 	}
 
 	@GetMapping("/todayId/{id}")
-	public String Todaydetail(@PathVariable("id") Integer id, Model model) {
+	public String Todaydetail(@PathVariable("id") Integer id, Model model, Authentication authentication) {
 
-		ClimbingToday todayList = todayService.getClimbingToday(id);
+		ClimbingToday todayList = todayService.getClimbingToday(id, authentication.getName());
 
 		model.addAttribute("board", todayList);
 
@@ -281,7 +281,7 @@ public class ClimbingController {
 	
 	@GetMapping("/todayModify/{id}")
 	public String modifyForm(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("board", todayService.getClimbingToday(id));
+		model.addAttribute("board", todayService.getClimbingToday(id, null));
 		return "climbing/mateModify";
 	}
 
@@ -425,5 +425,47 @@ public class ClimbingController {
 	@GetMapping("/courseListArea")
 	public void courseListArea() {
 		
+	}
+	
+	@PostMapping("/climbingLike")
+	// responseEntitiy를 해주는 이유는 에러 메시지를 함께 보내주기 위함이다.
+	// @RequestBody Like like를 해준 것은 like에 있는 인자들을 json으로 보내주기 위함
+	// 또한 등록 된 사람들만 like를 할 수 있게 하게 위해서 Authentication 을 인자로 추가해주었다.
+	// 홈페이지의 대부분의 정보는 nickName 활용하였지만, like는 userId를 쓰기로 함
+	public ResponseEntity<Map<String, Object>> like(@RequestBody ClimbingLike like, Authentication auth) {
+		System.out.println(like);
+		System.out.println(auth);
+
+		if (auth == null) {
+			// 만약에 인증되지 않은 사용자가 들어왔으면...
+			return ResponseEntity.status(403) // 상태값 반환
+					.body(Map.of("message", "로그인 후 좋아요 클릭 해주세요")); // body에 해당 Map을 담아서
+			// 넘긴다. 이때 넘길 때는 js에 넘겨서 비동기 처리가 된다.
+
+		} else {
+
+			return ResponseEntity.ok().body(todayService.like(like, auth));
+		}
+
+	}
+
+	@GetMapping("alarm")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> alarm(ClimbingParty climbingParty, Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.alarm(climbingParty, authentication));
+	}
+
+	@PostMapping("agreeParty")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> agreeParty(@RequestBody ClimbingParty climbingParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.agreeParty(climbingParty, authentication));
+	}
+
+	@PostMapping("disagreeParty")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> disagreeParty(@RequestBody ClimbingParty climbingParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.disagreeParty(climbingParty, authentication));
 	}
 }

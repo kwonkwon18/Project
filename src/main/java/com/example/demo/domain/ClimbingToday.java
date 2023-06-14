@@ -13,4 +13,7 @@ public class ClimbingToday {
 	private String writer;
 	private LocalDate inserted;
 	private List<String> fileName;
+	private String userId;
+	private Integer likeCount;
+	private boolean liked; 
 }

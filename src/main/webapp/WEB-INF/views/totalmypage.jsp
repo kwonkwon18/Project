@@ -12,21 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
 <my:navBarRunning></my:navBarRunning>
-
-
-
-	<br />
-	<br />
-	<br />
-
-	
-	<button id="alarmList">알람 목록 보기</button>
-   <div id="HostAlarm"></div>
-   <div id="MemberAlarm"></div>'
-
-
 	<h1>마이페이지</h1>
 
 	<div class="row row-cols-1 row-cols-md-3 g-4">
@@ -118,22 +104,21 @@
 
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script>
-      <c:forEach items="${totalMyData}" var="board" varStatus="status">
-         var latNum${status.index + 1} = ${board.lat};
-         var lngNum${status.index + 1} = ${board.lng};
-         var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
-         var mapOption${status.index + 1} = {
-            center: new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
-            level: 3
-         };
-         var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
-         var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
-         var marker${status.index + 1} = new kakao.maps.Marker({
-            position: markerPosition${status.index + 1}
-         });
-         marker${status.index + 1}.setMap(map${status.index + 1});
-      </c:forEach>
-   </script>
-	<script src="/js/running/myPage.js"></script>
+		<c:forEach items="${totalMyData}" var="board" varStatus="status">
+			var latNum${status.index + 1} = ${board.lat};
+			var lngNum${status.index + 1} = ${board.lng};
+			var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
+			var mapOption${status.index + 1} = {
+				center: new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
+				level: 3
+			};
+			var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
+			var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
+			var marker${status.index + 1} = new kakao.maps.Marker({
+				position: markerPosition${status.index + 1}
+			});
+			marker${status.index + 1}.setMap(map${status.index + 1});
+		</c:forEach>
+	</script>
 </body>
 </html>

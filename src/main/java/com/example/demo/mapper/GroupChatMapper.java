@@ -138,5 +138,13 @@ public interface GroupChatMapper {
 			""")
 	RunningBoard getRunningBoard(int i);
 
+	@Select("""
+			SELECT senderId FROM GroupChatMessage
+			WHERE chatRoomId = #{chatRoomId}
+			ORDER BY id DESC
+			LIMIT 1 OFFSET 1
+			""")
+	String lastSenderIdSelectByChatRoomId(Integer chatRoomId);
+
 	
 }

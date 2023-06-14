@@ -17,7 +17,6 @@ public class Member {
 	private LocalDateTime inserted;
 	private String birth;
 	private String gender;
-	private String career;
 	private String address;
 	private String phone;
 	private String email;

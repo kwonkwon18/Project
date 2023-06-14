@@ -10,6 +10,8 @@ function showList() {
 	$("#chatListSearchBtn").show();
 	$("#groupChatListSearchBtn").hide();
 	$("#searchRemove").show();
+	$("#groupChatRoomListBtn").removeClass("active");
+	$("#personalChatRoomListBtn").addClass("active");
 	$("#groupSearchRemove").hide();
 	$.ajax("/chat/open", {
 		contentType: "application/json",
@@ -96,12 +98,14 @@ $(".chatClose").click(function() {
 	$("#chatListContainer").remove();
 	$("#chatContainer").remove();
 	clearInterval(repeat);
+	clearInterval(groupRepeat);
 })
 
 
 $("#returnBtn").click(function() {
 	document.removeEventListener('keyup', keyupHandler);
 	$("#chatContainer").remove();
+	clearInterval(groupRepeat);
 	clearInterval(repeat);
 	showList();
 })

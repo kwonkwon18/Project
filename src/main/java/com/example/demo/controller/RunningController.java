@@ -118,15 +118,15 @@ public class RunningController {
 
 		// 로그인 닉네임 확인
 		Member member = service.getMembertUserId(authentication.getName());
-//		System.out.println("접근함");
 
 		Map<String, Object> myPageList = new HashMap<>();
 
 		myPageList.put("MyNickName", member.getNickName());
 
 		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
-//		System.out.println("***" + totalMyData);
 		myPageList.put("totalMyData", totalMyData);
+		
+		
 
 		// id 기준으로 리스트업
 //		List<RunningBoard> runningBoards = service.getMyPageInfo(authentication.getName());
@@ -411,7 +411,7 @@ public class RunningController {
 
 		} else {
 
-			return ResponseEntity.ok().body(service.like(like, auth));
+			return ResponseEntity.ok().body(todayService.like(like, auth));
 		}
 
 	}
@@ -435,5 +435,19 @@ public class RunningController {
 			Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.disagreeParty(runningParty, authentication));
 	}
+	
+	@PostMapping("confirmation")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> confirmationGood(@RequestBody RunningParty runningParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.confirmation(runningParty, authentication));
+	}
+	
+//	@PostMapping("confirmationBad")
+//	@ResponseBody
+//	public ResponseEntity<Map<String, Object>> confirmationBad(@RequestBody RunningParty runningParty,
+//			Authentication authentication) {
+//		return ResponseEntity.ok().body(partyService.confirmationBad(runningParty, authentication));
+//	}
 
 }

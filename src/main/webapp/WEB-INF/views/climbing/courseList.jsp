@@ -15,11 +15,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
-	<my:navBarclimbing> </my:navBarclimbing>
-
-	<my:chatBtn></my:chatBtn>
-
+	<my:navBar></my:navBar>
 
 	<div class="container-lg">
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -48,14 +44,16 @@
 		</div>
 
 		<h2>추천 코스</h2>
-		<br />
 		<ul>
 			<!-- 			<button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
 			<!-- 			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button> -->
 			<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
-				<button type="button" class="btn btn-success" style="margin-right: 10px; pointer-events: none;">🌄지역별 보기</button>
+				<a href="courseList">
+					<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
+				</a>
+				<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
 				<form action="/climbing/courseList" class="d-flex" role="courseSearch">
-					<input id="searchInput" value="${param.courseSearch}" name="courseSearch" class="form-control" type="courseSearch" aria-label="courseSearch" style="width: 300px">
+					<input id="searchInput" value="${param.courseSearch}" name="courseSearch" class="form-control" type="courseSearch" placeholder="Search" aria-label="courseSearch" style="width: 300px">
 					<button id="search" class="btn btn-outline-success" type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</button>
@@ -94,8 +92,12 @@
 			</c:forEach>
 		</div>
 	</div>
+
+	<my:chatBtn></my:chatBtn>
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="/js/chat.js"></script>
+	<script src="/js/groupChat.js"></script>
 </body>
 </html>

@@ -211,6 +211,8 @@
 		</div>
 	</div>
 
+	<br /><br />
+	
 	<div class="container-lg">
 		<h2>추천 코스</h2>
 		<ul>

@@ -144,43 +144,60 @@ public class ClimbingController {
 		}
 	}
 
-	@GetMapping("/mateId/{id}")
-	public String detail(@PathVariable("id") Integer id, Model model) {
+//	@GetMapping("/mateId/{id}")
+//	public String detail(@PathVariable("id") Integer id, Model model) {
+//
+//		ClimbingMate getList = mateService.getClimbingMate(id);
+//
+//		model.addAttribute("board", getList);
+//
+//		return "climbing/mateGet";
+//	}
+
+//	@GetMapping("/mateModify/{id}")
+//	public String mateModifyForm(@PathVariable("id") Integer id, Model model) {
+//		model.addAttribute("board", mateService.getClimbingMate(id));
+//		return "climbing/mateModify";
+//	}
+	
+	@GetMapping("/mateModify/{id}")
+	public String climbingModifyForm(@PathVariable("id") Integer id, Model model, String writer,
+			Authentication authentication) {
+
+		Map<String, Object> getMemberList = new HashMap<>();
 
 		ClimbingMate getList = mateService.getClimbingMate(id);
+		getMemberList.put("board", getList);
 
-		model.addAttribute("board", getList);
+		List<ClimbingParty> members = mateService.selectMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("members", members);
+//		System.out.println(members);
 
-		return "climbing/mateGet";
-	}
+		List<Member> memberList = mateService.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
 
-	@GetMapping("/mateModify/{id}")
-	public String mateModifyForm(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("board", mateService.getClimbingMate(id));
+		model.addAllAttributes(getMemberList);
+
 		return "climbing/mateModify";
 	}
 
 //	@RequestMapping(value = "/modify/{id}", method = RequestMethod.POST)
 	@PostMapping("/mateModify/{id}")
-	
 	// 수정하려는 게시물 id : mate.id
-	public String modifyProcess(ClimbingMate climbingMate,
-			@RequestParam(value = "files", required = false) MultipartFile[] addFiles,
-			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
-			RedirectAttributes rttr) throws Exception {
+	public String modifyProcess(ClimbingMate climbingMate, RedirectAttributes rttr) throws Exception {
 		
-		boolean ok = mateService.modify(climbingMate, addFiles, removeFileNames);
+		boolean ok = mateService.modify(climbingMate);
 
 		if (ok) {
 			// 해당 게시물 보기로 리디렉션
 //			rttr.addAttribute("success", "success");
 			rttr.addFlashAttribute("message", climbingMate.getId() + "번 게시물이 수정되었습니다.");
-			return "redirect:/id/" + climbingMate.getId();
+			return "redirect:/climbing/id/" + climbingMate.getId();
 		} else {
 			// 수정 form 으로 리디렉션
 //			rttr.addAttribute("fail", "fail");
 			rttr.addFlashAttribute("message", climbingMate.getId() + "번 게시물이 수정되지 않았습니다.");
-			return "redirect:/mateModify/" + climbingMate.getId();
+			return "redirect:/climbing/mateModify/" + climbingMate.getId();
 		}
 	}
 	
@@ -209,7 +226,7 @@ public class ClimbingController {
 
 		model.addAllAttributes(getMemberList);
 
-		return "climbing/climbingGet";
+		return "climbing/mateGet";
 	}
 	
 	@PostMapping("/mateRemove")
@@ -224,20 +241,26 @@ public class ClimbingController {
 
 			return "redirect:/climbing/mateList";
 		} else {
-			return "redirect:/mateId/" + id;
+			return "redirect:/climbing/climbingModify/" + id;
 		}
 	}
 	
 	@GetMapping("/mateMap")
-	public void mateMap(Model model) {
-		Map<String, Object> listMap = new HashMap<>();
+	public void mateMapProcess() {
 
-		// 메이트 구하기
-		List<ClimbingMate> mate = mateService.listBoard(); // 페이지 처리 전
-		listMap.put("climbingMateList", mate);
-		
-		model.addAllAttributes(listMap);
 	}
+
+	
+//	@GetMapping("/mateMap")
+//	public void mateMap(Model model) {
+//		Map<String, Object> listMap = new HashMap<>();
+//
+//		// 메이트 구하기
+//		List<ClimbingMate> mate = mateService.listBoard(); // 페이지 처리 전
+//		listMap.put("climbingMateList", mate);
+//		
+//		model.addAllAttributes(listMap);
+//	}
 	
 //	@GetMapping("/climbingMate")
 //	public void climbingMatePage(Model model) {

@@ -144,7 +144,8 @@ public class ClimbingMateService {
 		return mateMapper.selectUserId(userId);
 	}
 
-	public Object getBoardForModal(Integer boardId, Authentication authentication) {
+	public Map<String, Object> getBoardForModal(Integer boardId, Authentication authentication) {
+		
 		Map<String, Object> getMemberList = new HashMap<>();
 
 		// board에 대한 정보가 들어감
@@ -154,6 +155,14 @@ public class ClimbingMateService {
 		// 신청자가 들어감
 		List<ClimbingParty> members = mateMapper.selectForMemberIdByBoardId(boardId);
 		getMemberList.put("members", members);
+		
+		// 대기자가 들어감
+		List<ClimbingParty> waitingMembers = mateMapper.selectWaitingMemberIdByBoardIdForModal(boardId);
+		getMemberList.put("waitingMembers", waitingMembers);
+		
+		// 거절멤버
+		List<ClimbingParty> rejectMembers = mateMapper.selectRejectMemberIdByBoardIdForModal(boardId);
+		getMemberList.put("rejectMembers", rejectMembers);
 
 		// 중복 신청 방지용
 		List<Member> memberList = getUserId(authentication.getName());
@@ -162,7 +171,7 @@ public class ClimbingMateService {
 		// 로그인한 사람 확인용 (닉네임)
 		Member myNickName = mateMapper.getNickName(authentication.getName());
 		getMemberList.put("myNickName", myNickName);
-
+		
 		return getMemberList;
 	}
 

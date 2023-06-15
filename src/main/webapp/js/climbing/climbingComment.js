@@ -34,6 +34,10 @@ $("#updateCommentBtn").click(function() {
 			listComment();
 			$(".toast-body").text(jqXHR.responseJSON.message);
 			toast.show();
+			// 댓글 수정 시 시간 업데이트
+			const commentId = $("#commentUpdateIdInput").val();
+			const updatedTime = new Date().toLocaleString(); // 현재 시간을 가져옴
+			$(`#commentListContainer li[data-comment-id='${commentId}'] .badge`).text(updatedTime);
 		}
 	})
 })

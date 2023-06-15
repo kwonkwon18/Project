@@ -1,15 +1,10 @@
 // 페이지가 로드될 때마다 호출해줄것임
 $(document).ready(function() {
 	console.log("작동은됨")
-	$.ajax("/running/countOfAlarm", {
+	$.ajax("/climbing/countOfAlarm", {
 		contentType: "application/json",
 		success: function(data) {
-			console.log("asdf" + data.confirmationTotal)
-
-			if (data.confirmationTotal > 0) {
-				$("#NumberOfAlarm").css("display", "block");
-			}
-
+			console.log(data.confirmationTotal)
 			$("#NumberOfAlarm").html(data.confirmationTotal);
 		}
 	})
@@ -17,7 +12,7 @@ $(document).ready(function() {
 
 
 $("#alarmList").click(function() {
-	$.ajax("/running/alarm", {
+	$.ajax("/climbing/alarm", {
 		contentType: "application/json",
 		success: function(data) {
 			// 데이터로 들어갈 것 boardId, userId, memberId
@@ -130,7 +125,7 @@ $("#HostAlarm").on("click", ".agreeParty", function() {
 	const data = { boardId, userId, memberId };
 	console.log(data);
 
-	$.ajax("/running/agreeParty", {
+	$.ajax("/climbing/agreeParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -164,7 +159,7 @@ $("#HostAlarm").on("click", ".disagreeParty", function() {
 	const data = { boardId, userId, memberId };
 	console.log(data);
 
-	$.ajax("/running/disagreeParty", {
+	$.ajax("/climbing/disagreeParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -198,7 +193,7 @@ $("#MemberAlarm").on("click", ".memberConfirmation", function() {
 	const data = { boardId, userId, memberId };
 	console.log(data);
 
-	$.ajax("/running/confirmation", {
+	$.ajax("/climbing/confirmation", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -209,7 +204,7 @@ $("#MemberAlarm").on("click", ".memberConfirmation", function() {
 			alert("접수 오류발생.");
 		},
 		complete: function() {
-			location.href = "/running/id/" + boardId;
+			location.href = "/climbing/id/" + boardId;
 		}
 	});
 });

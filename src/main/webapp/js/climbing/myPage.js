@@ -1,23 +1,5 @@
-// 페이지가 로드될 때마다 호출해줄것임
-$(document).ready(function() {
-	console.log("작동은됨")
-	$.ajax("/running/countOfAlarm", {
-		contentType: "application/json",
-		success: function(data) {
-			console.log("asdf" + data.confirmationTotal)
-
-			if (data.confirmationTotal > 0) {
-				$("#NumberOfAlarm").css("display", "block");
-			}
-
-			$("#NumberOfAlarm").html(data.confirmationTotal);
-		}
-	})
-});
-
-
 $("#alarmList").click(function() {
-	$.ajax("/running/alarm", {
+	$.ajax("/climbing/alarm", {
 		contentType: "application/json",
 		success: function(data) {
 			// 데이터로 들어갈 것 boardId, userId, memberId
@@ -67,30 +49,10 @@ $("#alarmList").click(function() {
 				var message = "";
 
 				// 참여여부(participation) 값에 따라 메시지 설정
-				if (participation === 1 && userId != memberId) {
-					message = ` ${userId} 수락되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
-					$("#MemberAlarm").append(`
-    <div id="alarmDiv${boardId}" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-        *** ${title} 신청이 ${message} == ${boardId}
-    </div>
-`);
-				} else if (participation === 1 && userId == memberId) {
-					$("#MemberAlarm").append(`
-    <div id="" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-        *** ' ${title} ' 게시물이 올라갔습니다
-    </div>
-`);
-				}
-
-				else if (participation === 2) {
-					message = ` ${userId} 반려되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
-					$("#MemberAlarm").append(`
-    <div id="alarmDiv${boardId}" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-        *** ${title} 신청이 ${message} == ${boardId}
-    </div>
-`);
-				} else if (participation === 0) {
-
+				if (participation === 1) {
+					message = `수락되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
+				} else if (participation === 2) {
+					message = `반려되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
 				}
 
 				console.log("&&" + boardId);
@@ -99,7 +61,12 @@ $("#alarmList").click(function() {
 				console.log("&&" + userId);
 				console.log("&&" + participation);
 
-
+				$("#MemberAlarm").append(`
+    <div id="alarmDiv${boardId}" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+        *** ${title} 신청이 ${message} == ${boardId}
+        
+    </div>
+`);
 			});
 
 			// 삭제 버튼에 대한 클릭 이벤트 처리
@@ -130,7 +97,7 @@ $("#HostAlarm").on("click", ".agreeParty", function() {
 	const data = { boardId, userId, memberId };
 	console.log(data);
 
-	$.ajax("/running/agreeParty", {
+	$.ajax("/climbing/agreeParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -164,7 +131,7 @@ $("#HostAlarm").on("click", ".disagreeParty", function() {
 	const data = { boardId, userId, memberId };
 	console.log(data);
 
-	$.ajax("/running/disagreeParty", {
+	$.ajax("/climbing/disagreeParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -198,7 +165,7 @@ $("#MemberAlarm").on("click", ".memberConfirmation", function() {
 	const data = { boardId, userId, memberId };
 	console.log(data);
 
-	$.ajax("/running/confirmation", {
+	$.ajax("/climbing/confirmation", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -209,7 +176,92 @@ $("#MemberAlarm").on("click", ".memberConfirmation", function() {
 			alert("접수 오류발생.");
 		},
 		complete: function() {
-			location.href = "/running/id/" + boardId;
+			location.href = "/climbing/id/" + boardId;
 		}
 	});
 });
+
+
+
+
+
+
+
+/*
+$("#").click(function() {
+	$("#chatButton").hide();
+	$("#chatList").show();
+	showList();
+});
+
+
+function showList() {
+	$.ajax("/chat/open", {
+		contentType: "application/json",
+		success: function(data) {
+			var nickNameList = data.nickNameList;
+			var lastMessageList = data.lastMessageList;
+			var insertedList = data.insertedList;
+			var timeList = data.timeList;
+			var chatCount = data.chatCount;
+			var chatInsertedList = data.chatInsertedList;
+			$("#chatList").append(`
+			<div id="chatListContainer"></div>
+			`)
+			$("#chatListContainer").append(`
+					<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button0">
+						<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+							<span class="nickNameSpan">${nickNameList[0]}</span>
+							<span>님과의 대화방</span>
+							<span class="ms-auto">${timeList[0]}</span>
+						</div>
+						<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+							<span>${lastMessageList[0]}</span>
+							<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[0]}</span>
+						</div>
+						<input type="hidden" class="inserted" value="${insertedList[0]}">
+						<input type="hidden" class="chatInserted" value="${chatInsertedList[0]}">
+					</button>
+				`);
+			for (var i = 1; i < nickNameList.length; i++) {
+				for (var j = i - 1; j >= 0; j--) {
+					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
+						$(`#button${j}`).before(`
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span class="nickNameSpan">${nickNameList[i]}</span>
+									<span>님과의 대화방</span>
+									<span class="ms-auto">${timeList[i]}</span>
+								</div>
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span>${lastMessageList[i]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+								</div>
+								<input type="hidden" class="inserted" value="${insertedList[i]}">
+								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
+							</button>
+						`);
+						break;
+					} else if (chatInsertedList[i] < chatInsertedList[j]) {
+						$(`#button${j}`).after(`
+							<button type="button	" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span class="nickNameSpan">${nickNameList[i]}</span>
+									<span>님과의 대화방</span>
+									<span class="ms-auto">${timeList[i]}</span>
+								</div>
+								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+									<span>${lastMessageList[i]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+								</div>
+								<input type="hidden" class="inserted" value="${insertedList[i]}">
+								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
+							</button>
+						`);
+						break;
+					}
+				}
+			}
+		}
+	});
+}*/

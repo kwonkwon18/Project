@@ -15,7 +15,7 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/runningMate">러닝</a></li>
+				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/runningMain">러닝</a></li>
 				<li class="nav-item"><a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/futsal/list">풋살</a></li>
 				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/mateList">등산</a></li>
 				<sec:authorize access="isAuthenticated()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/logout">로그아웃</a></li></sec:authorize>

@@ -139,52 +139,27 @@ public class RunningController {
 	}
 
 	// 여기서 List<String> Mapper 써줄 것임
-	@GetMapping("/runningMate")
-	@PreAuthorize("authenticated")
-	public void runningMatePage(Model model, Authentication authentication,
-			@RequestParam(value = "type", required = false) String type,
-			@RequestParam(value = "search", defaultValue = "") String search) {
 
-//		System.err.println("접근 1");
-
-		Map<String, Object> getMemberList = new HashMap<>();
-
-		List<RunningBoard> runningMates = service.getMateBoardByAddress(authentication, type, search);
-		getMemberList.put("runningMates", runningMates);
-
-		/* model.addAttribute("board", runningMates); */
-//		System.out.println(runningMates);
-
-		List<RunningParty> members = service.selectMemberIdByBoardId();
-		getMemberList.put("members", members);
-
-		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
-		List<Member> memberList = service.getUserId(authentication.getName());
-		getMemberList.put("memberList", memberList);
-
-		model.addAllAttributes(getMemberList);
-	}
-
-	@GetMapping("/runningMate1")
-	public void runningMatePage1(Model model, Authentication authentication) {
-
-		Map<String, Object> getMemberList = new HashMap<>();
-
-		List<RunningBoard> runningMates = service.getMateBoard();
-		getMemberList.put("runningMates", runningMates);
-
-		/* model.addAttribute("board", runningMates); */
-//		System.out.println(runningMates);
-
-		List<RunningParty> members = service.selectMemberIdByBoardId();
-		getMemberList.put("members", members);
-
-		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
-		List<Member> memberList = service.getUserId(authentication.getName());
-		getMemberList.put("memberList", memberList);
-
-		model.addAllAttributes(getMemberList);
-	}
+//	@GetMapping("/runningMate1")
+//	public void runningMatePage1(Model model, Authentication authentication) {
+//
+//		Map<String, Object> getMemberList = new HashMap<>();
+//
+//		List<RunningBoard> runningMates = service.getMateBoard();
+//		getMemberList.put("runningMates", runningMates);
+//
+//		/* model.addAttribute("board", runningMates); */
+////		System.out.println(runningMates);
+//
+//		List<RunningParty> members = service.selectMemberIdByBoardId();
+//		getMemberList.put("members", members);
+//
+//		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+//		List<Member> memberList = service.getUserId(authentication.getName());
+//		getMemberList.put("memberList", memberList);
+//
+//		model.addAllAttributes(getMemberList);
+//	}
 
 	@GetMapping("/runningModify/{id}")
 	@PreAuthorize("authenticated")
@@ -355,6 +330,62 @@ public class RunningController {
 
 		model.addAllAttributes(todayList);
 
+	}
+
+	@GetMapping("/runningMate")
+	public void runningMatePage(Model model, Authentication authentication,
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "search", defaultValue = "") String search) {
+
+//		System.err.println("접근 1");
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		List<RunningBoard> runningMates = service.getMateBoardByAddress(authentication, type, search);
+		getMemberList.put("runningMates", runningMates);
+
+		/* model.addAttribute("board", runningMates); */
+//		System.out.println(runningMates);
+
+		List<RunningParty> members = service.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+		
+		List<RunningToday> today = todayService.listBoard(search);
+		getMemberList.put("runningTodayList", today);
+
+		model.addAllAttributes(getMemberList);
+	}
+
+	@GetMapping("/runningMain")
+	public void runningMain(Model model, Authentication authentication,
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "search", defaultValue = "") String search) {
+
+//		System.err.println("접근 1");
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		List<RunningBoard> runningMates = service.getMateBoardByAddress(authentication, type, search);
+		getMemberList.put("runningMates", runningMates);
+
+		/* model.addAttribute("board", runningMates); */
+//		System.out.println(runningMates);
+
+		List<RunningParty> members = service.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+		
+		List<RunningToday> today = todayService.listBoard(search);
+		getMemberList.put("runningTodayList", today);
+
+		model.addAllAttributes(getMemberList);
 	}
 
 	// ******************** AJAX

@@ -17,11 +17,6 @@
 
 	<my:navBarclimbing> </my:navBarclimbing>
 
-	<my:chatBtn></my:chatBtn>
-
-
-
-
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
 	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
@@ -169,6 +164,7 @@
 	</script>
 	<script src="/js/climbing/mateList.js"></script>
 	<script src="/js/chat.js"></script>
+	<script src="/js/groupChat.js"></script>
 
 	<script>
 		function changeDropdownItem(item) {

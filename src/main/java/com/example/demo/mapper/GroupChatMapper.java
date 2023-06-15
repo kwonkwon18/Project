@@ -146,5 +146,17 @@ public interface GroupChatMapper {
 			""")
 	String lastSenderIdSelectByChatRoomId(Integer chatRoomId);
 
+	@Select("""
+			SELECT memberId FROM RunningParty
+			WHERE boardId = #{lastChatRoomId}
+			""")
+	List<String> getMemberByChatRoomId(Integer lastChatRoomId);
+
+	@Select("""
+			SELECT id FROM GroupChatMessage
+			WHERE message LIKE CONCAT('%', #{search}, '%') AND chatRoomId = #{chatRoomId}			
+			""")
+	List<Integer> searchGroupChatId(String search, Integer chatRoomId);
+	
 	
 }

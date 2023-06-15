@@ -143,4 +143,12 @@ public class GroupChatService {
 	public String lastSenderIdSelectByChatRoomId(Integer chatRoomId) {
 		return mapper.lastSenderIdSelectByChatRoomId(chatRoomId);
 	}
+
+	public List<String> getMember(Integer lastChatRoomId) {
+		return mapper.getMemberByChatRoomId(lastChatRoomId);
+	}
+
+	public List<Integer> searchGroupChatId(String search, Integer chatRoomId) {
+		return mapper.searchGroupChatId(search, chatRoomId);
+	}
 }

@@ -53,6 +53,5 @@
 	<div class="offcanvas-body">
 		<div id="HostAlarm"></div>
 		<div id="MemberAlarm"></div>
-		'
 	</div>
 </div>

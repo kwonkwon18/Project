@@ -16,7 +16,7 @@
 <body>
 
 	<my:navBarClimbing></my:navBarClimbing>
-	
+
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
 	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
@@ -81,7 +81,8 @@
 
 		<ul>
 			<div style="text-align: right;">
-				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
+				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> 
+				<a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
 			</div>
 		</ul>
 
@@ -144,14 +145,13 @@
 
 
 	<my:chatBtn></my:chatBtn>
-	<!-- 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script> -->
-	<!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-	<!-- 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
-	<!-- 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> -->
-	<!-- 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+	<script src="/js/climbing/mateList.js"></script>
+	<script src="/js/chat.js"></script>
+	<script src="/js/groupChat.js"></script>
+	<script src="/js/climbing/navBar.js"></script>
 
 	<script type="text/javascript">
 		$("#search1").click(function() {
@@ -162,9 +162,7 @@
 			}
 		});
 	</script>
-	<script src="/js/climbing/mateList.js"></script>
-	<script src="/js/chat.js"></script>
-	<script src="/js/groupChat.js"></script>
+
 
 	<script>
 		function changeDropdownItem(item) {

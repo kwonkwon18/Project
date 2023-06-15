@@ -74,6 +74,24 @@ public class ClimbingController {
 		
 		model.addAllAttributes(listMap);
 	}
+	
+	@GetMapping("/mateList1")
+	public void climbingMatePage1(Model model, Authentication authentication) {
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		List<ClimbingMate> climbingMates = mateService.getMateBoard();
+		getMemberList.put("climbingMates", climbingMates);
+
+		List<ClimbingParty> members = mateService.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+		List<Member> memberList = mateService.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+
+		model.addAllAttributes(getMemberList);
+	}
 
 	@GetMapping("todayList")
 	public void todayList(Model model, Authentication authentication,
@@ -166,6 +184,33 @@ public class ClimbingController {
 		}
 	}
 	
+	@GetMapping("/id/{id}")
+	public String detail(@PathVariable("id") Integer id, Model model, String writer, Authentication authentication) {
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		ClimbingMate getList = mateService.getClimbingMate(id);
+		getMemberList.put("board", getList);
+
+		// 초대 수락된 멤버
+		List<ClimbingParty> members = mateService.selectMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("members", members);
+		
+		// 초대 대기멤버
+		List<ClimbingParty> waitingMembers = mateService.selectWaitingMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("waitingMembers", waitingMembers);
+		
+		// 거절 멤버
+		List<ClimbingParty> rejectMembers = mateService.selectRejectMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("rejectMembers", rejectMembers);
+		
+		List<Member> memberList = mateService.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+
+		model.addAllAttributes(getMemberList);
+
+		return "climbing/climbingGet";
+	}
 	
 	@PostMapping("/mateRemove")
 	public String mateRemove(Integer id, RedirectAttributes rttr) {
@@ -226,6 +271,28 @@ public class ClimbingController {
 	    
 	    System.out.println(listSearch.get("result"));
 	    return listSearch;
+	}
+	
+	@GetMapping("/myPage")
+	public void climbingMyPage(Authentication authentication, Model model) {
+
+		// 로그인 닉네임 확인
+		Member member = mateService.getMemberUserId(authentication.getName());
+
+		Map<String, Object> myPageList = new HashMap<>();
+
+		myPageList.put("MyNickName", member.getNickName());
+
+		List<ClimbingMate> totalMyData = mateService.getTotalMyPageInfo(member.getNickName());
+		myPageList.put("totalMyData", totalMyData);
+		
+		// 참여자들 리스트업
+		List<ClimbingParty> members = mateService.getJoinMember(member.getNickName());
+		myPageList.put("members", members);
+//		System.out.println("멤버스 : " + members);
+
+		model.addAllAttributes(myPageList);
+
 	}
 
 	@GetMapping("/getClimbingDetail")
@@ -472,54 +539,5 @@ public class ClimbingController {
 		return ResponseEntity.ok().body(partyService.disagreeParty(climbingParty, authentication));
 	}
 	
-	@GetMapping("/id/{id}")
-	public String detail(@PathVariable("id") Integer id, Model model, String writer, Authentication authentication) {
-
-		Map<String, Object> getMemberList = new HashMap<>();
-
-		ClimbingMate getList = mateService.getClimbingMate(id);
-		getMemberList.put("board", getList);
-
-		// 초대 수락된 멤버
-		List<ClimbingParty> members = mateService.selectMemberIdByBoardId(id, getList.getWriter());
-		getMemberList.put("members", members);
-		
-		// 초대 대기멤버
-		List<ClimbingParty> waitingMembers = mateService.selectWaitingMemberIdByBoardId(id, getList.getWriter());
-		getMemberList.put("waitingMembers", waitingMembers);
-		
-		// 거절 멤버
-		List<ClimbingParty> rejectMembers = mateService.selectRejectMemberIdByBoardId(id, getList.getWriter());
-		getMemberList.put("rejectMembers", rejectMembers);
-		
-		List<Member> memberList = mateService.getUserId(authentication.getName());
-		getMemberList.put("memberList", memberList);
-
-		model.addAllAttributes(getMemberList);
-
-		return "climbing/climbingGet";
-	}
 	
-	
-	@GetMapping("/myPage")
-	public void climbingMyPage(Authentication authentication, Model model) {
-
-		// 로그인 닉네임 확인
-		Member member = mateService.getMemberUserId(authentication.getName());
-
-		Map<String, Object> myPageList = new HashMap<>();
-
-		myPageList.put("MyNickName", member.getNickName());
-
-		List<ClimbingMate> totalMyData = mateService.getTotalMyPageInfo(member.getNickName());
-		myPageList.put("totalMyData", totalMyData);
-		
-		// 참여자들 리스트업
-		List<ClimbingParty> members = mateService.getJoinMember(member.getNickName());
-		myPageList.put("members", members);
-//		System.out.println("멤버스 : " + members);
-
-		model.addAllAttributes(myPageList);
-
-	}
 }

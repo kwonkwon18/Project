@@ -82,9 +82,9 @@ public interface ClimbingMateMapper {
 	List<ClimbingParty> selectMemberId(String writer);
 
 	@Select("""
-			select boardId ,memberId
+			select p.boardId , c.memberId
 			from ClimbingParty p left join ClimbingMate c ON p.boardId = c.id
-			where userId = #{writer} and boardId = #{boardId}
+			where p.userId = #{writer} and boardId = #{boardId}
 			""")
 	List<ClimbingParty> selectMemberIdByBoardId(Integer boardId, String writer);
 

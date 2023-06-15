@@ -47,14 +47,15 @@
 		<!-- 새로 작성된 코드, 변경된 코드  -->
 		<!-- table.table>thead>tr>th*4^^tbody -->
 		<div style="display: flex;">
+		<button type="button" class="btn btn-success" onclick="location.href='runningTodayList'">전체보기</button>
+		<button type="button" class="btn btn-success" onclick="location.href='runningToday'">글쓰기</button>
 			<div style="flex: 1; margin-left: 800px;" id="mateMapBox">
 				<ul style="display: flex; align-items: left;">
-					<form action="/search" class="d-flex" role="search">
-						<input id="searchInput" value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
-						<button id="search" class="btn btn-outline-success" type="submit">
+					<form action="/running/runningTodayList" class="d-flex" role="search">
+						<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
-						<button type="button" class="btn btn-success" onclick="location.href='runningToday'" style="margin-left: 10px;">번개 글작성</button>
 					</form>
 				</ul>
 			</div>
@@ -117,12 +118,12 @@
 			</-->
 		</div>
 
-	<my:chatBtn></my:chatBtn>
+		<my:chatBtn></my:chatBtn>
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="/js/chat.js"></script>
 		<script src="/js/running/runningTodayList.js" charset="UTF-8"></script>
-		<script src = "/js/navBar.js"></script>
+		<script src="/js/navBar.js"></script>
 </body>
 </html>

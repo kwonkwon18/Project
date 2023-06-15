@@ -22,7 +22,7 @@
 				<form method="post" enctype="multipart/form-data">
 					<div class="mb-3">
 						<label for="titleInput" class="form-label">제목</label>
-						<input id="titleInput" class="form-control" type="text" name="title" value="${runningToday.title }" />
+						<input id="titleInput" class="form-control" type="text" name="title" value="${runningToday.title }" required />
 					</div>
 
 					<%-- 					<div class="mb-3">
@@ -32,10 +32,10 @@
 
 					<div class="mb-3">
 						<label for="fileInput" class="form-label"></label>
-						<input type="file" multiple name="files" accept="image/*" id="fileInput" />
+						<input type="file" multiple name="files" accept="image/*" id="fileInput" required/>
 					</div>
 
-					<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title }" />
+					<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title } "  required/>
 
 					<!-- application property에서 작업 하는 내용 
 					spring.servlet.multipart.max-file-size=1MB
@@ -46,7 +46,7 @@
 
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
-						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${runningToday.body }</textarea>
+						<textarea rows="10" id="bodyTextarea" class="form-control" name="body" required>${runningToday.body }</textarea>
 					</div>
 
 

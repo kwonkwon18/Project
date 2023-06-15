@@ -36,7 +36,7 @@ public interface RunningCommentMapper {
 
 	@Update("""
 			UPDATE RunningComment
-			SET
+				SET
 				content = #{content}
 			WHERE
 				id = #{id}

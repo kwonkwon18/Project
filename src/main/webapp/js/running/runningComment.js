@@ -34,6 +34,7 @@ $("#updateCommentBtn").click(function() {
 			listComment();
 			$(".toast-body").text(jqXHR.responseJSON.message);
 			toast.show();
+			
 		}
 	})
 })
@@ -53,7 +54,7 @@ $("#deleteCommentModalButton").click(function() {
 function listComment() {
 	const boardId = $("#boardIdText").text().trim();
 	$.ajax("/runningComment/list?board=" + boardId, {
-		method: "get", // 생략 가능
+		method: "get", 
 		success: function(comments) {
 			// console.log(data);
 			$("#commentListContainer").empty();

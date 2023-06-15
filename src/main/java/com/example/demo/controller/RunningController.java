@@ -387,6 +387,7 @@ public class RunningController {
 	 */
 
 	@GetMapping("/getRunningDetail")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> detailForModal(Integer boardId, Authentication authentication) {
 

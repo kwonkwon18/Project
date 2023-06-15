@@ -5,8 +5,8 @@ $(document).ready(function() {
 		contentType: "application/json",
 		success: function(data) {
 			console.log("asdf" + data.confirmationTotal)
-
-			if (data.confirmationTotal > 0) {
+      
+			if(data.confirmationTotal > 0 ){
 				$("#NumberOfAlarm").css("display", "block");
 			}
 

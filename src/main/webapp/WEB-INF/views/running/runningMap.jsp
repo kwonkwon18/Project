@@ -41,23 +41,6 @@
 		<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
 		
 
-		<!-- 		<div class="row" id="all3"> -->
-		<%-- 			<c:forEach items="${climbingMateList}" var="board"> --%>
-		<!-- 				<div class="col-md-4"> -->
-		<!-- 					<div class="card" style="width: 18rem;"> -->
-		<!-- 						<div class="card-body"> -->
-		<%-- 							<h5 class="card-title">🌄${board.title}</h5> --%>
-		<%-- 							<p class="card-text">작성자: ${board.writer}</p> --%>
-		<%-- 							<p class="card-text">작성일자: ${board.inserted}</p> --%>
-		<!-- 							<div style="text-align: right"> -->
-		<%-- 								<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a> --%>
-		<!-- 							</div> -->
-		<!-- 						</div> -->
-		<!-- 					</div> -->
-		<!-- 				</div> -->
-		<%-- 			</c:forEach> --%>
-		<!-- 		</div> -->
-
 		<br /> <br />
 
 		<div style="display: flex;">

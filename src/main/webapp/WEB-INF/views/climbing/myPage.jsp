@@ -13,7 +13,8 @@
 </head>
 <body>
 
-	<my:navBar></my:navBar>
+	<my:navBarClimbing></my:navBarClimbing>
+	
 	<br />
 	<br />
 

@@ -10,6 +10,8 @@
 		<result column="body" property="body" />
 		<result column="inserted" property="inserted" />
 		<result column="writer" property="writer" />
+		<result column="likeCount" property="likeCount" />
+		<result column="commentCount" property="commentCount" />
 		<collection property="fileName" ofType="string">
 			<result column="fileName"></result>
 		</collection>

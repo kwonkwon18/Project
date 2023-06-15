@@ -29,6 +29,7 @@ public class RunningCommentController {
 	private RunningCommentService service;
 
 	@PutMapping("update")
+	@PreAuthorize("authenticated")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody RunningComment comment) {
 		Map<String, Object> res = service.update(comment);
 
@@ -41,6 +42,7 @@ public class RunningCommentController {
 	}
 
 	@PostMapping("add")
+	@PreAuthorize("authenticated")
 	public ResponseEntity<Map<String, Object>> add(@RequestBody RunningComment comment, Authentication authentication) {
 
 		if (authentication == null) {
@@ -60,6 +62,7 @@ public class RunningCommentController {
 	}
 
 	@DeleteMapping("id/{id}")
+	@PreAuthorize("authenticated")
 	public ResponseEntity<Map<String, Object>> remove(@PathVariable("id") Integer id) {
 		Map<String, Object> res = service.remove(id);
 

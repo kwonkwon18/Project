@@ -23,7 +23,6 @@ public class ClimbingPartyService {
 
 		Member member = partyMapper.selectMemberById(authentication.getName());
 		
-
 		ClimbingMate board = mateMapper.selectById(climbingParty.getBoardId());
 		int currentNum = partyMapper.countByBoardId(climbingParty.getBoardId());
 

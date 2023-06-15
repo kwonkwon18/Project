@@ -47,21 +47,41 @@
 		</div>
 		<!-- 		<nav> -->
 		<ul>
-			<!-- 				<a id="all1" href="/climbing/mateList" style="text-decoration-line: none;">전체</a> -->
 			<button type="button" class="btn btn-warning" style="margin-left: 70px;" onclick="location.href='mateList'">전체 보기</button>
 
-			<!-- 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a> -->
-			<!-- 				<div class="dropdown-menu" aria-labelledby="search1"> -->
-			<!-- 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a> -->
-			<!-- 				</div> -->
-			<!-- 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a> -->
 			<div style="float: right;">
 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
 				<!-- 					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 			</div>
 		</ul>
-	</div>
 	
+		<br />
+
+		<div style="display: flex;">
+			<div style="flex: 1; margin-left: 70px;" id="mateMapBox">
+				<ul style="display: flex; align-items: left;">
+					<form action="/climbing/search" class="d-flex" role="search">
+						<input id="searchInput" value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
+						<button id="search" class="btn btn-outline-success" type="submit">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</form>
+				</ul>
+
+
+				<br />
+				<div id="mateMapData">
+
+				</div>
+			</div>
+			<div id="map" style="width: 60%; height: 655px;"></div>
+		</div>
+	</div>
+
+
+
+	<br />
+	<br />
 	
 	
 <!-- 		<div style="display: flex;"> -->
@@ -99,33 +119,6 @@
 	<%-- 					</c:forEach> --%>
 	<!-- 				</div> -->
 
-	<br />
-
-		<div style="display: flex;">
-			<div style="flex: 1; margin-left: 70px;" id="mateMapBox">
-				<ul style="display: flex; align-items: left;">
-					<form action="/climbing/search" class="d-flex" role="search">
-						<input id="searchInput" value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 300px">
-						<button id="search" class="btn btn-outline-success" type="submit">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</form>
-				</ul>
-
-
-				<br />
-				<div id="mateMapData">
-
-				</div>
-			</div>
-			<div id="map" style="width: 60%; height: 655px;"></div>
-		</div>
-	</div>
-
-
-
-	<br />
-	<br />
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>

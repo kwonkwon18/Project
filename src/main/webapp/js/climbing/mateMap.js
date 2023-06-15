@@ -26,12 +26,12 @@ $(document).ready(function() {
 			method: 'get',   // 요청 메서드를 선택합니다 (GET, POST 등).
 			data: { search: searchTerm },  // 요청 데이터로 검색어를 전달합니다.
 			success: function(response) {
-				let clibmingMateList = response.result;
-				console.log(clibmingMateList);
+				let climbingMateList = response.result;
+				console.log(climbingMateList);
 				$("#mateMapData").remove("");
 				$("#mateMapBoxItem").remove("");
 
-				console.log(clibmingMateList.title);
+				console.log(climbingMateList.title);
 
 				$("#mateMapBox").append(`
           <div id="mateMapBoxItem">
@@ -40,15 +40,15 @@ $(document).ready(function() {
         `);
 
 				for (let i = 0; i < 3; i++) {
-					const clibmingMate = clibmingMateList[i];
-					if (clibmingMate == null) {
+					const climbingMate = climbingMateList[i];
+					if (climbingMate == null) {
 						break;
 					}
 
 					mapInfo.push({
-						content: clibmingMate.title,
-						lat: clibmingMate.lat,
-						lng: clibmingMate.lng
+						content: climbingMate.title,
+						lat: climbingMate.lat,
+						lng: climbingMate.lng
 					});
 
 
@@ -57,13 +57,13 @@ $(document).ready(function() {
             <div class="col-md-4">
               <div class="card" style="width: 18rem; margin-left: 40px;">
                 <div class="card-body">
-                  <h5 class="card-title">🙋‍♂️🙋‍♂️${clibmingMate.title}</h5>
-                  <p class="card-text">작성자: ${clibmingMate.writer}</p>
-                  <p class="card-text">작성일자: ${clibmingMate.inserted}</p>
-                  <p class="card-text">모임장소: ${clibmingMate.address}</p>
-                  <p class="card-text">모임시간: ${clibmingMate.time}</p>
+                  <h5 class="card-title">🙋‍♂️🙋‍♂️${climbingMate.title}</h5>
+                  <p class="card-text">작성자: ${climbingMate.writer}</p>
+                  <p class="card-text">작성일자: ${climbingMate.inserted}</p>
+                  <p class="card-text">모임장소: ${climbingMate.address}</p>
+                  <p class="card-text">모임시간: ${climbingMate.time}</p>
                   <div style="text-align: right">
-                    <a href="/clibming/id/${clibmingMate.id}" class="btn btn-primary">더보기</a>
+                    <a href="/climbing/id/${climbingMate.id}" class="btn btn-primary">더보기</a>
                   </div>
                 </div>
               </div>

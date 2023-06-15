@@ -42,22 +42,22 @@ public class RunningController {
 	@Autowired
 	private RunningTodayService todayService;
 
-	@GetMapping("/runningList")
-	public void list(Model model) {
-
-		Map<String, Object> listMap = new HashMap<>();
-
-		// 메이트 모집
-		List<RunningBoard> list = service.listBoard(); // 페이지 처리 전
-		listMap.put("boardList", list);
-
-		// 오늘의 러닝
-		List<RunningToday> today = todayService.listBoard();
-		listMap.put("todayList", today);
-
-		model.addAllAttributes(listMap);
-
-	}
+//	@GetMapping("/runningList")
+//	public void list(Model model) {
+//
+//		Map<String, Object> listMap = new HashMap<>();
+//
+//		// 메이트 모집
+//		List<RunningBoard> list = service.listBoard(); // 페이지 처리 전
+//		listMap.put("boardList", list);
+//
+//		// 오늘의 러닝
+//		List<RunningToday> today = todayService.listBoard();
+//		listMap.put("todayList", today);
+//
+//		model.addAllAttributes(listMap);
+//
+//	}
 
 	@GetMapping("/runningAdd")
 	@PreAuthorize("authenticated")
@@ -99,15 +99,15 @@ public class RunningController {
 		// 초대 수락된 멤버
 		List<RunningParty> members = service.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
-		
+
 		// 초대 대기멤버
 		List<RunningParty> waitingMembers = service.selectWaitingMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("waitingMembers", waitingMembers);
-		
+
 		// 거절 멤버
 		List<RunningParty> rejectMembers = service.selectRejectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("rejectMembers", rejectMembers);
-		
+
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
 
@@ -139,52 +139,27 @@ public class RunningController {
 	}
 
 	// 여기서 List<String> Mapper 써줄 것임
-	@GetMapping("/runningMate")
-	@PreAuthorize("authenticated")
-	public void runningMatePage(Model model, Authentication authentication,
-			@RequestParam(value = "type", required = false) String type,
-			@RequestParam(value = "search", defaultValue = "") String search) {
 
-//		System.err.println("접근 1");
-
-		Map<String, Object> getMemberList = new HashMap<>();
-
-		List<RunningBoard> runningMates = service.getMateBoardByAddress(authentication, type, search);
-		getMemberList.put("runningMates", runningMates);
-
-		/* model.addAttribute("board", runningMates); */
-//		System.out.println(runningMates);
-
-		List<RunningParty> members = service.selectMemberIdByBoardId();
-		getMemberList.put("members", members);
-
-		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
-		List<Member> memberList = service.getUserId(authentication.getName());
-		getMemberList.put("memberList", memberList);
-
-		model.addAllAttributes(getMemberList);
-	}
-
-	@GetMapping("/runningMate1")
-	public void runningMatePage1(Model model, Authentication authentication) {
-
-		Map<String, Object> getMemberList = new HashMap<>();
-
-		List<RunningBoard> runningMates = service.getMateBoard();
-		getMemberList.put("runningMates", runningMates);
-
-		/* model.addAttribute("board", runningMates); */
-//		System.out.println(runningMates);
-
-		List<RunningParty> members = service.selectMemberIdByBoardId();
-		getMemberList.put("members", members);
-
-		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
-		List<Member> memberList = service.getUserId(authentication.getName());
-		getMemberList.put("memberList", memberList);
-
-		model.addAllAttributes(getMemberList);
-	}
+//	@GetMapping("/runningMate1")
+//	public void runningMatePage1(Model model, Authentication authentication) {
+//
+//		Map<String, Object> getMemberList = new HashMap<>();
+//
+//		List<RunningBoard> runningMates = service.getMateBoard();
+//		getMemberList.put("runningMates", runningMates);
+//
+//		/* model.addAttribute("board", runningMates); */
+////		System.out.println(runningMates);
+//
+//		List<RunningParty> members = service.selectMemberIdByBoardId();
+//		getMemberList.put("members", members);
+//
+//		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+//		List<Member> memberList = service.getUserId(authentication.getName());
+//		getMemberList.put("memberList", memberList);
+//
+//		model.addAllAttributes(getMemberList);
+//	}
 
 	@GetMapping("/runningModify/{id}")
 	@PreAuthorize("authenticated")
@@ -341,23 +316,77 @@ public class RunningController {
 	}
 
 	@GetMapping("runningTodayList")
-	public void todayList(Model model
+	public void todayList(Model model,
 //			@RequestParam(value = "page", defaultValue = "1") Integer page,
-//			@RequestParam(value = "search", defaultValue = "") String search,
+			@RequestParam(value = "search", defaultValue = "") String search
 //			@RequestParam(value = "type", required = false) String type) 
 	) {
 
 		Map<String, Object> todayList = new HashMap<>();
 
-		List<RunningToday> today = todayService.listBoard();
-		System.out.println("%%%" + today);
+		List<RunningToday> today = todayService.listBoard(search);
+
 		todayList.put("runningTodayList", today);
 
 		model.addAllAttributes(todayList);
 
 	}
 
-	
+	@GetMapping("/runningMate")
+	public void runningMatePage(Model model, Authentication authentication,
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "search", defaultValue = "") String search) {
+
+//		System.err.println("접근 1");
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		List<RunningBoard> runningMates = service.getMateBoardByAddress(authentication, type, search);
+		getMemberList.put("runningMates", runningMates);
+
+		/* model.addAttribute("board", runningMates); */
+//		System.out.println(runningMates);
+
+		List<RunningParty> members = service.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+		
+		List<RunningToday> today = todayService.listBoard(search);
+		getMemberList.put("runningTodayList", today);
+
+		model.addAllAttributes(getMemberList);
+	}
+
+	@GetMapping("/runningMain")
+	public void runningMain(Model model, Authentication authentication,
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "search", defaultValue = "") String search) {
+
+//		System.err.println("접근 1");
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		List<RunningBoard> runningMates = service.getMateBoardByAddress(authentication, type, search);
+		getMemberList.put("runningMates", runningMates);
+
+		/* model.addAttribute("board", runningMates); */
+//		System.out.println(runningMates);
+
+		List<RunningParty> members = service.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+		
+		List<RunningToday> today = todayService.listBoard(search);
+		getMemberList.put("runningTodayList", today);
+
+		model.addAllAttributes(getMemberList);
+	}
 
 	// ******************** AJAX
 
@@ -390,6 +419,20 @@ public class RunningController {
 	@GetMapping("/search")
 	@ResponseBody
 	public Map<String, Object> mapSearch(@RequestParam("search") String searchTerm) {
+		Map<String, Object> listSearch = new HashMap<>();
+
+		// 검색어를 이용하여 필요한 처리를 수행하고 결과를 listSearch에 저장합니다.
+		// 예: DB에서 검색 쿼리를 수행하거나 다른 로직을 수행합니다.
+
+		// 결과를 listSearch에 저장하여 클라이언트로 전달합니다.
+		listSearch.put("result", service.searchMate(searchTerm));
+
+		return listSearch;
+	}
+
+	@GetMapping("/searchToday")
+	@ResponseBody
+	public Map<String, Object> searchToday(@RequestParam("search") String searchTerm) {
 		Map<String, Object> listSearch = new HashMap<>();
 
 		// 검색어를 이용하여 필요한 처리를 수행하고 결과를 listSearch에 저장합니다.
@@ -447,7 +490,7 @@ public class RunningController {
 			Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.disagreeParty(runningParty, authentication));
 	}
-	
+
 	@PostMapping("confirmation")
 	@PreAuthorize("authenticated")
 	@ResponseBody
@@ -455,15 +498,14 @@ public class RunningController {
 			Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.confirmation(runningParty, authentication));
 	}
-	
+
 	@GetMapping("countOfAlarm")
 	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> countOfAlarm(Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.countOfAlarm(authentication));
 	}
-	
-	
+
 //	@PostMapping("confirmationBad")
 //	@ResponseBody
 //	public ResponseEntity<Map<String, Object>> confirmationBad(@RequestBody RunningParty runningParty,

@@ -19,7 +19,7 @@
 					<a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/running/runningMate">메이트 구하기</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/runningToday">오늘의 러닝</a>
+					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/runningTodayList">오늘의 러닝</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/myPage">마이페이지</a>

@@ -36,17 +36,20 @@ public interface RunningTodayMapper {
 			    r.inserted,
 			    r.writer,
 			    f.fileName,
-			    (select count(*) from RunningLike where boardId = r.id) likeCount,
+			    (SELECT COUNT(*) FROM RunningLike WHERE boardId = r.id) likeCount,
 			    (SELECT COUNT(*) FROM RunningComment WHERE boardId = r.id) commentCount
 			FROM
 			    RunningToday r
 			    LEFT JOIN RunningFileName f ON r.id = f.boardId
-			    LEFT JOIN RunningLike rl on r.id = rl.boardId
-			    LEFT JOIN RunningComment rc on r.id = rc.boardId
-			    order by r.inserted desc
-						""")
+			    LEFT JOIN RunningLike rl ON r.id = rl.boardId
+			    LEFT JOIN RunningComment rc ON r.id = rc.boardId
+			WHERE
+			    r.title LIKE CONCAT('%', #{search}, '%')
+			ORDER BY
+			    r.inserted DESC
+									""")
 	@ResultMap("boardResultMap")
-	List<RunningToday> selectList();
+	List<RunningToday> selectList(String search);
 
 	@Select("""
 			select * from RunningToday where id = #{id};

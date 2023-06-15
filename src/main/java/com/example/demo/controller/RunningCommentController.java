@@ -31,7 +31,9 @@ public class RunningCommentController {
 	@PutMapping("update")
 	@PreAuthorize("authenticated")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody RunningComment comment) {
+		
 		Map<String, Object> res = service.update(comment);
+		
 
 		return ResponseEntity.ok().body(res);
 	}

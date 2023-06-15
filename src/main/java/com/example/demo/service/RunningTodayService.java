@@ -41,9 +41,9 @@ public class RunningTodayService {
 	@Autowired
 	private RunningLikeMapper likeMapper;
 
-	public List<RunningToday> listBoard() {
+	public List<RunningToday> listBoard(String search) {
 
-		return todayMapper.selectList();
+		return todayMapper.selectList(search);
 
 	}
 

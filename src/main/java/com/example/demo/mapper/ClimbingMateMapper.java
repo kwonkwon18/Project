@@ -82,9 +82,10 @@ public interface ClimbingMateMapper {
 	List<ClimbingParty> selectMemberId(String writer);
 
 	@Select("""
-			select p.boardId , c.memberId
-			from ClimbingParty p left join ClimbingMate c ON p.boardId = c.id
-			where p.userId = #{writer} and boardId = #{boardId}
+			select boardId , memberId
+			from ClimbingParty p
+				left join ClimbingMate c ON p.boardId = c.id
+			where userId = #{writer} and boardId = #{boardId} and participation = 1;
 			""")
 	List<ClimbingParty> selectMemberIdByBoardId(Integer boardId, String writer);
 
@@ -155,7 +156,7 @@ public interface ClimbingMateMapper {
 			DELETE FROM ClimbingMate
 			WHERE id = #{id}
 			""")
-	int deleteById(Integer id);
+	boolean deleteById(Integer id);
 
 	@Select("""
 			SELECT fileName FROM ClimbingMateFileName
@@ -320,5 +321,21 @@ public interface ClimbingMateMapper {
 						""")
 	@ResultMap("climbingMateResultMap2")
 	List<ClimbingParty> selectRejectMemberIdByBoardIdForModal(Integer boardId);
+
+	@Update("""
+			UPDATE ClimbingMate
+			SET
+				title = #{title},
+				body = #{body},
+				writer = #{writer},
+				Lat = #{Lat},
+				Lng = #{Lng},
+				people = #{people},
+				time = #{time},
+				address = #{address}
+			WHERE
+				id = #{id}
+			""")
+	boolean updateBoardById(ClimbingMate climbingMate);
 
 }

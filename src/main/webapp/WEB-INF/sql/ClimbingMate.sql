@@ -8,7 +8,6 @@ CREATE TABLE ClimbingMate (
     inserted DATETIME DEFAULT NOW()
 );
 
-DROP TABLE ClimbingMate;
 
 SELECT * FROM ClimbingMate;
 
@@ -58,30 +57,11 @@ ADD time DATETIME NOT NULL;
 ALTER TABLE ClimbingMate
 MODIFY COLUMN time DATETIME NOT NULL;
 
-SELECT
-			    c.id,
-			    c.title,
-			    c.body,
-			    c.inserted,
-			    c.writer,
-			    c.Lat,
-			    c.Lng,
-			    c.people,
-                c.time,
-			    m.userId,
-			    COUNT(cp.boardId) AS currentNum
-			FROM
-			    ClimbingMate c
-			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
-			    LEFT JOIN Member m ON c.writer = m.nickName
-			WHERE
-			    c.id = 32
-			GROUP BY
-			    c.id,
-			    c.title,
-			    c.body,
-			    c.inserted,
-			    c.writer,
-			    c.Lat,
-			    c.Lng,
-			    c.people;
+ALTER TABLE ClimbingMate
+ADD FOREIGN KEY (writer) REFERENCES Member(nickName);
+
+select * FROM RunningBoard;
+
+DESC RunningBoard;
+DESC ClimbingMate;
+ALTER TABLE ClimbingMate ADD FOREIGN KEY (writer) REFERENCES Member (nickName);

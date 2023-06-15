@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import java.time.*;
 import java.util.*;
 
 import org.apache.ibatis.annotations.*;
@@ -33,7 +34,8 @@ public interface ClimbingCommentMapper {
 	@Update("""
 			UPDATE ClimbingComment
 			SET
-				content = #{content}
+				content = #{content},
+				inserted = #{inserted}
 			WHERE
 				id = #{id}
 			""")

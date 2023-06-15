@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.time.*;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
@@ -48,6 +49,7 @@ public class ClimbingCommentService {
 	}
 
 	public Map<String, Object> update(ClimbingComment comment) {
+		comment.setInserted(LocalDateTime.now());
 		int cnt = climbingCommentMapper.update(comment);
 		var res = new HashMap<String, Object>();
 		if (cnt == 1) {

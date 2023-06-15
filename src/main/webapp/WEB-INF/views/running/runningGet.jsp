@@ -104,6 +104,8 @@
 						</c:if>
 					</c:forEach>
 
+
+
 					<sec:authorize access="#board.writer eq #userName">
 						<div>
 							<a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
@@ -111,49 +113,35 @@
 						</div>
 
 
-						<sec:authorize access="#board.writer eq #userName">
-							<div>
-								<a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
-								<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
-							</div>
 
 
-							<div class="d-none">
-								<form action="/running/runningRemove" method="post" id="removeForm">
-									<input type="text" name="id" value="${board.id }" />
-								</form>
-							</div>
+						<div class="d-none">
+							<form action="/running/runningRemove" method="post" id="removeForm">
+								<input type="text" name="id" value="${board.id }" />
+							</form>
+						</div>
 
 
-							<div class="d-none">
-								<form action="/running/runningRemove" method="post" id="removeForm">
-									<input type="text" name="id" value="${board.id }" />
-								</form>
-							</div>
-
-
-							<!-- Modal -->
-							<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
-											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">삭제 하시겠습니까?</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-											<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
-										</div>
+						<!-- Modal -->
+						<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">삭제 하시겠습니까?</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+										<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
 									</div>
 								</div>
 							</div>
-						</sec:authorize>
+						</div>
+					</sec:authorize>
 
 
-
-
-						<c:forEach items="${memberList}" var="memberList">
+					<c:forEach items="${memberList}" var="memberList">
 							<c:set var="memberNickName" value="${memberList.nickName}" />
 						</c:forEach>
 

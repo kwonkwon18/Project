@@ -24,7 +24,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: '/climbing/mateSearch',  // 검색 요청을 처리하는 서버의 엔드포인트 URL을 입력합니다.
 			method: 'get',   // 요청 메서드를 선택합니다 (GET, POST 등).
-			data: { search: searchTerm },  // 요청 데이터로 검색어를 전달합니다.
+			data: { search : searchTerm },  // 요청 데이터로 검색어를 전달합니다.
 			success: function(response) {
 				let climbingMateList = response.result;
 				console.log(climbingMateList);
@@ -50,6 +50,8 @@ $(document).ready(function() {
 						lat: climbingMate.lat,
 						lng: climbingMate.lng
 					});
+					
+					
 
 
 

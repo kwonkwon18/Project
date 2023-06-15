@@ -281,10 +281,10 @@ public class ClimbingController {
 	
 	@GetMapping("/mateSearch")
 	@ResponseBody
-	public Map<String, Object> mateSearch(@RequestParam("mateSearch") String searchTerm) {
+	public Map<String, Object> mateSearch(@RequestParam("search") String searchTerm) {
 	    Map<String, Object> listSearch = new HashMap<>();
-	    
-	    
+	    System.out.println(searchTerm);
+	    System.out.println("도착함");
 	    // 검색어를 이용하여 필요한 처리를 수행하고 결과를 listSearch에 저장합니다.
 	    // 예: DB에서 검색 쿼리를 수행하거나 다른 로직을 수행합니다.
 	    
@@ -292,7 +292,7 @@ public class ClimbingController {
 	    // 결과를 listSearch에 저장하여 클라이언트로 전달합니다.
 	    listSearch.put("result", mateService.searchMate(searchTerm));
 	    
-	    System.out.println(listSearch.get("result"));
+	    System.out.println("gkgkgkgk" + listSearch.get("result"));
 	    return listSearch;
 	}
 	

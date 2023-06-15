@@ -179,7 +179,7 @@ public interface ClimbingMateMapper {
 
 	@Select("""
 			SELECT * FROM ClimbingMate
-			WHERE title LIKE '%${searchTerm}%'
+			WHERE address LIKE '%${searchTerm}%'
 			""")
 	List<ClimbingMate> selectBySearchTerm(String searchTerm);
 

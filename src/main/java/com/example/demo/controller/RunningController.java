@@ -129,18 +129,10 @@ public class RunningController {
 
 		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
 		myPageList.put("totalMyData", totalMyData);
-		
-		
-
-		// id 기준으로 리스트업
-//		List<RunningBoard> runningBoards = service.getMyPageInfo(authentication.getName());
-//		myPageList.put("runningBoards", runningBoards);
-//		System.out.println(runningBoards);
 
 		// 참여자들 리스트업
 		List<RunningParty> members = service.getJoinMember(member.getNickName());
 		myPageList.put("members", members);
-//		System.out.println("멤버스 : " + members);
 
 		model.addAllAttributes(myPageList);
 

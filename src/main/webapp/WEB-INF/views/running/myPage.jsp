@@ -23,10 +23,8 @@
 
 
 	<!-- 	<button id="alarmList">알람 목록 보기</button> -->
-	<div id="HostAlarm"></div>
-	<div id="MemberAlarm"></div>
-	'
-
+	<!-- <div id="HostAlarm"></div>
+	<div id="MemberAlarm"></div> -->
 
 	<h1>마이페이지</h1>
 

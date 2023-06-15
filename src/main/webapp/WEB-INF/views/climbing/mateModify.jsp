@@ -115,6 +115,7 @@
 		</div>
 	</div>
 
+	<my:chatBtn></my:chatBtn>
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script src="/js/climbing/mateAdd.js"></script>

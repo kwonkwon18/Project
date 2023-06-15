@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,11 +60,13 @@ public class RunningController {
 	}
 
 	@GetMapping("/runningAdd")
+	@PreAuthorize("authenticated")
 	public void addProcess() {
 
 	}
 
 	@PostMapping("/runningAdd")
+	@PreAuthorize("authenticated")
 	public String addResult(RunningParty runningParty, RunningBoard runningBoard, RedirectAttributes rttr,
 			Authentication authentication) {
 
@@ -114,6 +117,7 @@ public class RunningController {
 	}
 
 	@GetMapping("/myPage")
+	@PreAuthorize("authenticated")
 	public void runningMyPage(Authentication authentication, Model model) {
 
 		// 로그인 닉네임 확인
@@ -190,6 +194,7 @@ public class RunningController {
 	}
 
 	@GetMapping("/runningModify/{id}")
+	@PreAuthorize("authenticated")
 	public String runningModifyForm(@PathVariable("id") Integer id, Model model, String writer,
 			Authentication authentication) {
 
@@ -211,6 +216,7 @@ public class RunningController {
 	}
 
 	@PostMapping("/runningModify/{id}")
+	@PreAuthorize("authenticated")
 	public String runningModifyProcess(RunningBoard runningBoard, RedirectAttributes rttr) throws Exception {
 
 		boolean ok = service.modify(runningBoard);
@@ -229,6 +235,7 @@ public class RunningController {
 	}
 
 	@PostMapping("/runningRemove")
+	@PreAuthorize("authenticated")
 	public String runningRemove(Integer id, RedirectAttributes rttr) {
 		boolean ok = service.remove(id);
 		if (ok) {
@@ -251,11 +258,13 @@ public class RunningController {
 	// ******* TODAY
 
 	@GetMapping("/runningToday")
+	@PreAuthorize("authenticated")
 	public void addrunningShare(Authentication authentication, Model model) {
 
 	}
 
 	@PostMapping("/runningToday")
+	@PreAuthorize("authenticated")
 	public String addrunningShareResult(@RequestParam("files") MultipartFile[] files, RunningToday runningToday,
 			RedirectAttributes rttr, Authentication authentication) throws Exception {
 
@@ -282,12 +291,14 @@ public class RunningController {
 	}
 
 	@GetMapping("/runningTodayModify/{id}")
+	@PreAuthorize("authenticated")
 	public String todayModifyForm(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("board", todayService.getBoard(id, null));
 		return "running/runningTodayModify";
 	}
 
 	@PostMapping("/runningTodayModify/{id}")
+	@PreAuthorize("authenticated")
 	// 수정하려는 게시물 id : board.getId()
 	public String modifyProcess(RunningToday runningToday, RedirectAttributes rttr,
 			// requestParam을 통해서 jsp로 넘어오는 인자를 value 로 처래해줌을 표시해준다.
@@ -320,6 +331,7 @@ public class RunningController {
 	}
 
 	@PostMapping("/todayRemove")
+	@PreAuthorize("authenticated")
 	public String remove(Integer id, RedirectAttributes rttr) {
 		boolean ok = todayService.removeById(id);
 		if (ok) {
@@ -357,6 +369,7 @@ public class RunningController {
 	// ******************** AJAX
 
 	@PostMapping("joinParty")
+	@PreAuthorize("authenticated")
 	public ResponseEntity<Map<String, Object>> joinParty(@RequestBody RunningParty runningParty,
 			Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.join(runningParty, authentication));
@@ -373,6 +386,7 @@ public class RunningController {
 	 */
 
 	@GetMapping("/getRunningDetail")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> detailForModal(Integer boardId, Authentication authentication) {
 
@@ -395,6 +409,7 @@ public class RunningController {
 	}
 
 	@PostMapping("/runningLike")
+	@PreAuthorize("authenticated")
 	// responseEntitiy를 해주는 이유는 에러 메시지를 함께 보내주기 위함이다.
 	// @RequestBody Like like를 해준 것은 like에 있는 인자들을 json으로 보내주기 위함
 	// 또한 등록 된 사람들만 like를 할 수 있게 하게 위해서 Authentication 을 인자로 추가해주었다.
@@ -417,12 +432,14 @@ public class RunningController {
 	}
 
 	@GetMapping("alarm")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> alarm(Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.alarm(authentication));
 	}
 
 	@PostMapping("agreeParty")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> agreeParty(@RequestBody RunningParty runningParty,
 			Authentication authentication) {
@@ -430,6 +447,7 @@ public class RunningController {
 	}
 
 	@PostMapping("disagreeParty")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> disagreeParty(@RequestBody RunningParty runningParty,
 			Authentication authentication) {
@@ -437,6 +455,7 @@ public class RunningController {
 	}
 	
 	@PostMapping("confirmation")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> confirmationGood(@RequestBody RunningParty runningParty,
 			Authentication authentication) {
@@ -444,6 +463,7 @@ public class RunningController {
 	}
 	
 	@GetMapping("countOfAlarm")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> countOfAlarm(Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.countOfAlarm(authentication));

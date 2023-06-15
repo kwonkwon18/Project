@@ -25,7 +25,7 @@ public interface ClimbingPartyMapper {
 
 	
 	@Select("""
-			select count(*) from ClibmingParty
+			select count(*) from ClimbingParty
 			where boardId = #{boardId}
 			""")
 	Integer countByBoardId(Integer boardId);

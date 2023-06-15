@@ -5,7 +5,14 @@ $(document).ready(function() {
 		contentType: "application/json",
 		success: function(data) {
 			console.log(data.confirmationTotal)
-			$("#NumberOfAlarm").html(data.confirmationTotal);
+			
+			
+			if(data.confirmationTotal != 0){
+				$("#NumberOfAlarm").html(data.confirmationTotal);
+				$("#NumberOfAlarm").style.display = 'block';
+			}
+			
+			
 		}
 	})
 });

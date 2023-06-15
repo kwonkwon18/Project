@@ -15,7 +15,9 @@
 </head>
 <body>
 
+
 	<my:navBarClimbing></my:navBarClimbing>
+
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -162,6 +164,7 @@
 			}
 		});
 	</script>
+
 
 
 	<script>

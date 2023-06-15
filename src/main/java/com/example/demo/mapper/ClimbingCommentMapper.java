@@ -45,4 +45,10 @@ public interface ClimbingCommentMapper {
 			""")
 	Integer deleteById(Integer id);
 
+	@Delete("""
+			DELETE FROM ClimbingComment
+			WHERE boardId = #{boardId}
+			""")
+	void deleteByBoardId(Integer boardId);
+
 }

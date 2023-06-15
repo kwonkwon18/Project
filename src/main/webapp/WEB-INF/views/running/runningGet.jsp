@@ -29,6 +29,8 @@
 
 	<div class="container-lg">
 
+
+
 		<div class="row justify-content-center">
 			<div id="map" style="width: 500px; height: 500x;"></div>
 			<div class="col-12 col-md-8 col-lg-6">
@@ -93,10 +95,33 @@
 					</c:forEach>
 
 
+					<!-- 본인 게시물 확인 -->
+					<c:set var="isUser" value="false" />
+					<c:forEach items="${memberList}" var="memberList">
+						<c:if test="${memberList.nickName eq board.writer}">
+							<c:set var="isUser" value="true" />
+							<c:set var="userName" value="${memberList.nickName}" />
+						</c:if>
+					</c:forEach>
+
 					<sec:authorize access="#board.writer eq #userName">
 						<div>
 							<a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
 							<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
+						</div>
+
+
+					<sec:authorize access="#board.writer eq #userName">
+						<div>
+							<a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
+							<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
+						</div>
+
+
+						<div class="d-none">
+							<form action="/running/runningRemove" method="post" id="removeForm">
+								<input type="text" name="id" value="${board.id }" />
+							</form>
 						</div>
 
 

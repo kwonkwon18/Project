@@ -41,7 +41,7 @@ public class ClimbingController {
 		listMap.put("climbingMateList", mate);
 
 		// 오늘의 등산
-		List<ClimbingToday> today = todayService.listBoard();
+		List<ClimbingToday> today = todayService.todayListBoard();
 		listMap.put("climbingTodayList", today);
 
 		// 추천 코스
@@ -74,6 +74,24 @@ public class ClimbingController {
 		
 		model.addAllAttributes(listMap);
 	}
+	
+	@GetMapping("/mateList1")
+	public void climbingMatePage1(Model model, Authentication authentication) {
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		List<ClimbingMate> climbingMates = mateService.getMateBoard();
+		getMemberList.put("climbingMates", climbingMates);
+
+		List<ClimbingParty> members = mateService.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+		List<Member> memberList = mateService.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+
+		model.addAllAttributes(getMemberList);
+	}
 
 	@GetMapping("todayList")
 	public void todayList(Model model, Authentication authentication,
@@ -85,6 +103,9 @@ public class ClimbingController {
 		
 		// 오늘의 등산
 		List<ClimbingToday> today = todayService.listBoard(todaySearch); // 페이지 처리 전
+		for(ClimbingToday i : today) {
+			System.out.println(i.getCommentCount());
+		}
 		listMap.put("climbingTodayList", today);
 		
 		model.addAllAttributes(listMap);
@@ -112,9 +133,9 @@ public class ClimbingController {
 	}
 
 	@PostMapping("/mateAdd")
-	public String addResult(ClimbingMate climbingMate, RedirectAttributes rttr) throws Exception {
+	public String addResult(ClimbingMate climbingMate, RedirectAttributes rttr, Authentication authentication) throws Exception {
 
-		boolean ok = mateService.addClimbingMate(climbingMate);
+		boolean ok = mateService.addClimbingMate(climbingMate, authentication.getName());
 
 		if (ok) {
 			return "redirect:/climbing/mateList";
@@ -163,6 +184,33 @@ public class ClimbingController {
 		}
 	}
 	
+	@GetMapping("/id/{id}")
+	public String detail(@PathVariable("id") Integer id, Model model, String writer, Authentication authentication) {
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		ClimbingMate getList = mateService.getClimbingMate(id);
+		getMemberList.put("board", getList);
+
+		// 초대 수락된 멤버
+		List<ClimbingParty> members = mateService.selectMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("members", members);
+		
+		// 초대 대기멤버
+		List<ClimbingParty> waitingMembers = mateService.selectWaitingMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("waitingMembers", waitingMembers);
+		
+		// 거절 멤버
+		List<ClimbingParty> rejectMembers = mateService.selectRejectMemberIdByBoardId(id, getList.getWriter());
+		getMemberList.put("rejectMembers", rejectMembers);
+		
+		List<Member> memberList = mateService.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+
+		model.addAllAttributes(getMemberList);
+
+		return "climbing/climbingGet";
+	}
 	
 	@PostMapping("/mateRemove")
 	public String mateRemove(Integer id, RedirectAttributes rttr) {
@@ -224,6 +272,28 @@ public class ClimbingController {
 	    System.out.println(listSearch.get("result"));
 	    return listSearch;
 	}
+	
+	@GetMapping("/myPage")
+	public void climbingMyPage(Authentication authentication, Model model) {
+
+		// 로그인 닉네임 확인
+		Member member = mateService.getMemberUserId(authentication.getName());
+
+		Map<String, Object> myPageList = new HashMap<>();
+
+		myPageList.put("MyNickName", member.getNickName());
+
+		List<ClimbingMate> totalMyData = mateService.getTotalMyPageInfo(member.getNickName());
+		myPageList.put("totalMyData", totalMyData);
+		
+		// 참여자들 리스트업
+		List<ClimbingParty> members = mateService.getJoinMember(member.getNickName());
+		myPageList.put("members", members);
+//		System.out.println("멤버스 : " + members);
+
+		model.addAllAttributes(myPageList);
+
+	}
 
 	@GetMapping("/getClimbingDetail")
 	@ResponseBody
@@ -282,16 +352,16 @@ public class ClimbingController {
 	@GetMapping("/todayModify/{id}")
 	public String modifyForm(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("board", todayService.getClimbingToday(id, null));
-		return "climbing/mateModify";
+		return "climbing/todayModify";
 	}
 
+	
 //	@RequestMapping(value = "/modify/{id}", method = RequestMethod.POST)
 	@PostMapping("/todayModify/{id}")
-	
 	// 수정하려는 게시물 id : mate.id
 	public String modifyProcess(ClimbingToday climbingToday,
-			@RequestParam(value = "files", required = false) MultipartFile[] addFiles,
 			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
+			@RequestParam(value = "files", required = false) MultipartFile[] addFiles,
 			RedirectAttributes rttr) throws Exception {
 		
 		boolean ok = todayService.modify(climbingToday, addFiles, removeFileNames);
@@ -300,12 +370,12 @@ public class ClimbingController {
 			// 해당 게시물 보기로 리디렉션
 //			rttr.addAttribute("success", "success");
 			rttr.addFlashAttribute("message", climbingToday.getId() + "번 게시물이 수정되었습니다.");
-			return "redirect:/id/" + climbingToday.getId();
+			return "redirect:/climbing/todayId/" + climbingToday.getId();
 		} else {
 			// 수정 form 으로 리디렉션
 //			rttr.addAttribute("fail", "fail");
 			rttr.addFlashAttribute("message", climbingToday.getId() + "번 게시물이 수정되지 않았습니다.");
-			return "redirect:/todayModify/" + climbingToday.getId();
+			return "redirect:/climbing/todayId/" + climbingToday.getId();
 		}
 	}
 	
@@ -322,7 +392,7 @@ public class ClimbingController {
 
 			return "redirect:/climbing/todayList";
 		} else {
-			return "redirect:/todayId/" + id;
+			return "redirect:/climbing/todayModify/" + id;
 		}
 	}
 	
@@ -401,7 +471,7 @@ public class ClimbingController {
 			// 수정 form 으로 리디렉션
 //			rttr.addAttribute("fail", "fail");
 			rttr.addFlashAttribute("message", climbingCourse.getId() + "번 게시물이 수정되지 않았습니다.");
-			return "redirect:/todayModify/" + climbingCourse.getId();
+			return "redirect:/courseModify/" + climbingCourse.getId();
 		}
 	}
 	
@@ -416,9 +486,9 @@ public class ClimbingController {
 			// 모델에 추가
 			rttr.addFlashAttribute("message", id + "번 게시물이 삭제되었습니다.");
 
-			return "redirect:/climbing/todayList";
+			return "redirect:/climbing/courseList";
 		} else {
-			return "redirect:/todayId/" + id;
+			return "redirect:/courseId/" + id;
 		}
 	}
 	
@@ -468,4 +538,6 @@ public class ClimbingController {
 			Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.disagreeParty(climbingParty, authentication));
 	}
+	
+	
 }

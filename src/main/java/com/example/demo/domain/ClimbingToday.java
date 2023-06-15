@@ -1,9 +1,9 @@
 package com.example.demo.domain;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
 public class ClimbingToday {
@@ -14,6 +14,8 @@ public class ClimbingToday {
 	private LocalDate inserted;
 	private List<String> fileName;
 	private String userId;
+	
 	private Integer likeCount;
 	private boolean liked; 
+	private Integer commentCount;
 }

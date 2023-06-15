@@ -75,19 +75,19 @@ public interface ClimbingMateMapper {
 	List<ClimbingMate> selectMyPageInfo(String writer);
 
 	@Select("""
-			select boardId ,memberId
+			select p.boardId , p.memberId
 			from ClimbingParty p left join ClimbingMate c ON p.boardId = c.id
-			where userId = #{writer}
+			where p.userId = #{writer}
 			""")
 	List<ClimbingParty> selectMemberId(String writer);
 
 	@Select("""
-			select boardId ,memberId
+			select p.boardId , c.memberId
 			from ClimbingParty p left join ClimbingMate c ON p.boardId = c.id
-			where userId = #{writer} and boardId = #{boardId}
+			where p.userId = #{writer} and boardId = #{boardId}
 			""")
 	List<ClimbingParty> selectMemberIdByBoardId(Integer boardId, String writer);
-	
+
 	@Select("""
 			SELECT
 			    c.id,
@@ -171,9 +171,9 @@ public interface ClimbingMateMapper {
 	void deleteFileNameByMateId(Integer id);
 
 	@Select("""
-	select boardId ,memberId
-	from ClimbingParty p left join ClimbingBoard b ON p.boardId = b.id
-	""")
+			select boardId ,memberId
+			from ClimbingParty p left join ClimbingBoard b ON p.boardId = b.id
+			""")
 	List<ClimbingParty> selectMember();
 
 	@Select("""
@@ -199,70 +199,126 @@ public interface ClimbingMateMapper {
 			select * from Member where userId = #{userId}
 			""")
 	Member getNickName(String name);
-	
+
 	@Select("""
 			select * from Member where userId = #{userId}
 			""")
 	Member selectMemberById(String name);
 
 	// 주소 반영한 것
-		@Select("""
-				<script>
-				<bind name="pattern" value="'%' + mateSearch + '%'" />
-				SELECT
-				    c.id,
-				    c.title,
-				    c.body,
-				    c.inserted,
-				    c.writer,
-				    c.Lat,
-				    c.Lng,
-				    c.people,
-				    c.time,
-				    c.address,
-				    COUNT(cp.boardId) AS currentNum
-				FROM
-				    ClimbingMate c
-				    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
+	@Select("""
+			<script>
+			<bind name="pattern" value="'%' + mateSearch + '%'" />
+			SELECT
+			    c.id,
+			    c.title,
+			    c.body,
+			    c.inserted,
+			    c.writer,
+			    c.Lat,
+			    c.Lng,
+			    c.people,
+			    c.time,
+			    c.address,
+			    COUNT(cp.boardId) AS currentNum
+			FROM
+			    ClimbingMate c
+			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
 
-					<where>
+				<where>
 
-					<if test = "(type eq 'all') or (type eq 'title')">
-					title LIKE #{pattern}
-					</if>
-
-
-					<if test = "(type eq 'all') or (type eq 'address')">
-					OR address LIKE #{pattern}
-					</if>
-
-					</where>
+				<if test = "(type eq 'all') or (type eq 'title')">
+				title LIKE #{pattern}
+				</if>
 
 
-					<if test = "(type eq 'distance')">
-					WHERE address IN (
-					<foreach collection="addressList" item="item" separator=", ">
-						#{item}
-					</foreach>
-					)
-					</if>
+				<if test = "(type eq 'all') or (type eq 'address')">
+				OR address LIKE #{pattern}
+				</if>
 
-				GROUP BY
-				    c.id,
-				    c.title,
-				    c.body,
-				    c.inserted,
-				    c.writer,
-				    c.Lat,
-				    c.Lng,
-				    c.people,
-				    c.time,
-				    c.address
-				    ORDER BY c.inserted desc
-				    </script>
-						""")
+				</where>
+
+
+				<if test = "(type eq 'distance')">
+				WHERE address IN (
+				<foreach collection="addressList" item="item" separator=", ">
+					#{item}
+				</foreach>
+				)
+				</if>
+
+			GROUP BY
+			    c.id,
+			    c.title,
+			    c.body,
+			    c.inserted,
+			    c.writer,
+			    c.Lat,
+			    c.Lng,
+			    c.people,
+			    c.time,
+			    c.address
+			    ORDER BY c.inserted desc
+			    </script>
+					""")
 	List<ClimbingMate> selectMateByDistance(List<String> addressList, String type, String mateSearch);
 
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	Member selecMemberUserId(String userId);
 
+	@Select("""
+			select
+			    c.id,
+			    c.title,
+			    c.body,
+			    c.writer,
+			    c.inserted,
+			    c.Lat,
+			    c.Lng,
+			    c.people,
+			    c.time,
+			    c.address,
+			    p.memberId
+			from ClimbingMate c
+			left join ClimbingParty p on c.id = p.boardId
+			where (c.writer = #{nickName} or p.memberId = #{nickName})
+			    and c.writer <> p.memberId
+			order by c.inserted desc
+					         """)
+	List<ClimbingMate> selectTotalMyPageInfo(String nickName);
+
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from ClimbingParty p left join ClimbingMate c ON p.boardId = c.id
+			where boardId = #{boardId} and participation = 0 group by p.boardId, p.memberId;
+						""")
+	@ResultMap("climbingMateResultMap2")
+	List<ClimbingParty> selectWaitingMemberIdByBoardIdForModal(Integer boardId);
+
+	@Select("""
+			select boardId ,memberId
+			from ClimbingParty p
+				left join ClimbingMate c ON p.boardId = c.id
+			where boardId = #{boardId} and userId = #{writer} and participation = 0
+			""")
+	List<ClimbingParty> selectWaitingMemberIdByBoardId(Integer boardId, String writer);
+
+	@Select("""
+			select boardId ,memberId
+			from ClimbingParty p
+				left join ClimbingMate c ON p.boardId = c.id
+			where boardId = #{boardId} and userId = #{writer} and participation = 2
+			""")
+	List<ClimbingParty> selectRejectMemberIdByBoardId(Integer boardId, String writer);
+
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from ClimbingParty p left join ClimbingMate c ON p.boardId = c.id
+			where boardId = #{boardId} and participation = 2 group by p.boardId, p.memberId;
+						""")
+	@ResultMap("climbingMateResultMap2")
+	List<ClimbingParty> selectRejectMemberIdByBoardIdForModal(Integer boardId);
 
 }

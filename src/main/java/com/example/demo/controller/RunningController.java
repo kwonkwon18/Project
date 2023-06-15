@@ -61,7 +61,6 @@ public class RunningController {
 
 	@GetMapping("/runningAdd")
 	@PreAuthorize("authenticated")
-
 	public void addProcess() {
 
 	}
@@ -149,6 +148,7 @@ public class RunningController {
 
 	// 여기서 List<String> Mapper 써줄 것임
 	@GetMapping("/runningMate")
+	@PreAuthorize("authenticated")
 	public void runningMatePage(Model model, Authentication authentication,
 			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "search", defaultValue = "") String search) {
@@ -226,7 +226,7 @@ public class RunningController {
 			// 해당 게시물 보기로 리디렉션
 //			rttr.addAttribute("success", "success");
 			rttr.addFlashAttribute("message", runningBoard.getId() + "번 게시물이 수정되었습니다.");
-			return "redirect:/running/runningList";
+			return "redirect:/running/runningMate";
 		} else {
 			// 수정 form 으로 리디렉션
 //			rttr.addAttribute("fail", "fail");

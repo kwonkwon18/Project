@@ -4,7 +4,12 @@ $(document).ready(function() {
 	$.ajax("/running/countOfAlarm", {
 		contentType: "application/json",
 		success: function(data) {
-			console.log(data.confirmationTotal)
+			console.log("asdf" + data.confirmationTotal)
+
+			if (data.confirmationTotal > 0) {
+				$("#NumberOfAlarm").css("display", "block");
+			}
+
 			$("#NumberOfAlarm").html(data.confirmationTotal);
 		}
 	})

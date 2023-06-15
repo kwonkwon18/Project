@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<my:navBar></my:navBar>
+	<my:navBarRunning></my:navBarRunning>
 	<div class="container-lg">
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
@@ -123,5 +123,6 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="/js/chat.js"></script>
 		<script src="/js/running/runningTodayList.js" charset="UTF-8"></script>
+		<script src = "/js/navBar.js"></script>
 </body>
 </html>

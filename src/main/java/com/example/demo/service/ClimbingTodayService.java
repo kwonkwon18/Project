@@ -27,6 +27,12 @@ public class ClimbingTodayService {
 
 	@Autowired
 	private ClimbingTodayMapper todayMapper;
+	
+	@Autowired
+	private ClimbingLikeMapper likeMapper;
+	
+	@Autowired
+	private ClimbingCommentMapper commentMapper;
 
 	public List<ClimbingToday> listBoard() {
 		
@@ -38,9 +44,16 @@ public class ClimbingTodayService {
 		return todayMapper.selectListByTodaySearch(todaySearch);
 	}
 
-	public ClimbingToday getClimbingToday(Integer id) {
+	public ClimbingToday getClimbingToday(Integer id, String myUserId) {
 
-		return todayMapper.selectById(id);
+		ClimbingToday climbingToday = todayMapper.selectById(id);
+		if (myUserId != null) {
+			ClimbingLike like = likeMapper.select(id, myUserId);
+			if (like != null) {
+				climbingToday.setLiked(true);
+			}
+		}
+		return climbingToday;
 	}
 	
 	public List<ClimbingToday> searchToday(String searchTerm) {
@@ -110,6 +123,8 @@ public class ClimbingTodayService {
 			s3.deleteObject(dor);
 
 		}
+		likeMapper.deleteByBoardId(id);
+		commentMapper.deleteByBoardId(id);
 		// 게시물 테이블의 데이터 지우기
 		int cnt = todayMapper.deleteById(id);
 
@@ -139,6 +154,37 @@ public class ClimbingTodayService {
 			}
 		}
 		return cnt == 1;
+	}
+
+	public Map<String, Object> like(ClimbingLike like, Authentication auth) {
+
+		// json을 보내줄 때는 ResponseEntity와 Map의 타입을 활용한다.
+		Map<String, Object> result = new HashMap<>();
+
+		// 기본 값으로 key = like, value = false를 넣어준다. 
+		result.put("like", false);
+			
+		// memberid를 인증된 사람의 id로 바꿔준다.
+		like.setMemberId(auth.getName());
+		
+		// 로직은 먼저 삭제를 하고 삭제가 만약 삭제가 안되었으면 
+		// like 에 해당 정보를 insert 하고 json { "like" : true} 를 반환해준다.
+		Integer deleteCnt = likeMapper.delete(like);
+
+		if (deleteCnt != 1) {
+			Integer insertCnt = likeMapper.insert(like);
+			result.put("like", true);
+		}
+		
+		// 좋아요 갯수 넘겨주기
+		Integer count = likeMapper.countByBoardId(like.getBoardId());
+		result.put("count", count);
+
+		return result;
+	}
+
+	public List<ClimbingToday> todayListBoard() {
+		return todayMapper.selectTodayList();
 	}
 
 //	public Map<String, Object> listBoard(Integer page, String search, String type) {

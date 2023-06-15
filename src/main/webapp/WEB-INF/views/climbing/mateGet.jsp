@@ -15,7 +15,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<my:navBarclimbing> </my:navBarclimbing>
+	<my:navBarclimbing>
+	</my:navBarclimbing>
+
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
 	<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
@@ -33,16 +35,14 @@
 				<div class="d-flex">
 					<div class="me-auto">
 						<h1>
-							<span id="boardIdText"> ${board.id } </span>
-							번게시물${formattedDate }
+							<span id="boardIdText"> ${board.id } </span> 번게시물${formattedDate }
 						</h1>
 					</div>
 				</div>
 
 				<div>
 					<div class="mb-3">
-						<label for="" class="form-label">제목</label>
-						<input type="text" class="form-control" value="${board.title }" readonly />
+						<label for="" class="form-label">제목</label> <input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
 
 					<div class="mb-3">
@@ -51,27 +51,21 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">작성자</label>
-						<input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
+						<label for="" class="form-label">작성자</label> <input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">모임시간</label>
-						<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+						<label for="" class="form-label">모임시간</label> <input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">작성일시</label>
-						<input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
+						<label for="" class="form-label">작성일시</label> <input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
-					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
-					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
-
-
-
-					<label for="" class="form-label">신청한 사람 </label>
+					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" /> <label for="" class="form-label">신청한 사람 </label>
 					<c:forEach items="${members}" var="member">
-						<c:if test="${board.id eq member.boardId}">
+						<!-- 보드아이디와 멤버의 보드아이디가 같은 경우 -->
+						<!-- 멤버의 아이디와 작성자가 같은 경우는 해주면 안됨  -->
+						<c:if test="${board.id eq member.boardId && board.writer ne member.memberId}">
 							<div class="mb-3">
 								<input type="text" readonly class="form-control" value="${member.memberId}" />
 							</div>
@@ -92,7 +86,7 @@
 
 
 					<!-- Modal -->
-						<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -149,7 +143,7 @@
 									<c:otherwise>
 										<c:if test="${board.people > board.currentNum }">
 											<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-            						   </c:if>
+										</c:if>
 									</c:otherwise>
 								</c:choose>
 
@@ -180,5 +174,6 @@
 					<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 					<script src="/js/climbing/climbingGet.js"></script>
+					<script src="/js/navBarClimbing.js"></script>
 </body>
 </html>

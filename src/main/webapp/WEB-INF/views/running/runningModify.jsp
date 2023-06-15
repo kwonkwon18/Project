@@ -18,12 +18,19 @@
 <body>
 
 
+
 <my:navBarRunning></my:navBarRunning>
 
+	<%
+	java.util.Date now = new java.util.Date();
+	java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+	String nowString = dateFormat.format(now);
+	%>
 
-	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
 	<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
+	<fmt:parseDate value="${now}" pattern="yyyy-MM-dd'T'HH:mm" var="qqq" />
+	
 
 	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
 	<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
@@ -77,7 +84,7 @@
 
 						<div class="mb-3">
 							<label for="dateInput" class="form-label">모이는 시간</label>
-							<input required id="dateInput" name="time" type="datetime-local" />
+							<input required id="dateInput" name="time" type="datetime-local" min="<%=nowString%>" />
 						</div>
 
 						<div class="mb-3">
@@ -111,8 +118,10 @@
 		</div>
 	</div>
 
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script src="/js/climbing/mateAdd.js"></script>
+	<script src = "/js/navBar.js"></script>
 </body>
 </html>

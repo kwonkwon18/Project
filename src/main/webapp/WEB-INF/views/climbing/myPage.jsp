@@ -13,20 +13,17 @@
 </head>
 <body>
 
-	<my:navBarRunning></my:navBarRunning>
-
-
+	<my:navBarClimbing></my:navBarClimbing>
 
 	<br />
 	<br />
-	<br />
 
-
-	<!-- 	<button id="alarmList">알람 목록 보기</button> -->
-	<!-- <div id="HostAlarm"></div>
-	<div id="MemberAlarm"></div> -->
+	<button id="alarmList">알람 목록 보기</button>
+	<div id="HostAlarm"></div>
+	<div id="MemberAlarm"></div>
 
 	<h1>마이페이지</h1>
+
 
 	<div class="row row-cols-1 row-cols-md-3 g-4">
 		<c:forEach items="${totalMyData}" var="board" varStatus="status">
@@ -37,6 +34,8 @@
 
 	<div class="row row-cols-1 row-cols-md-3 g-4">
 		</c:if>
+
+
 		<div class="col">
 			<div class="card text-white bg-primary mb-3" style="max-width: 21rem;">
 				<h3>내가 올린 게시물</h3>
@@ -61,7 +60,7 @@
 							<input id="timeText" type="text" class="form-control" value="${board.time}" readonly />
 						</div>
 
-						<button type="button" onclick="location.href='/running/id/${board.id}'">내 게시물 상세 보기</button>
+						<button type="button" onclick="location.href='/climbing/id/${board.id}'">내 게시물 상세 보기</button>
 						<input class="LatSubmit${status.index + 1}" type="hidden" name="Lat" value="${board.lat}" />
 						<input class="LngSubmit${status.index + 1}" type="hidden" name="Lng" value="${board.lng}" />
 						<c:set var="latNum" value="${board.lat}" />
@@ -71,6 +70,7 @@
 			</div>
 		</div>
 		</c:if>
+
 
 
 		<c:if test="${MyNickName eq board.memberId}">
@@ -102,7 +102,7 @@
 							<input id="timeText" type="text" class="form-control" value="${board.time}" readonly />
 						</div>
 
-						<button type="button" onclick="location.href='/running/id/${board.id}'">신청한 상태 보기</button>
+						<button type="button" onclick="location.href='/climbing/id/${board.id}'">신청한 상태 보기</button>
 						<input class="LatSubmit${status.index + 1}" type="hidden" name="Lat" value="${board.lat}" />
 						<input class="LngSubmit${status.index + 1}" type="hidden" name="Lng" value="${board.lng}" />
 						<c:set var="latNum" value="${board.lat}" />
@@ -114,26 +114,25 @@
 		</c:if>
 		</c:forEach>
 	</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script>
-      <c:forEach items="${totalMyData}" var="board" varStatus="status">
-         var latNum${status.index + 1} = ${board.lat};
-         var lngNum${status.index + 1} = ${board.lng};
-         var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
-         var mapOption${status.index + 1} = {
-            center: new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
-            level: 3
-         };
-         var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
-         var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
-         var marker${status.index + 1} = new kakao.maps.Marker({
-            position: markerPosition${status.index + 1}
-         });
-         marker${status.index + 1}.setMap(map${status.index + 1});
-      </c:forEach>
-   </script>
-	<script src="/js/navBar.js"></script>
+		<c:forEach items="${totalMyData}" var="board" varStatus="status">
+			var latNum${status.index + 1} = ${board.lat};
+			var lngNum${status.index + 1} = ${board.lng};
+			var mapContainer${status.index + 1} = document.getElementById('map${status.index + 1}');
+			var mapOption${status.index + 1} = {
+				center: new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1}),
+				level: 3
+			};
+			var map${status.index + 1} = new kakao.maps.Map(mapContainer${status.index + 1}, mapOption${status.index + 1});
+			var markerPosition${status.index + 1} = new kakao.maps.LatLng(latNum${status.index + 1}, lngNum${status.index + 1});
+			var marker${status.index + 1} = new kakao.maps.Marker({
+				position: markerPosition${status.index + 1}
+			});
+			marker${status.index + 1}.setMap(map${status.index + 1});
+		</c:forEach>
+	</script>
+	<script src="/js/climbing/myPage.js"></script>
 </body>
 </html>

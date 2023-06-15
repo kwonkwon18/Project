@@ -23,7 +23,6 @@ public class ClimbingPartyService {
 
 		Member member = partyMapper.selectMemberById(authentication.getName());
 		
-
 		ClimbingMate board = mateMapper.selectById(climbingParty.getBoardId());
 		int currentNum = partyMapper.countByBoardId(climbingParty.getBoardId());
 
@@ -86,6 +85,60 @@ public class ClimbingPartyService {
 		result.put("count", count);
 
 		return result;
+	}
+
+	public Map<String, Object> alarm(ClimbingParty climbingParty, Authentication authentication) {
+		// 현재 접속한 로그인 아이디 찾기
+		Member member = mateMapper.selectMemberById(authentication.getName());
+		
+		Map<String, Object> result = new HashMap<>();
+
+		climbingParty.setUserId(member.getNickName());
+
+		// System.out.println("%%" + runningParty);
+
+		// 호스트 마이페이지 
+		List<ClimbingParty> alarmList = partyMapper.selectAlarmList(climbingParty);
+		result.put("alarmList", alarmList);
+		
+		// 게스트 마이페이지
+		List<ClimbingParty> memberAlarmList = partyMapper.selectMemberAlarmList(climbingParty);
+		result.put("memberAlarmList", memberAlarmList);
+
+		return result;
+	}
+
+	public Map<String, Object> agreeParty(ClimbingParty climbingParty, Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+		// System.out.println("접근 1");
+		Integer agreeMember = partyMapper.updateMember(climbingParty);
+		// System.out.println("접근 2");
+
+		System.out.println(climbingParty);
+
+		if (agreeMember == 1) {
+			result.put("join", true);
+			return result;
+		} else {
+			result.put("join", false);
+			return result;
+		}
+	}
+
+	public Map<String, Object> disagreeParty(ClimbingParty climbingParty, Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+
+		Integer agreeMember = partyMapper.updateMemberDisagree(climbingParty);
+
+		System.out.println(climbingParty);
+
+		if (agreeMember == 1) {
+			result.put("out", true);
+			return result;
+		} else {
+			result.put("out", false);
+			return result;
+		}
 	}
 
 }

@@ -15,12 +15,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
-		<my:navBarclimbing> </my:navBarclimbing>
-		<div class="container-lg">
-
-	<my:chatBtn></my:chatBtn>
-
+	<my:navBarClimbing></my:navBarClimbing>
 
 	<div class="container-lg">
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -49,21 +44,26 @@
 		</div>
 
 		<h2>오늘의 등산</h2>
-		<!-- 새로 작성된 코드, 변경된 코드  -->
-		<!-- table.table>thead>tr>th*4^^tbody -->
-		<div style="display: flex;">
-			<div style="flex: 1; margin-left: 800px;" id="mateMapBox">
-				<ul style="display: flex; align-items: left;">
-					<form action="/climbing/todayList" class="d-flex" role="todaySearch">
-						<input id="searchInput" value="${param.todaySearch}" name="todaySearch" class="form-control" type="todaySearch" aria-label="todaySearch" style="width: 300px" >
-						<button id="search" class="btn btn-outline-success" type="submit">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-						<button type="button" class="btn btn-success" onclick="location.href='todayAdd'" style="margin-left: 10px;">번개 글작성</button>
-					</form>
-				</ul>
+		<ul>
+			<!-- 새로 작성된 코드, 변경된 코드  -->
+			<!-- table.table>thead>tr>th*4^^tbody -->
+			<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
+				<a href="todayList">
+					<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
+				</a>
+				<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
+				<form action="/climbing/todayList" class="d-flex" role="todaySearch">
+					<input id="searchInput" value="${param.courseSearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
+					<button id="search" class="btn btn-outline-success" type="submit">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</form>
 			</div>
-		</div>
+
+			<div style="text-align: right;">
+				<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
+			</div>
+		</ul>
 		<br />
 		<div id="todayListData" class="row">
 			<c:forEach items="${climbingTodayList}" var="board">
@@ -76,7 +76,13 @@
 									<p style="font-size: medium;">${board.inserted}</p>
 								</h5>
 								<p class="card-text">${board.title}</p>
-								<%-- 							<p class="card-text">${board.body}</p> --%>
+								<p class="card-text">
+									<i class="fa-solid fa-heart"></i>
+									${board.likeCount } 
+									<i class="fa-regular fa-comments"></i> 
+									${board.commentCount }
+								</p>
+							
 							</div>
 							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
 								<c:if test="${status.count lt 2 }">
@@ -113,8 +119,12 @@
 			<!-- 		</table> <-->
 			</-->
 		</div>
+
+		<my:chatBtn></my:chatBtn>
+
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="/js/chat.js"></script>
+		<script src="/js/groupChat.js"></script>
 </body>
 </html>

@@ -5,6 +5,10 @@ $(document).ready(function() {
 		contentType: "application/json",
 		success: function(data) {
 			console.log(data.confirmationTotal)
+		
+			if(data.confirmationTotdal > 0) {
+				$("#NumberOfAlarm").css("display", "block");
+			}
 			$("#NumberOfAlarm").html(data.confirmationTotal);
 		}
 	})

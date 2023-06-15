@@ -88,6 +88,36 @@ public interface ClimbingPartyMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer updateMemberDisagree(ClimbingParty climbingParty);
 
+	@Update("""
+			UPDATE ClimbingParty
+			SET
+				confirmation = 0
+			WHERE
+				userId = #{userId} and memberId = #{memberId} and boardId = #{boardId}
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	Integer confirmationGuest(ClimbingParty climbingParty);
+
+	@Select("""
+			SELECT
+				count(*)
+			  FROM ClimbingParty p
+			  LEFT JOIN ClimbingMate c on c.id = p.boardId
+			WHERE host = #{userId} AND participation = 0 and confirmation = 1
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	Integer countOfAlarmHost(String name);
+
+	@Select("""
+			SELECT
+				count(*)
+			  FROM ClimbingParty p
+			  LEFT JOIN ClimbingMate c on c.id = p.boardId
+			WHERE guest = #{userId} AND (participation = 1 or participation = 2) and confirmation = 1 ;
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	Integer countOfAlarmGuest(String name);
+
 
 
 

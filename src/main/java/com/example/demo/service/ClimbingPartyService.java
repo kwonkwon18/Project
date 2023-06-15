@@ -141,4 +141,43 @@ public class ClimbingPartyService {
 		}
 	}
 
+	public Map<String, Object> confirmation(ClimbingParty climbingParty, Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+		Integer confirmation = partyMapper.confirmationGuest(climbingParty);
+
+		if (confirmation == 1) {
+			result.put("confirmation", true);
+			return result;
+		} else {
+			result.put("confirmation", false);
+			return result;
+		}
+	}
+
+	public Map<String, Object> countOfAlarm(Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+		
+		// host와 guest
+		
+		// 1 빼줄수 있는데.. 봐야함 
+		Integer confirmationHost = partyMapper.countOfAlarmHost(authentication.getName());
+
+		if (confirmationHost < 0) {
+			confirmationHost = 0;
+		}
+
+		Integer confirmationGuest = partyMapper.countOfAlarmGuest(authentication.getName());
+		if (confirmationGuest < 0) {
+			confirmationGuest = 0;
+		}
+		
+		
+		System.out.println("confirmationGuest == " + confirmationGuest);
+		Integer confirmationTotal = confirmationHost + confirmationGuest;
+
+		result.put("confirmationTotal", confirmationTotal);
+
+		return result;
+	}
+
 }

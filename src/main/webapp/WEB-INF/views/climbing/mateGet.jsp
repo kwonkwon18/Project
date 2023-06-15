@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+
 
 
 
@@ -15,8 +17,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<my:navBarclimbing>
-	</my:navBarclimbing>
+	<my:navBarClimbing>
+	</my:navBarClimbing>
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -72,45 +74,52 @@
 						</c:if>
 					</c:forEach>
 
-					<div>
-						<a class="btn btn-secondary" href="/climbing/mateModify/${board.id }">수정</a>
-						<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
-					</div>
-
-
-					<div class="d-none">
-						<form action="/climbing/mateRemove" method="post" id="removeForm">
-							<input type="text" name="id" value="${board.id }" />
-						</form>
-					</div>
-
-
-					<!-- Modal -->
-					<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<div class="modal-body">삭제 하시겠습니까?</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-									<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-
 					<!-- 본인 게시물 확인 -->
 					<c:set var="isUser" value="false" />
 					<c:forEach items="${memberList}" var="memberList">
 						<c:if test="${memberList.nickName eq board.writer}">
 							<c:set var="isUser" value="true" />
+							<c:set var="userName" value="${memberList.nickName}" />
 						</c:if>
 					</c:forEach>
+
+					<sec:authorize access="#board.writer eq #userName">
+
+						<div>
+							<a class="btn btn-secondary" href="/climbing/mateModify/${board.id }">수정</a>
+							<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
+						</div>
+
+
+						<div class="d-none">
+							<form action="/climbing/mateRemove" method="post" id="removeForm">
+								<input type="text" name="id" value="${board.id }" />
+							</form>
+						</div>
+
+
+						<!-- Modal -->
+						<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">삭제 하시겠습니까?</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+										<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</sec:authorize>
+
+
+
+
+
 
 					<c:forEach items="${memberList}" var="memberList">
 						<c:set var="memberNickName" value="${memberList.nickName}" />
@@ -167,6 +176,7 @@
 
 
 
+					<my:chatBtn></my:chatBtn>
 
 					<!-- **************************************************  -->
 

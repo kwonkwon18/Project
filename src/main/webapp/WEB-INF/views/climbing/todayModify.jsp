@@ -27,8 +27,7 @@
 				<form method="post" enctype="multipart/form-data">
 					<div>
 						<div class="mb-3">
-							<label for="" class="form-label">제목</label>
-							<input type="text" name = "title" class="form-control" value="${board.title }" />
+							<label for="" class="form-label">제목</label> <input type="text" name="title" class="form-control" value="${board.title }" />
 						</div>
 
 						<h1>
@@ -49,23 +48,20 @@
 
 						<div class="mb-3">
 							<label for="" class="form-label">본문</label>
-							<textarea name = "body" class="form-control" rows="10">${board.body }</textarea>
+							<textarea name="body" class="form-control" rows="10">${board.body }</textarea>
 						</div>
 
 						<div class="mb-3">
-							<label for="" class="form-label">작성자</label>
-							<input id="writerText" name = "writer" type="text" readonly class="form-control" value="${board.writer }" />
+							<label for="" class="form-label">작성자</label> <input id="writerText" name="writer" type="text" readonly class="form-control" value="${board.writer }" />
 						</div>
 
 						<div class="mb-3">
-							<label for="" class="form-label">작성일시</label>
-							<input type="text" name = "inserted" readonly class="form-control" value="${board.inserted }" />
+							<label for="" class="form-label">작성일시</label> <input type="text" name="inserted" readonly class="form-control" value="${board.inserted }" />
 						</div>
 
 						<!-- 새 그림파일 추가   -->
 						<div class="mb-3">
-							<label for="fileInput" class="form-label"> </label>
-							<input type="file" multiple name="files" accept="image/*" id="fileInput" />
+							<label for="fileInput" class="form-label"> </label> <input type="file" multiple name="files" accept="image/*" id="fileInput" />
 						</div>
 						<div class="form-text">1MB 크기의 파일, 총 10MB 크기만 허용</div>
 						<br />
@@ -78,6 +74,9 @@
 			</div>
 		</div>
 	</div>
+	
+	<my:chatBtn></my:chatBtn>
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>

@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.*;
 import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
@@ -543,12 +544,14 @@ public class ClimbingController {
 	}
 
 	@GetMapping("alarm")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> alarm(ClimbingParty climbingParty, Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.alarm(climbingParty, authentication));
 	}
 
 	@PostMapping("agreeParty")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> agreeParty(@RequestBody ClimbingParty climbingParty,
 			Authentication authentication) {
@@ -556,11 +559,26 @@ public class ClimbingController {
 	}
 
 	@PostMapping("disagreeParty")
+	@PreAuthorize("authenticated")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> disagreeParty(@RequestBody ClimbingParty climbingParty,
 			Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.disagreeParty(climbingParty, authentication));
 	}
 	
+	@PostMapping("confirmation")
+	@PreAuthorize("authenticated")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> confirmationGood(@RequestBody ClimbingParty climbingParty,
+			Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.confirmation(climbingParty, authentication));
+	}
 	
+	@GetMapping("countOfAlarm")
+	@PreAuthorize("authenticated")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> countOfAlarm(Authentication authentication) {
+		return ResponseEntity.ok().body(partyService.countOfAlarm(authentication));
+	}
+
 }

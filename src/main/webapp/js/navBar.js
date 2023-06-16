@@ -5,8 +5,8 @@ $(document).ready(function() {
 		contentType: "application/json",
 		success: function(data) {
 			console.log("asdf" + data.confirmationTotal)
-      
-			if(data.confirmationTotal > 0 ){
+
+			if (data.confirmationTotal > 0) {
 				$("#NumberOfAlarm").css("display", "block");
 			}
 
@@ -76,8 +76,8 @@ $("#alarmList").click(function() {
 `);
 				} else if (participation === 1 && userId == memberId) {
 					$("#MemberAlarm").append(`
-    <div id="" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-        *** ' ${title} ' 게시물이 올라갔습니다
+    <div id="hostPost" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+        *** ' ${title} ' 게시물이 올라갔습니다 <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="poserConfirmation deleteAlarm" value="${boardId}">확인</button>
     </div>
 `);
 				}
@@ -210,6 +210,38 @@ $("#MemberAlarm").on("click", ".memberConfirmation", function() {
 		},
 		complete: function() {
 			location.href = "/running/id/" + boardId;
+		}
+	});
+});
+
+$("#MemberAlarm").on("click", ".poserConfirmation", function() {
+	var memberId = $(this).data('board-memberid');
+	var userId = $(this).data('board-userid');
+	var boardId = $(this).data('board-boardid');
+	var title = $(this).data('board-title');
+
+	console.log(memberId);
+	console.log(userId);
+	console.log(boardId);
+	console.log(title);
+
+	const data = { boardId, userId, memberId };
+	console.log(data);
+
+	var hostPost = $(this).closest("#hostPost");
+
+	$.ajax("/running/confirmation", {
+		method: "post",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success: function(data) {
+			// 성공적으로 AJAX 호출이 완료되었을 때 실행되는 코드
+		},
+		error: function() {
+			alert("오류발생.");
+		},
+		complete: function() {
+			hostPost.remove(); // AJAX 호출이 완료된 후 hostpost div를 삭제
 		}
 	});
 });

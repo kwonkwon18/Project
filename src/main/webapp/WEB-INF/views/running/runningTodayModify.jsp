@@ -36,13 +36,37 @@
 						</h1>
 
 
-						<!-- 그림 파일 출력  -->
+<%-- 						<!-- 그림 파일 출력  -->
 						<div class="mb-3">
 							<c:forEach items="${board.fileName }" var="fileName">
 								<div>
 									<!-- http://localhost:8080/image/게시물번호/fileName  -->
 									<!-- aws로 올리면 위 만큼이 aws 주소가 됨   -->
 									<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${board.id }/${fileName}" alt="" height="300" width="300" />
+								</div>
+							</c:forEach>
+						</div>
+ --%>
+						<!-- 그림 파일 출력 -->
+						<div class="mb-3">
+							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+								<div class="mb-3">
+									<div class="row">
+										<div class="col-2 d-flex">
+											<div class="form-check form-switch m-auto">
+												<input name="removeFiles" value="${fileName }" class="form-check-input" type="checkbox" role="switch" id="removeCheckBox${status.index }">
+												<label class="form-check-label" for="removeCheckBox${status.index }">
+													<i class="fa-solid fa-trash-can text-danger"></i>
+												</label>
+											</div>
+										</div>
+
+										<div class="col-10">
+											<div>
+												<img class="img-thumbnail img-fluid" src="${bucketUrl }/runningToday/${board.id }/${fileName}" alt="" />
+											</div>
+										</div>
+									</div>
 								</div>
 							</c:forEach>
 						</div>

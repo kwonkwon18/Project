@@ -14,33 +14,51 @@
 <body>
 
 		<form action="/modify" method="post">
-		<div>
+		<div class="mb-3">
+			<label for="inputId">
 			아이디		
-			<input type="text" name="id" value="${member.userId }" readonly" />
+			</label>
+			<input id ="inputId" class="form-control" type="text" name="id" value="${member.userId }" readonly" />
 		</div>
-		<div>
+		<div class="mb-3">
+			<label for="inputPassWord">
+			비밀번호		
+			</label>
+			<input id ="inputPassword" class="form-control" type="text" name="password" value="${member.password }" readonly" />
+		</div>
+		<div class="mb-3">
+			<label for="inputName">
 			이름		
-			<input type="text" name="name" value="${member.name }" readonly" />
+			</label >
+			<input id ="inputName" type="text" class="form-control" name="name" value="${member.name }" readonly" />
 		
 		</div>
-		<div>
+		<div class="mb-3">
+			<label for="inputNickName">
 			별명		
-			<input type="text" name="nickName" value="${member.nickName }" readonly" />
+			</label>
+			<input id="inputNickName" class="form-control" type="text" name="nickName" value="${member.nickName }" readonly" />
 			
 		</div>
-		<div>
+		<div class="mb-3">
+			<label for="inputBirth">
 			생년월일		
-			<input type="text" name="birth" value="${member.birth }" readonly" />
+			</label>
+			<input id="inputBirth" class="form-control" type="text" name="birth" value="${member.birth }" readonly" />
 			
 		</div>
-		<div>
+		<div class="mb-3">
+			<label for="inputGender">
 			성별		
-			<input type="text" name="gender" value="${member.gender }" readonly" />
+			</label>
+			<input id="inputGender" type="text" name="gender" value="${member.gender }" readonly" />
 		
 		</div>
-		<div>
+		<div class="mb-3">
+			<label for="inputAddress">
 			주소		
-			<select class="form-control" name="address" id="address">
+			</label>
+			<select id="inputAddress" class="form-control" name="address" id="address">
 							<option value="강남구">강남구</option>
 							<option value="강동구">강동구</option>
 							<option value="강북구">강북구</option>
@@ -70,19 +88,24 @@
 
 						</select>
 		</div>
-		<div>
+		<div class="mb-3">
+			<label for="inputPhone"></label>
 			핸드폰 번호		
-			<input type="text" name="phone" value="${member.phone }" readonly" />
+			<input id ="inputPhone" class="form-control" type="text" name="phone" value="${member.phone }" readonly" />
 		
 		</div>
-		<div>
-			이메일	
-			<input type="text" name="email" value="${member.email }" readonly" />
+		<div class="mb-3">
+			<label for="inputEmail">
+			이메일
+			</label>
+			<input id="inputEmail" class="form-control" type="text" name="email" value="${member.email }" readonly" />
 		
 		</div>
-		<div>
+		<div class="mb-3">
+			<label for="inputIntroduce">
 			자기소개	
-			<input type="text" name="introduce" value="${member.introduce }" readonly" />
+			</label>
+			<input id="inputIntroduce" class="form-control" type="text" name="introduce" value="${member.introduce }" readonly" />
 		
 		</div>
 		

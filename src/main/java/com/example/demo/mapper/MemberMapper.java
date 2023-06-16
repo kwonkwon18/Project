@@ -47,14 +47,14 @@ public interface MemberMapper {
 			""")
 	Member selectById(String integer);
 	
-	String getUserIdSelectByNickName(String yourNickName);	
+	
 
 	@Delete("""
 			DELETE FROM Member
-			WHERE id=#{id}
+			WHERE userId=#{userId}
 			""")
-
-	Member deleteById(String integer);
+	Integer deleteById(String userId);
+	
 	@Update("""
 			UPDATE Member
 			SET password = #{password},

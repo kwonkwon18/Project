@@ -21,8 +21,8 @@
 				<sec:authorize access="isAuthenticated()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/logout">로그아웃</a></li></sec:authorize>
 				<sec:authorize access="isAnonymous()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/login">로그인</a></li></sec:authorize>
 				<sec:authorize access="isAnonymous()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/signup">회원가입</a></li></sec:authorize>
-				<sec:authorize access="isAuthenticated()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/my_page">마이페이지</a></li></sec:authorize>
-				 <%-- <li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/list">회원목록</a></li> --%>
+				<sec:authorize access="isAuthenticated()"><li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/mypage">마이페이지</a></li></sec:authorize>
+				  <li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/list">회원목록</a></li> 
 			</ul>
 			
 		</div>

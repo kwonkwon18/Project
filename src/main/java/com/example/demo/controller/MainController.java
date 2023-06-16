@@ -72,19 +72,40 @@ public class MainController {
 		model.addAttribute("member", member);
 	}
 
+	@GetMapping("mypage")
+	public void myapge(String userId, Model model) {
+		Member member = memberService.get(userId);
+		System.out.println(member);
+		model.addAttribute("member", member);
+	}
+	
+//	@PostMapping("remove")
+//	public String remove(Member member,RedirectAttributes rttr) {
+//		boolean ok = memberService.remove(member);
+//		if(ok) {
+//			rttr.addFlashAttribute("message", "회원 탈퇴되었습니다.");
+//			return "redirect:/list";
+//		}
+//		else {
+//			rttr.addFlashAttribute("message", "회원 탈퇴에 문제가 생겼습니다.");
+//			return "redirect:/info?userId"+member.getUserId();
+//		}
+//	}
+	// 1.
 	@PostMapping("remove")
-	public String remove(Member member,RedirectAttributes rttr) {
+	public String remove(Member member, RedirectAttributes rttr) {
+		
 		boolean ok = memberService.remove(member);
-		if(ok) {
-			rttr.addFlashAttribute("message", "회원 탈퇴되었습니다.");
+		if (ok) {
+			rttr.addFlashAttribute("message","회원 탈퇴하였습니다.");
 			return "redirect:/list";
 		}
 		else {
-			rttr.addFlashAttribute("message", "회원 탈퇴에 문제가 생겼습니다.");
-			return "redirect:/info?userId"+member.getUserId();
+			rttr.addFlashAttribute("message", "회원 탈퇴시 문제가 발생하였습니다.");
+			return "redirect:/info";
 		}
 	}
-	// 1.
+	
 	
 	@GetMapping("modify")
 		public void modifyForm(String userId,Model model) {
@@ -95,7 +116,16 @@ public class MainController {
 	
 	//2.
 	@PostMapping("modify")
-	public void modifyProcess(Member member, String oldPassword, RedirectAttributes rttr) {
-		boolean ok = memberService.modify(member,oldPassword);
+	public String modifyProcess(Member member,  RedirectAttributes rttr) {
+		boolean ok = memberService.modify(member);
+		
+		if ( ok) {
+			rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다.");
+			return "redirect:/info?id=" +member.getUserId();
+		}
+		else {
+			rttr.addFlashAttribute("message", "회원 정보시 문제가 발생했습니다.");
+			return "redirect:/modify?id="+member.getUserId();
+		}
 	}
 }

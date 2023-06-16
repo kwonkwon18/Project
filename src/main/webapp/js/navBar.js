@@ -137,6 +137,7 @@ $("#HostAlarm").on("click", ".agreeParty", function() {
 		success: function(data) {
 			if (data.join) {
 				alert("접수 수락하였습니다.");
+				showGroupList();
 			} else {
 				alert("접수 수락 실패하였습니다.");
 			}

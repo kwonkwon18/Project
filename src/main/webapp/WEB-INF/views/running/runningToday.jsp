@@ -31,12 +31,17 @@
 						<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningToday.writer }" />
 					</div> --%>
 
-					<div class="mb-3">
+					<!-- <div class="mb-3">
 						<label for="fileInput" class="form-label"></label>
-						<input type="file" multiple name="files" accept="image/*" id="fileInput" required/>
-					</div>
+						<input type="file" multiple name="files" accept="image/*" id="fileInput" required />
+					</div> -->
 
-					<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title } "  required/>
+					<div class="form-group">
+						<input class="form-control form-control-user" accept="image/*" required type="file" multiple name="files" id="fileInput" onchange="setDetailImage(event);">
+					</div>
+					<div id="images_container"></div>
+
+					<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title } " required />
 
 					<!-- application property에서 작업 하는 내용 
 					spring.servlet.multipart.max-file-size=1MB
@@ -58,6 +63,26 @@
 		</div>
 	</div>
 	</div>
+
+
+	<script>
+	function setDetailImage(event){
+		for(var image of event.target.files){
+			var reader = new FileReader();
+			
+			reader.onload = function(event){
+				var img = document.createElement("img");
+				img.setAttribute("src", event.target.result);
+				img.setAttribute("class", "col-lg-6");
+				document.querySelector("div#images_container").appendChild(img);
+			};
+			
+			console.log(image);
+			reader.readAsDataURL(image);
+		}
+	}
+	</script>
+  
 	<sec:authorize access="isAuthenticated()">
 		<my:chatBtn></my:chatBtn>
 		<script src="/js/groupChat.js"></script>

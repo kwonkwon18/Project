@@ -45,14 +45,16 @@ public interface MemberMapper {
 			FROM Member
 			WHERE userId = #{userId}
 			""")
-	Member selectById(String integer);	
+	Member selectById(String integer);
+	
+	
 
 	@Delete("""
 			DELETE FROM Member
-			WHERE id=#{id}
+			WHERE userId=#{userId}
 			""")
-
-	Member deleteById(String integer);
+	Integer deleteById(String userId);
+	
 	@Update("""
 			UPDATE Member
 			SET password = #{password},

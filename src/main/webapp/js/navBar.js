@@ -114,8 +114,6 @@ $("#alarmList").click(function() {
 
 
 
-
-
 $("#HostAlarm").on("click", ".agreeParty", function() {
 	var memberId = $(this).data('board-memberid');
 	var userId = $(this).data('board-userid');
@@ -137,7 +135,6 @@ $("#HostAlarm").on("click", ".agreeParty", function() {
 		success: function(data) {
 			if (data.join) {
 				alert("접수 수락하였습니다.");
-				showGroupList();
 			} else {
 				alert("접수 수락 실패하였습니다.");
 			}
@@ -204,14 +201,15 @@ $("#MemberAlarm").on("click", ".memberConfirmation", function() {
 		contentType: "application/json",
 		data: JSON.stringify(data),
 		success: function(data) {
-
+			$("#offcanvasClose").click();
+			showGroupList();
 		},
 		error: function() {
 			alert("접수 오류발생.");
 		},
-		complete: function() {
+		/*complete: function() {
 			location.href = "/running/id/" + boardId;
-		}
+		}*/
 	});
 });
 

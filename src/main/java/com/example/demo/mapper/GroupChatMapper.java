@@ -9,7 +9,7 @@ import com.example.demo.domain.*;
 
 @Mapper
 public interface GroupChatMapper {
-	
+
 	@Select("""
 			SELECT message FROM GroupChatMessage
 			WHERE chatRoomId = #{id}
@@ -20,7 +20,7 @@ public interface GroupChatMapper {
 
 	@Select("""
 			SELECT boardId FROM RunningParty
-			WHERE guest = #{myName}
+			WHERE guest = #{myName} AND participation = 1;
 			""")
 	List<Integer> getBoardIdByMyName(String myName);
 
@@ -40,7 +40,7 @@ public interface GroupChatMapper {
 
 	@Select("""
 			SELECT chatCount FROM RunningParty
-			WHERE boardId = #{id} AND guest = #{myUserId}  
+			WHERE boardId = #{id} AND guest = #{myUserId}
 			""")
 	Integer getChatCount(Integer id, String myUserId);
 
@@ -61,13 +61,13 @@ public interface GroupChatMapper {
 
 	@Select("""
 			SELECT * FROM GroupChatMessage
-			WHERE chatRoomId = #{chatRoomId} 
+			WHERE chatRoomId = #{chatRoomId}
 			""")
 	List<GroupChatMessage> getChatSelectByChatRoomId(Integer chatRoomId);
 
 	@Select("""
 			SELECT * FROM GroupChatMessage
-			WHERE id > #{lastChatId} AND chatRoomId = #{chatRoomId} 
+			WHERE id > #{lastChatId} AND chatRoomId = #{chatRoomId}
 			""")
 	List<GroupChatMessage> checkId(Integer lastChatId, Integer chatRoomId);
 
@@ -121,14 +121,14 @@ public interface GroupChatMapper {
 	String getHostByChatRoomId(Integer chatRoomId);
 
 	@Select("""
-		    SELECT id FROM RunningBoard
-		    WHERE title LIKE CONCAT('%', #{search}, '%')
-		    """)
-		List<Integer> boardIdSelectBySearch(String search);
+			SELECT id FROM RunningBoard
+			WHERE title LIKE CONCAT('%', #{search}, '%')
+			""")
+	List<Integer> boardIdSelectBySearch(String search);
 
 	@Select("""
 			SELECT boardId FROM RunningParty
-			WHERE boardId = #{id} AND guest = #{myId} 
+			WHERE boardId = #{id} AND guest = #{myId} AND participation = 1;
 			""")
 	Integer getMyRoom(int id, String myId);
 
@@ -154,9 +154,8 @@ public interface GroupChatMapper {
 
 	@Select("""
 			SELECT id FROM GroupChatMessage
-			WHERE message LIKE CONCAT('%', #{search}, '%') AND chatRoomId = #{chatRoomId}			
+			WHERE message LIKE CONCAT('%', #{search}, '%') AND chatRoomId = #{chatRoomId}
 			""")
 	List<Integer> searchGroupChatId(String search, Integer chatRoomId);
-	
-	
+
 }

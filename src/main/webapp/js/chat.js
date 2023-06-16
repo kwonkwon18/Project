@@ -104,6 +104,7 @@ $(".chatClose").click(function() {
 	$("#chatBox").hide();
 	$("#chatListContainer").remove();
 	$("#chatContainer").remove();
+	$("#chatSearchBox").css("display", "none");
 	clearInterval(repeat);
 	clearInterval(groupRepeat);
 })
@@ -112,6 +113,7 @@ $(".chatClose").click(function() {
 $("#returnBtn").click(function() {
 	document.removeEventListener('keyup', keyupHandler);
 	$("#chatContainer").remove();
+	$("#chatSearchBox").css("display", "none");
 	clearInterval(groupRepeat);
 	clearInterval(repeat);
 	showList();
@@ -206,7 +208,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 				if (chat.senderId === chatList1.myUserId) {
 					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
-                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
             	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
@@ -215,7 +217,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 	                    `)
 					} else {
 						$("#chatContainer").append(`
-                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
             	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
         	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
     	                    </div>
@@ -224,7 +226,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 				} else {
 					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
-	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 								</div>
@@ -233,7 +235,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 	                    `)
 					} else {
 						$("#chatContainer").append(`
-	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 	                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
 	                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 	                        </div>
@@ -464,12 +466,10 @@ $("#chatSearch").keyup(function() {
 })
 
 $("#chatSearchBtn").click(function() {
-	$("#chatSearchBtn").hide();
-	$("#nextBtn").show();
 	var search = $("#chatSearch").val();
 	var chatRoomId = lastChatRoomId;
 	var count = 1;
-	if($("#chatSendBtn").is(":hidden")) {
+	if($("#sendChatBtn").is(":hidden")) {
 		$.ajax("/groupChat/search?search=" + search + "&chatRoomId=" + chatRoomId, {
 			success: function(data) {
 				var idList = data.chatList;
@@ -477,10 +477,12 @@ $("#chatSearchBtn").click(function() {
 				if(idList.length <= 0) {
         			alert('검색어를 찾을 수 없습니다.');
 				} else {
-					document.getElementById(element).scrollIntoView(true);
+					$("#chatSearchBtn").hide();
+					$("#nextBtn").show();
+					document.getElementById(element).scrollIntoView(false);
 					$("#nextBtn").click(function() {
 						element = idList[count];
-						document.getElementById(element).scrollIntoView(true);
+						document.getElementById(element).scrollIntoView(false);
 						if(count === idList.length - 1) {
 							count = 0;
 						} else {
@@ -498,10 +500,12 @@ $("#chatSearchBtn").click(function() {
 				if(idList.length <= 0) {
         			alert('검색어를 찾을 수 없습니다.');
 				} else {
-					document.getElementById(element).scrollIntoView(true);
+					$("#chatSearchBtn").hide();
+					$("#nextBtn").show();
+					document.getElementById(element).scrollIntoView(false);
 					$("#nextBtn").click(function() {
 						element = idList[count];
-						document.getElementById(element).scrollIntoView(true);
+						document.getElementById(element).scrollIntoView(false);
 						if(count === idList.length - 1) {
 							count = 0;
 						} else {

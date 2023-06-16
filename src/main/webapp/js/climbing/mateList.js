@@ -190,7 +190,7 @@ function handleListUpButtonClick() {
 										if (chat.senderId === myId) {
 											if (chat.fileName !== null) {
 												$("#chatContainer").append(`
-						                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+						                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 						            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 						          						<div>
 															<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
@@ -199,7 +199,7 @@ function handleListUpButtonClick() {
 							                    `)
 											} else {
 												$("#chatContainer").append(`
-						                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+						                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 						            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 						        	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
 						    	                    </div>
@@ -208,7 +208,7 @@ function handleListUpButtonClick() {
 										} else {
 											if (chat.fileName !== null) {
 												$("#chatContainer").append(`
-							                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+							                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 						          						<div>
 															<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 														</div>
@@ -217,7 +217,7 @@ function handleListUpButtonClick() {
 							                    `)
 											} else {
 												$("#chatContainer").append(`
-							                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+							                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 							                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
 							                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 							                        </div>

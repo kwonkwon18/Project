@@ -168,8 +168,10 @@ public class RunningPartyService {
 		// host와 guest
 		
 		// 1 빼줄수 있는데.. 봐야함 
+		
 		Integer confirmationHost = partyMapper.countOfAlarmHost(authentication.getName()) ;
-		System.out.println("confirmationHost ==" + confirmationHost);
+		
+		
 
 		if (confirmationHost < 0) {
 			confirmationHost = 0;

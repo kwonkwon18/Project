@@ -30,12 +30,17 @@
 						<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningToday.writer }" />
 					</div> --%>
 
-					<div class="mb-3">
+					<!-- <div class="mb-3">
 						<label for="fileInput" class="form-label"></label>
-						<input type="file" multiple name="files" accept="image/*" id="fileInput" required/>
-					</div>
+						<input type="file" multiple name="files" accept="image/*" id="fileInput" required />
+					</div> -->
 
-					<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title } "  required/>
+					<div class="form-group">
+						<input class="form-control form-control-user" accept="image/*" required type="file" multiple name="files" id="fileInput" onchange="setDetailImage(event);">
+					</div>
+					<div id="images_container"></div>
+
+					<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title } " required />
 
 					<!-- application property에서 작업 하는 내용 
 					spring.servlet.multipart.max-file-size=1MB
@@ -57,6 +62,26 @@
 		</div>
 	</div>
 	</div>
+
+	<script>
+	function setDetailImage(event){
+		for(var image of event.target.files){
+			var reader = new FileReader();
+			
+			reader.onload = function(event){
+				var img = document.createElement("img");
+				img.setAttribute("src", event.target.result);
+				img.setAttribute("class", "col-lg-6");
+				document.querySelector("div#images_container").appendChild(img);
+			};
+			
+			console.log(image);
+			reader.readAsDataURL(image);
+		}
+	}
+	</script>
+
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="/js/navBar.js"></script>

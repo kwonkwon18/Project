@@ -155,5 +155,11 @@ public interface ChatMapper {
 	        """)
 	ChatRoom findRoomSelectBySearch(String yourId, String myId);
 
+	@Select("""
+			SELECT id FROM Chat
+			WHERE message LIKE CONCAT('%', #{search}, '%') AND chatRoomId = #{chatRoomId}
+			""")
+	List<Integer> searchChatId(String search, Integer chatRoomId);
+
 
 }

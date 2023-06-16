@@ -1,6 +1,8 @@
 var lastChatRoomId;
 var repeat;
 var lastChatId;
+var currentIndex = 0;
+var searchResults = $('.highlight');
 
 function showList() {
 	$("#chatListContainer").remove();
@@ -10,6 +12,8 @@ function showList() {
 	$("#chatListSearchBtn").show();
 	$("#groupChatListSearchBtn").hide();
 	$("#searchRemove").show();
+	$("#groupChatRoomListBtn").removeClass("active");
+	$("#personalChatRoomListBtn").addClass("active");
 	$("#groupSearchRemove").hide();
 	$.ajax("/chat/open", {
 		contentType: "application/json",
@@ -83,6 +87,11 @@ function showList() {
 	});
 }
 
+function scrollToBottom() {
+	var chatBox = document.getElementById("chatBox");
+	chatBox.scrollTop = chatBox.scrollHeight;
+}
+
 $("#chatButton").click(function() {
 	$("#chatButton").hide();
 	showList();
@@ -95,6 +104,7 @@ $(".chatClose").click(function() {
 	$("#chatBox").hide();
 	$("#chatListContainer").remove();
 	$("#chatContainer").remove();
+	$("#chatSearchBox").css("display", "none");
 	clearInterval(repeat);
 	clearInterval(groupRepeat);
 })
@@ -103,6 +113,7 @@ $(".chatClose").click(function() {
 $("#returnBtn").click(function() {
 	document.removeEventListener('keyup', keyupHandler);
 	$("#chatContainer").remove();
+	$("#chatSearchBox").css("display", "none");
 	clearInterval(groupRepeat);
 	clearInterval(repeat);
 	showList();
@@ -118,6 +129,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 	$("#sendChatBtn").show();
 	$("#dChat").show();
 	$("#dGroupChat").hide();
+	$("#chatMemberListBtn").hide();
 	$(`#returnBtn`).after(`
 		<span style="white-space: nowrap; position: absolute; left: 50%; transform: translateX(-50%);" class="chatNameTag">${nickName}님과의 채팅방</span>
 	`);
@@ -136,7 +148,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 				if (chat.senderId === myId) {
 					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
-                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
             	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
@@ -145,7 +157,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 	                    `)
 					} else {
 						$("#chatContainer").append(`
-                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
             	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
         	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
     	                    </div>
@@ -154,18 +166,18 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 				} else {
 					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
-	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 								</div>
-	                            <div>${chat.time}</div>
+	                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 	                        </div>
 	                    `)
 					} else {
 						$("#chatContainer").append(`
-	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 	                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-	                            <div>${chat.time}</div>
+	                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 	                        </div>
 	                    `)
 					}
@@ -189,9 +201,6 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 	$.ajax("/chat/check?chatRoomId=" + chatRoomId + "&lastChatId=" + lastChatIdParam, {
 		success: function(chatList1) {
 			const chatList = chatList1.chatList;
-			console.log(chatList.myUserId);
-			console.log(chatList.length);
-			console.log(chatList);
 			if (chatList.length === 0) {
 				return;
 			}
@@ -199,7 +208,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 				if (chat.senderId === chatList1.myUserId) {
 					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
-                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
             	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
@@ -208,7 +217,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 	                    `)
 					} else {
 						$("#chatContainer").append(`
-                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
             	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
         	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
     	                    </div>
@@ -217,18 +226,18 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 				} else {
 					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
-	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 								</div>
-	                            <div>${chat.time}</div>
+	                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 	                        </div>
 	                    `)
 					} else {
 						$("#chatContainer").append(`
-	                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+	                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 	                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-	                            <div>${chat.time}</div>
+	                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 	                        </div>
 	                    `)
 					}
@@ -440,10 +449,75 @@ $("#searchRemove").click(function() {
 	showList();
 })
 
-function scrollToBottom() {
-	var chatBox = document.getElementById("chatBox");
-	chatBox.scrollTop = chatBox.scrollHeight;
-}
+$("#chatSearchOpenBtn").click(function() {
+	$("#chatSearchBox").css("display", "flex");
+	$("#chatSearchBtn").show();
+	$("#nextBtn").hide();
+})
+
+$("#chatSearchRemove").click(function() {
+	$("#chatSearch").val("");
+	$("#chatSearchBox").css("display", "none");
+})
+
+$("#chatSearch").keyup(function() {
+	$("#chatSearchBtn").show();
+	$("#nextBtn").hide();
+})
+
+$("#chatSearchBtn").click(function() {
+	var search = $("#chatSearch").val();
+	var chatRoomId = lastChatRoomId;
+	var count = 1;
+	if($("#sendChatBtn").is(":hidden")) {
+		$.ajax("/groupChat/search?search=" + search + "&chatRoomId=" + chatRoomId, {
+			success: function(data) {
+				var idList = data.chatList;
+				var element = idList[0];
+				if(idList.length <= 0) {
+        			alert('검색어를 찾을 수 없습니다.');
+				} else {
+					$("#chatSearchBtn").hide();
+					$("#nextBtn").show();
+					document.getElementById(element).scrollIntoView(false);
+					$("#nextBtn").click(function() {
+						element = idList[count];
+						document.getElementById(element).scrollIntoView(false);
+						if(count === idList.length - 1) {
+							count = 0;
+						} else {
+							count = count + 1;
+						}
+					})
+				}
+			}
+		})		
+	} else {
+		$.ajax("/chat/search?search=" + search + "&chatRoomId=" + chatRoomId, {
+			success: function(data) {
+				var idList = data.chatList;
+				var element = idList[0];
+				if(idList.length <= 0) {
+        			alert('검색어를 찾을 수 없습니다.');
+				} else {
+					$("#chatSearchBtn").hide();
+					$("#nextBtn").show();
+					document.getElementById(element).scrollIntoView(false);
+					$("#nextBtn").click(function() {
+						element = idList[count];
+						document.getElementById(element).scrollIntoView(false);
+						if(count === idList.length - 1) {
+							count = 0;
+						} else {
+							count = count + 1;
+						}
+					})
+				}
+			}
+		})
+	}
+});
+
 
 $("#personalChatRoomListBtn").click(function() {
 	showList();

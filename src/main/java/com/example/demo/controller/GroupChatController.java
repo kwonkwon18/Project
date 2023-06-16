@@ -160,4 +160,21 @@ public class GroupChatController {
 		map.put("chatInsertedList", chatInsertedList);
 		return map;
 	}
+	
+	@GetMapping("memberCheck")
+	@ResponseBody
+	public Map<String, Object> MemberCheck(@RequestParam("lastChatRoomId") Integer lastChatRoomId) {
+		Map<String, Object> map = new HashMap<>();
+		System.out.println(lastChatRoomId);
+		map.put("memberList", service.getMember(lastChatRoomId));
+		return map;
+	}
+	
+	@GetMapping("search")
+	@ResponseBody
+	public Map<String, Object> groupChatSearch(String search, Integer chatRoomId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("chatList", service.searchGroupChatId(search, chatRoomId));
+		return map;
+	}
 }

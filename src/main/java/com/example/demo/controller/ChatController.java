@@ -203,6 +203,14 @@ public class ChatController {
 		return map;
 	}
 	
+	@GetMapping("search")
+	@ResponseBody
+	public Map<String, Object> chatSearch(String search, Integer chatRoomId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("chatList", service.searchChatId(search, chatRoomId));
+		return map;
+	}
+	
 
 	
 }

@@ -26,7 +26,7 @@ public class ChatService {
 
 	@Autowired
 	private S3Client s3;
-	
+
 	@Value("${aws.s3.bucketUrl}")
 	private String bucketUrl;
 
@@ -51,6 +51,7 @@ public class ChatService {
 			list.get(i).setTime(time.getHour() + ":" + time.getMinute());
 			list.get(i).setImgUrl(bucketUrl + "/ChatRoom/" + chatRoomId + "/" + list.get(i).getFileName());
 		}
+
 		return list;
 	}
 
@@ -178,7 +179,7 @@ public class ChatService {
 				s3.putObject(por, rb);
 
 				chat.setFileName(file.getOriginalFilename());
-				
+
 				mapper.insertFileChat(chat);
 			}
 		}
@@ -187,12 +188,16 @@ public class ChatService {
 	public List<ChatRoom> findRoomSelectBySearch(String search, String myId) {
 		List<String> searchId = memberMapper.UserIdSelectBySearch(search);
 		List<ChatRoom> list = new ArrayList<>();
-		for(String s : searchId) {
-			if(mapper.findRoomSelectBySearch(s, myId) != null) {
+		for (String s : searchId) {
+			if (mapper.findRoomSelectBySearch(s, myId) != null) {
 				list.add(mapper.findRoomSelectBySearch(s, myId));
-			} 
+			}
 		}
 		return list;
+	}
+
+	public List<Integer> searchChatId(String search, Integer chatRoomId) {
+		return mapper.searchChatId(search, chatRoomId);
 	}
 
 }

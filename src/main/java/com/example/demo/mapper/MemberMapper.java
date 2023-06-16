@@ -85,4 +85,3 @@ public interface MemberMapper {
 
 	
 }
-

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -217,7 +219,12 @@ $('#rejectPartyBtn${status.index + 1}').click(function() {
 });
 </script>
 
-
+	<sec:authorize access="isAuthenticated()">
+		<my:chatBtn></my:chatBtn>
+		<script src="/js/groupChat.js"></script>
+		<script src="/js/chat.js" charset="UTF-8"></script>
+	</sec:authorize>
+	<script src="/js/running/runningMate.js" charset="UTF-8"></script>
 	<script src="/js/running/runningMate.js"></script>
 </body>
 </html>

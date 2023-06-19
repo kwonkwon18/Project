@@ -50,79 +50,85 @@
 			</button>
 		</div>
 
-		<h2>메이트구하기</h2>
-
 		<nav>
 			<ul>
 				<span style="margin-left: 50px;"></span>
 				<a id="all1" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
+				&nbsp; &nbsp;
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색</a>
-				<div class="dropdown-menu" aria-labelledby="search1">
-					<a class="dropdown-item" href="#">메뉴 항목 1</a>
-					<a class="dropdown-item" href="#">메뉴 항목 2</a>
-					<a class="dropdown-item" href="#">메뉴 항목 3</a>
-				</div>
-				<a href="runningMap" style="text-decoration-line: none;">지도로 보기</a>
-				<span style="margin-left: 480px;"></span>
-				<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
-				<!-- <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
+				&nbsp; &nbsp;
+				<a href="runningMap" style="text-decoration-line: none;">
+					지도로 보기
+					<i class="fa-solid fa-map-location-dot"></i>
+				</a>
+				<span style="margin-left: 800px;">
+					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성 ⚡</button>
+				</span>
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<form action="/running/runningMate" class="d-flex" role="search">
-						<select class="form-select" name="type" id="">
-							<option value="all">전체</option>
-							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
-							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
-							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
-						</select>
-						<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</form>
+					<div class="d-flex justify-content-start align-items-center">
+						<form action="/running/runningMate" class="d-flex align-items-center" role="search">
+							<div class="form-group">
+								<select class="form-select" name="type" id="">
+									<option value="all">전체</option>
+									<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
+									<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
+								</select>
+							</div>
+							<div class="form-group mx-2">
+								<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+							</div>
+							<button class="btn btn-outline-success" type="submit">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+						</form>
+					</div>
 				</ul>
 			</div>
 		</nav>
 
-		<ul>
+		<!-- <ul>
 			<div style="text-align: right;">
 				<a href="/running/runningMate?type=distance" style="text-decoration-line: none;">거리순</a>
 				<a href="/running/runningMate" style="text-decoration-line: none;">최신순</a>
 			</div>
-		</ul>
+		</ul> -->
 
 
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach items="${runningMates}" var="board" varStatus="status">
+
+				<c:set var="isMember" value="false" />
+				<c:forEach items="${memberList}" var="memberList">
+					<c:if test="${memberList.nickName eq board.writer}">
+						<c:set var="isMember" value="true" />
+					</c:if>
+				</c:forEach>
+
 				<c:if test="${status.index < 3 }">
 					<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
 					<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 					<div class="col">
-						<div class="card">
+						<div class="card ${isMember ? 'card-member' : 'card-nonMember'}">
 							<div class="card-body">
 								<h5 class="card-title">🏃‍♀️🏃‍♂️ ${board.title}</h5>
 								<div>
 									<div class="mb-3">
 										<label for="" class="form-label">작성자</label>
-										<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
+										<span id="writerData${status.index + 1}" type="text" class="form-control">${board.writer}</span>
 									</div>
 									<div class="mb-3">
 										<label for="" class="form-label">모임장소</label>
-										<input id="addressText" type="text" class="form-control" value="${board.address }" readonly />
+										<span id="addressText" class="form-control">${board.address}</span>
 									</div>
 									<div class="mb-3">
 										<label for="" class="form-label">모임시간</label>
-										<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+										<span id="timeText" class="form-control">${board.time}</span>
 									</div>
 
-									<c:set var="isMember" value="false" />
-									<c:forEach items="${memberList}" var="memberList">
-										<c:if test="${memberList.nickName eq board.writer}">
-											<c:set var="isMember" value="true" />
-										</c:if>
-									</c:forEach>
+
+
 
 									<c:if test="${openDate <= nowDate }">
 										<button>마감된 러닝</button>
@@ -131,7 +137,7 @@
 									<c:if test="${openDate > nowDate }">
 										<c:if test="${isMember}">
 											<div class="card-footer card-footer-gray" style="text-align: right">
-												<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+												<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 											</div>
 										</c:if>
 
@@ -149,29 +155,59 @@
 			</c:forEach>
 		</div>
 
+		<br />
+		<br />
+
 		<h2>오늘의 러닝</h2>
 		<!-- 새로 작성된 코드, 변경된 코드  -->
 		<!-- table.table>thead>tr>th*4^^tbody -->
-		<div style="display: flex;">
-			<button type="button" class="btn btn-success" onclick="location.href='runningTodayList'">전체보기</button>
-			<button type="button" class="btn btn-success" onclick="location.href='runningToday'">글쓰기</button>
-			<div style="flex: 1; margin-left: 800px;" id="mateMapBox">
-				<ul style="display: flex; align-items: left;">
-					<form action="/running/runningTodayList" class="d-flex" role="search">
-						<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</form>
+
+		<%-- 		<ul style="display: flex; align-items: center;">
+			<span style="margin-left: 50px;"></span>
+			<a id="all2" href="/running/runningTodayList" style="text-decoration-line: none; display: inline-block;">전체</a>
+			&nbsp; &nbsp;
+			<form action="/running/runningTodayList" class="d-flex" role="search">
+				<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex-grow: 1;">
+				<button class="btn btn-outline-success" type="submit">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
+			</form>
+			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'" style="margin-left: auto;">러닝 공유하기 ⚡</button>
+		</ul> --%>
+
+		<nav>
+			<ul>
+				<span style="margin-left: 50px;"></span>
+				<a id="all2" href="/running/runningTodayList" style="text-decoration-line: none; display: inline-block;">전체</a>
+				&nbsp; &nbsp;
+				<a class="dropdown-toggle" href="#" role="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색</a>
+				&nbsp; &nbsp;
+				<span style="margin-left: 900px;">
+					<button type="button" class="btn btn-success" onclick="location.href='runningToday'" style="margin-left: auto;">러닝 공유하기 ✨</button>
+				</span>
+			</ul>
+			<div id="dropdown2" style="display: none">
+				<ul>
+					<div class="d-flex justify-content-start align-items-center">
+						<form action="/running/runningTodayList" class="d-flex" role="search">
+							<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex-grow: 1;">
+							<button class="btn btn-outline-success" type="submit">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+						</form>
+					</div>
 				</ul>
 			</div>
-		</div>
+		</nav>
+
+
+
 
 		<div class="row">
 			<c:forEach items="${runningTodayList}" var="boardToday" varStatus="status">
 				<c:if test="${status.index < 3 }">
 					<div class="col-md-4 todayListData" data-board-boardId="${boardToday.id }" onclick='newPage(${boardToday.id })'>
-						<div class="card">
+						<div class="card todayCard">
 							<div class="card-body">
 								<h5 class="card-title">🌄${boardToday.title}</h5>
 								<p class="card-text">${boardToday.writer}</p>
@@ -188,7 +224,7 @@
 							<c:forEach items="${boardToday.fileName }" var="fileName" varStatus="status">
 								<c:if test="${status.count lt 2 }">
 									<div>
-										<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${boardToday.id }/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
+										<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${boardToday.id }/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
 									</div>
 								</c:if>
 							</c:forEach>
@@ -226,6 +262,22 @@
 		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 		<script src="/js/running/runningMate.js" charset="UTF-8"></script>
 		<script src="/js/running/runningTodayList.js" charset="UTF-8"></script>
+
+		<style>
+.card-member {
+	border: 4px solid #56B37F;
+}
+
+.card-nonMember {
+	border: 4px solid #646EFF;
+}
+
+.todayCard {
+	border: 4px solid #828282;
+}
+</style>
+
+
 
 		<script src="/js/navBar.js"></script>
 </body>

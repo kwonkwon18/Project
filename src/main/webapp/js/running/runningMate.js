@@ -320,4 +320,11 @@ $("#search1").click(function() {
 	$("#dropdown1").slideDown()
 })
 
+$("#all2").click(function() {
+	$("#dropdown2").slideUp()
+})
+$("#search2").click(function() {
+	$("#dropdown2").slideDown()
+})
+
 

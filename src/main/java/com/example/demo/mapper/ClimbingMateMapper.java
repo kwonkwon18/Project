@@ -289,6 +289,7 @@ public interface ClimbingMateMapper {
 			left join ClimbingParty p on c.id = p.boardId
 			where (c.writer = #{nickName} or p.memberId = #{nickName})
 			    and c.writer <> p.memberId
+			GROUP BY b.id
 			order by c.inserted desc;
 								         """)
 	List<ClimbingMate> selectTotalMyPageInfo(String nickName);

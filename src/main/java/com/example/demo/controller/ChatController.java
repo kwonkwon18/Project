@@ -44,7 +44,7 @@ public class ChatController {
 		List<LocalDateTime> chatInsertedList = new ArrayList<>();
 		LocalTime time;
 		for (ChatRoom chatRoom : chatRoomList) {
-			if(memberService.getNickName(authentication.getName()).equals(chatRoom.getInvited())) {
+			if(authentication.getName().equals(chatRoom.getInvited())) {
 				nickNameList.add(memberService.getNickName(chatRoom.getCreater()));
 				chatCount.add(chatRoom.getCreaterChatCount());
 			} else {

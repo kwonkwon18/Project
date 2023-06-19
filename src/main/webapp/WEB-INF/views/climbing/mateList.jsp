@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,9 @@
 </head>
 <body>
 
-	<my:navBar></my:navBar>
+
+	<my:navBarClimbing></my:navBarClimbing>
+
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -50,37 +52,42 @@
 		<br />
 		<nav>
 			<ul>
-				<a id="all1" href="#" style="text-decoration-line: none;">전체</a>
+				<a id="all1" href="mateList" style="text-decoration-line: none;">전체</a>
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 				<div class="dropdown-menu" aria-labelledby="search1">
 					<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
 				</div>
 				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-				<span style="margin-left: 700px;"></span>
-				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-<!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
+				<span style="margin-left: 735px;">
+					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
+					<button type="button" class="btn btn-success" onclick="location.href='https://www.weather.go.kr/w/weather/forecast/mid-term.do'">날씨 보기</button>
+				</span>
+				<!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<form action="/futsal/futsalMate" class="d-flex" role="search">
+
+					<form action="/climbing/mateList" class="d-flex" role="mateSearch">
+
 						<select class="form-select" name="type" id="" style="width: 150px">
 							<option value="all">전체</option>
 							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
 							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
 							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
-						</select> <input value="${param.search}" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+						</select> <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
 						<button class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
-					</form>	
+					</form>
 				</ul>
 			</div>
 		</nav>
 
 		<ul>
 			<div style="text-align: right;">
-				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
+				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> 
+				<a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
 			</div>
 		</ul>
 
@@ -142,15 +149,16 @@
 
 
 
-	<my:chatBtn></my:chatBtn>
-	<!-- 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script> -->
-	<!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-	<!-- 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
-	<!-- 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> -->
-	<!-- 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+	<sec:authorize access="isAuthenticated()">
+		<my:chatBtn></my:chatBtn>
+		<script src="/js/groupChat.js"></script>
+		<script src="/js/chat.js" charset="UTF-8"></script>
+	</sec:authorize>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+	<script src="/js/climbing/mateList.js"></script>
+	<script src="/js/climbing/navBar.js"></script>
 
 	<script type="text/javascript">
 		$("#search1").click(function() {
@@ -161,8 +169,8 @@
 			}
 		});
 	</script>
-	<script src="/js/climbing/mateList.js"></script>
-	<script src="/js/chat.js"></script>
+
+
 
 	<script>
 		function changeDropdownItem(item) {

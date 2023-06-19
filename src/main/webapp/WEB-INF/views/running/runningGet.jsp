@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
 </head>
 <body>
 
-<my:navBar></my:navBar>
+	<my:navBarRunning></my:navBarRunning>
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -29,22 +30,22 @@
 
 	<div class="container-lg">
 
+
+
 		<div class="row justify-content-center">
 			<div id="map" style="width: 500px; height: 500x;"></div>
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
 					<div class="me-auto">
 						<h1>
-							<span id="boardIdText"> ${board.id } </span>
-							번게시물${formattedDate }
+							<span id="boardIdText"> ${board.id } </span> 번게시물${formattedDate }
 						</h1>
 					</div>
 				</div>
 
 				<div>
 					<div class="mb-3">
-						<label for="" class="form-label">제목</label>
-						<input type="text" class="form-control" value="${board.title }" readonly />
+						<label for="" class="form-label">제목</label> <input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
 
 
@@ -54,72 +55,75 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">작성자</label>
-						<input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
+						<label for="" class="form-label">작성자</label> <input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">모임시간</label>
-						<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+						<label for="" class="form-label">모임시간</label> <input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">작성일시</label>
-						<input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
+						<label for="" class="form-label">작성일시</label> <input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
-					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
-					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
-
-
-
-					<label for="" class="form-label">신청한 사람 </label>
-					<c:forEach items="${members}" var="member">
-						<c:if test="${board.id eq member.boardId}">
-							<div class="mb-3">
-								<input type="text" readonly class="form-control" value="${member.memberId}" />
-							</div>
-						</c:if>
-					</c:forEach>
-
-					<div>
-						<a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
-						<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
-					</div>
-
-
-					<div class="d-none">
-						<form action="/running/runningRemove" method="post" id="removeForm">
-							<input type="text" name="id" value="${board.id }" />
-						</form>
-					</div>
-
-
-					<!-- Modal -->
-						<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<div class="modal-body">삭제 하시겠습니까?</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-									<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
+					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 
 					<!-- 본인 게시물 확인 -->
 					<c:set var="isUser" value="false" />
 					<c:forEach items="${memberList}" var="memberList">
 						<c:if test="${memberList.nickName eq board.writer}">
 							<c:set var="isUser" value="true" />
+							<c:set var="userName" value="${memberList.nickName}" />
 						</c:if>
 					</c:forEach>
+
+
+
+					<label for="" class="form-label">신청한 사람 </label>
+					<c:forEach items="${members}" var="member">
+						<!-- 보드아이디와 멤버의 보드아이디가 같은 경우 -->
+						<!-- 멤버의 아이디와 작성자가 같은 경우는 해주면 안됨  -->
+						<c:if test="${board.id eq member.boardId && board.writer ne member.memberId}">
+							<div class="mb-3">
+								<input type="text" readonly class="form-control" value="${member.memberId}" />
+							</div>
+						</c:if>
+					</c:forEach>
+
+
+					<sec:authorize access="#board.writer eq #userName">
+						<div>
+							<a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
+							<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
+						</div>
+
+
+
+
+						<div class="d-none">
+							<form action="/running/runningRemove" method="post" id="removeForm">
+								<input type="text" name="id" value="${board.id }" />
+							</form>
+						</div>
+
+
+						<!-- Modal -->
+						<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">삭제 하시겠습니까?</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+										<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</sec:authorize>
+
 
 					<c:forEach items="${memberList}" var="memberList">
 						<c:set var="memberNickName" value="${memberList.nickName}" />
@@ -135,6 +139,22 @@
 						</c:if>
 					</c:forEach>
 
+					<!-- 대기인원 확인  -->
+					<c:set var="isWaiting" value="false" />
+					<c:forEach items="${waitingMembers}" var="waitingMembers">
+						<c:if test="${waitingMembers.memberId eq memberNickName}">
+							<c:set var="isWaiting" value="true" />
+						</c:if>
+					</c:forEach>
+
+					<!-- 거절인원 확인  -->
+					<c:set var="isReject" value="false" />
+					<c:forEach items="${rejectMembers}" var="rejectMembers">
+						<c:if test="${rejectMembers.memberId eq memberNickName}">
+							<c:set var="isReject" value="true" />
+						</c:if>
+					</c:forEach>
+
 
 
 					<div>
@@ -145,31 +165,49 @@
 
 							<c:if test="${openDate > nowDate }">
 
-								<c:choose>
-									<c:when test="${isMember}">
-										<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
-									</c:when>
-									<c:otherwise>
-										<c:if test="${board.people > board.currentNum }">
-											<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
-               </c:if>
-									</c:otherwise>
-								</c:choose>
+								<c:if test="${isReject }">
+									<button id="">거절된 러닝입니다.</button>
+								</c:if>
 
-								<c:if test="${board.people <= board.currentNum }">
-									<button>마감</button>
+								<c:if test="${not isReject }">
+
+
+									<c:if test="${not isWaiting }">
+										<!-- 실제로 신청 되기 전에도 취소하기가 보여야함   -->
+										<c:choose>
+											<c:when test="${isMember}">
+												<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
+											</c:when>
+											<c:otherwise>
+												<c:if test="${board.people > board.currentNum }">
+													<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+           									    </c:if>
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+
+									<c:if test="${isWaiting }">
+										<button>신청대기중👼👼👼</button>
+										<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️</button>
+									</c:if>
+
+									<c:if test="${board.people <= board.currentNum }">
+										<button>마감</button>
+									</c:if>
 								</c:if>
 							</c:if>
 
 
 							<input type="text" id="totalPeople" value="${board.people }" />
-							<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
 							<p id="currentPeople"></p>
 							<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
 						</c:if>
 
 						<c:if test="${isUser}">
 							<button>내가 올린 게시물</button>
+							<input type="text" id="totalPeople" value="${board.people }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
 						</c:if>
 					</div>
 
@@ -179,9 +217,15 @@
 
 					<!-- **************************************************  -->
 
+					<sec:authorize access="isAuthenticated()">
+						<my:chatBtn></my:chatBtn>
+						<script src="/js/groupChat.js"></script>
+						<script src="/js/chat.js" charset="UTF-8"></script>
+					</sec:authorize>
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 					<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 					<script src="/js/running/runningGet.js"></script>
+					<script src="/js/navBar.js"></script>
 </body>
 </html>

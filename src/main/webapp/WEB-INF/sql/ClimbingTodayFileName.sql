@@ -7,7 +7,8 @@ CREATE TABLE ClimbingTodayFileName (
     FOREIGN KEY (todayId) REFERENCES ClimbingToday(id)
 );
 
-SELECT * FROM ClimbingBoardFileName;
+SELECT * FROM ClimbingTodayFileName;
+DESC ClimbingTodayFileName;
 
 ALTER TABLE ClimbingTodayFileName
 MODIFY id INT PRIMARY KEY AUTO_INCREMENT;

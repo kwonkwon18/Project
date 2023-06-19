@@ -8,7 +8,6 @@ CREATE TABLE ClimbingMate (
     inserted DATETIME DEFAULT NOW()
 );
 
-DROP TABLE ClimbingMate;
 
 SELECT * FROM ClimbingMate;
 
@@ -58,3 +57,11 @@ ADD time DATETIME NOT NULL;
 ALTER TABLE ClimbingMate
 MODIFY COLUMN time DATETIME NOT NULL;
 
+ALTER TABLE ClimbingMate
+ADD FOREIGN KEY (writer) REFERENCES Member(nickName);
+
+select * FROM RunningBoard;
+
+DESC RunningBoard;
+DESC ClimbingMate;
+ALTER TABLE ClimbingMate ADD FOREIGN KEY (writer) REFERENCES Member (nickName);

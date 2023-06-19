@@ -1,7 +1,8 @@
 package com.example.demo.service;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.Member;
+import com.example.demo.domain.RunningLike;
 import com.example.demo.domain.RunningToday;
+import com.example.demo.mapper.RunningLikeMapper;
 import com.example.demo.mapper.RunningMapper;
 import com.example.demo.mapper.RunningTodayMapper;
 
@@ -35,10 +38,41 @@ public class RunningTodayService {
 	@Autowired
 	private RunningMapper mapper;
 
-	public List<RunningToday> listBoard() {
+	@Autowired
+	private RunningLikeMapper likeMapper;
 
-		return todayMapper.selectList();
+	public List<RunningToday> listBoard(String search) {
 
+		return todayMapper.selectList(search);
+
+	}
+
+	// ** After
+	public Map<String, Object> like(RunningLike like, Authentication auth) {
+
+		// json을 보내줄 때는 ResponseEntity와 Map의 타입을 활용한다.
+		Map<String, Object> result = new HashMap<>();
+
+		// 기본 값으로 key = like, value = false를 넣어준다.
+		result.put("like", false);
+
+		// memberid를 인증된 사람의 id로 바꿔준다.
+		like.setMemberId(auth.getName());
+
+		// 로직은 먼저 삭제를 하고 삭제가 만약 삭제가 안되었으면
+		// like 에 해당 정보를 insert 하고 json { "like" : true} 를 반환해준다.
+		Integer deleteCnt = likeMapper.delete(like);
+
+		if (deleteCnt != 1) {
+			Integer insertCnt = likeMapper.insert(like);
+			result.put("like", true);
+		}
+
+		// 좋아요 갯수 넘겨주기
+		Integer count = likeMapper.countByBoardId(like.getBoardId());
+		result.put("count", count);
+
+		return result;
 	}
 
 	public boolean addRunningToday(Authentication authentication, RunningToday runningToday, MultipartFile[] files)
@@ -46,7 +80,7 @@ public class RunningTodayService {
 
 		Member member = mapper.selectMemberById(authentication.getName());
 		runningToday.setWriter(member.getNickName());
-		
+
 		Integer cnt = todayMapper.insertRunningToday(runningToday);
 
 		for (MultipartFile file : files) {
@@ -72,12 +106,21 @@ public class RunningTodayService {
 
 	}
 
-	public RunningToday getBoard(Integer id) {
-		System.out.println("***" + todayMapper.selectFileNameById(id));
-		return todayMapper.selectFileNameById(id);
+	public RunningToday getBoard(Integer id, Authentication authentication) {
+		RunningToday runningToday = todayMapper.selectFileNameById(id);
+
+		// like 여부가 표시되게 하기 위함
+		if (authentication != null) {
+			RunningLike like = likeMapper.select(id, authentication.getName());
+			if (like != null) {
+				runningToday.setLiked(true);
+			}
+		}
+		return runningToday;
 	}
 
-	public boolean todayModify(RunningToday runningToday, List<String> removeFileNames, MultipartFile[] addFiles) throws Exception {
+	public boolean todayModify(RunningToday runningToday, List<String> removeFileNames, MultipartFile[] addFiles)
+			throws Exception {
 		// FileName 테이블 삭제
 		// List<String> removeFileNamse에 뭐라도 있다면..
 		if (removeFileNames != null && !removeFileNames.isEmpty()) {
@@ -122,9 +165,9 @@ public class RunningTodayService {
 	}
 
 	public boolean removeById(Integer id) {
-		
+
 		Integer cnt = todayMapper.deletefileNameById(id);
-		
+
 		return todayMapper.deleteTodayById(id);
 	}
 }

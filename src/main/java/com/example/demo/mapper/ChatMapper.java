@@ -34,7 +34,6 @@ public interface ChatMapper {
 	@Insert("""
 			INSERT INTO Chat(chatRoomId, senderId, recipientId, message)
 			VALUES(#{chatRoomId}, #{senderId}, #{recipientId}, #{message})
-			
 			""")
 	void addChat(Chat data);
 
@@ -143,5 +142,24 @@ public interface ChatMapper {
 			VALUES(#{myId}, #{yourId})
 			""")
 	void createChatRoom(String myId, String yourId);
+
+	@Insert("""
+			INSERT INTO Chat(chatRoomId, senderId, recipientId, message, fileName)
+			VALUES(#{chatRoomId}, #{senderId}, #{recipientId}, #{fileName}, #{fileName})
+			""")
+	void insertFileChat(Chat chat);
+
+	@Select("""
+	        SELECT * FROM ChatRoom
+	        WHERE (creater = #{yourId} AND invited = #{myId}) OR (creater = #{myId} AND invited = #{yourId})
+	        """)
+	ChatRoom findRoomSelectBySearch(String yourId, String myId);
+
+	@Select("""
+			SELECT id FROM Chat
+			WHERE message LIKE CONCAT('%', #{search}, '%') AND chatRoomId = #{chatRoomId}
+			""")
+	List<Integer> searchChatId(String search, Integer chatRoomId);
+
 
 }

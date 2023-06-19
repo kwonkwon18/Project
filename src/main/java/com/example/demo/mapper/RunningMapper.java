@@ -45,7 +45,7 @@ public interface RunningMapper {
 			    COUNT(rp.boardId) AS currentNum
 			FROM
 			    RunningBoard r
-			    LEFT JOIN RunningParty rp ON r.id = rp.boardId
+			    LEFT JOIN RunningParty rp ON r.id = rp.boardId and participation = 1
 			    LEFT JOIN Member m ON r.writer = m.nickName
 			WHERE
 			    r.id = #{id}
@@ -124,10 +124,18 @@ public interface RunningMapper {
 			""")
 	List<RunningParty> selectMemberId(String writer);
 
+	/*
+	 * @Select(""" select boardId ,memberId from RunningParty p left join
+	 * RunningBoard b ON p.boardId = b.id where boardId = #{boardId} and userId =
+	 * #{writer} """) List<RunningParty> selectMemberIdByBoardId(Integer boardId,
+	 * String writer);
+	 */
+
 	@Select("""
 			select boardId ,memberId
-			from RunningParty p left join RunningBoard b ON p.boardId = b.id
-			where boardId = #{boardId} and userId = #{writer}
+			from RunningParty p
+				left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} and userId = #{writer} and participation = 1
 			""")
 	List<RunningParty> selectMemberIdByBoardId(Integer boardId, String writer);
 
@@ -202,8 +210,8 @@ public interface RunningMapper {
 				</foreach>
 				)
 				</if>
-				
-				 AND time > DATE_SUB(NOW(), INTERVAL 3 DAY) -- 수정된 부분
+
+				 AND time > DATE_SUB(NOW(), INTERVAL 3 DAY)
 
 				</where>
 
@@ -247,7 +255,7 @@ public interface RunningMapper {
 	@Select("""
 			select p.boardId , p.memberId, p.userId
 			from RunningParty p left join RunningBoard b ON p.boardId = b.id
-			where boardId = #{boardId} group by p.boardId, p.memberId;
+			where boardId = #{boardId} and participation = 1 group by p.boardId, p.memberId;
 						""")
 	@ResultMap("boardResultMap2")
 	List<RunningParty> selectForMemberIdByBoardId(Integer boardId);
@@ -258,21 +266,24 @@ public interface RunningMapper {
 	Member getNickName(String userId);
 
 	@Select("""
-			 select
-			   b.id,
-			   b.title,
-			   b.body,
-			   b.writer,
-			   b.inserted,
-			   b.Lat,
-			   b.Lng,
-			   b.people,
-			   b.time,
-			   b.address,
-			   memberId
-			   FROM RunningBoard b left join RunningParty p on b.id = p.boardId
-			   where b.writer = #{nickName} or p.memberId = #{nickName2};
-			""")
+			select
+			    b.id,
+			    b.title,
+			    b.body,
+			    b.writer,
+			    b.inserted,
+			    b.Lat,
+			    b.Lng,
+			    b.people,
+			    b.time,
+			    b.address,
+			    memberId
+			from RunningBoard b
+			left join RunningParty p on b.id = p.boardId
+			where (b.writer = #{nickName} or p.memberId = #{nickName2})
+			    and b.writer <> p.memberId
+			order by b.inserted desc;
+					         """)
 	List<RunningBoard> selectTotalMyPageInfo(String nickName, String nickName2);
 
 	@Update("""
@@ -308,6 +319,43 @@ public interface RunningMapper {
 			where boardId = #{id} AND fileName = #{fileName}
 			""")
 	void deleteFileNameByBoardIdAndFileName(Integer id, String fileName);
+
+	@Select("""
+			Select userId from Member where nickName = #{hostNickName}
+			""")
+	String findHost(String hostNickName);
+
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} and participation = 0 group by p.boardId, p.memberId;
+						""")
+	@ResultMap("boardResultMap2")
+	List<RunningParty> selectWaitingMemberIdByBoardIdForModal(Integer boardId);
+
+	@Select("""
+			select boardId ,memberId
+			from RunningParty p
+				left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} and userId = #{writer} and participation = 0
+			""")
+	List<RunningParty> selectWaitingMemberIdByBoardId(Integer boardId, String writer);
+
+	@Select("""
+			select boardId ,memberId
+			from RunningParty p
+				left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} and userId = #{writer} and participation = 2
+			""")
+	List<RunningParty> selectRejectMemberIdByBoardId(Integer boardId, String writer);
+
+	@Select("""
+			select p.boardId , p.memberId, p.userId
+			from RunningParty p left join RunningBoard b ON p.boardId = b.id
+			where boardId = #{boardId} and participation = 2 group by p.boardId, p.memberId;
+						""")
+	@ResultMap("boardResultMap2")
+	List<RunningParty> selectRejectMemberIdByBoardIdForModal(Integer boardId);
 
 //	@Select("""
 //			<scipt>

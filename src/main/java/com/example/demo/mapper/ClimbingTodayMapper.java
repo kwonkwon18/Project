@@ -25,6 +25,28 @@ public interface ClimbingTodayMapper {
 	
 	
 	@Select("""
+		    SELECT
+		        c.id,
+		        c.title,
+		        c.body,
+		        c.writer,
+		        c.inserted,
+		        f.fileName,
+		        (SELECT COUNT(*) FROM ClimbingTodayLike cl WHERE cl.boardId = c.id) likeCount,
+		        (SELECT COUNT(*) FROM ClimbingTodayComment ct WHERE ct.boardId = c.id) commentCount
+		    FROM 
+		        ClimbingToday c 
+		        LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+		        LEFT JOIN ClimbingTodayLike cl on c.id = cl.boardId
+		        LEFT JOIN ClimbingTodayComment ct on c.id = ct.boardId
+		    WHERE c.title LIKE '%${todaySearch}%'
+		    ORDER BY c.id DESC
+		""")
+		@ResultMap("climbingTodayResultMap")
+		List<ClimbingToday> selectListByTodaySearch(String todaySearch);
+
+	
+	@Select("""
 			SELECT
 				c.id,
 				c.title,
@@ -33,7 +55,8 @@ public interface ClimbingTodayMapper {
 				c.inserted,
 				f.fileName
 			FROM ClimbingToday c LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
-			ORDER BY Id DESC;
+			WHERE c.title LIKE '%${todaySearch}%'
+			ORDER BY Id DESC
 			""")
 	@ResultMap("climbingTodayResultMap")
 	List<ClimbingToday> selectListForList();
@@ -45,8 +68,14 @@ public interface ClimbingTodayMapper {
 				c.body,
 				c.writer,
 				c.inserted,
-				f.fileName
-			FROM ClimbingToday c LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+				f.fileName,
+				m.userId,
+				(select count(*) from ClimbingTodayLike where boardId = c.id) likeCount
+			FROM 
+				ClimbingToday c 
+				LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+				LEFT JOIN Member m ON c.writer = m.nickName
+				LEFT JOIN ClimbingTodayLike cl on c.id = cl.boardId
 			WHERE c.id = #{id}
 			""")
 	@ResultMap("climbingTodayResultMap")
@@ -84,7 +113,6 @@ public interface ClimbingTodayMapper {
 	@Delete("""
 			DELETE FROM ClimbingTodayFileName
 			WHERE todayId = #{todayId}
-				AND fileName = #{fileName}
 			""")
 	void deleteFileNameByTodayId(Integer id);
 
@@ -100,7 +128,31 @@ public interface ClimbingTodayMapper {
 			""")
 	Member selectMemberById(String userId);
 
+	@Select("""
+			SELECT * FROM ClimbingToday
+			WHERE title LIKE '%${searchTerm}%'
+			""")	
+	List<ClimbingToday> selectBySearchTerm(String searchTerm);
 
+	@Select("""
+		    SELECT
+		        c.id,
+		        c.title,
+		        c.body,
+		        c.writer,
+		        c.inserted,
+		        f.fileName,
+		        (SELECT COUNT(*) FROM ClimbingTodayLike cl WHERE cl.boardId = c.id) likeCount,
+		        (SELECT COUNT(*) FROM ClimbingTodayComment ct WHERE ct.boardId = c.id) commentCount
+		    FROM 
+		        ClimbingToday c 
+		        LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+		        LEFT JOIN ClimbingTodayLike cl on c.id = cl.boardId
+		        LEFT JOIN ClimbingTodayComment ct on c.id = ct.boardId
+		    ORDER BY c.id DESC
+		""")
+	@ResultMap("climbingTodayResultMap")
+	List<ClimbingToday> selectTodayList();
 	
 
 }

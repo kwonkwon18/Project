@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
 <!DOCTYPE html>
@@ -12,6 +14,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+	<my:navBarClimbing> </my:navBarClimbing>
+	
 	<div id="map" style="width: 100%; height: 350px;"></div>
   
    <%
@@ -38,10 +42,10 @@
 						<label for="titleInput" class="form-label">제목</label>
 						<input id="titleInput" class="form-control" type="text" name="title" value="${climbingMate.title }" />
 					</div>
-					<div class="mb-3">
-						<label for="writerInput" class="form-label">글쓴이</label>
-						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingMate.writer }" />
-					</div>
+<!-- 					<div class="mb-3"> -->
+<!-- 						<label for="writerInput" class="form-label">글쓴이</label> -->
+<%-- 						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingMate.writer }" /> --%>
+<!-- 					</div> -->
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${climbingMate.body }</textarea>
@@ -69,6 +73,8 @@
 		</div>
 	</div>
 	</div>
+
+	<my:chatBtn></my:chatBtn>
 
 	<!-- ******************************************************************  -->
 
@@ -197,6 +203,11 @@
 	</script>
 	<!-- ******************************************************************  -->
 
+	<sec:authorize access="isAuthenticated()">
+		<my:chatBtn></my:chatBtn>
+		<script src="/js/groupChat.js"></script>
+		<script src="/js/chat.js" charset="UTF-8"></script>
+	</sec:authorize>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 
 	<script src="/js/climbing/mateAdd.js"></script>

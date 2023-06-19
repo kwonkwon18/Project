@@ -12,3 +12,21 @@ CREATE TABLE ClimbingToday (
 SELECT * FROM ClimbingToday;
 
 
+		    SELECT
+		        c.id,
+		        c.title,
+		        c.body,
+		        c.writer,
+		        c.inserted,
+		        f.fileName,
+		        (SELECT COUNT(*) FROM ClimbingLike cl WHERE cl.boardId = c.id) likeCount,
+		        (SELECT COUNT(*) FROM ClimbingComment ct WHERE ct.boardId = c.id) commentCount
+		    FROM 
+		        ClimbingToday c 
+		        LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
+		        LEFT JOIN ClimbingLike cl on c.id = cl.boardId
+		        LEFT JOIN ClimbingComment ct on c.id = ct.boardId
+		    ORDER BY c.id DESC;
+
+
+

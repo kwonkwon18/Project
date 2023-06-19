@@ -19,21 +19,20 @@ public class MainController {
 
 	@Autowired
 	private ChatService chatService;
-	
+
 	@Autowired
 	private MemberService memberService;
-	
-	@GetMapping({"/", "main"})
+
+	@GetMapping({ "/", "main" })
 	public void main() {
 
 	}
-	
-	//  서재권 작업 내용***********************
+
+	// 서재권 작업 내용***********************
 	@GetMapping("login")
 	public void loginForm() {
 
 	}
-	
 
 	@GetMapping("signup")
 	public void signupForm() {
@@ -45,9 +44,9 @@ public class MainController {
 
 		try {
 			memberService.signup(member);
-			// 정보 제공을 위한 것 
+			// 정보 제공을 위한 것
 			rttr.addFlashAttribute("member", member);
-			// alert를 위한 것 
+			// alert를 위한 것
 			rttr.addFlashAttribute("message", "회원 가입되었습니다 ⭕⭕");
 			return "redirect:/login";
 
@@ -58,11 +57,75 @@ public class MainController {
 			return "redirect:/login";
 		}
 	}
+
+	@GetMapping("list")
+	public void list(Model model) {
+		List<Member> list = memberService.listMember();
+		model.addAttribute("memberList", list);
+	}
+
+	// 경로 : /member/info?id=asdf
+	@GetMapping("info")
+	public void info(String userId, Model model) {
+		Member member = memberService.get(userId);
+		System.out.println(member);
+		model.addAttribute("member", member);
+	}
+
+	@GetMapping("mypage")
+	public void myapge(String userId, Model model) {
+		Member member = memberService.get(userId);
+		System.out.println(member);
+		model.addAttribute("member", member);
+	}
+	
+//	@PostMapping("remove")
+//	public String remove(Member member,RedirectAttributes rttr) {
+//		boolean ok = memberService.remove(member);
+//		if(ok) {
+//			rttr.addFlashAttribute("message", "회원 탈퇴되었습니다.");
+//			return "redirect:/list";
+//		}
+//		else {
+//			rttr.addFlashAttribute("message", "회원 탈퇴에 문제가 생겼습니다.");
+//			return "redirect:/info?userId"+member.getUserId();
+//		}
+//	}
+	// 1.
+	@PostMapping("remove")
+	public String remove(Member member, RedirectAttributes rttr) {
+		
+		boolean ok = memberService.remove(member);
+		if (ok) {
+			rttr.addFlashAttribute("message","회원 탈퇴하였습니다.");
+			return "redirect:/list";
+		}
+		else {
+			rttr.addFlashAttribute("message", "회원 탈퇴시 문제가 발생하였습니다.");
+			return "redirect:/info";
+		}
+	}
 	
 	
+	@GetMapping("modify")
+		public void modifyForm(String userId,Model model) {
+		Member member=memberService.get(userId);
+		model.addAttribute("member",member);
+//		model.addAttribute(memberService.get(userId));
+	}
 	
-	
-	
-	
-	
+	//2.
+	@PostMapping("modify")
+	public String modifyProcess(Member member,  RedirectAttributes rttr) {
+		boolean ok = memberService.modify(member);
+		
+		if ( ok) {
+			rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다.");
+			return "redirect:/info?id=" +member.getUserId();
+		}
+		else {
+			rttr.addFlashAttribute("message", "회원 정보시 문제가 발생했습니다.");
+			return "redirect:/modify?id="+member.getUserId();
+		}
+	}
 }

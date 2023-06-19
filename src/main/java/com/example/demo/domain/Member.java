@@ -1,10 +1,9 @@
 package com.example.demo.domain;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.*;
+import java.util.*;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
 public class Member {
@@ -17,7 +16,6 @@ public class Member {
 	private LocalDateTime inserted;
 	private String birth;
 	private String gender;
-	private String career;
 	private String address;
 	private String phone;
 	private String email;

@@ -8,17 +8,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.Member;
 import com.example.demo.domain.RunningBoard;
+import com.example.demo.domain.RunningLike;
 import com.example.demo.domain.RunningParty;
-import com.example.demo.domain.RunningToday;
+import com.example.demo.mapper.RunningLikeMapper;
 import com.example.demo.mapper.RunningMapper;
 import com.example.demo.mapper.RunningPartyMapper;
 import com.example.demo.mapper.RunningTodayMapper;
-
-import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 
 @Service
 public class RunningService {
@@ -31,6 +29,9 @@ public class RunningService {
 
 	@Autowired
 	private RunningPartyMapper partyMapper;
+	
+	@Autowired
+	private RunningLikeMapper likeMapper;
 
 	public boolean addBoard(RunningBoard runningBoard, Authentication authentication) {
 
@@ -255,6 +256,14 @@ public class RunningService {
 		// 신청자가 들어감
 		List<RunningParty> members = mapper.selectForMemberIdByBoardId(boardId);
 		getMemberList.put("members", members);
+		
+		// 대기자가 들어감
+		List<RunningParty> waitingMembers = mapper.selectWaitingMemberIdByBoardIdForModal(boardId);
+		getMemberList.put("waitingMembers", waitingMembers);
+		
+		// 거절멤버
+		List<RunningParty> rejectMembers = mapper.selectRejectMemberIdByBoardIdForModal(boardId);
+		getMemberList.put("rejectMembers", rejectMembers);
 
 		// 중복 신청 방지용
 		List<Member> memberList = getUserId(authentication.getName());
@@ -289,6 +298,21 @@ public class RunningService {
 		// TODO Auto-generated method stub
 		return mapper.selectBySearchTerm(searchTerm);
 	}
+
+	
+
+
+	public List<RunningParty> selectWaitingMemberIdByBoardId(Integer id, String writer) {
+		// TODO Auto-generated method stub
+		return mapper.selectWaitingMemberIdByBoardId(id, writer);
+	}
+
+	public List<RunningParty> selectRejectMemberIdByBoardId(Integer id, String writer) {
+		// TODO Auto-generated method stub
+		return mapper.selectRejectMemberIdByBoardId(id, writer);
+	}
+
+
 
 
 

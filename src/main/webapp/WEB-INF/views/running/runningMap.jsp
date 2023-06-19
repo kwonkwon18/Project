@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
+<my:navBarRunning></my:navBarRunning>
 	<div class="container-lg">
 		<h2>메이트구하기</h2>
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -40,23 +42,6 @@
 		<a id="goToRunningMate" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
 		<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
 		
-
-		<!-- 		<div class="row" id="all3"> -->
-		<%-- 			<c:forEach items="${climbingMateList}" var="board"> --%>
-		<!-- 				<div class="col-md-4"> -->
-		<!-- 					<div class="card" style="width: 18rem;"> -->
-		<!-- 						<div class="card-body"> -->
-		<%-- 							<h5 class="card-title">🌄${board.title}</h5> --%>
-		<%-- 							<p class="card-text">작성자: ${board.writer}</p> --%>
-		<%-- 							<p class="card-text">작성일자: ${board.inserted}</p> --%>
-		<!-- 							<div style="text-align: right"> -->
-		<%-- 								<a href="/climbing/mateId/${board.id}" class="btn btn-primary">더보기</a> --%>
-		<!-- 							</div> -->
-		<!-- 						</div> -->
-		<!-- 					</div> -->
-		<!-- 				</div> -->
-		<%-- 			</c:forEach> --%>
-		<!-- 		</div> -->
 
 		<br /> <br />
 
@@ -89,6 +74,11 @@
 	
 
 
+	<sec:authorize access="isAuthenticated()">
+		<my:chatBtn></my:chatBtn>
+		<script src="/js/groupChat.js"></script>
+		<script src="/js/chat.js" charset="UTF-8"></script>
+	</sec:authorize>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -97,7 +87,7 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	
 	<script src = "/js/running/runningMap.js"></script>
-		
+		<script src = "/js/navBar.js"></script>
 
 
 </body>

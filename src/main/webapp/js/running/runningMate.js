@@ -1,9 +1,11 @@
 function handleListUpButtonClick() {
 	// 아이디 얻는 코드 
 	const boardId = $(this).attr("data-board-id");
+	const boardNickName = $(this).attr("data-board-userId");
 	let today = new Date();
 	console.log(boardId);
 	console.log(today);
+	console.log(boardNickName);
 
 
 	$.ajax("/running/getRunningDetail?boardId=" + boardId, {
@@ -53,66 +55,34 @@ function handleListUpButtonClick() {
         <label for="" class="form-label">신청자</label><br />
       `);
 
-			$(".chatRoomCheckBtn").click(function() {
-				const yourNickName = $(this).text();
-				console.log(yourNickName);
-				$.ajax("/chat/roomCheck?yourNickName=" + yourNickName, {
-					success: function(data) {
-						console.log(data.check);
-						if (data.check) {
-							$(".btn-close").click();
-							$("#chatListContainer").remove("");
-							$("#chatContainer").remove("");
-							$("#chatButton").hide();
-							$("#chatList").hide();
-							$("#chatBox").show();
-							$.ajax("/chat/roomOpen", {
-								data: { yourNickName: yourNickName },
-								contentType: "application/json",
-								success: function(data) {
-									var chatList = data.chatList;
-									var myId = data.myId;
-									lastChatRoomId = data.chatRoomId;
-									$("#chatBox").append(`
-			                			<div id="chatContainer"></div> 
-			            			`)
-									for (const chat of chatList) {
-										if (chat.senderId === myId) {
-											$("#chatContainer").append(`
-						                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
-						                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
-						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
-						                        </div>
-			                    			`)
-										} else {
-											$("#chatContainer").append(`
-						                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
-						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-						                            <div>${chat.time}</div>
-						                        </div>
-			                    			`)
-										}
-									}
-									scrollToBottom();
-									lastChatId = chatList[chatList.length - 1].id;
-									repeat = setInterval(function() {
-										currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
-									}, 3000);
-
-								}
-							})
-						} else {
-							$(".createChatRoomCheckBtn").trigger("click");
-						}
-					}
-				})
-			})
 			let memberIds = [];
+			let waitingMemberIds = [];
 			let isMine = false;
+			let isWaitingMember = false;
+			let isRejectMember = false;
 
+			// 대기자 인지
+			for (let i = 0; i < data.waitingMembers.length; i++) {
+				if (nickName === data.waitingMembers[i].memberId) {
+					isWaitingMember = true;
+				}
+			}
+
+			// 거절된 사람인지
+			for (let i = 0; i < data.rejectMembers.length; i++) {
+				if (nickName === data.rejectMembers[i].memberId) {
+					isRejectMember = true;
+				}
+			}
+
+			// 신청 수락된 사람인지
 			for (let i = 0; i < data.members.length; i++) {
+				if (boardNickName === data.members[i].memberId) {
+					continue;
+				}
+
 				let memberId = data.members[i].memberId;
-				memberIds.push(memberId); // 배열에 memberId 추가
+				memberIds.push(memberId); // 배열에 memberId 추가		
 
 				if (nickName === data.members[i].memberId) {
 					isMine = true;
@@ -123,58 +93,77 @@ function handleListUpButtonClick() {
 				`);
 			}
 
-			console.log(isMine)
+			console.log("*** " + isMine)
+
+
 
 			// 필요한 경우에 각각의 memberId 값을 가져올 수 있음
 			console.log(memberIds[0]); // 첫 번째 memberId 값
 			console.log(memberIds[1]); // 두 번째 memberId 값
 
 			if (today < compareTime) {
-
-				if (people > currentNum && isMine) {
-					$("#resMate").append(`</div>
+				if (!isRejectMember) {
+					if (isWaitingMember) {
+						$("#resMate").append(`</div>
+			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">신청대기중👼👼👼</button>
 			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
 			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} 
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} 
       <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
-				} else if (people > currentNum && !isMine) {
-					$("#resMate").append(`</div>
+					} else if (people > currentNum && isMine) {
+						$("#resMate").append(`</div>
+			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} 
+      <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			`);
+					} else if (people > currentNum && !isMine) {
+						$("#resMate").append(`</div>
 			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
 			<div><button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button></div>
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
-				} else if (people <= currentNum && !isMine) {
-					$("#resMate").append(`
+					} else if (people <= currentNum && !isMine) {
+						$("#resMate").append(`
 				</div>
 			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
 			<button   data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">마감되었습니다.</button>
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 
+					} else {
+						$("#resMate").append(`</div>
+			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			`);
+
+					}
 				} else {
 					$("#resMate").append(`</div>
 			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">거절된 러닝</button>
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
-
 				}
 			} else {
 				$("#resMate").append(`</div>
 			<div><button type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
 			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">종료된 러닝</button>
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 			}
 
 			$(".chatRoomCheckBtn").click(function() {
-				const yourNickName = $(this).text();
+				const yourNickNameLong = $(this).text();
+				const yourNickName = yourNickNameLong.substring(0, yourNickNameLong.indexOf("님과의"));
 				console.log(yourNickName);
 				$.ajax("/chat/roomCheck?yourNickName=" + yourNickName, {
 					success: function(data) {
 						console.log(data.check);
 						if (data.check) {
+							document.addEventListener('keyup', keyupHandler);
 							$(".btn-close").click();
 							$("#chatListContainer").remove("");
 							$("#chatContainer").remove("");
@@ -182,34 +171,59 @@ function handleListUpButtonClick() {
 							$("#chatList").hide();
 							$("#chatBox").show();
 							$(".chatNameTag").remove();
+							$("#dChat").show();
+							$("#dGroupChat").hide();
+							$("#chatMemberListBtn").hide();
 							$(`#returnBtn`).after(`
 								<span style="white-space: nowrap; position: absolute; left: 50%; transform: translateX(-50%);" class="chatNameTag">${yourNickName}님과의 채팅방</span>
 							`);
 							$.ajax("/chat/roomOpen", {
 								data: { yourNickName: yourNickName },
 								contentType: "application/json",
-								success: function(data) {
-									var chatList = data.chatList;
-									var myId = data.myId;
-									lastChatRoomId = data.chatRoomId;
+								success: function(response) {
+									var chatList = response.chatList;
+									var myId = response.myId;
+									lastChatRoomId = response.chatRoomId;
 									$("#chatBox").append(`
 			                			<div id="chatContainer"></div> 
 			            			`)
 									for (const chat of chatList) {
 										if (chat.senderId === myId) {
-											$("#chatContainer").append(`
-						                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
-						                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
-						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
-						                        </div>
-			                    			`)
+											if (chat.fileName !== null) {
+												$("#chatContainer").append(`
+						                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
+						            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+						          						<div>
+															<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
+														</div>
+						    	                    </div>
+							                    `)
+											} else {
+												$("#chatContainer").append(`
+						                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
+						            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+						        	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
+						    	                    </div>
+							                    `)
+											}
 										} else {
-											$("#chatContainer").append(`
-						                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
-						                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-						                            <div>${chat.time}</div>
-						                        </div>
-			                    			`)
+											if (chat.fileName !== null) {
+												$("#chatContainer").append(`
+							                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
+						          						<div>
+															<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
+														</div>
+							                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
+							                        </div>
+							                    `)
+											} else {
+												$("#chatContainer").append(`
+							                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
+							                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
+							                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
+							                        </div>
+							                    `)
+											}
 										}
 									}
 									scrollToBottom();
@@ -269,8 +283,8 @@ $(document).on('click', '.joinPartyBtn', function() {
 	const boardId = $(this).attr("data-board-id");
 	const userId = $(this).attr("data-board-userId");
 
-	console.log(boardId)
-	console.log(userId)
+	console.log("&&" + boardId)
+	console.log("!!" + userId)
 
 	const data = { boardId, userId };
 	console.log(data)

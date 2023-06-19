@@ -22,10 +22,7 @@
 	<!-- 	<button id="alarmList">알람 목록 보기</button> -->
 	<!-- 	<div id="HostAlarm"></div> -->
 	<!-- 	<div id="MemberAlarm"></div> -->
-	<h1>마이페이지</h1>
-	<hr />
-	<br />
-	<br />
+	<h1>내가 올린 게시물</h1>
 	<div class="container-lg">
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach items="${totalMyData}" var="board" varStatus="status">
@@ -71,6 +68,7 @@
 		</div>
 	</div>
 	<hr />
+	<h1>내가 신청한 게시물</h1>
 	<div class="container-lg">
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach items="${totalMyData}" var="board" varStatus="status">

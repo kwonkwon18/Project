@@ -229,7 +229,7 @@ function handleListUpButtonClick() {
 									lastChatId = chatList[chatList.length - 1].id;
 									repeat = setInterval(function() {
 										currentChatId(lastChatId, lastChatRoomId, $("#chatContainer"));
-									}, 3000);
+									}, 500);
 
 								}
 							})

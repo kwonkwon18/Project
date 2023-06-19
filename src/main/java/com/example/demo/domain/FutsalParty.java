@@ -1,22 +1,13 @@
 package com.example.demo.domain;
 
-import java.sql.*;
-import java.time.*;
-
 import lombok.*;
 
 @Data
 public class FutsalParty {
 	private Integer id;
-	private String title;
-	private String body;
-	private String writer;
-	private String stadium;
-	private Integer memberNum;
-	private Integer applyNum;
-	private String futsalGender;
-	private LocalDate startDate;
-	private LocalTime startTime;
-	private Double Lat;
-	private Double Lng;
+	private Integer boardId; // ==> get 화면에서 가져올 수 있음
+	private String userId; // 호스트 ==> get 화면에서 가져올 수 있음
+	private String memberId; // 게스트 
+	
+	
 }

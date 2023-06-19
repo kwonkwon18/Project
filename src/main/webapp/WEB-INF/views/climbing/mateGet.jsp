@@ -73,8 +73,8 @@
 						<label for="" class="form-label">작성일시</label>
 						<input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
-					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
-					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+
 
 					<!-- 본인 게시물 확인 -->
 					<c:set var="isUser" value="false" />
@@ -99,20 +99,11 @@
 					</c:forEach>
 
 
-					<!-- 본인 게시물 확인 -->
-					<c:set var="isUser" value="false" />
-					<c:forEach items="${memberList}" var="memberList">
-						<c:if test="${memberList.nickName eq board.writer}">
-							<c:set var="isUser" value="true" />
-							<c:set var="userName" value="${memberList.nickName}" />
-						</c:if>
-					</c:forEach>
-
-
 
 					<sec:authorize access="#board.writer eq #userName">
 						<div>
-							<a class="btn btn-secondary" href="/running/mateModify/${board.id }">수정</a>
+							<a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
+
 							<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
 						</div>
 
@@ -201,7 +192,9 @@
 											<c:otherwise>
 												<c:if test="${board.people > board.currentNum }">
 													<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
-               </c:if>
+
+           									    </c:if>
+
 											</c:otherwise>
 										</c:choose>
 									</c:if>
@@ -227,9 +220,12 @@
 						<c:if test="${isUser}">
 							<button>내가 올린 게시물</button>
 							<input type="text" id="totalPeople" value="${board.people }" />
-							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
+
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
+
 						</c:if>
 					</div>
+
 
 
 					<!-- **************************************************  -->

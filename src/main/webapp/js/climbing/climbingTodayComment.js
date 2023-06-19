@@ -6,7 +6,7 @@ $("#sendCommentBtn").click(function() {
 	const data = { boardId, content };
 	$("#commentTextArea").val("");
 
-	$.ajax("/climbingComment/add", {
+	$.ajax("/climbingTodayComment/add", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -26,7 +26,7 @@ $("#updateCommentBtn").click(function() {
 		id: commentId,
 		content: content
 	}
-	$.ajax("/climbingComment/update", {
+	$.ajax("/climbingTodayComment/update", {
 		method: "put",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -43,8 +43,8 @@ $("#updateCommentBtn").click(function() {
 })
 
 $("#deleteCommentModalButton").click(function() {
-	const commentId = $(this).attr("data-climbingComment-id");
-	$.ajax("/climbingComment/id/" + commentId, {
+	const commentId = $(this).attr("data-climbingTodayComment-id");
+	$.ajax("/climbingTodayComment/id/" + commentId, {
 		method: "delete",
 		complete: function(jqXHR) {
 			listComment();
@@ -56,45 +56,45 @@ $("#deleteCommentModalButton").click(function() {
 
 function listComment() {
 	const boardId = $("#boardIdText").text().trim();
-	$.ajax("/climbingComment/list?board=" + boardId, {
+	$.ajax("/climbingTodayComment/list?board=" + boardId, {
 		method: "get", // 생략 가능
 		success: function(comments) {
 			// console.log(data);
 			$("#commentListContainer").empty();
-			for (const climbingComment of comments) {
+			for (const climbingTodayComment of comments) {
 				const editButtons = `
 					<button 
-						id="commentDeleteBtn${climbingComment.id}" 
+						id="commentDeleteBtn${climbingTodayComment.id}" 
 						class="commentDeleteButton"
 						data-bs-toggle="modal"
 						data-bs-target="#deleteCommentConfirmModal" 
-						data-climbingComment-id="${climbingComment.id}"><i class="fa-regular fa-trash-can"></i></button>
+						data-climbingTodayComment-id="${climbingTodayComment.id}"><i class="fa-regular fa-trash-can"></i></button>
 						:
 						<button
-							id="commentUpdateBtn${climbingComment.id}"
+							id="commentUpdateBtn${climbingTodayComment.id}"
 							class="commentUpdateButton btn btn-secondary"
 							data-bs-toggle="modal" data-bs-target="#commentUpdateModal"
-							data-climbingComment-id="${climbingComment.id}"><i class="fa-regular fa-pen-to-square"></i></button>
+							data-climbingTodayComment-id="${climbingTodayComment.id}"><i class="fa-regular fa-pen-to-square"></i></button>
 				`;
 				// console.log(comment);
 				$("#commentListContainer").append(`
 					<li class="list-groupp-item d-flex justify-content-between align-items-start">
 						<div class="ms-2 me-auto">
-							<div class="fw-bold"> <i class="fa-regular fa-user"></i> ${climbingComment.memberId}</div>
-							<div style="white-space: pre-wrap;">${climbingComment.content}</div>
+							<div class="fw-bold"> <i class="fa-regular fa-user"></i> ${climbingTodayComment.memberId}</div>
+							<div style="white-space: pre-wrap;">${climbingTodayComment.content}</div>
 						</div>
 						<div>
-							<span class="badge bg-primary rounded-pill">${climbingComment.inserted}</span>
+							<span class="badge bg-primary rounded-pill">${climbingTodayComment.inserted}</span>
 							<div class="text-end mt-2">
-								${climbingComment.editable ? editButtons : ''}
+								${climbingTodayComment.editable ? editButtons : ''}
 							</div>
 						</div>
 					</li>
 				`);
 			};
 			$(".commentUpdateButton").click(function() {
-				const id = $(this).attr("data-climbingComment-id");
-				$.ajax("/climbingComment/id/" + id, {
+				const id = $(this).attr("data-climbingTodayComment-id");
+				$.ajax("/climbingTodayComment/id/" + id, {
 					success: function(data) {
 						$("#commentUpdateIdInput").val(data.id);
 						$("#commentUpdateTextArea").val(data.content);
@@ -103,8 +103,8 @@ function listComment() {
 			});
 
 			$(".commentDeleteButton").click(function() {
-				const commentId = $(this).attr("data-climbingComment-id");
-				$("#deleteCommentModalButton").attr("data-climbingComment-id", commentId);
+				const commentId = $(this).attr("data-climbingTodayComment-id");
+				$("#deleteCommentModalButton").attr("data-climbingTodayComment-id", commentId);
 			});
 		}
 	});

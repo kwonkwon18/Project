@@ -15,19 +15,18 @@ public interface ClimbingPartyMapper {
 			""")
 	Integer delete(ClimbingParty climbingParty);
 
-	
-	/*
-	 * @Insert(""" insert into ClimbingParty (boardId, userId, memberId) values
-	 * (#{boardId}, #{userId}, #{memberId}) """)
-	 * 
-	 * @Options(useGeneratedKeys = true, keyProperty = "id") Integer
-	 * insert(ClimbingParty climbingParty);
-	 */
 
-	
+	@Insert("""
+			insert into ClimbingParty (boardId, userId, memberId, host, guest)
+			values (#{boardId}, #{userId}, #{memberId}, #{host}, #{guest})
+			""")
+//	@Options(useGeneratedKeys = true, keyProperty = "id")
+	Integer insert(Integer boardId, String userId, String memberId, String host, String guest);
+
+
 	@Select("""
 			select count(*) from ClimbingParty
-			where boardId = #{boardId}
+			where boardId = #{boardId} AND participation = 1;
 			""")
 	Integer countByBoardId(Integer boardId);
 
@@ -36,6 +35,15 @@ public interface ClimbingPartyMapper {
 			WHERE boardId = #{boardId}
 			""")
 	Integer deleteByBoardId(Integer boardId);
+
+	@Select("""
+			SELECT
+				count(*)
+			  FROM ClimbingParty
+			WHERE boardId = #{boardId} AND userId = #{userId} AND participation = 0;
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	Integer checkAlarm(ClimbingParty climbingParty);
 
 	@Select("""
 			select * from Member where userId = #{userId}
@@ -50,10 +58,10 @@ public interface ClimbingPartyMapper {
 			    c.title
 			  FROM ClimbingParty p
 			  LEFT JOIN ClimbingMate c on c.id = p.boardId
-			WHERE userId = #{userId} AND participation = 0;
+			WHERE host = #{userId} AND participation = 0 and confirmation = 1;
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	List<ClimbingParty> selectAlarmList(ClimbingParty climbingParty);
+	List<ClimbingParty> selectAlarmList(String userId);
 
 	@Select("""
 			SELECT
@@ -64,10 +72,10 @@ public interface ClimbingPartyMapper {
 			    c.title
 			  FROM ClimbingParty p
 			  LEFT JOIN ClimbingMate c on c.id = p.boardId
-			WHERE userId = #{userId} AND participation = 1 or participation = 2 ;
+			WHERE guest = #{userId} AND participation = 1 or participation = 2) and confirmation = 1;
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	List<ClimbingParty> selectMemberAlarmList(ClimbingParty climbingParty);
+	List<ClimbingParty> selectMemberAlarmList(String userId);
 
 	@Update("""
 			UPDATE ClimbingParty
@@ -120,14 +128,4 @@ public interface ClimbingPartyMapper {
 	Integer countOfAlarmGuest(String name);
 
 
-	@Insert("""
-			insert into ClimbingParty (boardId, userId, memberId, host, guest)
-			values (#{boardId}, #{userId}, #{memberId}, #{host}, #{guest})
-			""")
-	Integer insert(Integer boardId, String userId, String memberId, String host, String guest);
-
-
-
-
-	
 }

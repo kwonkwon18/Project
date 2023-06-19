@@ -1,181 +1,296 @@
 package com.example.demo.service;
 
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.*;
-import org.springframework.transaction.annotation.*;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.domain.*;
-import com.example.demo.mapper.*;
+import com.example.demo.domain.Member;
+import com.example.demo.domain.FutsalBoard;
+import com.example.demo.domain.FutsalParty;
+import com.example.demo.domain.RunningToday;
+import com.example.demo.mapper.FutsalMapper;
+import com.example.demo.mapper.FutsalPartyMapper;
+import com.example.demo.mapper.FutsalTodayMapper;
 
-import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.services.s3.*;
-import software.amazon.awssdk.services.s3.model.*;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class FutsalService {
 
 	@Autowired
-	private S3Client s3;
-
-	@Value("${aws.s3.bucketName}")
-	private String bucketName;
+	private FutsalMapper mapper;
 
 	@Autowired
-	private FutsalMapper futsalMapper;
-	
+	private FutsalTodayMapper todayMapper;
+
 	@Autowired
-	private FutsalLikeMapper futsalLikeMapper;
+	private FutsalPartyMapper partyMapper;
+
+	public boolean addBoard(FutsalBoard futsalBoard, Authentication authentication) {
+
+		Member member = mapper.selectMemberById(authentication.getName());
+		futsalBoard.setWriter(member.getNickName());
+
+		int cnt = mapper.insert(futsalBoard);
+		return cnt == 1;
+	}
 
 	public List<FutsalBoard> listBoard() {
-		List<FutsalBoard> list = futsalMapper.selectAll();
-		return list;
+
+		return mapper.selectList();
 	}
 
-	public FutsalBoard getFutsalBoard(Integer id) {
-		FutsalBoard board = futsalMapper.selectById(id);
-		return board;
+	public FutsalBoard getBoard(Integer id) {
+
+		return mapper.selectById(id);
 	}
 
-	public boolean addBoard(FutsalBoard futsalBoard, MultipartFile[] files) throws Exception {
+	public List<FutsalBoard> getMyPageInfo(String writer) {
 
-		// 게시물 insert
+		return mapper.selectMyPageInfo(writer);
+	}
 
-		int cnt = futsalMapper.insert(futsalBoard);
+	public List<FutsalParty> getJoinMember(String writer) {
 
-		for (MultipartFile file : files) {
-			if (file.getSize() > 0) {
-				String objectKey = "project/futsalBoard/" + futsalBoard.getId() + "/" + file.getOriginalFilename();
+		return mapper.selectMemberId(writer);
+	}
+
+	public List<FutsalBoard> getMateBoard() {
+
+		return mapper.selectMate();
+	}
+
+	public List<FutsalBoard> getMateBoard(Authentication authentication) {
 
 
-				PutObjectRequest por = PutObjectRequest.builder()
-						.bucket(bucketName)
-						.key(objectKey)
-						.acl(ObjectCannedACL.PUBLIC_READ)
-						.build();
-				RequestBody rb = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+		return mapper.selectMate();
 
-				// db에 관련 정보 저장(insert)
-				s3.putObject(por, rb);
-				futsalMapper.insertFileName(futsalBoard.getId(), file.getOriginalFilename());
-
-			}
-
-		}
-
-		return cnt == 1;
 	}
 	
-	public boolean addRunningToday(RunningToday runningToday, MultipartFile[] files) throws Exception {
+	public List<FutsalBoard> getMateBoardByAddress(Authentication authentication, String type, String search) {
 
-		Integer cnt = todayMapper.insertRunningToday(runningToday);
+		if(authentication != null) {
 
-		for (MultipartFile file : files) {
-			if (file.getSize() > 0) {
+		
+		// 유저 정보 가져옴 Member member =
+		Member member = mapper.selectMemberById(authentication.getName()); // 유저 정보 중 주소 정보 변수 저장
+		String userAddress = member.getAddress();
+		System.out.println(userAddress);
+		// 주소가 들어갈 ArrayList
+		List<String> addressList = new ArrayList<>();
 
-				// 이름이 될 내용
-				String objectKey = "project/" + runningToday.getId() + "/" + file.getOriginalFilename();
-
-				// s3 첫번째 파라미터
-				PutObjectRequest por = PutObjectRequest.builder().bucket(bucketName).key(objectKey)
-						.acl(ObjectCannedACL.PUBLIC_READ).build();
-
-				// s3 두번째 파라미터
-				RequestBody rb = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
-
-				s3.putObject(por, rb);
-
-				todayMapper.insertFileName(runningToday.getId(), file.getOriginalFilename());
+		if (userAddress != "") {
+			if (userAddress.equals("은평구")) {
+				addressList.add("은평구");
+				addressList.add("마포구");
+				addressList.add("서대문구");
+			} else if (userAddress.equals("마포구")) {
+				addressList.add("마포구");
+				addressList.add("서대문구");
+				addressList.add("은평구");
+				addressList.add("용산구");
+			} else if (userAddress.equals("종로구")) {
+				addressList.add("종로구");
+				addressList.add("성북구");
+				addressList.add("중구");
+				addressList.add("서대문구");
+			} else if (userAddress.equals("중구")) {
+				addressList.add("중구");
+				addressList.add("종로구");
+				addressList.add("성동구");
+				addressList.add("용산구");
+			} else if (userAddress.equals("용산구")) {
+				addressList.add("용산구");
+				addressList.add("마포구");
+				addressList.add("중구");
+				addressList.add("성동구");
+			} else if (userAddress.equals("성동구")) {
+				addressList.add("성동구");
+				addressList.add("중구");
+				addressList.add("동대문구");
+				addressList.add("광진구");
+			} else if (userAddress.equals("광진구")) {
+				addressList.add("광진구");
+				addressList.add("성동구");
+				addressList.add("동대문구");
+				addressList.add("중랑구");
+			} else if (userAddress.equals("동대문구")) {
+				addressList.add("동대문구");
+				addressList.add("성북구");
+				addressList.add("중랑구");
+				addressList.add("성동구");
+			} else if (userAddress.equals("중랑구")) {
+				addressList.add("중랑구");
+				addressList.add("노원구");
+				addressList.add("동대문구");
+				addressList.add("광진구");
+			} else if (userAddress.equals("성북구")) {
+				addressList.add("성북구");
+				addressList.add("강북구");
+				addressList.add("동대문구");
+				addressList.add("종로구");
+			} else if (userAddress.equals("강북구")) {
+				addressList.add("강북구");
+				addressList.add("도봉구");
+				addressList.add("노원구");
+				addressList.add("성북구");
+			} else if (userAddress.equals("도봉구")) {
+				addressList.add("도봉구");
+				addressList.add("노원구");
+				addressList.add("강북구");
+				addressList.add("성북구");
+			} else if (userAddress.equals("노원구")) {
+				addressList.add("노원구");
+				addressList.add("도봉구");
+				addressList.add("강북구");
+				addressList.add("중랑구");
+			} else if (userAddress.equals("서대문구")) {
+				addressList.add("서대문구");
+				addressList.add("은평구");
+				addressList.add("종로구");
+				addressList.add("마포구");
+			} else if (userAddress.equals("양천구")) {
+				addressList.add("양천구");
+				addressList.add("강서구");
+				addressList.add("영등포구");
+				addressList.add("구로구");
+			} else if (userAddress.equals("강서구")) {
+				addressList.add("강서구");
+				addressList.add("양천구");
+				addressList.add("구로구");
+				addressList.add("영등포구");
+			} else if (userAddress.equals("구로구")) {
+				addressList.add("구로구");
+				addressList.add("양천구");
+				addressList.add("영등포구");
+				addressList.add("금천구");
+			} else if (userAddress.equals("금천구")) {
+				addressList.add("금천구");
+				addressList.add("구로구");
+				addressList.add("관악구");
+				addressList.add("영등포구");
+			} else if (userAddress.equals("영등포구")) {
+				addressList.add("영등포구");
+				addressList.add("양천구");
+				addressList.add("구로구");
+				addressList.add("동작구");
+			} else if (userAddress.equals("동작구")) {
+				addressList.add("동작구");
+				addressList.add("영등포구");
+				addressList.add("관악구");
+				addressList.add("서초구");
+			} else if (userAddress.equals("관악구")) {
+				addressList.add("관악구");
+				addressList.add("금천구");
+				addressList.add("동작구");
+				addressList.add("서초구");
+			} else if (userAddress.equals("서초구")) {
+				addressList.add("서초구");
+				addressList.add("강남구");
+				addressList.add("동작구");
+				addressList.add("관악구");
+			} else if (userAddress.equals("강남구")) {
+				addressList.add("강남구");
+				addressList.add("서초구");
+				addressList.add("송파구");
+				addressList.add("성동구");
+			} else if (userAddress.equals("송파구")) {
+				addressList.add("송파구");
+				addressList.add("강남구");
+				addressList.add("강동구");
+				addressList.add("광진구");
+			} else if (userAddress.equals("강동구")) {
+				addressList.add("강동구");
+				addressList.add("송파구");
+				addressList.add("광진구");
+				addressList.add("강남구");
 			}
-		}
+		
 
-	public boolean modify(FutsalBoard futsalBoard, MultipartFile[] addFiles, List<String> removeFileNames) throws Exception {
+		}// 마지막 괄호임
 		
-		// FutsalFileName 테이블 삭제
-		if(removeFileNames != null && !removeFileNames.isEmpty()) {
-			for(String fileName : removeFileNames) {
-				// s3에서 파일 삭제
-				String objectKey = "project/futsalBoard/" + futsalBoard.getId() + "/" + fileName;
-				DeleteObjectRequest dor = DeleteObjectRequest.builder()
-						.bucket(bucketName)
-						.key(objectKey)
-						.build();
-				s3.deleteObject(dor);
-				
-				// 테이블에서 삭제
-				futsalMapper.deleteFileNameByBoardIdAndFileName(futsalBoard.getId(), fileName);
-			}
-		}
+		System.out.println("addressList" + addressList);
+
+		return mapper.selectMateByDistance(addressList, type, search);
+	}
 		
-		// 새 파일 추가
-		for (MultipartFile newFile : addFiles) {
-			if(newFile.getSize() > 0) {
-				// 테이블에 파일명 추가
-				futsalMapper.insertFileName(futsalBoard.getId(), newFile.getOriginalFilename());
-				
-				// s3에 파일 업로드
-				String objectKey = "project/futsalBoard/" + futsalBoard.getId() + "/" + newFile.getOriginalFilename();
-				PutObjectRequest por = PutObjectRequest.builder()
-						.acl(ObjectCannedACL.PUBLIC_READ)
-						.bucket(bucketName)
-						.key(objectKey)
-						.build();
-				RequestBody rb = RequestBody.fromInputStream(newFile.getInputStream(), newFile.getSize());
-				s3.putObject(por, rb);
-			}
-		}
-		
-		
-		// 게시물 (futsalBoard) 테이블 수정
-		int cnt = futsalMapper.update(futsalBoard);
-		return cnt == 1;
+		return null;
+
+	}
+
+	public List<FutsalParty> selectMemberIdByBoardId(Integer id, String writer) {
+
+		return mapper.selectMemberIdByBoardId(id, writer);
+	}
+
+	public List<FutsalParty> selectMemberIdByBoardId() {
+		// TODO Auto-generated method stub
+		return mapper.selectMember();
+	}
+
+	public List<Member> getUserId(String userId) {
+		// TODO Auto-generated method stub
+		return mapper.selectUserId(userId);
+	}
+
+	public Member getMembertUserId(String userId) {
+		// TODO Auto-generated method stub
+		return mapper.selectMemberUserId(userId);
+	}
+
+	public Map<String, Object> getBoardForModal(Integer boardId, Authentication authentication) {
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		// board에 대한 정보가 들어감
+		FutsalBoard getList = mapper.selectById(boardId);
+		getMemberList.put("board", getList);
+
+		// 신청자가 들어감
+		List<FutsalParty> members = mapper.selectForMemberIdByBoardId(boardId);
+		getMemberList.put("members", members);
+
+		// 중복 신청 방지용
+		List<Member> memberList = getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+
+		// 로그인한 사람 확인용 (닉네임)
+		Member myNickName = mapper.getNickName(authentication.getName());
+		getMemberList.put("myNickName", myNickName);
+
+		return getMemberList;
+	}
+
+	public List<FutsalBoard> getTotalMyPageInfo(String nickName1, String nickName2) {
+		// TODO Auto-generated method stub
+		return mapper.selectTotalMyPageInfo(nickName1, nickName2);
+	}
+
+	public boolean modify(FutsalBoard runningBoard) {
+		System.out.println(1234);
+		return mapper.updateBoardById(runningBoard);
 	}
 
 	public boolean remove(Integer id) {
 
-		// 파일명 조회
-		List<String> fileNames = futsalMapper.selectFileNameByBoardId(id);
+		// 참조키 제약 사항으로 러닝파티에서 boardId에 해당하는 것들을 지워함
+		int cnt = partyMapper.deleteByBoardId(id);
 
-		// FileName 테이블의 데이터 지우기
-		futsalMapper.deleteFileNameByBoardId(id);
-
-		for (String fileName : fileNames) {
-			String objectKey = "project/futsalBoard/" + id + "/" + fileName;
-			DeleteObjectRequest dor = DeleteObjectRequest.builder()
-					.bucket(bucketName)
-					.key(objectKey)
-					.build();
-			s3.deleteObject(dor);
-
-		}
-		int cnt = futsalMapper.deleteById(id);
-		
-		return cnt == 1;
-
+		return mapper.deleteById(id);
 	}
 
-	public Map<String, Object> like(FutsalLike like, Authentication authentication) {
-		Map<String, Object> result = new HashMap<>();
-		
-		result.put("like", false);
-		
-		like.setMemberId(authentication.getName());
-		Integer deleteCnt = futsalLikeMapper.delete(like);
-		
-		if (deleteCnt != 1) {
-			Integer insertCnt = futsalLikeMapper.insert(like);
-			result.put("like", true);
-		}
-		
-		Integer count = futsalLikeMapper.countByBoardId(like.getBoardId());
-		result.put("count", count);
-		
-		return result;
+	public Object searchMate(String searchTerm) {
+		// TODO Auto-generated method stub
+		return mapper.selectBySearchTerm(searchTerm);
 	}
+
+
+
+
 }

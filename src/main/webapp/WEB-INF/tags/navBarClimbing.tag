@@ -16,7 +16,7 @@
 				<li class="nav-item"><a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/climbing/mateList">메이트 구하기</a></li>
 				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/todayList">오늘의 등산</a></li>
 				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/courseList">추천 코스</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/weather">날씨</a></li>
+				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/restaurant">맛집 찾기</a></li>
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/myPage">마이페이지</a></li>
 				</sec:authorize>

@@ -38,16 +38,14 @@
 				<div class="d-flex">
 					<div class="me-auto">
 						<h1>
-							<span id="boardIdText"> ${board.id } </span>
-							번게시물${formattedDate }
+							<span id="boardIdText"> ${board.id } </span> 번게시물${formattedDate }
 						</h1>
 					</div>
 				</div>
 
 				<div>
 					<div class="mb-3">
-						<label for="" class="form-label">제목</label>
-						<input type="text" class="form-control" value="${board.title }" readonly />
+						<label for="" class="form-label">제목</label> <input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
 
 
@@ -57,21 +55,17 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">작성자</label>
-						<input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
+						<label for="" class="form-label">작성자</label> <input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">모임시간</label>
-						<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+						<label for="" class="form-label">모임시간</label> <input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">작성일시</label>
-						<input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
+						<label for="" class="form-label">작성일시</label> <input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
-					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
-					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 
 					<!-- 본인 게시물 확인 -->
 					<c:set var="isUser" value="false" />
@@ -94,17 +88,6 @@
 							</div>
 						</c:if>
 					</c:forEach>
-
-
-					<!-- 본인 게시물 확인 -->
-					<c:set var="isUser" value="false" />
-					<c:forEach items="${memberList}" var="memberList">
-						<c:if test="${memberList.nickName eq board.writer}">
-							<c:set var="isUser" value="true" />
-							<c:set var="userName" value="${memberList.nickName}" />
-						</c:if>
-					</c:forEach>
-
 
 
 					<sec:authorize access="#board.writer eq #userName">
@@ -198,7 +181,7 @@
 											<c:otherwise>
 												<c:if test="${board.people > board.currentNum }">
 													<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
-               </c:if>
+           									    </c:if>
 											</c:otherwise>
 										</c:choose>
 									</c:if>
@@ -215,6 +198,12 @@
 							</c:if>
 
 
+									<c:if test="${isWaiting }">
+										<button>신청대기중👼👼👼</button>
+										<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️</button>
+									</c:if>
+
+
 							<input type="text" id="totalPeople" value="${board.people }" />
 							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
 							<p id="currentPeople"></p>
@@ -228,7 +217,18 @@
 						</c:if>
 					</div>
 
+
+
+							<input type="text" id="totalPeople" value="${board.people }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
+							<p id="currentPeople"></p>
+							<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
+						</c:if>
+
+
 					<!-- **************************************************  -->
+
+
 					<sec:authorize access="isAuthenticated()">
 						<my:chatBtn></my:chatBtn>
 						<script src="/js/groupChat.js"></script>

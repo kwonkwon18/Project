@@ -32,7 +32,7 @@ public class ClimbingTodayService {
 	private ClimbingLikeMapper likeMapper;
 	
 	@Autowired
-	private ClimbingCommentMapper commentMapper;
+	private ClimbingTodayCommentMapper commentMapper;
 
 	public List<ClimbingToday> listBoard() {
 		
@@ -48,7 +48,7 @@ public class ClimbingTodayService {
 
 		ClimbingToday climbingToday = todayMapper.selectById(id);
 		if (myUserId != null) {
-			ClimbingLike like = likeMapper.select(id, myUserId);
+			ClimbingTodayLike like = likeMapper.select(id, myUserId);
 			if (like != null) {
 				climbingToday.setLiked(true);
 			}
@@ -156,7 +156,7 @@ public class ClimbingTodayService {
 		return cnt == 1;
 	}
 
-	public Map<String, Object> like(ClimbingLike like, Authentication auth) {
+	public Map<String, Object> like(ClimbingTodayLike like, Authentication auth) {
 
 		// json을 보내줄 때는 ResponseEntity와 Map의 타입을 활용한다.
 		Map<String, Object> result = new HashMap<>();

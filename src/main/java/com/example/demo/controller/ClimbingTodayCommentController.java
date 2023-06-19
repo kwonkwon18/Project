@@ -11,26 +11,26 @@ import com.example.demo.domain.*;
 import com.example.demo.service.*;
 
 @RestController
-@RequestMapping("climbingComment")
-public class ClimbingCommentController {
+@RequestMapping("climbingTodayComment")
+public class ClimbingTodayCommentController {
 
 	@Autowired
-	private ClimbingCommentService service;
+	private ClimbingTodayCommentService service;
 
 	@PutMapping("update")
-	public ResponseEntity<Map<String, Object>> update(@RequestBody ClimbingComment comment) {
+	public ResponseEntity<Map<String, Object>> update(@RequestBody ClimbingTodayComment comment) {
 		Map<String, Object> res = service.update(comment);
 
 		return ResponseEntity.ok().body(res);
 	}
 
 	@GetMapping("id/{id}")
-	public ClimbingComment get(@PathVariable("id") Integer id) {
+	public ClimbingTodayComment get(@PathVariable("id") Integer id) {
 		return service.get(id);
 	}
 
 	@PostMapping("add")
-	public ResponseEntity<Map<String, Object>> add(@RequestBody ClimbingComment comment, Authentication authentication) {
+	public ResponseEntity<Map<String, Object>> add(@RequestBody ClimbingTodayComment comment, Authentication authentication) {
 
 		if (authentication == null) {
 			Map<String, Object> res = Map.of("message", "로그인 후 댓글을 작성해주세요");
@@ -43,7 +43,7 @@ public class ClimbingCommentController {
 	}
 
 	@GetMapping("list")
-	public List<ClimbingComment> list(@RequestParam("board") Integer boardId, Authentication authentication) {
+	public List<ClimbingTodayComment> list(@RequestParam("board") Integer boardId, Authentication authentication) {
 
 		return service.list(boardId, authentication);
 	}
@@ -54,5 +54,5 @@ public class ClimbingCommentController {
 
 		return ResponseEntity.ok().body(res);
 	}
-
 }
+	

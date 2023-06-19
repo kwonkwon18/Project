@@ -1,6 +1,5 @@
 package com.example.demo.mapper;
 
-import java.time.*;
 import java.util.*;
 
 import org.apache.ibatis.annotations.*;
@@ -8,47 +7,46 @@ import org.apache.ibatis.annotations.*;
 import com.example.demo.domain.*;
 
 @Mapper
-public interface ClimbingCommentMapper {
-
+public interface ClimbingCourseCommentMapper {
 	@Select("""
 			SELECT *
-			FROM ClimbingComment
+			FROM ClimbingCourseComment
 			WHERE id = #{id}
 			""")
-	ClimbingComment selectById(Integer id);
+	ClimbingCourseComment selectById(Integer id);
 
 	@Insert("""
-			INSERT INTO ClimbingComment (boardId, content, memberId)
+			INSERT INTO ClimbingCourseComment (boardId, content, memberId)
 			VALUES (#{boardId}, #{content}, #{memberId})
 			""")
-	Integer insert(ClimbingComment comment);
+	Integer insert(ClimbingCourseComment comment);
 
 	@Select("""
 			SELECT *
-			FROM ClimbingComment
+			FROM ClimbingCourseComment
 			WHERE boardId = #{boardId}
 			ORDER BY id
 			""")
-	List<ClimbingComment> selectAllByBoardId(Integer boardId);
+	List<ClimbingCourseComment> selectAllByBoardId(Integer boardId);
 
 	@Update("""
-			UPDATE ClimbingComment
+			UPDATE ClimbingCourseComment
 			SET
 				content = #{content},
 				inserted = #{inserted}
 			WHERE
 				id = #{id}
 			""")
-	Integer update(ClimbingComment comment);
+	Integer update(ClimbingCourseComment comment);
 
 	@Delete("""
-			DELETE FROM ClimbingComment
+			DELETE FROM ClimbingCourseComment
 			WHERE id = #{id}
 			""")
 	Integer deleteById(Integer id);
 
 	@Delete("""
-			DELETE FROM ClimbingComment
+			DELETE FROM ClimbingCourseComment
 			WHERE boardId = #{boardId}
 			""")
 	void deleteByBoardId(Integer boardId);

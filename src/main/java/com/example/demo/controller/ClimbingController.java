@@ -123,7 +123,12 @@ public class ClimbingController {
 		
 		// 추천 코스
 		List<ClimbingCourse> course = courseService.listBoard(courseSearch); // 페이지 처리 전
+		for(ClimbingCourse i : course) {
+			System.out.println(i.getCommentCount());
+		}
 		listMap.put("climbingCourseList", course);
+		
+		System.out.println(course);
 
 		model.addAllAttributes(listMap);
 	}
@@ -213,6 +218,7 @@ public class ClimbingController {
 		// 초대 수락된 멤버
 		List<ClimbingParty> members = mateService.selectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("members", members);
+		System.out.println(members);
 		
 		// 초대 대기멤버
 		List<ClimbingParty> waitingMembers = mateService.selectWaitingMemberIdByBoardId(id, getList.getWriter());
@@ -306,9 +312,10 @@ public class ClimbingController {
 		Map<String, Object> myPageList = new HashMap<>();
 
 		myPageList.put("MyNickName", member.getNickName());
-
+		
 		List<ClimbingMate> totalMyData = mateService.getTotalMyPageInfo(member.getNickName());
 		myPageList.put("totalMyData", totalMyData);
+		System.out.println(totalMyData);
 		
 		// 참여자들 리스트업
 		List<ClimbingParty> members = mateService.getJoinMember(member.getNickName());
@@ -374,7 +381,7 @@ public class ClimbingController {
 	}
 	
 	@GetMapping("/todayModify/{id}")
-	public String modifyForm(@PathVariable("id") Integer id, Model model) {
+	public String todayModifyForm(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("board", todayService.getClimbingToday(id, null));
 		return "climbing/todayModify";
 	}
@@ -459,9 +466,9 @@ public class ClimbingController {
 	}
 
 	@GetMapping("/courseId/{id}")
-	public String Coursedetail(@PathVariable("id") Integer id, Model model) {
+	public String Coursedetail(@PathVariable("id") Integer id, Model model, Authentication authentication) {
 
-		ClimbingCourse courseList = courseService.getClimbingCourse(id);
+		ClimbingCourse courseList = courseService.getClimbingCourse(id, authentication.getName());
 
 		model.addAttribute("board", courseList);
 
@@ -471,7 +478,7 @@ public class ClimbingController {
 
 	@GetMapping("/courseModify/{id}")
 	public String courseModifyForm(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("board", courseService.getClimbingCourse(id));
+		model.addAttribute("board", courseService.getClimbingCourse(id, null));
 		return "climbing/courseModify";
 	}
 
@@ -521,12 +528,12 @@ public class ClimbingController {
 		
 	}
 	
-	@PostMapping("/climbingLike")
+	@PostMapping("/climbingTodayLike")
 	// responseEntitiy를 해주는 이유는 에러 메시지를 함께 보내주기 위함이다.
 	// @RequestBody Like like를 해준 것은 like에 있는 인자들을 json으로 보내주기 위함
 	// 또한 등록 된 사람들만 like를 할 수 있게 하게 위해서 Authentication 을 인자로 추가해주었다.
 	// 홈페이지의 대부분의 정보는 nickName 활용하였지만, like는 userId를 쓰기로 함
-	public ResponseEntity<Map<String, Object>> like(@RequestBody ClimbingLike like, Authentication auth) {
+	public ResponseEntity<Map<String, Object>> like(@RequestBody ClimbingTodayLike like, Authentication auth) {
 		System.out.println(like);
 		System.out.println(auth);
 
@@ -539,6 +546,28 @@ public class ClimbingController {
 		} else {
 
 			return ResponseEntity.ok().body(todayService.like(like, auth));
+		}
+
+	}
+	
+	@PostMapping("/climbingCourseLike")
+	// responseEntitiy를 해주는 이유는 에러 메시지를 함께 보내주기 위함이다.
+	// @RequestBody Like like를 해준 것은 like에 있는 인자들을 json으로 보내주기 위함
+	// 또한 등록 된 사람들만 like를 할 수 있게 하게 위해서 Authentication 을 인자로 추가해주었다.
+	// 홈페이지의 대부분의 정보는 nickName 활용하였지만, like는 userId를 쓰기로 함
+	public ResponseEntity<Map<String, Object>> like(@RequestBody ClimbingCourseLike like, Authentication auth) {
+		System.out.println(like);
+		System.out.println(auth);
+
+		if (auth == null) {
+			// 만약에 인증되지 않은 사용자가 들어왔으면...
+			return ResponseEntity.status(403) // 상태값 반환
+					.body(Map.of("message", "로그인 후 좋아요 클릭 해주세요")); // body에 해당 Map을 담아서
+			// 넘긴다. 이때 넘길 때는 js에 넘겨서 비동기 처리가 된다.
+
+		} else {
+
+			return ResponseEntity.ok().body(courseService.like(like, auth));
 		}
 
 	}
@@ -579,6 +608,11 @@ public class ClimbingController {
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> countOfAlarm(Authentication authentication) {
 		return ResponseEntity.ok().body(partyService.countOfAlarm(authentication));
+	}
+	
+	@GetMapping("restaurant")
+	public void restaurant() {
+		
 	}
 
 }

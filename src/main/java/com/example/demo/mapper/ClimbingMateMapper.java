@@ -38,7 +38,7 @@ public interface ClimbingMateMapper {
 			    COUNT(cp.boardId) AS currentNum
 			FROM
 			    ClimbingMate c
-			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
+			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId and participation = 1
 			    LEFT JOIN Member m ON c.writer = m.nickName
 			WHERE
 			    c.id = #{id}
@@ -237,16 +237,19 @@ public interface ClimbingMateMapper {
 				OR address LIKE #{pattern}
 				</if>
 
-				</where>
 
 
 				<if test = "(type eq 'distance')">
-				WHERE address IN (
+				address IN (
 				<foreach collection="addressList" item="item" separator=", ">
 					#{item}
 				</foreach>
 				)
 				</if>
+
+				 AND time > DATE_SUB(NOW(), INTERVAL 3 DAY)
+
+				</where>
 
 			GROUP BY
 			    c.id,
@@ -286,6 +289,7 @@ public interface ClimbingMateMapper {
 			left join ClimbingParty p on c.id = p.boardId
 			where (c.writer = #{nickName} or p.memberId = #{nickName})
 			    and c.writer <> p.memberId
+			GROUP BY b.id
 			order by c.inserted desc;
 								         """)
 	List<ClimbingMate> selectTotalMyPageInfo(String nickName);

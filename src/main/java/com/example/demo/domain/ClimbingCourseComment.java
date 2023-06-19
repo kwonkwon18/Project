@@ -5,7 +5,7 @@ import java.time.*;
 import lombok.*;
 
 @Data
-public class ClimbingComment {
+public class ClimbingCourseComment {
 	private Integer id;
 	private Integer boardId;
 	private String content;

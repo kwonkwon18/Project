@@ -2,8 +2,6 @@ package com.example.demo.service;
 
 import java.util.*;
 
-import javax.xml.transform.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
@@ -11,76 +9,84 @@ import org.springframework.stereotype.*;
 import com.example.demo.domain.*;
 import com.example.demo.mapper.*;
 
-import software.amazon.awssdk.services.s3.*;
 
 @Service
 public class FutsalPartyService {
 
 	@Autowired
-	private S3Client s3;
-	
-	@Value("${aws.s3.bucketName}")
-	private String bucketName;
-	
+	private FutsalPartyMapper partyMapper;
+
 	@Autowired
-	private FutsalPartyMapper futsalPartyMapper;
+	private FutsalMapper mapper;
 
-	public List<FutsalParty> partyList() {
-		List<FutsalParty> partyList = futsalPartyMapper.selectPartyAll();
-		return partyList;
-	}
+	public Map<String, Object> join(FutsalParty futsalParty, Authentication authentication) {
 
-	public FutsalParty getFutsalParty(Integer id) {
-		FutsalParty party = futsalPartyMapper.selectById(id);
-		return party;
-	}
-	
-	public boolean addFutsalParty(FutsalParty futsalParty) {
-		int cnt = futsalPartyMapper.insert(futsalParty);
 		
-		return cnt == 1;
-	}
+		Member member = mapper.selectMemberById(authentication.getName());
+		
 
-	public Map<String, Object> futsalPartyMember(FutsalPartyMember futsalPartyMember,
-			Authentication authentication) {
-		
-		// 멤버 객체 생성해서 userId로 받기
-		Member member = futsalPartyMapper.selectByUserId(authentication.getName());
-		FutsalParty party = futsalPartyMapper.selectById(futsalPartyMember.getFutsalPartyId());
-		int applyNum = futsalPartyMapper.countByPartyId(futsalPartyMember.getFutsalPartyId());
-		
-		if (party.getMemberNum() > applyNum) {
-			
-			futsalPartyMember.setFutsalApplyMember(member.getNickName());
-			
-			Map<String, Object> result = new HashMap<>();
-			
-			result.put("member", false);
-			
-			Integer deleteCnt = futsalPartyMapper.deletePartyMember(futsalPartyMember);
-			
-			if(deleteCnt != 1) {
-				Integer insertCnt = futsalPartyMapper.insertPartyMember(futsalPartyMember);
-				result.put("member", true);		
+		FutsalBoard board = mapper.selectById(futsalParty.getBoardId());
+		int currentNum = partyMapper.countByBoardId(futsalParty.getBoardId());
+
+		Map<String, Object> result = new HashMap<>();
+
+		System.out.println(board.getPeople() + "총인원");
+		System.out.println(currentNum + "현재인원");
+
+		if (board.getPeople() >= currentNum) {
+
+			futsalParty.setMemberId(member.getNickName());
+
+			System.out.println(futsalParty);
+
+			result.put("join", false);
+
+			Integer deleteCnt = partyMapper.delete(futsalParty);
+
+			if (deleteCnt != 1) {
+				Integer insertCnt = partyMapper.insert(futsalParty);
+				result.put("join", true);
 			}
-			
-			Integer count = futsalPartyMapper.countByFutsalPartyId(futsalPartyMember.getFutsalPartyId());
+
+			// 참여인원갯수 넘겨주기
+			Integer count = partyMapper.countByBoardId(futsalParty.getBoardId());
+
 			result.put("count", count);
-			
+			System.out.println("****" + result);
 			return result;
-			
-			
+
 		} else {
 			// 신청 불가능한 경우
-			Map<String, Object> result = new HashMap<>();
-			result.put("member", false);
-			result.put("message", "신청이 불가능합니다.");
+			result.put("join", false);
+			result.put("message", "신청이 불가능합니다."); // 메시지 추가
+			System.out.println(result);
 			return result;
 		}
 		
+		
+
 	}
 
+	public Map<String, Object> reject(FutsalParty futsalParty, Authentication authentication) {
 
-	
-	
+		futsalParty.setMemberId(authentication.getName());
+		System.out.println(futsalParty.getMemberId());
+
+		Map<String, Object> result = new HashMap<>();
+
+		result.put("join", false);
+		System.out.println("futsalParty" + futsalParty);
+		Integer deleteCnt = partyMapper.delete(futsalParty);
+		System.out.println("deleteCnt" + deleteCnt);
+
+		// 참여인원갯수 넘겨주기
+		Integer count = partyMapper.countByBoardId(futsalParty.getBoardId());
+
+		System.out.println(futsalParty.getBoardId());
+		System.out.println(count);
+		result.put("count", count);
+
+		return result;
+	}
+
 }

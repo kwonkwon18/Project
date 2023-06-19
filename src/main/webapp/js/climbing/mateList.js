@@ -104,15 +104,15 @@ function handleListUpButtonClick() {
 				if (!isRejectMember) {
 					if (isWaitingMember) {
 						$("#resMate").append(`</div>
-			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">신청대기중👼👼👼</button>
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">신청대기중...</button>
+			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기❌‍❌❌</button>
 			<div><button type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} 
       <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 					} else if (people > currentNum && isMine) {
 						$("#resMate").append(`</div>
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기❌❌❌</button>
 			<div><button type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
 			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} 
       <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>

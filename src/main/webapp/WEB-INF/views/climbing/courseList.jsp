@@ -17,7 +17,7 @@
 </head>
 <body>
 	<my:navBarClimbing></my:navBarClimbing>
-	
+
 	<div class="container-lg">
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
@@ -79,6 +79,9 @@
 									<p style="font-size: medium;">${board.inserted}</p>
 								</h5>
 								<p class="card-title">${board.title}</p>
+								<p class="card-text">
+									<i class="fa-solid fa-heart"></i> ${board.likeCount } <i class="fa-regular fa-comments"></i> ${board.commentCount }
+								</p>
 							</div>
 							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
 								<c:if test="${status.count lt 2 }">

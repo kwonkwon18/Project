@@ -13,17 +13,17 @@ import com.example.demo.mapper.*;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class ClimbingCommentService {
-
+public class ClimbingCourseCommentService {
+	
 	@Autowired
-	private ClimbingCommentMapper climbingCommentMapper;
+	private ClimbingCourseCommentMapper climbingCourseCommentMapper;
 
-	public Map<String, Object> add(ClimbingComment comment, Authentication authentication) {
+	public Map<String, Object> add(ClimbingCourseComment comment, Authentication authentication) {
 		comment.setMemberId(authentication.getName());
 
 		var res = new HashMap<String, Object>();
 
-		int cnt = climbingCommentMapper.insert(comment);
+		int cnt = climbingCourseCommentMapper.insert(comment);
 		if (cnt == 1) {
 			res.put("message", "댓글이 등록되었습니다.");
 		} else {
@@ -33,24 +33,24 @@ public class ClimbingCommentService {
 		return res;
 	}
 
-	public List<ClimbingComment> list(Integer boardId, Authentication authentication) {
-		List<ClimbingComment> comments = climbingCommentMapper.selectAllByBoardId(boardId);
+	public List<ClimbingCourseComment> list(Integer boardId, Authentication authentication) {
+		List<ClimbingCourseComment> comments = climbingCourseCommentMapper.selectAllByBoardId(boardId);
 		if (authentication != null) {
 
-			for (ClimbingComment comment : comments) {
+			for (ClimbingCourseComment comment : comments) {
 				comment.setEditable(comment.getMemberId().equals(authentication.getName()));
 			}
 		}
 		return comments;
 	}
 
-	public ClimbingComment get(Integer id) {
-		return climbingCommentMapper.selectById(id);
+	public ClimbingCourseComment get(Integer id) {
+		return climbingCourseCommentMapper.selectById(id);
 	}
 
-	public Map<String, Object> update(ClimbingComment comment) {
+	public Map<String, Object> update(ClimbingCourseComment comment) {
 		comment.setInserted(LocalDateTime.now());
-		int cnt = climbingCommentMapper.update(comment);
+		int cnt = climbingCourseCommentMapper.update(comment);
 		var res = new HashMap<String, Object>();
 		if (cnt == 1) {
 			res.put("message", "댓글이 수정되었습니다.");
@@ -61,7 +61,7 @@ public class ClimbingCommentService {
 	}
 
 	public Map<String, Object> remove(Integer id) {
-		int cnt = climbingCommentMapper.deleteById(id);
+		int cnt = climbingCourseCommentMapper.deleteById(id);
 
 		var res = new HashMap<String, Object>();
 

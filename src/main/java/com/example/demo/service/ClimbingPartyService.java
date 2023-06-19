@@ -21,11 +21,20 @@ public class ClimbingPartyService {
 	
 	public Map<String, Object> join(ClimbingParty climbingParty, Authentication authentication) {
 
+		// 현재 접속한 로그인 아이디 찾기
 		Member member = partyMapper.selectMemberById(authentication.getName());
 		
+		// 총 인원 파악용
 		ClimbingMate board = mateMapper.selectById(climbingParty.getBoardId());
+	
+		String hostNickName = board.getWriter();
+		String host = mateMapper.findHost(hostNickName);
+		
 		int currentNum = partyMapper.countByBoardId(climbingParty.getBoardId());
-
+		Integer boardId = climbingParty.getBoardId();
+		String userId = climbingParty.getUserId();
+		String memberId = member.getNickName();
+		
 		Map<String, Object> result = new HashMap<>();
 
 		System.out.println(board.getPeople() + "총인원");
@@ -42,7 +51,7 @@ public class ClimbingPartyService {
 			Integer deleteCnt = partyMapper.delete(climbingParty);
 
 			if (deleteCnt != 1) {
-				Integer insertCnt = partyMapper.insert(climbingParty);
+				Integer insertCnt = partyMapper.insert(boardId, userId, memberId, host, authentication.getName());
 				result.put("join", true);
 			}
 
@@ -98,11 +107,11 @@ public class ClimbingPartyService {
 		// System.out.println("%%" + runningParty);
 
 		// 호스트 마이페이지 
-		List<ClimbingParty> alarmList = partyMapper.selectAlarmList(climbingParty);
+		List<ClimbingParty> alarmList = partyMapper.selectAlarmList(authentication.getName());
 		result.put("alarmList", alarmList);
 		
 		// 게스트 마이페이지
-		List<ClimbingParty> memberAlarmList = partyMapper.selectMemberAlarmList(climbingParty);
+		List<ClimbingParty> memberAlarmList = partyMapper.selectMemberAlarmList(authentication.getName());
 		result.put("memberAlarmList", memberAlarmList);
 
 		return result;

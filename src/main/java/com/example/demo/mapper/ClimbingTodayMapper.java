@@ -32,13 +32,13 @@ public interface ClimbingTodayMapper {
 		        c.writer,
 		        c.inserted,
 		        f.fileName,
-		        (SELECT COUNT(*) FROM ClimbingLike cl WHERE cl.boardId = c.id) likeCount,
-		        (SELECT COUNT(*) FROM ClimbingComment ct WHERE ct.boardId = c.id) commentCount
+		        (SELECT COUNT(*) FROM ClimbingTodayLike cl WHERE cl.boardId = c.id) likeCount,
+		        (SELECT COUNT(*) FROM ClimbingTodayComment ct WHERE ct.boardId = c.id) commentCount
 		    FROM 
 		        ClimbingToday c 
 		        LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
-		        LEFT JOIN ClimbingLike cl on c.id = cl.boardId
-		        LEFT JOIN ClimbingComment ct on c.id = ct.boardId
+		        LEFT JOIN ClimbingTodayLike cl on c.id = cl.boardId
+		        LEFT JOIN ClimbingTodayComment ct on c.id = ct.boardId
 		    WHERE c.title LIKE '%${todaySearch}%'
 		    ORDER BY c.id DESC
 		""")
@@ -70,12 +70,12 @@ public interface ClimbingTodayMapper {
 				c.inserted,
 				f.fileName,
 				m.userId,
-				(select count(*) from ClimbingLike where boardId = c.id) likeCount
+				(select count(*) from ClimbingTodayLike where boardId = c.id) likeCount
 			FROM 
 				ClimbingToday c 
 				LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
 				LEFT JOIN Member m ON c.writer = m.nickName
-				LEFT JOIN ClimbingLike cl on c.id = cl.boardId
+				LEFT JOIN ClimbingTodayLike cl on c.id = cl.boardId
 			WHERE c.id = #{id}
 			""")
 	@ResultMap("climbingTodayResultMap")
@@ -142,13 +142,13 @@ public interface ClimbingTodayMapper {
 		        c.writer,
 		        c.inserted,
 		        f.fileName,
-		        (SELECT COUNT(*) FROM ClimbingLike cl WHERE cl.boardId = c.id) likeCount,
-		        (SELECT COUNT(*) FROM ClimbingComment ct WHERE ct.boardId = c.id) commentCount
+		        (SELECT COUNT(*) FROM ClimbingTodayLike cl WHERE cl.boardId = c.id) likeCount,
+		        (SELECT COUNT(*) FROM ClimbingTodayComment ct WHERE ct.boardId = c.id) commentCount
 		    FROM 
 		        ClimbingToday c 
 		        LEFT JOIN ClimbingTodayFileName f ON c.id = f.todayId
-		        LEFT JOIN ClimbingLike cl on c.id = cl.boardId
-		        LEFT JOIN ClimbingComment ct on c.id = ct.boardId
+		        LEFT JOIN ClimbingTodayLike cl on c.id = cl.boardId
+		        LEFT JOIN ClimbingTodayComment ct on c.id = ct.boardId
 		    ORDER BY c.id DESC
 		""")
 	@ResultMap("climbingTodayResultMap")

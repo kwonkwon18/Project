@@ -11,7 +11,7 @@ $("#likeIcon").click(function() {
 	console.log(data1);
 	
 	
-	$.ajax("/climbing/climbingTodayLike", {
+	$.ajax("/climbing/climbingCourseLike", {
 		method : "post",
 		contentType : "application/json",
 		data : JSON.stringify(data1),

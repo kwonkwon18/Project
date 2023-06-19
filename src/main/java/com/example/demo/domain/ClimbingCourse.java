@@ -13,4 +13,8 @@ public class ClimbingCourse {
 	private String writer;
 	private LocalDate inserted;
 	private List<String> fileName;
+	
+	private Integer likeCount;
+	private boolean liked; 
+	private Integer commentCount;
 }

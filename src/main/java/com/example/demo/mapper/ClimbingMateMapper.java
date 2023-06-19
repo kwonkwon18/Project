@@ -237,16 +237,19 @@ public interface ClimbingMateMapper {
 				OR address LIKE #{pattern}
 				</if>
 
-				</where>
 
 
 				<if test = "(type eq 'distance')">
-				WHERE address IN (
+				address IN (
 				<foreach collection="addressList" item="item" separator=", ">
 					#{item}
 				</foreach>
 				)
 				</if>
+
+				 AND time > DATE_SUB(NOW(), INTERVAL 3 DAY)
+
+				</where>
 
 			GROUP BY
 			    c.id,

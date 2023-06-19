@@ -12,8 +12,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
+
 
 	<my:navBarRunning></my:navBarRunning>
 
@@ -52,6 +56,7 @@
 
 		<nav>
 			<ul>
+				<h2>메이트 구하기 🏃‍♀️ 🏃‍♀️</h2>
 				<span style="margin-left: 50px;"></span>
 				<a id="all1" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
 				&nbsp; &nbsp;
@@ -62,28 +67,23 @@
 					<i class="fa-solid fa-map-location-dot"></i>
 				</a>
 				<span style="margin-left: 800px;">
-					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성 ⚡</button>
+					<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성 ⚡</button>
 				</span>
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
-					<div class="d-flex justify-content-start align-items-center">
-						<form action="/running/runningMate" class="d-flex align-items-center" role="search">
-							<div class="form-group">
-								<select class="form-select" name="type" id="">
-									<option value="all">전체</option>
-									<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
-									<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
-								</select>
-							</div>
-							<div class="form-group mx-2">
-								<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-							</div>
-							<button class="btn btn-outline-success" type="submit">
-								<i class="fa-solid fa-magnifying-glass"></i>
-							</button>
-						</form>
-					</div>
+					<form action="/running/runningMate" class="d-flex align-items-center" role="search">
+						<select class="form-select" name="type" id="" style="width: 150px">
+							<option value="all">전체</option>
+							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
+							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
+							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
+						</select>
+						<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</form>
 				</ul>
 			</div>
 		</nav>
@@ -183,7 +183,7 @@
 				<a class="dropdown-toggle" href="#" role="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색</a>
 				&nbsp; &nbsp;
 				<span style="margin-left: 900px;">
-					<button type="button" class="btn btn-success" onclick="location.href='runningToday'" style="margin-left: auto;">러닝 공유하기 ✨</button>
+					<button type="button" class="btn btn-warning" onclick="location.href='runningToday'" style="margin-left: auto;">러닝 공유하기 ✨</button>
 				</span>
 			</ul>
 			<div id="dropdown2" style="display: none">
@@ -209,25 +209,43 @@
 					<div class="col-md-4 todayListData" data-board-boardId="${boardToday.id }" onclick='newPage(${boardToday.id })'>
 						<div class="card todayCard">
 							<div class="card-body">
-								<h5 class="card-title">🌄${boardToday.title}</h5>
+
+								<h5 class="card-title">🏃‍♀️🏃‍♂️ ${boardToday.title}</h5>
+								<div>
+									<div class="mb-3">
+										<label for="" class="form-label">작성자</label>
+										<span id="writerData${status.index + 1}" type="text" class="form-control">${boardToday.writer}</span>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">모임장소</label>
+										<span id="addressText" class="form-control">${boardToday.body}</span>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">모임시간</label>
+										<span id="timeText" class="form-control">${boardToday.inserted}</span>
+									</div>
+
+									<%-- <h5 class="card-title">🌄${boardToday.title}</h5>
 								<p class="card-text">${boardToday.writer}</p>
 								<p class="card-text">${boardToday.body}</p>
-								<p class="card-text">${boardToday.inserted}</p>
-								<p class="card-text">
-									<i class="fa-solid fa-heart"></i>
-									${boardToday.likeCount }
-									<i class="fa-regular fa-comments"></i>
-									${boardToday.commentCount }
+								<p class="card-text">${boardToday.inserted}</p> --%>
+									<c:forEach items="${boardToday.fileName }" var="fileName" varStatus="status">
+										<c:if test="${status.count lt 2 }">
+											<div>
+												<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${boardToday.id }/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
+											</div>
+										</c:if>
+									</c:forEach>
+									<input type="hidden" class="idValue" value="${boardToday.id }" />
+								</div>
+								<p class="card-text" style="font-size: 25px; text-align: right; margin-right: 10px; margin-bottom: 30px;">
+									<i class="fa-regular fa-heart"></i>
+									${boardToday.likeCount}
+									<i class="fa-regular fa-comment"></i>
+									${boardToday.commentCount}
 								</p>
-								<input type="hidden" class="idValue" value="${boardToday.id }" />
+
 							</div>
-							<c:forEach items="${boardToday.fileName }" var="fileName" varStatus="status">
-								<c:if test="${status.count lt 2 }">
-									<div>
-										<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${boardToday.id }/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
-									</div>
-								</c:if>
-							</c:forEach>
 						</div>
 					</div>
 				</c:if>
@@ -274,6 +292,11 @@
 
 .todayCard {
 	border: 4px solid #828282;
+}
+
+h2 {
+	font-family: 'Gasoek One', sans-serif;
+	font-family: 'Orbit', sans-serif;
 }
 </style>
 

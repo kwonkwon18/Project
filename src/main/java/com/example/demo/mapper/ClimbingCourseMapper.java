@@ -38,8 +38,14 @@ public interface ClimbingCourseMapper {
 				c.body,
 				c.writer,
 				c.inserted,
-				f.fileName
-			FROM ClimbingCourse c LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId
+				f.fileName,
+				m.userId,
+				(select count(*) from ClimbingCourseLike where boardId = c.id) likeCount
+			FROM 
+				ClimbingCourse c 
+				LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId
+				LEFT JOIN Member m ON c.writer = m.nickName
+				LEFT JOIN ClimbingCourseLike cl on c.id = cl.boardId
 			WHERE c.id = #{id}
 			""")
 	@ResultMap("climbingCourseResultMap")
@@ -94,18 +100,28 @@ public interface ClimbingCourseMapper {
 	int deleteById(Integer id);
 	
 	@Select("""
-			SELECT
-				c.id,
-				c.title,
-				c.body,
-				c.writer,
-				c.inserted,
-				f.fileName
-			FROM ClimbingCourse c LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId
-			WHERE c.title LIKE '%${courseSearch}%'
-			ORDER BY Id DESC;
+			SELECT 
+			c.id, 
+			c.title, 
+			c.body, 
+			c.writer, 
+			c.inserted, 
+			f.fileName, 
+			(SELECT COUNT(*) FROM ClimbingCourseLike cl WHERE cl.boardId = c.id) as likeCount, 
+			(SELECT COUNT(*) FROM ClimbingCourseComment ct WHERE ct.boardId = c.id) as commentCount 
+			FROM ClimbingCourse c 
+			LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId 
+			LEFT JOIN ClimbingCourseLike cl on c.id = cl.boardId 
+			LEFT JOIN ClimbingCourseFileName f2 ON c.id = f2.courseId WHERE c.title LIKE '%%' ORDER BY c.id DESC;
+
 			""")
 	@ResultMap("climbingCourseResultMap")
 	List<ClimbingCourse> selectListByCourseSearch(String courseSearch);
+
+	@Select("""
+			SELECT * FROM ClimbingCourse
+			WHERE title LIKE '%${searchTerm}%'
+			""")
+	List<ClimbingCourse> selectBySearchTerm(String searchTerm);
 
 }

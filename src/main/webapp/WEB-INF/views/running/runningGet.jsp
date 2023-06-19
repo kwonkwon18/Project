@@ -38,16 +38,14 @@
 				<div class="d-flex">
 					<div class="me-auto">
 						<h1>
-							<span id="boardIdText"> ${board.id } </span>
-							번게시물${formattedDate }
+							<span id="boardIdText"> ${board.id } </span> 번게시물${formattedDate }
 						</h1>
 					</div>
 				</div>
 
 				<div>
 					<div class="mb-3">
-						<label for="" class="form-label">제목</label>
-						<input type="text" class="form-control" value="${board.title }" readonly />
+						<label for="" class="form-label">제목</label> <input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
 
 
@@ -57,21 +55,17 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">작성자</label>
-						<input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
+						<label for="" class="form-label">작성자</label> <input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">모임시간</label>
-						<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+						<label for="" class="form-label">모임시간</label> <input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
 					</div>
 
 					<div class="mb-3">
-						<label for="" class="form-label">작성일시</label>
-						<input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
+						<label for="" class="form-label">작성일시</label> <input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
-					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
-					<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 
 					<!-- 본인 게시물 확인 -->
 					<c:set var="isUser" value="false" />
@@ -94,17 +88,6 @@
 							</div>
 						</c:if>
 					</c:forEach>
-
-
-					<!-- 본인 게시물 확인 -->
-					<c:set var="isUser" value="false" />
-					<c:forEach items="${memberList}" var="memberList">
-						<c:if test="${memberList.nickName eq board.writer}">
-							<c:set var="isUser" value="true" />
-							<c:set var="userName" value="${memberList.nickName}" />
-						</c:if>
-					</c:forEach>
-
 
 
 					<sec:authorize access="#board.writer eq #userName">
@@ -143,106 +126,106 @@
 
 
 					<c:forEach items="${memberList}" var="memberList">
-							<c:set var="memberNickName" value="${memberList.nickName}" />
-						</c:forEach>
+						<c:set var="memberNickName" value="${memberList.nickName}" />
+					</c:forEach>
 
 
-						<!-- 본인 신청 확인  -->
-						<%-- <c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" /> --%>
-						<c:set var="isMember" value="false" />
-						<c:forEach items="${members}" var="members">
-							<c:if test="${members.memberId eq memberNickName}">
-								<c:set var="isMember" value="true" />
+					<!-- 본인 신청 확인  -->
+					<%-- <c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" /> --%>
+					<c:set var="isMember" value="false" />
+					<c:forEach items="${members}" var="members">
+						<c:if test="${members.memberId eq memberNickName}">
+							<c:set var="isMember" value="true" />
+						</c:if>
+					</c:forEach>
+
+					<!-- 대기인원 확인  -->
+					<c:set var="isWaiting" value="false" />
+					<c:forEach items="${waitingMembers}" var="waitingMembers">
+						<c:if test="${waitingMembers.memberId eq memberNickName}">
+							<c:set var="isWaiting" value="true" />
+						</c:if>
+					</c:forEach>
+
+					<!-- 거절인원 확인  -->
+					<c:set var="isReject" value="false" />
+					<c:forEach items="${rejectMembers}" var="rejectMembers">
+						<c:if test="${rejectMembers.memberId eq memberNickName}">
+							<c:set var="isReject" value="true" />
+						</c:if>
+					</c:forEach>
+
+
+
+					<div>
+						<c:if test="${!isUser}">
+							<c:if test="${openDate < nowDate }">
+								<button>마감된 러닝</button>
 							</c:if>
-						</c:forEach>
 
-						<!-- 대기인원 확인  -->
-						<c:set var="isWaiting" value="false" />
-						<c:forEach items="${waitingMembers}" var="waitingMembers">
-							<c:if test="${waitingMembers.memberId eq memberNickName}">
-								<c:set var="isWaiting" value="true" />
-							</c:if>
-						</c:forEach>
+							<c:if test="${openDate > nowDate }">
 
-						<!-- 거절인원 확인  -->
-						<c:set var="isReject" value="false" />
-						<c:forEach items="${rejectMembers}" var="rejectMembers">
-							<c:if test="${rejectMembers.memberId eq memberNickName}">
-								<c:set var="isReject" value="true" />
-							</c:if>
-						</c:forEach>
-
-
-
-						<div>
-							<c:if test="${!isUser}">
-								<c:if test="${openDate < nowDate }">
-									<button>마감된 러닝</button>
+								<c:if test="${isReject }">
+									<button id="">거절된 러닝입니다.</button>
 								</c:if>
 
-								<c:if test="${openDate > nowDate }">
+								<c:if test="${not isReject }">
 
-									<c:if test="${isReject }">
-										<button id="">거절된 러닝입니다.</button>
+
+									<c:if test="${not isWaiting }">
+										<!-- 실제로 신청 되기 전에도 취소하기가 보여야함   -->
+										<c:choose>
+											<c:when test="${isMember}">
+												<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
+											</c:when>
+											<c:otherwise>
+												<c:if test="${board.people > board.currentNum }">
+													<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+           									    </c:if>
+											</c:otherwise>
+										</c:choose>
 									</c:if>
 
-									<c:if test="${not isReject }">
+									<c:if test="${isWaiting }">
+										<button>신청대기중👼👼👼</button>
+										<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️</button>
+									</c:if>
 
-
-										<c:if test="${not isWaiting }">
-											<!-- 실제로 신청 되기 전에도 취소하기가 보여야함   -->
-											<c:choose>
-												<c:when test="${isMember}">
-													<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
-												</c:when>
-												<c:otherwise>
-													<c:if test="${board.people > board.currentNum }">
-														<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
-               </c:if>
-												</c:otherwise>
-											</c:choose>
-										</c:if>
-
-										<c:if test="${isWaiting }">
-											<button>신청대기중👼👼👼</button>
-											<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️</button>
-										</c:if>
-
-										<c:if test="${board.people <= board.currentNum }">
-											<button>마감</button>
-										</c:if>
+									<c:if test="${board.people <= board.currentNum }">
+										<button>마감</button>
 									</c:if>
 								</c:if>
-
-
-								<input type="text" id="totalPeople" value="${board.people }" />
-								<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
-								<p id="currentPeople"></p>
-								<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
 							</c:if>
 
-							<c:if test="${isUser}">
-								<button>내가 올린 게시물</button>
-								<input type="text" id="totalPeople" value="${board.people }" />
-								<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
-							</c:if>
-						</div>
+
+							<input type="text" id="totalPeople" value="${board.people }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
+							<p id="currentPeople"></p>
+							<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
+						</c:if>
+
+						<c:if test="${isUser}">
+							<button>내가 올린 게시물</button>
+							<input type="text" id="totalPeople" value="${board.people }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
+						</c:if>
+					</div>
 
 
 
 
 
-						<!-- **************************************************  -->
+					<!-- **************************************************  -->
 
-						<sec:authorize access="isAuthenticated()">
-							<my:chatBtn></my:chatBtn>
-							<script src="/js/groupChat.js"></script>
-							<script src="/js/chat.js" charset="UTF-8"></script>
-						</sec:authorize>
-						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
-						<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-						<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-						<script src="/js/running/runningGet.js"></script>
-						<script src="/js/navBar.js"></script>
+					<sec:authorize access="isAuthenticated()">
+						<my:chatBtn></my:chatBtn>
+						<script src="/js/groupChat.js"></script>
+						<script src="/js/chat.js" charset="UTF-8"></script>
+					</sec:authorize>
+					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+					<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+					<script src="/js/running/runningGet.js"></script>
+					<script src="/js/navBar.js"></script>
 </body>
 </html>

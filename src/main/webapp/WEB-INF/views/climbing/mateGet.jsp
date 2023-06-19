@@ -32,6 +32,8 @@
 
 	<div class="container-lg">
 
+
+
 		<div class="row justify-content-center">
 			<div id="map" style="width: 500px; height: 500x;"></div>
 			<div class="col-12 col-md-8 col-lg-6">
@@ -47,6 +49,7 @@
 					<div class="mb-3">
 						<label for="" class="form-label">제목</label> <input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
+
 
 					<div class="mb-3">
 						<label for="" class="form-label">본문</label>
@@ -64,16 +67,7 @@
 					<div class="mb-3">
 						<label for="" class="form-label">작성일시</label> <input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
-					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" /> <label for="" class="form-label">신청한 사람 </label>
-					<c:forEach items="${members}" var="member">
-						<!-- 보드아이디와 멤버의 보드아이디가 같은 경우 -->
-						<!-- 멤버의 아이디와 작성자가 같은 경우는 해주면 안됨  -->
-						<c:if test="${board.id eq member.boardId && board.writer ne member.memberId}">
-							<div class="mb-3">
-								<input type="text" readonly class="form-control" value="${member.memberId}" />
-							</div>
-						</c:if>
-					</c:forEach>
+					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
 
 					<!-- 본인 게시물 확인 -->
 					<c:set var="isUser" value="false" />
@@ -84,16 +78,31 @@
 						</c:if>
 					</c:forEach>
 
-					<sec:authorize access="#board.writer eq #userName">
 
+
+					<label for="" class="form-label">신청한 사람 </label>
+					<c:forEach items="${members}" var="member">
+						<!-- 보드아이디와 멤버의 보드아이디가 같은 경우 -->
+						<!-- 멤버의 아이디와 작성자가 같은 경우는 해주면 안됨  -->
+						<c:if test="${board.id eq member.boardId && board.writer ne member.memberId}">
+							<div class="mb-3">
+								<input type="text" readonly class="form-control" value="${member.memberId}" />
+							</div>
+						</c:if>
+					</c:forEach>
+
+
+					<sec:authorize access="#board.writer eq #userName">
 						<div>
-							<a class="btn btn-secondary" href="/climbing/mateModify/${board.id }">수정</a>
+							<a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
 							<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
 						</div>
 
 
+
+
 						<div class="d-none">
-							<form action="/climbing/mateRemove" method="post" id="removeForm">
+							<form action="/running/runningRemove" method="post" id="removeForm">
 								<input type="text" name="id" value="${board.id }" />
 							</form>
 						</div>
@@ -118,10 +127,6 @@
 					</sec:authorize>
 
 
-
-
-
-
 					<c:forEach items="${memberList}" var="memberList">
 						<c:set var="memberNickName" value="${memberList.nickName}" />
 					</c:forEach>
@@ -136,6 +141,22 @@
 						</c:if>
 					</c:forEach>
 
+					<!-- 대기인원 확인  -->
+					<c:set var="isWaiting" value="false" />
+					<c:forEach items="${waitingMembers}" var="waitingMembers">
+						<c:if test="${waitingMembers.memberId eq memberNickName}">
+							<c:set var="isWaiting" value="true" />
+						</c:if>
+					</c:forEach>
+
+					<!-- 거절인원 확인  -->
+					<c:set var="isReject" value="false" />
+					<c:forEach items="${rejectMembers}" var="rejectMembers">
+						<c:if test="${rejectMembers.memberId eq memberNickName}">
+							<c:set var="isReject" value="true" />
+						</c:if>
+					</c:forEach>
+
 
 
 					<div>
@@ -146,19 +167,35 @@
 
 							<c:if test="${openDate > nowDate }">
 
-								<c:choose>
-									<c:when test="${isMember}">
-										<button id="rejectPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
-									</c:when>
-									<c:otherwise>
-										<c:if test="${board.people > board.currentNum }">
-											<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-										</c:if>
-									</c:otherwise>
-								</c:choose>
+								<c:if test="${isReject }">
+									<button id="">거절된 러닝입니다.</button>
+								</c:if>
 
-								<c:if test="${board.people <= board.currentNum }">
-									<button>마감</button>
+								<c:if test="${not isReject }">
+
+
+									<c:if test="${not isWaiting }">
+										<!-- 실제로 신청 되기 전에도 취소하기가 보여야함   -->
+										<c:choose>
+											<c:when test="${isMember}">
+												<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
+											</c:when>
+											<c:otherwise>
+												<c:if test="${board.people > board.currentNum }">
+													<button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+           									    </c:if>
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+
+									<c:if test="${isWaiting }">
+										<button>신청대기중👼👼👼</button>
+										<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️</button>
+									</c:if>
+
+									<c:if test="${board.people <= board.currentNum }">
+										<button>마감</button>
+									</c:if>
 								</c:if>
 							</c:if>
 
@@ -171,8 +208,11 @@
 
 						<c:if test="${isUser}">
 							<button>내가 올린 게시물</button>
+							<input type="text" id="totalPeople" value="${board.people }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
 						</c:if>
 					</div>
+
 
 
 

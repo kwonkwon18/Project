@@ -48,7 +48,7 @@
 
 
 								<c:set var="isUser" value="false" />
-								<label for="" class="form-label">같이 달릴 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️</label>
+								<label for="" class="form-label">같이 등산할 사람 🏃‍♀️🏃‍♂️🏃‍♀️🏃‍♂️</label>
 								<c:forEach items="${members}" var="member">
 									<c:if test="${board.id eq member.boardId}">
 										<div class="mb-3">
@@ -89,7 +89,7 @@
 										<button id="">${isMember}내가올린게시물${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}</button>
 									</c:when>
 									<c:when test="${isUser}">
-										<button id="">${isUser}이미신청한러닝입니다.${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}</button>
+										<button id="">${isUser}이미신청한등산입니다.${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}</button>
 										<button id="rejectPartyBtn${status.index + 1}">취소하기</button>
 									</c:when>
 									<c:otherwise>

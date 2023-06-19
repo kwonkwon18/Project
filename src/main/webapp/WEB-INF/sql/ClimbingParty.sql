@@ -24,3 +24,7 @@ ADD chatCount INT;
 
 ALTER TABLE ClimbingParty
 ADD confirmation INT;
+
+use RunData;
+
+select * from ClimbingParty;

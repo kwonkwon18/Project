@@ -38,7 +38,7 @@ public interface ClimbingMateMapper {
 			    COUNT(cp.boardId) AS currentNum
 			FROM
 			    ClimbingMate c
-			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId
+			    LEFT JOIN ClimbingParty cp ON c.id = cp.boardId and participation = 1
 			    LEFT JOIN Member m ON c.writer = m.nickName
 			WHERE
 			    c.id = #{id}
@@ -337,5 +337,10 @@ public interface ClimbingMateMapper {
 				id = #{id}
 			""")
 	boolean updateBoardById(ClimbingMate climbingMate);
+
+	@Select("""
+			Select userId from Member where nickName = #{hostNickName}
+			""")
+	String findHost(String hostNickName);
 
 }

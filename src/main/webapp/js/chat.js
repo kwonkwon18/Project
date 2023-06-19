@@ -192,7 +192,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 			console.log(lastChatId);
 			repeat = setInterval(function() {
 				currentChatId(lastChatId, lastChatRoomId);
-			}, 3000);
+			}, 500);
 		}
 	})
 })

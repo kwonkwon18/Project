@@ -200,7 +200,7 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 			console.log(lastChatId);
 			groupRepeat = setInterval(function() {
 				currentGroupChatId(lastChatId, lastChatRoomId);
-			}, 3000);
+			}, 500);
 		}
 	})
 })

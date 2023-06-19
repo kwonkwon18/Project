@@ -282,6 +282,7 @@ public interface RunningMapper {
 			left join RunningParty p on b.id = p.boardId
 			where (b.writer = #{nickName} or p.memberId = #{nickName2})
 			    and b.writer <> p.memberId
+			GROUP BY b.id
 			order by b.inserted desc;
 					         """)
 	List<RunningBoard> selectTotalMyPageInfo(String nickName, String nickName2);

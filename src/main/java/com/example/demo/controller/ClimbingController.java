@@ -306,9 +306,10 @@ public class ClimbingController {
 		Map<String, Object> myPageList = new HashMap<>();
 
 		myPageList.put("MyNickName", member.getNickName());
-
+		
 		List<ClimbingMate> totalMyData = mateService.getTotalMyPageInfo(member.getNickName());
 		myPageList.put("totalMyData", totalMyData);
+		System.out.println(totalMyData);
 		
 		// 참여자들 리스트업
 		List<ClimbingParty> members = mateService.getJoinMember(member.getNickName());

@@ -63,7 +63,7 @@
 			<div id="dropdown1" style="display: none">
 				<ul>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<form action="/climbing/mateList" class="d-flex" role="search">
+					<form action="/futsal/futsalMate" class="d-flex" role="search">
 						<select class="form-select" name="type" id="" style="width: 150px">
 							<option value="all">전체</option>
 							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
@@ -106,7 +106,7 @@
 							</c:forEach>
 
 							<c:if test="${openDate <= nowDate }">
-								<button>마감된 등산</button>
+								<button>마감된 경기</button>
 							</c:if>
 
 							<c:if test="${openDate > nowDate }">

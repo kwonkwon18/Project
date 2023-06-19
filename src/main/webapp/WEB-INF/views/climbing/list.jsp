@@ -112,7 +112,7 @@
 					</c:if>
 				</c:forEach>
 
-	
+
 				<c:if test="${status.index < 3 }">
 					<div class="col-md-4">
 						<div class="card ${isMember ? 'card-member' : 'card-nonMember'}">
@@ -188,10 +188,9 @@
 
 	<div class="container-lg">
 		<h2>오늘의 등산</h2>
+		<br />
 		<ul>
-			<!-- 새로 작성된 코드, 변경된 코드  -->
-			<!-- table.table>thead>tr>th*4^^tbody -->
-			<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
+			<div style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 10px;">
 				<a href="todayList">
 					<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
 				</a>
@@ -202,19 +201,18 @@
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</button>
 				</form>
-			</div>
-
-			<div style="text-align: right;">
-				<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
+				<span style="margin-left: 520px;">
+					<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
 			</div>
 		</ul>
+
 		<br />
 
 		<div id="todayListData" class="row">
 			<c:forEach items="${climbingTodayList}" var="board" varStatus="status">
 				<c:if test="${status.index < 3 }">
 					<div class="col-md-4">
-						<div class="card">
+						<div class="card todayCard">
 							<div onclick="location.href='todayId/${board.id}'">
 								<div class="card-body">
 									<h5 class="card-title">🏕🏕 ${board.title}</h5>
@@ -260,6 +258,66 @@
 	<br />
 
 	<div class="container-lg">
+		<h2>추천 코스</h2>
+		<br />
+		<ul>
+			<div style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 10px;">
+				<a href="courseList">
+					<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
+				</a>
+				<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
+				<form action="/climbing/courseList" class="d-flex" role="todaySearch">
+					<input id="searchInput" value="${param.courseSearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
+					<button id="search" class="btn btn-outline-success" type="submit">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</form>
+				<span style="margin-left: 520px;">
+					<button type="button" class="btn btn-success" onclick="location.href='courseAdd'">코스 등록하기</button>
+			</div>
+		</ul>
+
+		<br />
+
+		<div id="todayListData" class="row">
+			<c:forEach items="${climbingCourseList}" var="board" varStatus="status">
+				<c:if test="${status.index < 3 }">
+					<div class="col-md-4">
+						<div class="card todayCard">
+							<div onclick="location.href='todayId/${board.id}'">
+								<div class="card-body">
+									<h5 class="card-title">🏕🏕 ${board.title}</h5>
+
+									<div class="mb-3">
+										<label for="" class="form-label">작성자</label>
+										<span id="writerData${status.index + 1}" type="text" class="form-control">${board.writer}</span>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">본문</label>
+										<span id="addressText" class="form-control">${board.body}</span>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">업로드 시간</label>
+										<span id="timeText" class="form-control">${board.inserted}</span>
+									</div>
+									<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+										<c:if test="${status.count lt 2 }">
+											<div>
+												<img class="img-thumbnail" src="${bucketUrl}/climbingCourse/${board.id}/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</c:if>
+			</c:forEach>
+		</div>
+	</div>
+
+	<%-- 	<div class="container-lg">
 		<h2>추천 코스</h2>
 		<ul>
 			<!-- 			<button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
@@ -311,6 +369,8 @@
 			</c:forEach>
 		</div>
 	</div>
+ --%>
+
 
 	<!-- 	<div class="container-lg"> -->
 	<!-- 		<div class="row"> -->

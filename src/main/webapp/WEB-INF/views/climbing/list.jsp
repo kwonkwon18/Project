@@ -16,6 +16,10 @@
 <body>
 
 	<my:navBarClimbing></my:navBarClimbing>
+	
+		<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
+	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
+	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
 
 	<div class="container-lg">
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">

@@ -1,78 +1,44 @@
 package com.example.demo.mapper;
 
-import java.util.*;
-
 import org.apache.ibatis.annotations.*;
 
 import com.example.demo.domain.*;
 
+
 @Mapper
 public interface FutsalPartyMapper {
 
-	@Select("""
-			SELECT *
-			FROM FutsalParty
-			ORDER BY id DESC
+	
+	@Delete("""
+			delete from FutsalParty
+			where boardId = #{boardId} and userId = #{userId} and memberId = #{memberId}
 			""")
-	List<FutsalParty> selectPartyAll();
+	Integer delete(FutsalParty futsalParty);
 
-	@Select("""
-			SELECT *
-			FROM FutsalParty
-			WHERE id = #{id}
-			""")
-	FutsalParty selectById(Integer id);
 	
 	@Insert("""
-			INSERT INTO FutsalParty(
-				title,
-				body,
-				writer,
-				Lat,
-				Lng,
-				memberNum,
-				stadium,
-				startDate,
-				startTime,
-				futsalGender)
-			VALUES (#{title}, #{body}, #{writer}, #{Lat}, #{Lng}, #{memberNum}, #{stadium}, #{startDate}, #{startTime}, #{futsalGender})
+			insert into FutsalParty (boardId, userId, memberId)
+			values (#{boardId}, #{userId}, #{memberId})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	int insert(FutsalParty futsalParty);
+	Integer insert(FutsalParty futsalParty);
+
+	
+	@Select("""
+			select count(*) from FutsalParty
+			where boardId = #{boardId}
+			""")
+	Integer countByBoardId(Integer boardId);
 
 	@Delete("""
-			DELETE FROM FutsalPartyMember
-			WHERE futsalPartyId = #{futsalPartyId}
-			AND futsalApplyMember = #{futsalApplyMember}
+			DELETE FROM FutsalParty
+			WHERE boardId = #{boardId}
 			""")
-	Integer deletePartyMember(FutsalPartyMember futsalPartyMember);
+	Integer deleteByBoardId(Integer boardId);
+
+
 	
-	@Insert("""
-			INSERT INTO FutsalPartyMember
-			VALUES (#{futsalPartyId}, #{futsalApplyMember})
-			""")
-	Integer insertPartyMember(FutsalPartyMember futsalPartyMember);
 
-	@Select("""
-			SELECT COUNT(*)
-			FROM FutsalPartyMember
-			WHERE futsalPartyId = #{futsalPartyId}
-			""")
-	Integer countByFutsalPartyId(Integer futsalPartyId);
-
-	@Select("""
-			SELECT *
-			FROM Member
-			WHERE userId = #{userId}
-			""")
-	Member selectByUserId(String userId);
-
-	@Select("""
-			SELECT applyNum
-			FROM FutsalParty
-			WHERE id = #{futsalPartyId}
-			""")
-	int countByPartyId(Integer futsalPartyId);
 
 
 }

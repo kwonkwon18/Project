@@ -93,6 +93,7 @@
 			</div>
 		</ul>
 
+
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach items="${runningMates}" var="board" varStatus="status">
 				<c:if test="${status.index < 3 }">
@@ -129,11 +130,15 @@
 
 									<c:if test="${openDate > nowDate }">
 										<c:if test="${isMember}">
-											<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+											<div class="card-footer card-footer-gray" style="text-align: right">
+												<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+											</div>
 										</c:if>
 
 										<c:if test="${not isMember}">
-											<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+											<div class="card-footer card-footer-gray" style="text-align: right">
+												<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+											</div>
 										</c:if>
 									</c:if>
 								</div>
@@ -210,7 +215,7 @@
 
 
 		<!-- 맨밑 고정  -->
-	
+
 		<sec:authorize access="isAuthenticated()">
 			<my:chatBtn></my:chatBtn>
 			<script src="/js/groupChat.js"></script>

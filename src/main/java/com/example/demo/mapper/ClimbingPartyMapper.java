@@ -16,12 +16,13 @@ public interface ClimbingPartyMapper {
 	Integer delete(ClimbingParty climbingParty);
 
 	
-	@Insert("""
-			insert into ClimbingParty (boardId, userId, memberId)
-			values (#{boardId}, #{userId}, #{memberId})
-			""")
-	@Options(useGeneratedKeys = true, keyProperty = "id")
-	Integer insert(ClimbingParty climbingParty);
+	/*
+	 * @Insert(""" insert into ClimbingParty (boardId, userId, memberId) values
+	 * (#{boardId}, #{userId}, #{memberId}) """)
+	 * 
+	 * @Options(useGeneratedKeys = true, keyProperty = "id") Integer
+	 * insert(ClimbingParty climbingParty);
+	 */
 
 	
 	@Select("""
@@ -117,6 +118,13 @@ public interface ClimbingPartyMapper {
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer countOfAlarmGuest(String name);
+
+
+	@Insert("""
+			insert into ClimbingParty (boardId, userId, memberId, host, guest)
+			values (#{boardId}, #{userId}, #{memberId}, #{host}, #{guest})
+			""")
+	Integer insert(Integer boardId, String userId, String memberId, String host, String guest);
 
 
 

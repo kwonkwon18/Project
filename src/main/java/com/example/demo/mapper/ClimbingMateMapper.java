@@ -338,4 +338,9 @@ public interface ClimbingMateMapper {
 			""")
 	boolean updateBoardById(ClimbingMate climbingMate);
 
+	@Select("""
+			Select userId from Member where nickName = #{hostNickName}
+			""")
+	String findHost(String hostNickName);
+
 }

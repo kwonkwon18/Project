@@ -22,10 +22,18 @@ public class ClimbingPartyService {
 	public Map<String, Object> join(ClimbingParty climbingParty, Authentication authentication) {
 
 		Member member = partyMapper.selectMemberById(authentication.getName());
-		
+	
 		ClimbingMate board = mateMapper.selectById(climbingParty.getBoardId());
+		
+		String hostNickName = board.getWriter();
+		String host = mateMapper.findHost(hostNickName);
+		
 		int currentNum = partyMapper.countByBoardId(climbingParty.getBoardId());
 
+		Integer boardId = climbingParty.getBoardId();
+		String userId = climbingParty.getUserId();
+		String memberId = member.getNickName();
+		
 		Map<String, Object> result = new HashMap<>();
 
 		System.out.println(board.getPeople() + "총인원");
@@ -42,7 +50,7 @@ public class ClimbingPartyService {
 			Integer deleteCnt = partyMapper.delete(climbingParty);
 
 			if (deleteCnt != 1) {
-				Integer insertCnt = partyMapper.insert(climbingParty);
+				Integer insertCnt = partyMapper.insert(boardId, userId, memberId, host, authentication.getName());
 				result.put("join", true);
 			}
 

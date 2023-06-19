@@ -23,14 +23,17 @@ public class ClimbingPartyService {
 
 		// 현재 접속한 로그인 아이디 찾기
 		Member member = partyMapper.selectMemberById(authentication.getName());
+
 		
 		// 총 인원 파악용
 		ClimbingMate board = mateMapper.selectById(climbingParty.getBoardId());
 	
+
 		String hostNickName = board.getWriter();
 		String host = mateMapper.findHost(hostNickName);
 		
 		int currentNum = partyMapper.countByBoardId(climbingParty.getBoardId());
+
 		Integer boardId = climbingParty.getBoardId();
 		String userId = climbingParty.getUserId();
 		String memberId = member.getNickName();

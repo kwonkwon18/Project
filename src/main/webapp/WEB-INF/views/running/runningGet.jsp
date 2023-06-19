@@ -198,6 +198,12 @@
 							</c:if>
 
 
+									<c:if test="${isWaiting }">
+										<button>신청대기중👼👼👼</button>
+										<button id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️</button>
+									</c:if>
+
+
 							<input type="text" id="totalPeople" value="${board.people }" />
 							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
 							<p id="currentPeople"></p>
@@ -213,9 +219,15 @@
 
 
 
+							<input type="text" id="totalPeople" value="${board.people }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
+							<p id="currentPeople"></p>
+							<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
+						</c:if>
 
 
 					<!-- **************************************************  -->
+
 
 					<sec:authorize access="isAuthenticated()">
 						<my:chatBtn></my:chatBtn>

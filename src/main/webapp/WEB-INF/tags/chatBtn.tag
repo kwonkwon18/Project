@@ -139,6 +139,6 @@ button.active {
 </div>
 <button type="button" id="chatButton" class="btn btn-lg btn-primary position-fixed bottom-0 start-0" style="border-radius: 50%; margin-bottom: 15px; margin-left: 15px; z-index: 1;">
 	<i class="fa-regular fa-comments"></i>
-	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> 0 </span>
+	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="myChatCount"> 0 </span>
 </button>
 

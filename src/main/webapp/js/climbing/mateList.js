@@ -186,6 +186,11 @@ function handleListUpButtonClick() {
 									$("#chatBox").append(`
 			                			<div id="chatContainer"></div> 
 			            			`)
+			            			if (chatList.length > 12) {
+										$("#chatList").css("width", "320px");
+									} else {
+										$("#chatList").css("width", "300px");
+									}
 									for (const chat of chatList) {
 										if (chat.senderId === myId) {
 											if (chat.fileName !== null) {

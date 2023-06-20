@@ -12,24 +12,42 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/main">홈으로</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/climbing/mateList">메이트 구하기</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/todayList">오늘의 등산</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/courseList">추천 코스</a></li>
-				<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/restaurant">맛집 찾기</a></li>
+				<li class="nav-item">
+					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/main">홈으로</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/climbing/mateList">메이트 구하기</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/todayList">오늘의 등산</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/courseList">추천 코스</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/restaurant">맛집 찾기</a>
+				</li>
 				<sec:authorize access="isAuthenticated()">
-					<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/myPage">마이페이지</a></li>
-				</sec:authorize>
-				<sec:authorize access="isAuthenticated()">
-					<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/logout">로그아웃</a></li>
+					<li class="nav-item">
+						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/logout">로그아웃</a>
+					</li>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
-					<li class="nav-item"><a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/login">로그인</a></li>
+					<li class="nav-item">
+						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/login">로그인</a>
+					</li>
 				</sec:authorize>
-				<button id="alarmList" class="btn btn-primary position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-					<i class="fa-regular fa-bell"></i> 
-					<span id="NumberOfAlarm" style="display: none;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger""> </span>
-				</button>
+				<sec:authorize access="isAuthenticated()">
+					<li class="nav-item">
+						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/myPage">
+							<i class="fa-regular fa-bookmark btn btn-primary"></i>
+						</a>
+					</li>
+					<button id="alarmList" class="btn btn-primary position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+						<i class="fa-regular fa-bell"></i>
+						<span id="NumberOfAlarm" style="display: none;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger""> </span>
+					</button>
+				</sec:authorize>
 			</ul>
 
 		</div>

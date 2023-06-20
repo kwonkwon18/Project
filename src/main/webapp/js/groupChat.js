@@ -24,6 +24,11 @@ function showGroupList() {
 			$("#chatList").append(`
 			<div id="chatListContainer"></div>
 			`)
+			if (insertedList.length > 12) {
+				$("#chatList").css("width", "320px");
+			} else {
+				$("#chatList").css("width", "300px");
+			}
 			for (var i = 0; i < insertedList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`

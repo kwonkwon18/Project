@@ -304,7 +304,29 @@ public class ClimbingController {
 	}
 	
 	@GetMapping("/myPage")
-	public void climbingMyPage(Authentication authentication, Model model) {
+	public void climbingMyPageGet(Authentication authentication, Model model) {
+
+		// 로그인 닉네임 확인
+		Member member = mateService.getMemberUserId(authentication.getName());
+
+		Map<String, Object> myPageList = new HashMap<>();
+
+		myPageList.put("MyNickName", member.getNickName());
+		
+		List<ClimbingMate> totalMyData = mateService.getTotalMyPageInfo(member.getNickName());
+		myPageList.put("totalMyData", totalMyData);
+		System.out.println(totalMyData);
+		
+		// 참여자들 리스트업
+		List<ClimbingParty> members = mateService.getJoinMember(member.getNickName());
+		myPageList.put("members", members);
+//		System.out.println("멤버스 : " + members);
+		model.addAllAttributes(myPageList);
+	}
+	
+	@GetMapping("/myPageJs")
+	@ResponseBody
+	public Map<String, Object> climbingMyPage(Authentication authentication) {
 
 		// 로그인 닉네임 확인
 		Member member = mateService.getMemberUserId(authentication.getName());
@@ -322,8 +344,7 @@ public class ClimbingController {
 		myPageList.put("members", members);
 //		System.out.println("멤버스 : " + members);
 
-		model.addAllAttributes(myPageList);
-
+		return myPageList;
 	}
 
 	@GetMapping("/getClimbingDetail")

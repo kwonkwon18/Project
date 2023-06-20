@@ -28,30 +28,12 @@
 
 	<div class="container-lg">
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-indicators">
-				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-			</div>
+
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block w-100" height="500px" alt="...">
-				</div>
-				<div class="carousel-item">
-					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block w-100" height="500px" alt="...">
-				</div>
-				<div class="carousel-item">
-					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" height="500px" alt="...">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/runningMate/%EB%8B%AC%EB%A6%AC%EA%B8%B04.jpg" class="d-block w-100" height="500px" alt="...">
 				</div>
 			</div>
-			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
-			</button>
 		</div>
 
 		<nav>
@@ -131,13 +113,15 @@
 
 
 								<c:if test="${openDate <= nowDate }">
-									<button>마감된 러닝</button>
+									<div class="card-footer card-footer-gray" style="text-align: right">
+										<button class="btn btn-danger">마감된 등산</button>
+									</div>
 								</c:if>
 
 								<c:if test="${openDate > nowDate }">
 									<c:if test="${isMember}">
 										<div class="card-footer card-footer-gray" style="text-align: right">
-											<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-success" onclick="location.href='id/${board.id}'">더보기</button>
+											<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="" class=" btn btn-success" onclick="location.href='/climbing/id/${board.id}'">내 게시물</button>
 										</div>
 									</c:if>
 

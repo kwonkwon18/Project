@@ -46,10 +46,11 @@ $("#alarmList").click(function() {
 				console.log(userId)
 
 				$("#HostAlarm").append(`
-            <div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
+            <div class="btn btn-outline-dark mb-3" style="width: 500px;">
              🏃‍♀️ ${title} 에 ${memberId} 님이 신청하셨습니다. 
-              <button class="agreeParty" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >수락</button>
-              <button class="disagreeParty" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >거절</button>   
+              <button class="agreeParty btn btn-primary mr-2" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >수락</button>
+              
+              <button class="disagreeParty btn btn-danger" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >거절</button>   
             </div>
           `);
 
@@ -68,27 +69,38 @@ $("#alarmList").click(function() {
 
 				// 참여여부(participation) 값에 따라 메시지 설정
 				if (participation === 1 && userId != memberId) {
-					message = ` ${userId} 수락되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
+					message = ` ${userId} 수락되었습니다. &nbsp;&nbsp;
+					<button class="btn btn-primary" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button" class="memberConfirmation deleteAlarm" value="${boardId}" style="justify-content: flex-end;">확인</button>`
 					$("#MemberAlarm").append(`
-    <div id="alarmDiv${boardId}" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-        🏃‍♀️ ${title} 신청이 ${message} == ${boardId}
+<div class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
+    <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
+        🏃‍♀️ ${title} 신청이 ${message}
     </div>
+</div>
 `);
 				} else if (participation === 1 && userId == memberId) {
 					$("#MemberAlarm").append(`
-    <div id="hostPost" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-        🏃‍♀️ ' ${title} ' 게시물이 올라갔습니다 <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="poserConfirmation deleteAlarm" value="${boardId}">확인</button>
+					<div class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
+    <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
+        🏃‍♀️ ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; <button class = "btn btn-primary" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="poserConfirmation deleteAlarm" value="${boardId}">확인</button>
     </div>
+    </div>
+    
+
 `);
 				}
 
 				else if (participation === 2) {
-					message = ` ${userId} 반려되었습니다. <button data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="memberConfirmation deleteAlarm" value="${boardId}">확인</button>`
+					message = ` ${userId} 반려되었습니다. &nbsp;&nbsp;
+					<button class="btn btn-secondary" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button" class="memberConfirmation deleteAlarm" value="${boardId}" style="justify-content: flex-end;">확인</button>`
 					$("#MemberAlarm").append(`
-    <div id="alarmDiv${boardId}" class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-        🏃‍♀️ ${title} 신청이 ${message} == ${boardId}
+<div class="btn btn-outline-danger mb-3" style="width: 500px; display: flex; ">
+    <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
+        🏃‍♀️ ${title} 신청이 ${message}
     </div>
+</div>
 `);
+
 				} else if (participation === 0) {
 
 				}

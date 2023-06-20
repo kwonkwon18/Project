@@ -200,4 +200,17 @@ public class ChatService {
 		return mapper.searchChatId(search, chatRoomId);
 	}
 
+	public Integer getMyCount(String name) {
+		List<ChatRoom> list = mapper.chatRoomSelectByMyName(name);
+		Integer count = 0;
+		for(ChatRoom chatRoom : list) {
+			if(chatRoom.getCreater().equals(name)) {
+				count += chatRoom.getInvitedChatCount();
+			} else {
+				count += chatRoom.getCreaterChatCount();
+			}
+		}
+		return count;
+	}
+
 }

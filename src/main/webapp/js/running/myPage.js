@@ -22,11 +22,6 @@ $("#alarmList").click(function() {
 				// 유저 아이디
 				// 멤버 아이디 
 
-				console.log(boardId)
-				console.log(memberId)
-				console.log(title)
-				console.log(userId)
-
 				$("#HostAlarm").append(`
             <div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
               ${title} 에 ${memberId} 님이 신청하셨습니다. 
@@ -67,13 +62,6 @@ $("#alarmList").click(function() {
 
 				}
 
-				console.log("&&" + boardId);
-				console.log("&&" + memberId);
-				console.log("&&" + title);
-				console.log("&&" + userId);
-				console.log("&&" + participation);
-
-
 			});
 
 			// 삭제 버튼에 대한 클릭 이벤트 처리
@@ -96,13 +84,7 @@ $("#HostAlarm").on("click", ".agreeParty", function() {
 	var boardId = $(this).data('board-boardid');
 	var title = $(this).data('board-title');
 
-	console.log(memberId);
-	console.log(userId);
-	console.log(boardId);
-	console.log(title);
-
 	const data = { boardId, userId, memberId };
-	console.log(data);
 
 	$.ajax("/running/agreeParty", {
 		method: "post",
@@ -130,13 +112,7 @@ $("#HostAlarm").on("click", ".disagreeParty", function() {
 	var boardId = $(this).data('board-boardid');
 	var title = $(this).data('board-title');
 
-	console.log(memberId);
-	console.log(userId);
-	console.log(boardId);
-	console.log(title);
-
 	const data = { boardId, userId, memberId };
-	console.log(data);
 
 	$.ajax("/running/disagreeParty", {
 		method: "post",
@@ -164,13 +140,7 @@ $("#MemberAlarm").on("click", ".memberConfirmation", function() {
 	var boardId = $(this).data('board-boardid');
 	var title = $(this).data('board-title');
 
-	console.log(memberId);
-	console.log(userId);
-	console.log(boardId);
-	console.log(title);
-
 	const data = { boardId, userId, memberId };
-	console.log(data);
 
 	$.ajax("/running/confirmation", {
 		method: "post",
@@ -187,5 +157,212 @@ $("#MemberAlarm").on("click", ".memberConfirmation", function() {
 		}
 	});
 });
+
+$("#runningCurrentListBtn").click(function() {
+	$("#runningMyPostListBtn").removeClass("active");
+	$("#runningYourPostListBtn").removeClass("active");
+	$(this).addClass("active");
+	$("#myInfoContainer").remove();
+	$.ajax("/running/myPageJs", {
+		success: function(data) {
+			var totalMyData = data.totalMyData;
+			var myNickName = data.MyNickName;
+			$("#myInfo").after(`
+				<div class="container-lg" style="max-width: 1200px;" id="myInfoContainer">
+					<div class="row row-cols-1 row-cols-md-3 g-4" id="myInfoRow">
+					</div>
+				</div>
+			`)
+			for (var i = 0; i < 6; i++) {
+				var idNumber = i + 1;
+				if (myNickName === totalMyData[i].writer) {
+					var post = "내가 올린 게시물";
+				} else {
+					var post = "내가 신청한 게시물";
+				}
+				$("#myInfoRow").append(`
+					<div class="col">
+						<div class="card text-white bg-primary mb-3" style="max-width: 21rem; margin-left: 20px;">
+							<h3 style="margin-left: 15px;">${post}</h3>
+								<div class="card-body">
+								<h5 class="card-title">
+									<span id="boardIdText${idNumber}">"${totalMyData[i].id}"</span>
+									번게시물
+								</h5>
+								<div id="map${idNumber}" class="map-container" style="width: 300px; height: 300px;"></div>
+								<div>
+									<div class="mb-3">
+										<label for="" class="form-label">제목</label>
+										<input type="text" class="form-control" value="${totalMyData[i].title}" readonly />
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">작성자</label>
+										<input id="writerData${idNumber}" type="text" class="form-control" value="${totalMyData[i].writer}" readonly />
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">모임시간</label>
+										<input id="timeText" type="text" class="form-control" value="${totalMyData[i].time}" readonly />
+									</div>
+									<button type="button" onclick="location.href='/climbing/id/${totalMyData[i].id}'">내 게시물 상세 보기</button>
+									<input class="LatSubmit${idNumber}" type="hidden" name="Lat" value="${totalMyData[i].lat}" />
+									<input class="LngSubmit${idNumber}" type="hidden" name="Lng" value="${totalMyData[i].lng}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				`)
+				var latNum = totalMyData[i].lat;
+				var lngNum = totalMyData[i].lng;
+				var mapContainer = document.getElementById(`map${idNumber}`);
+				var mapOption = {
+					center: new kakao.maps.LatLng(latNum, lngNum),
+					level: 3
+				};
+				var map = new kakao.maps.Map(mapContainer, mapOption);
+				var markerPosition = new kakao.maps.LatLng(latNum, lngNum);
+				var marker = new kakao.maps.Marker({
+					position: markerPosition
+				});
+				marker.setMap(map);
+			}
+		}
+	})
+})
+
+$("#runningMyPostListBtn").click(function() {
+	$("#runningCurrentListBtn").removeClass("active");
+	$("#runningYourPostListBtn").removeClass("active");
+	$(this).addClass("active");
+	$("#myInfoContainer").remove();
+	$.ajax("/running/myPageJs", {
+		success: function(data) {
+			var totalMyData = data.totalMyData;
+			var myNickName = data.MyNickName;
+			$("#myInfo").after(`
+				<div class="container-lg" style="max-width: 1200px;" id="myInfoContainer">
+					<div class="row row-cols-1 row-cols-md-3 g-4" id="myInfoRow">
+					</div>
+				</div>
+			`)
+			for (var i = 0; i < totalMyData.length; i++) {
+				if (myNickName === totalMyData[i].writer) {
+					var idNumber = i + 1;
+					$("#myInfoRow").append(`
+						<div class="col">
+							<div class="card text-white bg-primary mb-3" style="max-width: 21rem; margin-left: 20px;">
+									<div class="card-body">
+									<h5 class="card-title">
+										<span id="boardIdText${idNumber}">"${totalMyData[i].id}"</span>
+										번게시물
+									</h5>
+									<div id="map${idNumber}" class="map-container" style="width: 300px; height: 300px;"></div>
+									<div>
+										<div class="mb-3">
+											<label for="" class="form-label">제목</label>
+											<input type="text" class="form-control" value="${totalMyData[i].title}" readonly />
+										</div>
+										<div class="mb-3">
+											<label for="" class="form-label">작성자</label>
+											<input id="writerData${idNumber}" type="text" class="form-control" value="${totalMyData[i].writer}" readonly />
+										</div>
+										<div class="mb-3">
+											<label for="" class="form-label">모임시간</label>
+											<input id="timeText" type="text" class="form-control" value="${totalMyData[i].time}" readonly />
+										</div>
+										<button type="button" onclick="location.href='/climbing/id/${totalMyData[i].id}'">내 게시물 상세 보기</button>
+										<input class="LatSubmit${idNumber}" type="hidden" name="Lat" value="${totalMyData[i].lat}" />
+										<input class="LngSubmit${idNumber}" type="hidden" name="Lng" value="${totalMyData[i].lng}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					`)
+					var latNum = totalMyData[i].lat;
+					var lngNum = totalMyData[i].lng;
+					var mapContainer = document.getElementById(`map${idNumber}`);
+					var mapOption = {
+						center: new kakao.maps.LatLng(latNum, lngNum),
+						level: 3
+					};
+					var map = new kakao.maps.Map(mapContainer, mapOption);
+					var markerPosition = new kakao.maps.LatLng(latNum, lngNum);
+					var marker = new kakao.maps.Marker({
+						position: markerPosition
+					});
+					marker.setMap(map);
+				}
+			}
+		}
+	})
+})
+
+$("#runningYourPostListBtn").click(function() {
+	$("#runningMyPostListBtn").removeClass("active");
+	$("#runningCurrentListBtn").removeClass("active");
+	$(this).addClass("active");
+	$("#myInfoContainer").remove();
+	$.ajax("/running/myPageJs", {
+		success: function(data) {
+			var totalMyData = data.totalMyData;
+			var myNickName = data.MyNickName;
+			$("#myInfo").after(`
+				<div class="container-lg" style="max-width: 1200px;" id="myInfoContainer">
+					<div class="row row-cols-1 row-cols-md-3 g-4" id="myInfoRow">
+					</div>
+				</div>
+			`)
+			for (var i = 0; i < totalMyData.length; i++) {
+				if (myNickName !== totalMyData[i].writer) {
+					var idNumber = i + 1;
+					$("#myInfoRow").append(`
+						<div class="col">
+							<div class="card text-white bg-primary mb-3" style="max-width: 21rem; margin-left: 20px;">
+									<div class="card-body">
+									<h5 class="card-title">
+										<span id="boardIdText${idNumber}">"${totalMyData[i].id}"</span>
+										번게시물
+									</h5>
+									<div id="map${idNumber}" class="map-container" style="width: 300px; height: 300px;"></div>
+									<div>
+										<div class="mb-3">
+											<label for="" class="form-label">제목</label>
+											<input type="text" class="form-control" value="${totalMyData[i].title}" readonly />
+										</div>
+										<div class="mb-3">
+											<label for="" class="form-label">작성자</label>
+											<input id="writerData${idNumber}" type="text" class="form-control" value="${totalMyData[i].writer}" readonly />
+										</div>
+										<div class="mb-3">
+											<label for="" class="form-label">모임시간</label>
+											<input id="timeText" type="text" class="form-control" value="${totalMyData[i].time}" readonly />
+										</div>
+										<button type="button" onclick="location.href='/climbing/id/${totalMyData[i].id}'">내 게시물 상세 보기</button>
+										<input class="LatSubmit${idNumber}" type="hidden" name="Lat" value="${totalMyData[i].lat}" />
+										<input class="LngSubmit${idNumber}" type="hidden" name="Lng" value="${totalMyData[i].lng}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					`)
+					var latNum = totalMyData[i].lat;
+					var lngNum = totalMyData[i].lng;
+					var mapContainer = document.getElementById(`map${idNumber}`);
+					var mapOption = {
+						center: new kakao.maps.LatLng(latNum, lngNum),
+						level: 3
+					};
+					var map = new kakao.maps.Map(mapContainer, mapOption);
+					var markerPosition = new kakao.maps.LatLng(latNum, lngNum);
+					var marker = new kakao.maps.Marker({
+						position: markerPosition
+					});
+					marker.setMap(map);
+				}
+			}
+		}
+	})
+})
+
+$("#runningCurrentListBtn").click();
 
 

@@ -4,7 +4,6 @@
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +18,7 @@
 </head>
 <body>
 
+
 	<my:navBarRunning></my:navBarRunning>
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
@@ -27,7 +27,6 @@
 
 
 	<div class="container-lg">
-		<h2>메이트구하기</h2>
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -57,7 +56,7 @@
 
 		<nav>
 			<ul>
-				<h2>러닝 메이트</h2>
+				<h2>메이트 구하기 🏃‍♀️ 🏃‍♀️</h2>
 				<span style="margin-left: 50px;"></span>
 				<a id="all1" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
 				&nbsp; &nbsp;
@@ -107,6 +106,7 @@
 					</c:if>
 				</c:forEach>
 
+
 				<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
 				<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 				<div class="col">
@@ -137,7 +137,7 @@
 								<c:if test="${openDate > nowDate }">
 									<c:if test="${isMember}">
 										<div class="card-footer card-footer-gray" style="text-align: right">
-											<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+											<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-success" onclick="location.href='id/${board.id}'">더보기</button>
 										</div>
 									</c:if>
 
@@ -151,12 +151,33 @@
 						</div>
 					</div>
 				</div>
+
 			</c:forEach>
+		</div>
+
+		<br />
+		<br />
+
+
+
+		<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">게시물 상세 보기</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="resMate"></div>
+				</div>
+			</div>
 		</div>
 
 
 
+
+
 		<!-- 맨밑 고정  -->
+
 		<sec:authorize access="isAuthenticated()">
 			<my:chatBtn></my:chatBtn>
 			<script src="/js/groupChat.js"></script>
@@ -166,8 +187,6 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 		<script src="/js/running/runningMate.js" charset="UTF-8"></script>
-		<script src="/js/chat.js" charset="UTF-8"></script>
-		<script src="/js/navBar.js"></script>
 
 		<style>
 .card-member {
@@ -179,7 +198,7 @@
 }
 
 .todayCard {
-	border: 4px solid #828282;
+	border: 4px solid #DCEBFF;
 }
 
 h2 {
@@ -187,5 +206,21 @@ h2 {
 	font-family: 'Orbit', sans-serif;
 }
 </style>
+
+		<script type="text/javascript">
+			$("#search1").click(function() {
+				if ($("#dropdown1").is(":hidden")) {
+					$("#dropdown1").slideDown();
+				} else {
+					$("#dropdown1").slideUp();
+				}
+			});
+		</script>
+
+
+
+
+
+		<script src="/js/navBar.js"></script>
 </body>
 </html>

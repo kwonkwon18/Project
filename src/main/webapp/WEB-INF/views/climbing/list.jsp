@@ -75,6 +75,7 @@
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
+					<button type="button" class="btn btn-success" style="pointer-events: none;">검색하기 🔍</button>
 					<form action="/climbing/mateList" class="d-flex" role="mateSearch">
 						<select class="form-select" name="type" id="" style="width: 150px">
 							<option value="all">전체</option>
@@ -114,6 +115,8 @@
 
 
 				<c:if test="${status.index < 3 }">
+					<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
+					<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 					<div class="col-md-4">
 						<div class="card ${isMember ? 'card-member' : 'card-nonMember'}">
 							<div class="card-body">
@@ -139,16 +142,17 @@
 
 								<c:if test="${openDate > nowDate }">
 									<c:if test="${isMember}">
-										<button type="button" onclick="location.href='/climbing/id/${board.id}' ">지원 사항 상세보기</button>
+										<div class="card-footer card-footer-gray" style="text-align: right">
+											<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="" class=" btn btn-success" onclick="location.href='/climbing/id/${board.id}'">더보기</button>
+										</div>
 									</c:if>
 
 									<c:if test="${not isMember}">
-										<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+										<div class="card-footer card-footer-gray" style="text-align: right">
+											<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+										</div>
 									</c:if>
 								</c:if>
-							</div>
-							<div class="card-footer" style="text-align: right">
-								<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 							</div>
 						</div>
 					</div>
@@ -434,7 +438,7 @@
 }
 
 .todayCard {
-	border: 4px solid #828282;
+	border: 4px solid #DCEBFF;
 }
 
 h2 {
@@ -444,5 +448,6 @@ h2 {
 </style>
 
 	<script src="/js/climbing/mateList.js"></script>
+	<script src="/js/climbingNavBar.js"></script>
 </body>
 </html>

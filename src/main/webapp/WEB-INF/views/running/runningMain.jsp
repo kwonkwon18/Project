@@ -127,9 +127,6 @@
 										<span id="timeText" class="form-control">${board.time}</span>
 									</div>
 
-
-
-
 									<c:if test="${openDate <= nowDate }">
 										<button>마감된 러닝</button>
 									</c:if>
@@ -137,7 +134,7 @@
 									<c:if test="${openDate > nowDate }">
 										<c:if test="${isMember}">
 											<div class="card-footer card-footer-gray" style="text-align: right">
-												<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+												<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-success" onclick="location.href='id/${board.id}'">더보기</button>
 											</div>
 										</c:if>
 
@@ -291,14 +288,36 @@
 }
 
 .todayCard {
-	border: 4px solid #828282;
+	border: 4px solid #DCEBFF;
 }
 
 h2 {
 	font-family: 'Gasoek One', sans-serif;
 	font-family: 'Orbit', sans-serif;
 }
+
+
 </style>
+
+		<script type="text/javascript">
+		$("#search1").click(function() {
+			if ($("#dropdown1").is(":hidden")) {
+				$("#dropdown1").slideDown();
+			} else {
+				$("#dropdown1").slideUp();
+			}
+		});
+	</script>
+
+		<script type="text/javascript">
+		$("#search2").click(function() {
+			if ($("#dropdown2").is(":hidden")) {
+				$("#dropdown2").slideDown();
+			} else {
+				$("#dropdown2").slideUp();
+			}
+		});
+	</script>
 
 
 

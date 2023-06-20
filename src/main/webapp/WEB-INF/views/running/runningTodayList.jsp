@@ -162,6 +162,16 @@
 		<script src="/js/running/runningTodayList.js" charset="UTF-8"></script>
 		<script src="/js/navBar.js"></script>
 
+		<script type="text/javascript">
+		$("#search2").click(function() {
+			if ($("#dropdown2").is(":hidden")) {
+				$("#dropdown2").slideDown();
+			} else {
+				$("#dropdown2").slideUp();
+			}
+		});
+	</script>
+
 		<style>
 .todayListData {
 	margin-bottom: 20px;
@@ -176,7 +186,7 @@
 }
 
 .todayCard {
-	border: 4px solid #828282;
+	border: 4px solid #DCEBFF;
 }
 
 h2 {

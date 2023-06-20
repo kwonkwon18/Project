@@ -52,9 +52,9 @@ public interface ClimbingPartyMapper {
 
 	@Select("""
 			SELECT
-				boardId,
-				userId,
-				memberId,
+				p.boardId,
+				p.userId,
+				p.memberId,
 			    c.title
 			  FROM ClimbingParty p
 			  LEFT JOIN ClimbingMate c on c.id = p.boardId
@@ -72,7 +72,7 @@ public interface ClimbingPartyMapper {
 			    c.title
 			  FROM ClimbingParty p
 			  LEFT JOIN ClimbingMate c on c.id = p.boardId
-			WHERE guest = #{userId} AND participation = 1 or participation = 2) and confirmation = 1;
+			WHERE guest = #{userId} AND (participation = 1 or participation = 2) and confirmation = 1;
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	List<ClimbingParty> selectMemberAlarmList(String userId);

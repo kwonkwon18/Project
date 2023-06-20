@@ -112,6 +112,7 @@ public class ClimbingPartyService {
 		// 호스트 마이페이지 
 		List<ClimbingParty> alarmList = partyMapper.selectAlarmList(authentication.getName());
 		result.put("alarmList", alarmList);
+		System.out.println(alarmList);
 		
 		// 게스트 마이페이지
 		List<ClimbingParty> memberAlarmList = partyMapper.selectMemberAlarmList(authentication.getName());
@@ -184,8 +185,10 @@ public class ClimbingPartyService {
 		}
 		
 		
+		System.out.println("confirmationHost == " + confirmationHost);
 		System.out.println("confirmationGuest == " + confirmationGuest);
 		Integer confirmationTotal = confirmationHost + confirmationGuest;
+		System.out.println("confirmationTotal == " + confirmationTotal);
 
 		result.put("confirmationTotal", confirmationTotal);
 

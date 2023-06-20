@@ -28,7 +28,8 @@
 				<form method="post" enctype="multipart/form-data">
 					<div>
 						<div class="mb-3">
-							<label for="" class="form-label">제목</label> <input type="text" name="title" class="form-control" value="${board.title }" />
+							<label for="" class="form-label">제목</label>
+							<input type="text" name="title" class="form-control" value="${board.title }" />
 						</div>
 
 						<h1>
@@ -53,16 +54,19 @@
 						</div>
 
 						<div class="mb-3">
-							<label for="" class="form-label">작성자</label> <input id="writerText" name="writer" type="text" readonly class="form-control" value="${board.writer }" />
+							<label for="" class="form-label">작성자</label>
+							<input id="writerText" name="writer" type="text" readonly class="form-control" value="${board.writer }" />
 						</div>
 
 						<div class="mb-3">
-							<label for="" class="form-label">작성일시</label> <input type="text" name="inserted" readonly class="form-control" value="${board.inserted }" />
+							<label for="" class="form-label">작성일시</label>
+							<input type="text" name="inserted" readonly class="form-control" value="${board.inserted }" />
 						</div>
 
 						<!-- 새 그림파일 추가   -->
 						<div class="mb-3">
-							<label for="fileInput" class="form-label"> </label> <input type="file" multiple name="files" accept="image/*" id="fileInput" />
+							<label for="fileInput" class="form-label"> </label>
+							<input type="file" multiple name="files" accept="image/*" id="fileInput" />
 						</div>
 						<div class="form-text">1MB 크기의 파일, 총 10MB 크기만 허용</div>
 						<br />
@@ -75,7 +79,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<sec:authorize access="isAuthenticated()">
 		<my:chatBtn></my:chatBtn>
 		<script src="/js/groupChat.js"></script>

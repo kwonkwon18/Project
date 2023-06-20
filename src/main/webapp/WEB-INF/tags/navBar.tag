@@ -6,7 +6,9 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary mb-5 fixed-top">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="/main"><img src="/Project/src/main/resources/qqq.png" alt="..."></a>
+		<a class="navbar-brand" href="/main">
+			<img src="/Project/src/main/resources/qqq.png" alt="...">
+		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -16,7 +18,7 @@
 					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/runningMain">러닝</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/futsal/list">풋살</a>
+					<a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/futsal/futsalList">풋살</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/list">등산</a>
@@ -57,7 +59,7 @@
 
 
 <!-- offcanvas -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" style="width: 600px;">
 	<div class="offcanvas-header">
 		<h5 class="offcanvas-title" id="offcanvasExampleLabel">알림 목록 🏄‍♂️</h5>
 		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -65,6 +67,6 @@
 	<div class="offcanvas-body">
 		<div id="HostAlarm"></div>
 		<div id="MemberAlarm"></div>
-		'
 	</div>
 </div>
+

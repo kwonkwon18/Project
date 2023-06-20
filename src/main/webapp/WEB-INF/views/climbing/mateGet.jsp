@@ -102,7 +102,7 @@
 
 					<sec:authorize access="#board.writer eq #userName">
 						<div>
-							<a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
+							<a class="btn btn-secondary" href="/climbing/mateModify/${board.id }">수정</a>
 
 							<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
 						</div>
@@ -111,7 +111,7 @@
 
 
 						<div class="d-none">
-							<form action="/running/runningRemove" method="post" id="removeForm">
+							<form action="/climbing/mateRemove" method="post" id="removeForm">
 								<input type="text" name="id" value="${board.id }" />
 							</form>
 						</div>

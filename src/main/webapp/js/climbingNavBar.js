@@ -1,13 +1,14 @@
 // 페이지가 로드될 때마다 호출해줄것임
 $(document).ready(function() {
-	$.ajax("/running/countOfAlarm", {
+	console.log("작동은됨")
+	$.ajax("/climbing/countOfAlarm", {
 		contentType: "application/json",
 		success: function(data) {
+			console.log(data.confirmationTotal)
 
 			if (data.confirmationTotal > 0) {
 				$("#NumberOfAlarm").css("display", "block");
 			}
-
 			$("#NumberOfAlarm").html(data.confirmationTotal);
 		}
 	})
@@ -15,7 +16,7 @@ $(document).ready(function() {
 
 
 $("#alarmList").click(function() {
-	$.ajax("/running/alarm", {
+	$.ajax("/climbing/alarm", {
 		contentType: "application/json",
 		success: function(data) {
 			// 데이터로 들어갈 것 boardId, userId, memberId
@@ -23,6 +24,7 @@ $("#alarmList").click(function() {
 			// boardId 별, participation이 0인 리스트를 줘야함
 			var alarmList = data.alarmList;
 			var memberAlarmList = data.memberAlarmList;
+
 
 
 			// 기존 내용 삭제
@@ -44,9 +46,8 @@ $("#alarmList").click(function() {
 				console.log(userId)
 
 				$("#HostAlarm").append(`
-
     <div class="btn btn-outline-dark mb-3" style="width: 500px;">
-        🏃‍♀️ ${title} 에 ${memberId} 님이 신청하셨습니다.
+       🏕 ${title} 에 ${memberId} 님이 신청하셨습니다.
             <button class="agreeParty btn btn-primary mr-10" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}">수락</button>
             <button class="disagreeParty btn btn-danger" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}">거절</button>
     </div>
@@ -73,15 +74,16 @@ $("#alarmList").click(function() {
 					$("#MemberAlarm").append(`
 <div class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
-        🏃‍♀️ ${title} 신청이 ${message}
+        🏕 ${title} 신청이 ${message}
     </div>
 </div>
 `);
 				} else if (participation === 1 && userId == memberId) {
 					$("#MemberAlarm").append(`
-					<div id = "postOk${boardId}" class="btn btn-outline-primary mb-3 " style="width: 500px; display: flex; ">
+					<div class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
-        🏃‍♀️ ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; <button class="btn btn-primary memberConfirmation deleteAlarm" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button"  value="${boardId}" style="justify-content: flex-end;">확인</button>
+         🏕 ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; 
+        <button class = "btn btn-primary" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="poserConfirmation deleteAlarm" value="${boardId}">확인</button>
     </div>
     </div>
     
@@ -95,7 +97,7 @@ $("#alarmList").click(function() {
 					$("#MemberAlarm").append(`
 <div class="btn btn-outline-danger mb-3" style="width: 500px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
-        🏃‍♀️ ${title} 신청이 ${message}
+        🏕 ${title} 신청이 ${message}
     </div>
 </div>
 `);
@@ -117,12 +119,12 @@ $("#alarmList").click(function() {
 			$(document).on("click", ".deleteAlarm", function() {
 				var boardId = $(this).closest('.d-flex').attr('id').replace('alarmDiv', '');
 				$("#alarmDiv" + boardId).remove();
-				$("#postOk" + boardId).remove();
 			});
 
 		}
 	});
 });
+
 
 
 
@@ -140,7 +142,7 @@ $("#HostAlarm").on("click", ".agreeParty", function() {
 	const data = { boardId, userId, memberId };
 	console.log(data);
 
-	$.ajax("/running/agreeParty", {
+	$.ajax("/climbing/agreeParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -174,7 +176,7 @@ $("#HostAlarm").on("click", ".disagreeParty", function() {
 	const data = { boardId, userId, memberId };
 	console.log(data);
 
-	$.ajax("/running/disagreeParty", {
+	$.ajax("/climbing/disagreeParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -208,51 +210,18 @@ $("#MemberAlarm").on("click", ".memberConfirmation", function() {
 	const data = { boardId, userId, memberId };
 	console.log(data);
 
-	$.ajax("/running/confirmation", {
+	$.ajax("/climbing/confirmation", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
 		success: function(data) {
-			$("#offcanvasClose").click();
-			showGroupList();
+
 		},
 		error: function() {
 			alert("접수 오류발생.");
 		},
-		/*complete: function() {
-			location.href = "/running/id/" + boardId;
-		}*/
-	});
-});
-
-$("#MemberAlarm").on("click", ".poserConfirmation", function() {
-	var memberId = $(this).data('board-memberid');
-	var userId = $(this).data('board-userid');
-	var boardId = $(this).data('board-boardid');
-	var title = $(this).data('board-title');
-
-	console.log(memberId);
-	console.log(userId);
-	console.log(boardId);
-	console.log(title);
-
-	const data = { boardId, userId, memberId };
-	console.log(data);
-
-	var hostPost = $(this).closest("#hostPost");
-
-	$.ajax("/running/confirmation", {
-		method: "post",
-		contentType: "application/json",
-		data: JSON.stringify(data),
-		success: function(data) {
-			// 성공적으로 AJAX 호출이 완료되었을 때 실행되는 코드
-		},
-		error: function() {
-			alert("오류발생.");
-		},
 		complete: function() {
-			hostPost.remove(); // AJAX 호출이 완료된 후 hostpost div를 삭제
+			location.href = "/climbing/id/" + boardId;
 		}
 	});
 });

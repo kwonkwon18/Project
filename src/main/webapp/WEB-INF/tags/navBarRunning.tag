@@ -2,14 +2,25 @@
 <%@ attribute name="current"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary mb-5 fixed-top">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="/main">메이트</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+<style>
+   #navbar-brand-link {
+      padding : 0;
+   }
+   #navbar-container {
+      padding : 0;
+   }
+   #navbar-padding {
+      padding : 0;
+   }
+</style>
+
+<nav id="navbar-padding" class="navbar navbar-expand-lg bg-body-tertiary mb-5 fixed-top">
+   <div id="navbar-container" class="container-fluid" style="background-color: #3CB4FF;">
+      <a id="navbar-brand-link" class="navbar-brand" href="/main"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%9F%AC%EB%8B%9D%EB%A1%9C%EA%B3%A0.jpg" alt="..." width="80" height="70"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">

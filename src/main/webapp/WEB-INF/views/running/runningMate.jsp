@@ -35,7 +35,8 @@
 				</div>
 			</div>
 		</div>
-
+	<br />
+		<br />
 		<nav>
 			<ul>
 				<h2>메이트 구하기 🏃‍♀️ 🏃‍♀️</h2>
@@ -114,7 +115,7 @@
 
 								<c:if test="${openDate <= nowDate }">
 									<div class="card-footer card-footer-gray" style="text-align: right">
-										<button class="btn btn-danger">마감된 등산</button>
+										<button class="btn btn-danger">마감된 러닝</button>
 									</div>
 								</c:if>
 

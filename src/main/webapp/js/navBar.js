@@ -77,7 +77,7 @@ $("#alarmList").click(function() {
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
         🏃‍♀️ ${title} 신청이 ${message}
     </div>
-</div>
+</div>jt
 `);
 				} else if (participation === 1 && userId == memberId) {
 					$("#MemberAlarm").append(`

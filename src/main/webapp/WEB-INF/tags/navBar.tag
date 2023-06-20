@@ -3,11 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
+<style>
+    #navbar-container {
+        border: 3px solid #aaaaaa; /* 여기서 #ff0000은 원하는 보더 색상을 나타냅니다. */
+    }
+</style>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary mb-5 fixed-top">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="/main">
-			<img src="/Project/src/main/resources/qqq.png" alt="...">
+<nav id="navbar-padding" class="navbar navbar-expand-lg bg-body-tertiary mb-5 fixed-top">
+	<div id="navbar-container" class="container-fluid"  style="background-color: white;">
+		<a id="navbar-brand-link" class="navbar-brand" href="/main">
+			<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%5B%EA%BE%B8%EB%AF%B8%EA%B8%B0%5Dlogo.jpg" alt="..." width="80" height="70">
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>

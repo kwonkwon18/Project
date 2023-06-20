@@ -18,7 +18,7 @@
 					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/runningMain">러닝</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/futsal/list">풋살</a>
+					<a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/futsal/futsalList">풋살</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/list">등산</a>

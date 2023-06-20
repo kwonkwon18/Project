@@ -252,26 +252,28 @@ public class RunningService {
 		// board에 대한 정보가 들어감
 		RunningBoard getList = mapper.selectById(boardId);
 		getMemberList.put("board", getList);
+		System.out.println("접근1");
 
 		// 신청자가 들어감
 		List<RunningParty> members = mapper.selectForMemberIdByBoardId(boardId);
 		getMemberList.put("members", members);
-		
+		System.out.println("접근2");
 		// 대기자가 들어감
 		List<RunningParty> waitingMembers = mapper.selectWaitingMemberIdByBoardIdForModal(boardId);
 		getMemberList.put("waitingMembers", waitingMembers);
-		
+		System.out.println("접근3");
 		// 거절멤버
 		List<RunningParty> rejectMembers = mapper.selectRejectMemberIdByBoardIdForModal(boardId);
 		getMemberList.put("rejectMembers", rejectMembers);
-
+		System.out.println("접근4");
 		// 중복 신청 방지용
 		List<Member> memberList = getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
-
+		System.out.println("접근5");
 		// 로그인한 사람 확인용 (닉네임)
 		Member myNickName = mapper.getNickName(authentication.getName());
 		getMemberList.put("myNickName", myNickName);
+		System.out.println("접근6");
 
 		return getMemberList;
 	}

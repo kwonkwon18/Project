@@ -117,7 +117,6 @@ public interface RunningPartyMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer confirmationHost(RunningParty runningParty);
 
-	
 	@Update("""
 			UPDATE RunningParty
 			SET

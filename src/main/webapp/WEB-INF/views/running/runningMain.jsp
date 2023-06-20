@@ -12,8 +12,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
+
 
 	<my:navBarRunning></my:navBarRunning>
 
@@ -31,13 +35,13 @@
 			</div>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block w-100" height="500px" alt="...">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/runningMate/%EB%8B%AC%EB%A6%AC%EA%B8%B01.jpg" class="d-block w-100" height="500px" alt="...">
 				</div>
 				<div class="carousel-item">
-					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block w-100" height="500px" alt="...">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/runningMate/%EB%8B%AC%EB%A6%AC%EA%B8%B03.jpg" class="d-block w-100" height="500px" alt="...">
 				</div>
 				<div class="carousel-item">
-					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" height="500px" alt="...">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/runningMate/%EB%8B%AC%EB%A6%AC%EA%B8%B02.jpg" height="500px" alt="...">
 				</div>
 			</div>
 			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -49,35 +53,34 @@
 				<span class="visually-hidden">Next</span>
 			</button>
 		</div>
-
-		<h2>메이트구하기</h2>
-
+<br />
+		<br />
 		<nav>
 			<ul>
+				<h2>메이트 구하기 🏃‍♀️ 🏃‍♀️</h2>
 				<span style="margin-left: 50px;"></span>
 				<a id="all1" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
+				&nbsp; &nbsp;
 				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색</a>
-				<div class="dropdown-menu" aria-labelledby="search1">
-					<a class="dropdown-item" href="#">메뉴 항목 1</a>
-					<a class="dropdown-item" href="#">메뉴 항목 2</a>
-					<a class="dropdown-item" href="#">메뉴 항목 3</a>
-				</div>
-				<a href="runningMap" style="text-decoration-line: none;">지도로 보기</a>
-				<span style="margin-left: 480px;"></span>
-				<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성</button>
-				<!-- <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
+				&nbsp; &nbsp;
+				<a href="runningMap" style="text-decoration-line: none;">
+					지도로 보기
+					<i class="fa-solid fa-map-location-dot"></i>
+				</a>
+				<span style="margin-left: 800px;">
+					<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성 ⚡</button>
+				</span>
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<form action="/running/runningMate" class="d-flex" role="search">
-						<select class="form-select" name="type" id="">
+					<form action="/running/runningMate" class="d-flex align-items-center" role="search">
+						<select class="form-select" name="type" id="" style="width: 150px">
 							<option value="all">전체</option>
 							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
 							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
 							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
 						</select>
-						<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+						<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
 						<button class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
@@ -86,43 +89,44 @@
 			</div>
 		</nav>
 
-		<ul>
+		<!-- <ul>
 			<div style="text-align: right;">
 				<a href="/running/runningMate?type=distance" style="text-decoration-line: none;">거리순</a>
 				<a href="/running/runningMate" style="text-decoration-line: none;">최신순</a>
 			</div>
-		</ul>
+		</ul> -->
 
 
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach items="${runningMates}" var="board" varStatus="status">
+
+				<c:set var="isMember" value="false" />
+				<c:forEach items="${memberList}" var="memberList">
+					<c:if test="${memberList.nickName eq board.writer}">
+						<c:set var="isMember" value="true" />
+					</c:if>
+				</c:forEach>
+
 				<c:if test="${status.index < 3 }">
 					<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
 					<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 					<div class="col">
-						<div class="card">
+						<div class="card ${isMember ? 'card-member' : 'card-nonMember'}">
 							<div class="card-body">
 								<h5 class="card-title">🏃‍♀️🏃‍♂️ ${board.title}</h5>
 								<div>
 									<div class="mb-3">
 										<label for="" class="form-label">작성자</label>
-										<input id="writerData${status.index + 1}" type="text" class="form-control" value="${board.writer}" readonly />
+										<span id="writerData${status.index + 1}" type="text" class="form-control">${board.writer}</span>
 									</div>
 									<div class="mb-3">
 										<label for="" class="form-label">모임장소</label>
-										<input id="addressText" type="text" class="form-control" value="${board.address }" readonly />
+										<span id="addressText" class="form-control">${board.address}</span>
 									</div>
 									<div class="mb-3">
 										<label for="" class="form-label">모임시간</label>
-										<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+										<span id="timeText" class="form-control">${board.time}</span>
 									</div>
-
-									<c:set var="isMember" value="false" />
-									<c:forEach items="${memberList}" var="memberList">
-										<c:if test="${memberList.nickName eq board.writer}">
-											<c:set var="isMember" value="true" />
-										</c:if>
-									</c:forEach>
 
 									<c:if test="${openDate <= nowDate }">
 										<button>마감된 러닝</button>
@@ -131,7 +135,7 @@
 									<c:if test="${openDate > nowDate }">
 										<c:if test="${isMember}">
 											<div class="card-footer card-footer-gray" style="text-align: right">
-												<button type="button" onclick="location.href='/running/id/${board.id}' ">지원 사항 상세보기</button>
+												<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-success" onclick="location.href='id/${board.id}'">더보기</button>
 											</div>
 										</c:if>
 
@@ -149,49 +153,97 @@
 			</c:forEach>
 		</div>
 
+		<br />
+		<br />
+
 		<h2>오늘의 러닝</h2>
 		<!-- 새로 작성된 코드, 변경된 코드  -->
 		<!-- table.table>thead>tr>th*4^^tbody -->
-		<div style="display: flex;">
-			<button type="button" class="btn btn-success" onclick="location.href='runningTodayList'">전체보기</button>
-			<button type="button" class="btn btn-success" onclick="location.href='runningToday'">글쓰기</button>
-			<div style="flex: 1; margin-left: 800px;" id="mateMapBox">
-				<ul style="display: flex; align-items: left;">
-					<form action="/running/runningTodayList" class="d-flex" role="search">
-						<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</form>
+
+		<%-- 		<ul style="display: flex; align-items: center;">
+			<span style="margin-left: 50px;"></span>
+			<a id="all2" href="/running/runningTodayList" style="text-decoration-line: none; display: inline-block;">전체</a>
+			&nbsp; &nbsp;
+			<form action="/running/runningTodayList" class="d-flex" role="search">
+				<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex-grow: 1;">
+				<button class="btn btn-outline-success" type="submit">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
+			</form>
+			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'" style="margin-left: auto;">러닝 공유하기 ⚡</button>
+		</ul> --%>
+
+		<nav>
+			<ul>
+				<span style="margin-left: 50px;"></span>
+				<a id="all2" href="/running/runningTodayList" style="text-decoration-line: none; display: inline-block;">전체</a>
+				&nbsp; &nbsp;
+				<a class="dropdown-toggle" href="#" role="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색</a>
+				&nbsp; &nbsp;
+				<span style="margin-left: 900px;">
+					<button type="button" class="btn btn-warning" onclick="location.href='runningToday'" style="margin-left: auto;">러닝 공유하기 ✨</button>
+				</span>
+			</ul>
+			<div id="dropdown2" style="display: none">
+				<ul>
+					<div class="d-flex justify-content-start align-items-center">
+						<form action="/running/runningTodayList" class="d-flex" role="search">
+							<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex-grow: 1;">
+							<button class="btn btn-outline-success" type="submit">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+						</form>
+					</div>
 				</ul>
 			</div>
-		</div>
+		</nav>
+
+
+
 
 		<div class="row">
 			<c:forEach items="${runningTodayList}" var="boardToday" varStatus="status">
 				<c:if test="${status.index < 3 }">
 					<div class="col-md-4 todayListData" data-board-boardId="${boardToday.id }" onclick='newPage(${boardToday.id })'>
-						<div class="card">
+						<div class="card todayCard">
 							<div class="card-body">
-								<h5 class="card-title">🌄${boardToday.title}</h5>
+
+								<h5 class="card-title">🏃‍♀️🏃‍♂️ ${boardToday.title}</h5>
+								<div>
+									<div class="mb-3">
+										<label for="" class="form-label">작성자</label>
+										<span id="writerData${status.index + 1}" type="text" class="form-control">${boardToday.writer}</span>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">모임장소</label>
+										<span id="addressText" class="form-control">${boardToday.body}</span>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">모임시간</label>
+										<span id="timeText" class="form-control">${boardToday.inserted}</span>
+									</div>
+
+									<%-- <h5 class="card-title">🌄${boardToday.title}</h5>
 								<p class="card-text">${boardToday.writer}</p>
 								<p class="card-text">${boardToday.body}</p>
-								<p class="card-text">${boardToday.inserted}</p>
-								<p class="card-text">
-									<i class="fa-solid fa-heart"></i>
-									${boardToday.likeCount }
-									<i class="fa-regular fa-comments"></i>
-									${boardToday.commentCount }
+								<p class="card-text">${boardToday.inserted}</p> --%>
+									<c:forEach items="${boardToday.fileName }" var="fileName" varStatus="status">
+										<c:if test="${status.count lt 2 }">
+											<div>
+												<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${boardToday.id }/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
+											</div>
+										</c:if>
+									</c:forEach>
+									<input type="hidden" class="idValue" value="${boardToday.id }" />
+								</div>
+								<p class="card-text" style="font-size: 25px; text-align: right; margin-right: 10px; margin-bottom: 30px;">
+									<i class="fa-regular fa-heart"></i>
+									${boardToday.likeCount}
+									<i class="fa-regular fa-comment"></i>
+									${boardToday.commentCount}
 								</p>
-								<input type="hidden" class="idValue" value="${boardToday.id }" />
+
 							</div>
-							<c:forEach items="${boardToday.fileName }" var="fileName" varStatus="status">
-								<c:if test="${status.count lt 2 }">
-									<div>
-										<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${boardToday.id }/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
-									</div>
-								</c:if>
-							</c:forEach>
 						</div>
 					</div>
 				</c:if>
@@ -226,6 +278,49 @@
 		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 		<script src="/js/running/runningMate.js" charset="UTF-8"></script>
 		<script src="/js/running/runningTodayList.js" charset="UTF-8"></script>
+
+		<style>
+.card-member {
+	border: 4px solid #56B37F;
+}
+
+.card-nonMember {
+	border: 4px solid #646EFF;
+}
+
+.todayCard {
+	border: 4px solid #DCEBFF;
+}
+
+h2 {
+	font-family: 'Gasoek One', sans-serif;
+	font-family: 'Orbit', sans-serif;
+}
+
+
+</style>
+
+		<script type="text/javascript">
+		$("#search1").click(function() {
+			if ($("#dropdown1").is(":hidden")) {
+				$("#dropdown1").slideDown();
+			} else {
+				$("#dropdown1").slideUp();
+			}
+		});
+	</script>
+
+		<script type="text/javascript">
+		$("#search2").click(function() {
+			if ($("#dropdown2").is(":hidden")) {
+				$("#dropdown2").slideDown();
+			} else {
+				$("#dropdown2").slideUp();
+			}
+		});
+	</script>
+
+
 
 		<script src="/js/navBar.js"></script>
 </body>

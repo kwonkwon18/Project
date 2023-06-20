@@ -19,14 +19,9 @@ function handleListUpButtonClick() {
 			let time = `${data.board.time}`
 			let compareTime = new Date(time);
 
+			console.log(nickName)
 
-//			console.log(data);
-//			console.log(latNum);
-//			console.log(lngNum);
-//			console.log(people);
-//			console.log(currentNum);
-//			console.log(nickName);
-//			console.log(compareTime);
+
 
 			$(".chatRoomModalBody").remove();
 			$("#chatRoomModalBefore").after('<div class="modal-body chatRoomModalBody">' + data.board.writer + '님과의 대화방을 생성하시겠습니까?</div>');
@@ -34,7 +29,7 @@ function handleListUpButtonClick() {
 			$("#resMate").empty();
 
 			$("#resMate").append(`
-			<div class="mb-3">
+			<div>
 
         <div class="mb-3">
           <label for="" class="form-label">게시물</label>
@@ -52,8 +47,11 @@ function handleListUpButtonClick() {
           <br />
           <span>${data.board.time}</span>
         </div>
-        <div id="map" class="map-container"></div>
-        <label for="" class="form-label">신청자</label><br />
+        <div id="map" class="map-container mb-2" ></div>
+        
+        <div>
+			<label for="" class="form-label">참여자</label>
+									
       `);
 
 			let memberIds = [];
@@ -90,11 +88,15 @@ function handleListUpButtonClick() {
 				}
 
 				$("#resMate").append(`
-				<span>${memberId}</span> <br />
+				<span type="text" class="form-control">${memberId}</span>
+				 <div style="height: 10px;"></div>
 				`);
 			}
 
 			console.log("*** " + isMine)
+
+			$("#resMate").append(`</div>`)
+
 
 			// 필요한 경우에 각각의 memberId 값을 가져올 수 있음
 			console.log(memberIds[0]); // 첫 번째 memberId 값
@@ -104,53 +106,79 @@ function handleListUpButtonClick() {
 				if (!isRejectMember) {
 					if (isWaitingMember) {
 						$("#resMate").append(`</div>
-			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">신청대기중...</button>
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기❌‍❌❌</button>
-			<div><button type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} 
-      <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+					
+<div class="mb-2" style="display: flex; justify-content: space-between; width: 100%;">
+  <button class="btn btn-warning" data-board-id="${data.board.id}" data-board-userId="${data.board.writer}" style="flex-grow: 1;">신청대기중👼👼👼</button>
+    <div style="width: 10px;"></div>
+    
+  <button class="joinPartyBtn btn btn-danger" data-board-id="${data.board.id}" data-board-userId="${data.board.writer}" style="flex-grow: 1;">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
+</div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			 <div style="width: 10px;"></div>
+			<div style="display: flex;">
+			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div>  
+      <button class="chatRoomCheckBtn btn btn-light" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 					} else if (people > currentNum && isMine) {
 						$("#resMate").append(`</div>
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기❌❌❌</button>
-			<div><button type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} 
-      <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+						<div class="mb-2" style="display: grid; grid-template-columns: 1fr;">
+			<button  class = "joinPartyBtn btn btn-danger" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			 <div style="width: 10px;"></div>
+			<div style="display: flex;">
+			<div class = "mt-2">모집인원 : ${data.board.people}  / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div> 
+      <button class="chatRoomCheckBtn btn btn-light" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 					} else if (people > currentNum && !isMine) {
 						$("#resMate").append(`</div>
-			<div><button type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
-			<div><button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button></div>
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+						
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button  class = "joinPartyBtn btn btn-primary" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			 <div style="width: 10px;"></div>
+			<div style="display: flex;">
+			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div> 
+			<button class="chatRoomCheckBtn btn btn-light" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 					} else if (people <= currentNum && !isMine) {
 						$("#resMate").append(`
 				</div>
-			<div><button type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
-			<button   data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">마감되었습니다.</button>
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button   data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">마감되었습니다.</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			 <div style="width: 10px;"></div>
+			<div style="display: flex;">
+			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div>  
+			<button class="chatRoomCheckBtn btn btn-light" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 
 					} else {
 						$("#resMate").append(`</div>
-			<div><button type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
-			<button  class = "joinPartyBtn" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button  class = "joinPartyBtn btn btn-danger" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button><div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>
+			 <div style="width: 10px;"></div>
+			<div style="display: flex;">
+			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div> 
+			<button class="chatRoomCheckBtn btn btn-light" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 
 					}
 				} else {
 					$("#resMate").append(`</div>
-			<div><button type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
-			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">거절된 러닝</button>
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button  class = "btn btn-danger" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">거절된 러닝</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>		
+			 <div style="width: 10px;"></div>
+			<div style="display: flex;">
+			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div>  
+			<button class="chatRoomCheckBtn btn btn-light" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 				}
 			} else {
 				$("#resMate").append(`</div>
-			<div><button type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
-			<button  class = "" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">종료된 러닝</button>
-			<div style="display: flex;">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1} <button class="chatRoomCheckBtn" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button  class = "btn btn-danger" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">종료된 러닝</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			 <div style="width: 10px;"></div>
+			<div style="display: flex;">
+			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div> 
+			<button class="chatRoomCheckBtn btn btn-light" type="button" style="margin-left: auto;">${data.board.writer}님과의 채팅방 만들기</button></div>
 			`);
 			}
 
@@ -310,3 +338,4 @@ $(document).on('click', '.joinPartyBtn', function() {
 
 	});
 });
+

@@ -81,9 +81,9 @@ $("#alarmList").click(function() {
 `);
 				} else if (participation === 1 && userId == memberId) {
 					$("#MemberAlarm").append(`
-					<div class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
+					<div id = "postOk${boardId}" class="btn btn-outline-primary mb-3 " style="width: 500px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
-        🏃‍♀️ ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; <button class = "btn btn-primary" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" class="poserConfirmation deleteAlarm" value="${boardId}">확인</button>
+        🏃‍♀️ ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; <button class="btn btn-primary memberConfirmation deleteAlarm" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button"  value="${boardId}" style="justify-content: flex-end;">확인</button>
     </div>
     </div>
     
@@ -119,6 +119,7 @@ $("#alarmList").click(function() {
 			$(document).on("click", ".deleteAlarm", function() {
 				var boardId = $(this).closest('.d-flex').attr('id').replace('alarmDiv', '');
 				$("#alarmDiv" + boardId).remove();
+				$("#postOk" + boardId).remove();
 			});
 
 		}

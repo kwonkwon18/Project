@@ -123,6 +123,11 @@ $("#inputValue").on("keyup", function(key) {
 	}
 });
 
+$("#searchPlace").click(function() {
+	var keyword = document.getElementById("inputValue").value.trim();
+	ps.keywordSearch(keyword, placesSearchCB);
+});
+
 marker.setMap(map);
 
 // 클릭한 위치를 기준으로 장소 검색

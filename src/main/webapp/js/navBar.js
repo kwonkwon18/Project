@@ -46,12 +46,13 @@ $("#alarmList").click(function() {
 				console.log(userId)
 
 				$("#HostAlarm").append(`
-            <div class="btn btn-outline-dark mb-3" style="width: 500px;">
-             🏃‍♀️ ${title} 에 ${memberId} 님이 신청하셨습니다. 
-              <button class="agreeParty btn btn-primary mr-2" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >수락</button>
-              
-              <button class="disagreeParty btn btn-danger" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}" >거절</button>   
-            </div>
+
+    <div class="btn btn-outline-dark mb-3" style="width: 500px;">
+        🏃‍♀️ ${title} 에 ${memberId} 님이 신청하셨습니다.
+            <button class="agreeParty btn btn-primary mr-10" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}">수락</button>
+            <button class="disagreeParty btn btn-danger" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}">거절</button>
+    </div>
+
           `);
 
 			});

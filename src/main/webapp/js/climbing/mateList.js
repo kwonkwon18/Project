@@ -113,7 +113,7 @@ function handleListUpButtonClick() {
     
   <button class="joinPartyBtn btn btn-danger" data-board-id="${data.board.id}" data-board-userId="${data.board.writer}" style="flex-grow: 1;">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>
 </div>
-			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
 			 <div style="width: 10px;"></div>
 			<div style="display: flex;">
 			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div>  
@@ -123,7 +123,7 @@ function handleListUpButtonClick() {
 						$("#resMate").append(`</div>
 						<div class="mb-2" style="display: grid; grid-template-columns: 1fr;">
 			<button  class = "joinPartyBtn btn btn-danger" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button></div>
-			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
 			 <div style="width: 10px;"></div>
 			<div style="display: flex;">
 			<div class = "mt-2">모집인원 : ${data.board.people}  / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div> 
@@ -133,7 +133,7 @@ function handleListUpButtonClick() {
 						$("#resMate").append(`</div>
 						
 			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button  class = "joinPartyBtn btn btn-primary" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button></div>
-			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
 			 <div style="width: 10px;"></div>
 			<div style="display: flex;">
 			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div> 
@@ -143,7 +143,7 @@ function handleListUpButtonClick() {
 						$("#resMate").append(`
 				</div>
 			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button   data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">마감되었습니다.</button></div>
-			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
 			 <div style="width: 10px;"></div>
 			<div style="display: flex;">
 			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div>  
@@ -153,7 +153,7 @@ function handleListUpButtonClick() {
 					} else {
 						$("#resMate").append(`</div>
 			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button  class = "joinPartyBtn btn btn-danger" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">취소하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button><div>
-			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>
 			 <div style="width: 10px;"></div>
 			<div style="display: flex;">
 			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div> 
@@ -164,7 +164,7 @@ function handleListUpButtonClick() {
 				} else {
 					$("#resMate").append(`</div>
 			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button  class = "btn btn-danger" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">거절된 러닝</button></div>
-			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>		
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>		
 			 <div style="width: 10px;"></div>
 			<div style="display: flex;">
 			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div>  
@@ -174,7 +174,7 @@ function handleListUpButtonClick() {
 			} else {
 				$("#resMate").append(`</div>
 			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button  class = "btn btn-danger" data-board-id = "${data.board.id}" data-board-userId = "${data.board.writer}">종료된 러닝</button></div>
-			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/running/id/${data.board.id}' ">상세보기</button></div>			
+			<div class="mb-2" style="display: grid; grid-template-columns: 1fr;"><button class="btn btn-success" type="button" onclick="location.href='/climbing/id/${data.board.id}' ">상세보기</button></div>			
 			 <div style="width: 10px;"></div>
 			<div style="display: flex;">
 			<div class = "mt-2">모집인원 : ${data.board.people} / 현재인원 : ${data.board.currentNum - 1 < 0 ? 0 : data.board.currentNum - 1}</div> 
@@ -214,7 +214,7 @@ function handleListUpButtonClick() {
 									$("#chatBox").append(`
 			                			<div id="chatContainer"></div> 
 			            			`)
-			            			if (chatList.length > 12) {
+									if (chatList.length > 12) {
 										$("#chatList").css("width", "320px");
 									} else {
 										$("#chatList").css("width", "300px");
@@ -286,8 +286,8 @@ function handleListUpButtonClick() {
 
 				function resizeMap() {
 					var mapContainer = document.getElementById('map');
-					mapContainer.style.width = '300px';
-					mapContainer.style.height = '300px';
+					mapContainer.style.width = '470px';
+					mapContainer.style.height = '500px';
 				}
 
 				resizeMap();

@@ -212,7 +212,7 @@
 
 
 							<input type="text" id="totalPeople" value="${board.people }" />
-							<input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
+							<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
 							<p id="currentPeople"></p>
 							<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
 						</c:if>

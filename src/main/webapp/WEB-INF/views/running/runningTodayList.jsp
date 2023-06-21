@@ -19,8 +19,7 @@
 
 	<my:navBarRunning></my:navBarRunning>
 	<div style="margin-top: 53px; margin-left: 201.5px; max-width: 1903px; display: flex; min-width: 1500px;">
-		<div style="width: 250px;">
-		</div>
+		<div style="width: 250px;"></div>
 		<div style="max-width: 1000px;">
 			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-inner">

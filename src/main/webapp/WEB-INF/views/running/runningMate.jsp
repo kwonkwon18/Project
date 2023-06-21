@@ -209,6 +209,6 @@ h2 {
 
 
 
-		<script src="/js/navBar.js"></script>
+		<script src="/js/running/runningNavBar.js"></script>
 </body>
 </html>

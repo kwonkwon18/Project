@@ -78,6 +78,7 @@ public class ClimbingController {
 		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
 		List<Member> memberList = mateService.getUserId(authentication.getName());
 		listMap.put("memberList", memberList);
+		System.out.println(memberList);
 		
 		model.addAllAttributes(listMap);
 	}
@@ -134,8 +135,6 @@ public class ClimbingController {
 		}
 		listMap.put("climbingCourseList", course);
 		
-		System.out.println(course);
-
 		model.addAllAttributes(listMap);
 	}
 
@@ -236,6 +235,7 @@ public class ClimbingController {
 		
 		List<Member> memberList = mateService.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
+		
 
 		model.addAllAttributes(getMemberList);
 

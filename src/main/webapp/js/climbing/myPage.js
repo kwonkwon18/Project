@@ -261,7 +261,7 @@ $("#currentListBtn").click(function() {
 				}
 				$("#myInfoRow").append(`
 					<div class="col">
-						<div class="card text-white bg-primary mb-3" style="max-width: 21rem; margin-left: 20px;">
+						<div class="card text-white bg-success mb-3" style="max-width: 21rem; margin-left: 20px;">
 							<h3 style="margin-left: 15px;">${post}</h3>
 								<div class="card-body">
 								<h5 class="card-title">

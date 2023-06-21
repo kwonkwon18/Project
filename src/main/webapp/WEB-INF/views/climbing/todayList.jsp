@@ -16,6 +16,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
+<style>
+.my-card {
+	border: 4px solid green;
+}
+h2 {
+	font-family: 'Gasoek One', sans-serif;
+	font-family: 'Orbit', sans-serif;
+}
+</style>
+
 	<my:navBarClimbing></my:navBarClimbing>
 
 	<div style="margin-top: 53px; margin-left: 201.5px; max-width: 1903px; display: flex; min-width: 1500px;">
@@ -48,7 +58,7 @@
 				</button>
 			</div>
 
-			<h2>오늘의 등산</h2>
+			<h2><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%98%A4%EB%8A%98%EC%9D%98+%EB%93%B1%EC%82%B0.png"></h2>
 			<ul>
 				<!-- 새로 작성된 코드, 변경된 코드  -->
 				<!-- table.table>thead>tr>th*4^^tbody -->
@@ -58,7 +68,7 @@
 					</a>
 					<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
 					<form action="/climbing/todayList" class="d-flex" role="todaySearch">
-						<input id="searchInput" value="${param.courseSearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
+						<input id="searchInput" value="${param.todaySearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
 						<button id="search" class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
@@ -73,7 +83,7 @@
 			<div id="todayListData" class="row">
 				<c:forEach items="${climbingTodayList}" var="board">
 					<div class="col-md-4">
-						<div class="card" style="width: 18rem; margin-bottom: 20px;">
+						<div class="card my-card" style="width: 18rem; margin-bottom: 20px;">
 							<div onclick="location.href='todayId/${board.id}'">
 								<div class="card-body">
 									<h5 class="card-title d-flex justify-content-between">

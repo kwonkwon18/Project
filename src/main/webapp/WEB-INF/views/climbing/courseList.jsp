@@ -80,7 +80,7 @@ h2 {
 					</form>
 				</div>
 				<div style="text-align: right;">
-					<button type="button" class="btn btn-success" onclick="location.href='courseAdd'">코스 등록하기</button>
+					<button type="button" class="btn btn-success" onclick="location.href='courseAdd'">코스 등록하기 ⚡</button>
 				</div>
 			</ul>
 			<br />

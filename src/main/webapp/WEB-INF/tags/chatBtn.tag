@@ -7,7 +7,7 @@ button.active {
 }
 </style>
 
-<div style="position: relative; display: none; border: 1px solid #ccc; overflow-y: auto; float: left; height: 85vh; width: 300px; background-color: white; border-radius: 3% 3% 0 0; margin-bottom: 50px; margin-left: 15px; z-index: 1;" id="chatBox" class="position-fixed bottom-0 start-0">
+<div style="position: relative; display: none; border: 1px solid #ccc; overflow-y: auto; float: left; height: 60vh; width: 300px; background-color: white; border-radius: 3% 3% 0 0; margin-bottom: 50px; margin-left: 15px; z-index: 1;" id="chatBox" class="position-fixed bottom-0 start-0">
 	<div style="padding-top: 10px; position: sticky; top: 0px; background-color: red; height: 40px; width: 100%;">
 		<button type="button" id="returnBtn" style="background-color: white; position: absolute; top: 0; left: 0; border-color: white; height: 40px; width: 40px;">
 			<i class="fa-solid fa-arrow-left-long"></i>
@@ -49,7 +49,7 @@ button.active {
 </div>
 
 
-<div style="border: 1px solid; padding: 10px; overflow-y: auto; float: left; height: 90vh; width: 300px; display: none; background-color: white; border-radius: 3%; margin-bottom: 15px; margin-left: 15px; z-index: 1;" id="chatList" class="position-fixed bottom-0 start-0">
+<div style="border: 1px solid; padding: 10px; overflow-y: auto; float: left; height: 65vh; width: 300px; display: none; background-color: white; border-radius: 3%; margin-bottom: 15px; margin-left: 15px; z-index: 1;" id="chatList" class="position-fixed bottom-0 start-0">
 	<span style="position: absolute; left: 50%; transform: translateX(-50%);">채팅방 리스트</span>
 	<button type="button" class="chatClose" style="background-color: white; position: absolute; top: 0; right: 0; height: 40px; width: 40px; border: 0;">
 		<i class="fa-solid fa-x"></i>
@@ -73,7 +73,10 @@ button.active {
 		<button type="button" style="margin-left: auto; border: 0px;" id="chatListSearchBtn">검색</button>
 		<button type="button" style="display: none; margin-left: auto; border: 0px;" id="groupChatListSearchBtn">검색</button>
 	</div>
-
+	
+	<div style="position: fixed; z-index: -1; left: 131px; bottom: 20px;">
+		<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%A9%94%EC%9D%B4%ED%8A%B8.png" alt="..." width="80" height="70">
+	</div>
 </div>
 
 <div class="modal fade" id="createChatRoom" tabindex="-1" aria-labelledby="chatRoomModalLabel" aria-hidden="true">

@@ -158,4 +158,10 @@ public interface GroupChatMapper {
 			""")
 	List<Integer> searchGroupChatId(String search, Integer chatRoomId);
 
+	@Select("""
+			SELECT SUM(chatCount) FROM RunningParty
+			WHERE guest = #{name} AND participation = 1;
+			""")
+	Integer getChatCountByMyName(String name);
+
 }

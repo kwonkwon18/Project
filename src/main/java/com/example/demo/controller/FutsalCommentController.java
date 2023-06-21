@@ -33,6 +33,7 @@ public class FutsalCommentController {
 	}
 	
 	@PostMapping("add")
+	@PreAuthorize("authenticated")
 	public ResponseEntity<Map<String, Object>> add(
 			@RequestBody FutsalComment comment,
 			Authentication authentication) {

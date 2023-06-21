@@ -1,11 +1,8 @@
 // 페이지가 로드될 때마다 호출해줄것임
 $(document).ready(function() {
-	console.log("작동은됨")
 	$.ajax("/climbing/countOfAlarm", {
 		contentType: "application/json",
 		success: function(data) {
-			console.log(data.confirmationTotal)
-		
 			if(data.confirmationTotdal > 0) {
 				$("#NumberOfAlarm").css("display", "block");
 			}

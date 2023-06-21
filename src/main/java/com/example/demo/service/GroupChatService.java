@@ -33,6 +33,7 @@ public class GroupChatService {
 	public List<RunningBoard> groupChatRoomSelectByName(String myName) {
 		List<RunningBoard> rList = new ArrayList<>();
 		List<Integer> list = mapper.getBoardIdByMyName(myName);
+		System.out.println(list);
 		for(Integer i : list) {
 			rList.add(mapper.groupChatRoomSelectByBoardId(i));
 		}
@@ -150,5 +151,10 @@ public class GroupChatService {
 
 	public List<Integer> searchGroupChatId(String search, Integer chatRoomId) {
 		return mapper.searchGroupChatId(search, chatRoomId);
+	}
+
+	public Integer getChatCount(String name) {
+		return mapper.getChatCountByMyName(name);
+		
 	}
 }

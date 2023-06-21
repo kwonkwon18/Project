@@ -12,6 +12,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -129,6 +132,32 @@
 								<div class="card-footer" style="text-align: right">
 									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 								</div>
+                
+			<div id="dropdown1" style="display: none">
+				<ul>
+					<button type="button" class="btn btn-success" style="pointer-events: none;">검색하기 🔍</button>
+					<form action="/climbing/mateList" class="d-flex" role="mateSearch">
+						<select class="form-select" name="type" id="" style="width: 150px">
+							<option value="all">전체</option>
+							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
+							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
+							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
+						</select>
+						<input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+						<button class="btn btn-outline-success" type="submit">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</form>
+				</ul>
+			</div>
+		</nav>
+
+		<!-- 	<ul>
+			<div style="text-align: right;">
+				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
+			</div>
+		</ul> -->
+
 							</div>
 						</div>
 					</c:if>
@@ -161,6 +190,7 @@
 
 			<br /> <br /> <br />
 
+     /*  아래 형꺼랑 비교해서 작동하는지        
 			<div class="container-lg">
 				<h2>오늘의 등산</h2>
 				<ul>
@@ -213,10 +243,79 @@
 							</div>
 						</c:if>
 					</c:forEach>
-				</div>
-			</div>
+				</div> 
+    
+        */
 
-			<br /> <br />
+	<div class="container-lg">
+		<h2>오늘의 등산</h2>
+		<br />
+		<ul>
+			<div style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 10px;">
+				<a href="todayList">
+					<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
+				</a>
+				<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
+				<form action="/climbing/todayList" class="d-flex" role="todaySearch">
+					<input id="searchInput" value="${param.courseSearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
+					<button id="search" class="btn btn-outline-success" type="submit">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</form>
+				<span style="margin-left: 520px;">
+					<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
+			</div>
+		</ul>
+
+		<br />
+
+		<div id="todayListData" class="row">
+			<c:forEach items="${climbingTodayList}" var="board" varStatus="status">
+				<c:if test="${status.index < 3 }">
+					<div class="col-md-4">
+						<div class="card todayCard">
+							<div onclick="location.href='todayId/${board.id}'">
+								<div class="card-body">
+									<h5 class="card-title">🏕🏕 ${board.title}</h5>
+
+									<div class="mb-3">
+										<label for="" class="form-label">작성자</label>
+										<span id="writerData${status.index + 1}" type="text" class="form-control">${board.writer}</span>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">본문</label>
+										<span id="addressText" class="form-control">${board.body}</span>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">업로드 시간</label>
+										<span id="timeText" class="form-control">${board.inserted}</span>
+									</div>
+									<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+										<c:if test="${status.count lt 2 }">
+											<div>
+												<img class="img-thumbnail" src="${bucketUrl}/climbingToday/${board.id}/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
+											</div>
+										</c:if>
+									</c:forEach>
+
+									<p class="card-text" style="font-size: 25px; text-align: right; margin-right: 10px; margin-bottom: 30px;">
+										<i class="fa-regular fa-heart"></i>
+										${board.likeCount}
+										<i class="fa-regular fa-comment"></i>
+										${board.commentCount}
+									</p>
+									<%-- 							<p class="card-text">${board.body}</p> --%>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</c:if>
+			</c:forEach>
+		</div>
+	</div>
+
+	<br /> <br />
 
 			<div class="container-lg">
 				<h2>추천 코스</h2>
@@ -259,7 +358,8 @@
 										<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
 											<c:if test="${status.count lt 2 }">
 												<div>
-													<img class="img-thumbnail" src="${bucketUrl}/climbingCourse/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />												</div>
+													<img class="img-thumbnail" src="${bucketUrl}/climbingCourse/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
+                        </div>
 											</c:if>
 										</c:forEach>
 									</div>
@@ -275,37 +375,8 @@
 		</div>
 	</div>
 
-	<!-- 	<div class="container-lg"> -->
-	<!-- 		<div class="row"> -->
-	<!-- 			<nav aria-label="Page navigation example"> -->
-	<!-- 				<ul class="pagination justify-content-center"> -->
 
-	<!-- 					이전 버튼 -->
-	<%-- 					<c:if test="${pageInfo.currentPageNum gt 1 }"> --%>
-	<%-- 						<my:pageItem pageNum="${pageInfo.currentPageNum - 1 }"> --%>
-	<!-- 							<i class="fa-solid fa-angle-left"></i> -->
-	<%-- 						</my:pageItem> --%>
-	<%-- 					</c:if> --%>
 
-	<%-- 					<c:forEach begin="${pageInfo.leftPageNum }" end="${pageInfo.rightPageNum }" var="pageNum"> --%>
-	<%-- 						<my:pageItem pageNum="${pageNum }"> --%>
-	<%-- 							${pageNum } --%>
-	<%-- 						</my:pageItem> --%>
-	<%-- 					</c:forEach> --%>
-
-	<!-- 					다음 버튼 -->
-	<%-- 					<c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum }"> --%>
-	<%-- 						페이지 번호 : ${pageInfo.currentPageNum + 1 } --%>
-	<%-- 						<my:pageItem pageNum="${pageInfo.currentPageNum + 1 }"> --%>
-	<!-- 							<i class="fa-solid fa-angle-right"></i> -->
-	<%-- 						</my:pageItem> --%>
-
-	<%-- 					</c:if> --%>
-
-	<!-- 				</ul> -->
-	<!-- 			</nav> -->
-	<!-- 		</div> -->
-	<!-- 	</div> -->
 
 	<sec:authorize access="isAuthenticated()">
 		<my:chatBtn></my:chatBtn>
@@ -326,6 +397,27 @@
 			}
 		});
 	</script>
+
+	<style>
+.card-member {
+	border: 4px solid #56B37F;
+}
+
+.card-nonMember {
+	border: 4px solid #646EFF;
+}
+
+.todayCard {
+	border: 4px solid #DCEBFF;
+}
+
+h2 {
+	font-family: 'Gasoek One', sans-serif;
+	font-family: 'Orbit', sans-serif;
+}
+</style>
+
 	<script src="/js/climbing/mateList.js"></script>
+	<script src="/js/climbingNavBar.js"></script>
 </body>
 </html>

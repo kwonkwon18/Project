@@ -116,6 +116,29 @@ public class RunningController {
 		return "running/runningGet";
 	}
 
+	@GetMapping("/myPageJs")
+	@ResponseBody
+	@PreAuthorize("authenticated")
+	public Map<String, Object> runningMyPage(Authentication authentication) {
+		
+		// 로그인 닉네임 확인
+		Member member = service.getMembertUserId(authentication.getName());
+		
+		Map<String, Object> myPageList = new HashMap<>();
+		
+		myPageList.put("MyNickName", member.getNickName());
+		
+		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
+		myPageList.put("totalMyData", totalMyData);
+		
+		// 참여자들 리스트업
+		List<RunningParty> members = service.getJoinMember(member.getNickName());
+		myPageList.put("members", members);
+		
+		return myPageList;
+		
+	}
+	
 	@GetMapping("/myPage")
 	@PreAuthorize("authenticated")
 	public void runningMyPage(Authentication authentication, Model model) {

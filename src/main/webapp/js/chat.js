@@ -27,6 +27,11 @@ function showList() {
 			$("#chatList").append(`
 			<div id="chatListContainer"></div>
 			`)
+			if (insertedList.length > 12) {
+				$("#chatList").css("width", "320px");
+			} else {
+				$("#chatList").css("width", "300px");
+			}
 			for (var i = 0; i < nickNameList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`
@@ -523,4 +528,12 @@ $("#personalChatRoomListBtn").click(function() {
 	showList();
 	$(this).addClass("active");
 	$("#groupChatRoomListBtn").removeClass("active");
+});
+
+$(document).ready(function() {
+	$.ajax("/chat/countMyChat", {
+		success: function(data) {
+			$("#myChatCount").text(data.count);
+		}
+	})
 });

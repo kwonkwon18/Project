@@ -60,11 +60,6 @@
 					</li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
-					<li class="nav-item">
-						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/myPage">
-							<i class="fa-regular fa-bookmark btn btn-primary"></i>
-						</a>
-					</li>
 					<button id="alarmList" class="btn btn-primary position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
 						<i class="fa-regular fa-bell"></i>
 						<span id="NumberOfAlarm" style="display: none;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger""> </span>

@@ -66,8 +66,8 @@
 		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 	</div>
 	<div class="offcanvas-body">
-		<div id="HostAlarm"></div>
-		<div id="MemberAlarm"></div>
+		<div id="runningHostAlarm"></div>
+		<div id="runningMemberAlarm"></div>
 	</div>
 </div>
 

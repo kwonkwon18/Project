@@ -16,10 +16,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <style>
 .my-card {
 	border: 4px solid green;
 }
+
 h2 {
 	font-family: 'Gasoek One', sans-serif;
 	font-family: 'Orbit', sans-serif;
@@ -51,6 +53,7 @@ h2 {
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
 				</button>
 				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
@@ -59,6 +62,7 @@ h2 {
 			</div>
 
 			<h2><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%98%A4%EB%8A%98%EC%9D%98+%EB%93%B1%EC%82%B0.png"></h2>
+
 			<ul>
 				<!-- 새로 작성된 코드, 변경된 코드  -->
 				<!-- table.table>thead>tr>th*4^^tbody -->
@@ -92,7 +96,9 @@ h2 {
 									</h5>
 									<p class="card-text">${board.title}</p>
 									<p class="card-text">
+
 										<i class="fa-solid fa-heart"></i> ${board.likeCount } <i class="fa-regular fa-comments"></i> ${board.commentCount }
+
 									</p>
 
 								</div>
@@ -115,6 +121,7 @@ h2 {
 		</div>
 	</div>
 
+
 	<sec:authorize access="isAuthenticated()">
 		<my:chatBtn></my:chatBtn>
 		<script src="/js/groupChat.js"></script>
@@ -136,5 +143,6 @@ h2 {
 	font-family: 'Orbit', sans-serif;
 }
 </style>
+
 </body>
 </html>

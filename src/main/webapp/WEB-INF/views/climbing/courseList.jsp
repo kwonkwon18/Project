@@ -18,10 +18,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <style>
 .my-card {
 	border: 4px solid green;
 }
+
 h2 {
 	font-family: 'Gasoek One', sans-serif;
 	font-family: 'Orbit', sans-serif;
@@ -53,6 +55,8 @@ h2 {
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+
+
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
 				</button>
 				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
@@ -60,6 +64,7 @@ h2 {
 				</button>
 			</div>
 			<h2><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%B6%94%EC%B2%9C+%EC%BD%94%EC%8A%A4.png"> </h2>
+
 			<ul>
 				<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
 					<a href="courseList">
@@ -93,7 +98,9 @@ h2 {
 									</h5>
 									<p class="card-title">${board.title}</p>
 									<p class="card-text">
+
 										<i class="fa-solid fa-heart"></i> ${board.likeCount } <i class="fa-regular fa-comments"></i> ${board.commentCount }
+
 									</p>
 								</div>
 								<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
@@ -112,6 +119,7 @@ h2 {
 		<div style="width: 250px;">
 			<my:advertisement2></my:advertisement2>
 		</div>
+
 
       <sec:authorize access="isAuthenticated()">
 			<my:chatBtn></my:chatBtn>

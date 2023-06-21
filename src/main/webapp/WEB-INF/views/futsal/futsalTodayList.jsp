@@ -16,7 +16,7 @@
 <body>
 	<my:chatBtn></my:chatBtn>
 
-	<my:navBar></my:navBar>
+	<my:navBarFutsal></my:navBarFutsal>
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -97,23 +97,30 @@
 
 		<div id="todayListData" class="row">
 			<c:forEach items="${futsalTodayList}" var="board">
-				<div class="col-md-4">
+				<div class="col-md-4 todayListData" data-board-boardId="${board.id}" onclick='newPage(${board.id})'>
 					<div class="card" style="width: 18rem; margin-bottom: 20px;">
-						<div class="card-body">
-							<h5 class="card-title">🌄${board.title}</h5>
-							<p class="card-text">${board.writer}</p>
-							<p class="card-text">${board.inserted}</p>
+						<div class="card-body" style="width: 18rem; margin-bottom: 20px; height: 555px;">
+							<h5 class="card-title">⚽ ${board.title}</h5>
+							<div class="mb-3">
+								<label for="" class="form-label">작성자</label>
+								<span id="writerData${status.index + 1}" type="text" class="form-control">${board.writer}</span>
+							</div>
+							<div class="mb-3">
+								<label for="" class="form-label">모임장소</label>
+								<span id="addressText" class="form-control">${board.body}</span>
+							</div>
+							<div class="mb-3">
+								<label for="" class="form-label">모임시간</label>
+								<span id="timeText" class="form-control">${board.inserted}</span>
+							</div>
 
 							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
 								<c:if test="${status.count lt 2 }">
 									<div>
-										<img class="img-fluid img-thumbnail" src="${bucketUrl }/futsalToday/${board.id }/${fileName}" alt="" height="300" width="300" />
+										<img class="img-fluid img-thumbnail" src="${bucketUrl }/futsalToday/${board.id }/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
 									</div>
 								</c:if>
 							</c:forEach>
-
-							<a class="btn btn-secondary" href="/futsal/todayId/${board.id }">상세보기</a>
-
 						</div>
 					</div>
 				</div>
@@ -122,5 +129,6 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="/js/chat.js"></script>
+		<script src="/js/futsal/futsalTodayList.js"></script>
 </body>
 </html>

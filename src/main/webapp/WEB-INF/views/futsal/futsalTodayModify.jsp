@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<my:navBar></my:navBar>
+	<my:navBarFutsal></my:navBarFutsal>
 
 
 	<div class="container-lg">

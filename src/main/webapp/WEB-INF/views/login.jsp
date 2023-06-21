@@ -17,7 +17,11 @@
 	<div class="container-lg">
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
-				<h1>로 그 인 🐾🐾</h1>
+			<br />
+			<br />
+			<br />
+				<br />
+
 				<form method="post">
 					<div class="mb-3">
 						<label for="" class=form-label">아이디</label>

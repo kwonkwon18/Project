@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<my:navBar></my:navBar>
+<my:navBarFutsal></my:navBarFutsal>
 	<h1>마이페이지</h1>
 
 	<div class="row row-cols-1 row-cols-md-3 g-4">

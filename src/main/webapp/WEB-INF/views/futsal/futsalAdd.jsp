@@ -26,7 +26,7 @@
 	String nowString = dateFormat.format(now);
 	%>
 
-	<my:navBar></my:navBar>
+	<my:navBarFutsal></my:navBarFutsal>
 	<br />
 	<br />
 	<br />

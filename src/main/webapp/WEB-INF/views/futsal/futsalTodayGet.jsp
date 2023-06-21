@@ -14,7 +14,7 @@
 </head>
 <body>
 
-	<my:navBar></my:navBar>
+	<my:navBarFutsal></my:navBarFutsal>
 	
 	<!-- toast -->
 	<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">

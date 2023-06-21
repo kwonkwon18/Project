@@ -140,7 +140,7 @@
 										<c:if test="${openDate > nowDate }">
 											<c:if test="${isMember}">
 												<div class="card-footer card-footer-gray" style="text-align: right">
-													<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-success" onclick="location.href='id/${board.id}'">더보기</button>
+													<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-success" onclick="location.href='id/${board.id}'">내 게시물</button>
 												</div>
 											</c:if>
 

@@ -120,25 +120,25 @@ public class RunningController {
 	@ResponseBody
 	@PreAuthorize("authenticated")
 	public Map<String, Object> runningMyPage(Authentication authentication) {
-		
+
 		// 로그인 닉네임 확인
 		Member member = service.getMembertUserId(authentication.getName());
-		
+
 		Map<String, Object> myPageList = new HashMap<>();
-		
+
 		myPageList.put("MyNickName", member.getNickName());
-		
+
 		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
 		myPageList.put("totalMyData", totalMyData);
-		
+
 		// 참여자들 리스트업
 		List<RunningParty> members = service.getJoinMember(member.getNickName());
 		myPageList.put("members", members);
-		
+
 		return myPageList;
-		
+
 	}
-	
+
 	@GetMapping("/myPage")
 	@PreAuthorize("authenticated")
 	public void runningMyPage(Authentication authentication, Model model) {
@@ -376,7 +376,7 @@ public class RunningController {
 		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
-		
+
 		List<RunningToday> today = todayService.listBoard(search);
 		getMemberList.put("runningTodayList", today);
 
@@ -404,7 +404,7 @@ public class RunningController {
 		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
-		
+
 		List<RunningToday> today = todayService.listBoard(search);
 		getMemberList.put("runningTodayList", today);
 

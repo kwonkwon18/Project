@@ -7,7 +7,7 @@ button.active {
 }
 </style>
 
-<div style="position: relative; display: none; border: 1px solid #ccc; overflow-y: auto; float: left; height: 60vh; width: 300px; background-color: white; border-radius: 3% 3% 0 0; margin-bottom: 50px; margin-left: 15px; z-index: 1;" id="chatBox" class="position-fixed bottom-0 start-0">
+<div style="position: relative; display: none; border: 1px solid #ccc; overflow-y: auto; float: left; height: 60vh; width: 404px; background-color: white; border-radius: 3% 3% 0 0; margin-bottom: 50px; margin-left: -1px; z-index: 1;" id="chatBox" class="position-fixed bottom-0 start-0">
 	<div style="padding-top: 10px; position: sticky; top: 0px; background-color: red; height: 40px; width: 100%;">
 		<button type="button" id="returnBtn" style="background-color: white; position: absolute; top: 0; left: 0; border-color: white; height: 40px; width: 40px;">
 			<i class="fa-solid fa-arrow-left-long"></i>
@@ -18,7 +18,7 @@ button.active {
 	</div>
 	<div id="chatSearchBox" class="mb-3" style="position: sticky; top: 45px; display: none; border: 1px solid black; width: 275.556px; height: 25.99px; margin-left: 10px; margin-top: 10px;">
 		<input type="text" style="width: 200px; border: 0px;" id="chatSearch" />
-		<button type="button" style="margin-left: auto; border: 0px; border-right: 1px solid black; background-color: red;" id="chatSearchBtn">검색</button>
+		<button type="button" style="margin-left: auto; border: 0px; border-right: 1px solid black; background-color: blue;" id="chatSearchBtn">검색</button>
 		<button type="button" style="display: none; margin-left: auto; border: 0px; border-right: 1px solid black;" id="nextBtn">다음</button>
 		<button type="button" id="chatSearchRemove" style="background-color: white; border-color: white; border: 0px;">
 			<i class="fa-solid fa-x"></i>
@@ -49,7 +49,7 @@ button.active {
 </div>
 
 
-<div style="border: 1px solid; padding: 10px; overflow-y: auto; float: left; height: 65vh; width: 300px; display: none; background-color: white; border-radius: 3%; margin-bottom: 15px; margin-left: 15px; z-index: 1;" id="chatList" class="position-fixed bottom-0 start-0">
+<div style="border: 1px solid; padding: 10px; overflow-y: auto; float: left; height: 65vh; width: 404px; display: none; background-color: white; border-radius: 3%; margin-bottom: 15px; margin-left: -1px; z-index: 1;" id="chatList" class="position-fixed bottom-0 start-0">
 	<span style="position: absolute; left: 50%; transform: translateX(-50%);">채팅방 리스트</span>
 	<button type="button" class="chatClose" style="background-color: white; position: absolute; top: 0; right: 0; height: 40px; width: 40px; border: 0;">
 		<i class="fa-solid fa-x"></i>

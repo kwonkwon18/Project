@@ -44,7 +44,6 @@ h2 {
 	font-family: 'Gasoek One', sans-serif;
 	font-family: 'Orbit', sans-serif;
 }
-
 </style>
 
 	<my:navBarClimbing></my:navBarClimbing>
@@ -87,7 +86,7 @@ h2 {
 			<h2>
 				<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EB%A9%94%EC%9D%B4%ED%8A%B8+%EA%B5%AC%ED%95%98%EA%B8%B0.png">
 			</h2>
-      
+
 			<br />
 			<nav>
 				<ul>
@@ -100,7 +99,7 @@ h2 {
 					</div>
 					<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
 					<div style="text-align: right;">
-						<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
+						<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성 ⚡</button>
 					</div>
 
 				</ul>
@@ -114,8 +113,7 @@ h2 {
 								<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
 								<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
 
-							</select> 
-              <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+							</select> <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
 
 							<button class="btn btn-outline-success" type="submit">
 								<i class="fa-solid fa-magnifying-glass"></i>
@@ -128,26 +126,35 @@ h2 {
 			<ul>
 				<div style="text-align: right;">
 
-					<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> 
-        <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
+					<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
 
 				</div>
 			</ul>
 
-			<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
-			<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 			<div id="mateListData" class="row">
 				<c:forEach items="${climbingMateList}" var="board" varStatus="status">
+					<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
+					<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 					<c:if test="${status.index < 3 }">
 						<div class="col-md-4">
-							<div class="card my-card1" style="width: 18rem; margin-bottom: 20px; height: 350px;">
+							<div class="card my-card1" style="width: 18rem; margin-bottom: 20px; height: 425px;">
 								<div class="card-body">
 									<h5 class="card-title">🌄${board.title}</h5>
-									<p class="card-text">작성자: ${board.writer}</p>
-									<p class="card-text">작성일자: ${board.inserted}</p>
-									<p class="card-text">모임장소: ${board.address}</p>
-									<p class="card-text">모임시간: ${board.time}</p>
-									${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}
+									<p class="card-text" style="text-align: right;">
+										<label for=""> ${board.writer} </label>
+									</p>
+									<div class="mb-3">
+										<label for="" class="form-label">작성일자</label>
+										<p id="inserted" class="form-control">${board.inserted}</p>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">모임장소</label>
+										<p id="addressText" class="form-control">${board.address}</p>
+									</div>
+									<div class="mb-3">
+										<label for="" class="form-label">모임시간</label>
+										<p id="time" class="form-control">${board.time}</p>
+									</div>
 
 									<c:set var="isMember" value="false" />
 									<c:forEach items="${memberList}" var="memberList">
@@ -155,24 +162,26 @@ h2 {
 											<c:set var="isMember" value="true" />
 										</c:if>
 									</c:forEach>
-
+								</div>
 									<c:if test="${openDate <= nowDate }">
-										<button>마감된 등산</button>
+										<div class="card-footer card-footer-gray" style="text-align: right">
+											<button class="btn btn-danger">마감된 등산</button>
+										</div>
 									</c:if>
 
-									<c:if test="${openDate > nowDate }">
-										<c:if test="${isMember}">
-											<button type="button" onclick="location.href='/climbing/id/${board.id}' ">지원 사항 상세보기</button>
-										</c:if>
-
-										<c:if test="${not isMember}">
-											<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-										</c:if>
+								<c:if test="${openDate > nowDate }">
+									<c:if test="${isMember}">
+										<div class="card-footer card-footer-gray" style="text-align: right">
+											<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="" class=" btn btn-success" onclick="location.href='/climbing/id/${board.id}'">내 게시물</button>
+										</div>
 									</c:if>
-								</div>
-								<div class="card-footer" style="text-align: right">
-									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-								</div>
+
+									<c:if test="${not isMember}">
+										<div class="card-footer card-footer-gray" style="text-align: right">
+											<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+										</div>
+									</c:if>
+								</c:if>
 
 								<div id="dropdown1" style="display: none">
 									<ul>
@@ -184,8 +193,7 @@ h2 {
 												<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
 												<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
 
-											</select> 
-                      <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+											</select> <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
 
 											<button class="btn btn-outline-success" type="submit">
 												<i class="fa-solid fa-magnifying-glass"></i>
@@ -246,7 +254,7 @@ h2 {
 					</div>
 
 					<div style="text-align: right;">
-						<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
+						<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성 ⚡</button>
 					</div>
 				</ul>
 				<br />
@@ -281,235 +289,63 @@ h2 {
 					</c:forEach>
 				</div>
 
-				<!-- 
-	<div class="container-lg">
-		<h2>오늘의 등산</h2>
-		<br />
-		<ul>
-			<div style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 10px;">
-				<a href="todayList">
-					<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
-				</a>
-				<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
-				<form action="/climbing/todayList" class="d-flex" role="todaySearch">
-					<input id="searchInput" value="${param.courseSearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
-					<button id="search" class="btn btn-outline-success" type="submit">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
-				</form>
-				<span style="margin-left: 520px;">
-					<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
 
-			</div>
+				<br /> <br />
 
-			<br />
-			<br />
-			<br />
+				<div class="container-lg">
+					<h2>
+						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%B6%94%EC%B2%9C+%EC%BD%94%EC%8A%A4.png">
+					</h2>
+					<ul>
+						<!-- 			<button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
+						<!-- 			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button> -->
 
-			<div class="container-lg">
-				<h2>오늘의 등산</h2>
-				<ul>
+						<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
+							<a href="courseList">
+								<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
+							</a>
+							<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
+							<form action="/climbing/courseList" class="d-flex" role="courseSearch">
+								<input id="searchInput" value="${param.courseSearch}" name="courseSearch" class="form-control" type="courseSearch" placeholder="Search" aria-label="courseSearch" style="width: 300px">
+								<button id="search" class="btn btn-outline-success" type="submit">
+									<i class="fa-solid fa-magnifying-glass"></i>
+								</button>
+							</form>
+						</div>
+
+						<div style="text-align: right;">
+							<button type="button" class="btn btn-success" onclick="location.href='courseAdd'">코스 등록하기 ⚡</button>
+						</div>
+					</ul>
+					<br />
 					<!-- 새로 작성된 코드, 변경된 코드  -->
 					<!-- table.table>thead>tr>th*4^^tbody -->
-					<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
-						<a href="todayList">
-							<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
-						</a>
-						<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
-						<form action="/climbing/todayList" class="d-flex" role="todaySearch">
-							<input id="searchInput" value="${param.courseSearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
-							<button id="search" class="btn btn-outline-success" type="submit">
-								<i class="fa-solid fa-magnifying-glass"></i>
-							</button>
-						</form>
-					</div>
-
-					<div style="text-align: right;">
-						<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
-					</div>
-				</ul>
-				<br />
-				<div id="todayListData" class="row">
-					<c:forEach items="${climbingTodayList}" var="board" varStatus="status">
-						<c:if test="${status.index < 3 }">
-							<div class="col-md-4">
-								<div class="card my-card2" style="width: 18rem; margin-bottom: 20px;">
-									<div onclick="location.href='todayId/${board.id}'">
-										<div class="card-body">
-											<h5 class="card-title d-flex justify-content-between">
-												<span>🌄 ${board.writer}</span>
-												<p style="font-size: medium;">${board.inserted}</p>
-											</h5>
-											<p class="card-text">${board.title}</p>
-											<p class="card-text">
-												<i class="fa-solid fa-heart"></i>
-												${board.likeCount }
-												<i class="fa-regular fa-comments"></i>
-												${board.commentCount }
-											</p>
-											<%--                      <p class="card-text">${board.body}</p> --%>
+					<div id="courseListData" class="row">
+						<c:forEach items="${climbingCourseList}" var="board" varStatus="status">
+							<c:if test="${status.index < 3 }">
+								<div class="col-md-4">
+									<div class="card my-card3" style="width: 18rem; margin-bottom: 20px;">
+										<div onclick="location.href='courseId/${board.id}'">
+											<div class="card-body">
+												<h5 class="card-text d-flex justify-content-between">
+													<span>🌄 ${board.writer}</span>
+													<p style="font-size: medium;">${board.inserted}</p>
+												</h5>
+												<p class="card-title">${board.title}</p>
+											</div>
+											<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+												<c:if test="${status.count lt 2 }">
+													<div>
+														<img class="img-thumbnail" src="${bucketUrl}/climbingCourse/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
+													</div>
+												</c:if>
+											</c:forEach>
 										</div>
-										<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
-											<c:if test="${status.count lt 2 }">
-												<div>
-													<img class="img-thumbnail" src="${bucketUrl}/climbingToday/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
-												</div>
-											</c:if>
-										</c:forEach>
 									</div>
 								</div>
-							</div>
-              
-
-					<!-- 
-            </c:if>
-					</c:forEach>
-				</div>
-
-				<!-- 
-   <div class="container-lg">
-      <h2>오늘의 등산</h2>
-      <br />
-      <ul>
-         <div style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 10px;">
-            <a href="todayList">
-               <button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
-            </a>
-            <button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
-            <form action="/climbing/todayList" class="d-flex" role="todaySearch">
-               <input id="searchInput" value="${param.courseSearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
-               <button id="search" class="btn btn-outline-success" type="submit">
-                  <i class="fa-solid fa-magnifying-glass"></i>
-               </button>
-            </form>
-            <span style="margin-left: 520px;">
-               <button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
-         </div>
-      </ul>
-
-      <br />
-
-      <div id="todayListData" class="row">
-         <c:forEach items="${climbingTodayList}" var="board" varStatus="status">
-            <c:if test="${status.index < 3 }">
-               <div class="col-md-4">
-                  <div class="card todayCard">
-                     <div onclick="location.href='todayId/${board.id}'">
-                        <div class="card-body">
-                           <h5 class="card-title">🏕🏕 ${board.title}</h5>
-
-                           <div class="mb-3">
-                              <label for="" class="form-label">작성자</label>
-                              <span id="writerData${status.index + 1}" type="text" class="form-control">${board.writer}</span>
-                           </div>
-                           <div class="mb-3">
-                              <label for="" class="form-label">본문</label>
-                              <span id="addressText" class="form-control">${board.body}</span>
-                           </div>
-                           <div class="mb-3">
-                              <label for="" class="form-label">업로드 시간</label>
-                              <span id="timeText" class="form-control">${board.inserted}</span>
-                           </div>
-                           <c:forEach items="${board.fileName }" var="fileName" varStatus="status">
-                              <c:if test="${status.count lt 2 }">
-                                 <div>
-                                    <img class="img-thumbnail" src="${bucketUrl}/climbingToday/${board.id}/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
-                                 </div>
-                              </c:if>
-                           </c:forEach>
-
-                           <p class="card-text" style="font-size: 25px; text-align: right; margin-right: 10px; margin-bottom: 30px;">
-                              <i class="fa-regular fa-heart"></i>
-                              ${board.likeCount}
-                              <i class="fa-regular fa-comment"></i>
-                              ${board.commentCount}
-                           </p>
-                           <%--                      <p class="card-text">${board.body}</p> --%>
-                        </div>
-
-                     </div>
-                  </div>
-               </div>
-            </c:if>
-         </c:forEach>
-      </div>
-    -->
-			</div>
-
-			<br />
-			<br />
-
-			<div class="container-lg">
-				<h2>추천 코스</h2>
-				<ul>
-					<!--          <button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
-					<!--          <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button> -->
-          
-          -->
-
-						</div>
+							</c:if>
+						</c:forEach>
 					</div>
-				</c:if>
-			</c:forEach>
-		</div>
-	 -->
-			</div>
-
-			<br /> <br />
-
-			<div class="container-lg">
-				<h2>
-					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%B6%94%EC%B2%9C+%EC%BD%94%EC%8A%A4.png">
-				</h2>
-				<ul>
-					<!-- 			<button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
-					<!-- 			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button> -->
-
-					<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
-						<a href="courseList">
-							<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
-						</a>
-						<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
-						<form action="/climbing/courseList" class="d-flex" role="courseSearch">
-							<input id="searchInput" value="${param.courseSearch}" name="courseSearch" class="form-control" type="courseSearch" placeholder="Search" aria-label="courseSearch" style="width: 300px">
-							<button id="search" class="btn btn-outline-success" type="submit">
-								<i class="fa-solid fa-magnifying-glass"></i>
-							</button>
-						</form>
-					</div>
-
-					<div style="text-align: right;">
-						<button type="button" class="btn btn-success" onclick="location.href='courseAdd'">코스 등록하기</button>
-					</div>
-				</ul>
-				<br />
-				<!-- 새로 작성된 코드, 변경된 코드  -->
-				<!-- table.table>thead>tr>th*4^^tbody -->
-				<div id="courseListData" class="row">
-					<c:forEach items="${climbingCourseList}" var="board" varStatus="status">
-						<c:if test="${status.index < 3 }">
-							<div class="col-md-4">
-								<div class="card my-card3" style="width: 18rem; margin-bottom: 20px;">
-									<div onclick="location.href='courseId/${board.id}'">
-										<div class="card-body">
-											<h5 class="card-text d-flex justify-content-between">
-												<span>🌄 ${board.writer}</span>
-												<p style="font-size: medium;">${board.inserted}</p>
-											</h5>
-											<p class="card-title">${board.title}</p>
-										</div>
-										<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
-											<c:if test="${status.count lt 2 }">
-												<div>
-													<img class="img-thumbnail" src="${bucketUrl}/climbingCourse/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
-												</div>
-											</c:if>
-										</c:forEach>
-									</div>
-								</div>
-							</div>
-						</c:if>
-					</c:forEach>
 				</div>
 			</div>
 		</div>

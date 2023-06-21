@@ -17,23 +17,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
+
 	<style>
 .my-card {
 	border: 4px solid green;
 }
 
-/* .card-member { */
-/* 	border: 4px solid #56B37F; */
-/* } */
-
-/* .card-nonMember { */
-/* 	border: 4px solid #646EFF; */
-/* } */
-
-/* .todayCard { */
-/* 	border: 4px solid green; */
-
-/* } */
 h2 {
 	font-family: 'Gasoek One', sans-serif;
 	font-family: 'Orbit', sans-serif;
@@ -77,7 +66,9 @@ h2 {
 				</button>
 			</div>
 
-			<h2><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EB%A9%94%EC%9D%B4%ED%8A%B8+%EA%B5%AC%ED%95%98%EA%B8%B0.png"></h2>
+			<h2>
+				<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EB%A9%94%EC%9D%B4%ED%8A%B8+%EA%B5%AC%ED%95%98%EA%B8%B0.png">
+			</h2>
 			<br />
 			<nav>
 				<ul>
@@ -88,7 +79,7 @@ h2 {
 					</div>
 					<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
 					<div style="text-align: right;">
-						<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
+						<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성 ⚡</button>
 					</div>
 					<!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 				</ul>
@@ -119,19 +110,29 @@ h2 {
 			</ul>
 
 
-			<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
-			<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 			<div id="mateListData" class="row">
 				<c:forEach items="${climbingMateList}" var="board">
+					<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
+					<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 					<div class="col-md-4">
-						<div class="card my-card" style="width: 18rem; margin-bottom: 20px; height: 350px;">
+						<div class="card my-card" style="width: 18rem; margin-bottom: 20px; height: 425px;">
 							<div class="card-body">
 								<h5 class="card-title">🌄${board.title}</h5>
-								<p class="card-text">작성자: ${board.writer}</p>
-								<p class="card-text">작성일자: ${board.inserted}</p>
-								<p class="card-text">모임장소: ${board.address}</p>
-								<p class="card-text">모임시간: ${board.time}</p>
-								${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}
+								<p class="card-text" style="text-align: right;">
+									<label for=""> ${board.writer} </label>
+								</p>
+								<div class="mb-3">
+									<label for="" class="form-label">작성일자</label>
+									<p id="inserted" class="form-control">${board.inserted}</p>
+								</div>
+								<div class="mb-3">
+									<label for="" class="form-label">모임장소</label>
+									<p id="addressText" class="form-control">${board.address}</p>
+								</div>
+								<div class="mb-3">
+									<label for="" class="form-label">모임시간</label>
+									<p id="time" class="form-control">${board.time}</p>
+								</div>
 
 								<c:set var="isMember" value="false" />
 								<c:forEach items="${memberList}" var="memberList">
@@ -139,151 +140,52 @@ h2 {
 										<c:set var="isMember" value="true" />
 									</c:if>
 								</c:forEach>
+							</div>
+							<c:if test="${openDate <= nowDate }">
+								<div class="card-footer card-footer-gray" style="text-align: right">
+									<button class="btn btn-danger">마감된 등산</button>
+								</div>
+							</c:if>
 
-								<c:if test="${openDate <= nowDate }">
-									<button>마감된 경기</button>
+							<c:if test="${openDate > nowDate }">
+								<c:if test="${isMember}">
+									<div class="card-footer card-footer-gray" style="text-align: right">
+										<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="" class=" btn btn-success" onclick="location.href='/climbing/id/${board.id}'">내 게시물</button>
+									</div>
 								</c:if>
 
-								<c:if test="${openDate > nowDate }">
-									<c:if test="${isMember}">
-										<button type="button" onclick="location.href='/climbing/id/${board.id}' ">지원 사항 상세보기</button>
-									</c:if>
-
-									<c:if test="${not isMember}">
-										<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-									</c:if>
+								<c:if test="${not isMember}">
+									<div class="card-footer card-footer-gray" style="text-align: right">
+										<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
+									</div>
 								</c:if>
-							</div>
-							<div class="card-footer" style="text-align: right">
-								<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-							</div>
+							</c:if>
 						</div>
 					</div>
 				</c:forEach>
 			</div>
-			<!--  
-			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
-			</button>
-		</div>
 
-		<nav>
-			<ul>
-				<h2>메이트구하기</h2>
-				<span style="margin-left: 50px;"></span>
-				<a id="all1" href="mateList" style="text-decoration-line: none;">전체</a>
-				&nbsp; &nbsp;
-				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
-				&nbsp; &nbsp;
-				<div class="dropdown-menu" aria-labelledby="search1">
-					<a class="dropdown-item" href="#">메뉴 항목 1</a>
-					<a class="dropdown-item" href="#">메뉴 항목 2</a>
-					<a class="dropdown-item" href="#">메뉴 항목 3</a>
-				</div>
-				<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-				<span style="margin-left: 735px;">
-					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-					<button type="button" class="btn btn-success" onclick="location.href='https://www.weather.go.kr/w/weather/forecast/mid-term.do'">날씨 보기</button>
-				</span>
 			</ul>
+
 			<div id="dropdown1" style="display: none">
-
 				<ul>
-					<a id="all1" href="mateList" style="text-decoration-line: none;">전체</a>
-					<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
-					<div class="dropdown-menu" aria-labelledby="search1">
-						<a class="dropdown-item" href="#">메뉴 항목 1</a>
-						<a class="dropdown-item" href="#">메뉴 항목 2</a>
-						<a class="dropdown-item" href="#">메뉴 항목 3</a>
-					</div>
-					<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-					<div style="text-align: right;">
-						<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
-					</div>
-					<!--             <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
+					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
+
+					<form action="/climbing/mateList" class="d-flex" role="mateSearch">
+
+						<select class="form-select" name="type" id="" style="width: 150px">
+							<option value="all">전체</option>
+							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
+							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
+							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
+						</select> <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+						<button class="btn btn-outline-success" type="submit">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</form>
 				</ul>
-
-				<div id="dropdown1" style="display: none">
-					<ul>
-						<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-
-						<form action="/climbing/mateList" class="d-flex" role="mateSearch">
-
-							<select class="form-select" name="type" id="" style="width: 150px">
-								<option value="all">전체</option>
-								<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
-								<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
-								<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
-							</select>
-							<input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
-							<button class="btn btn-outline-success" type="submit">
-								<i class="fa-solid fa-magnifying-glass"></i>
-							</button>
-						</form>
-					</ul>
-				</div>
+			</div>
 			</nav>
-
-
-
-			<ul>
-			<div style="text-align: right;">
-				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
-			</div>
-		</ul> 
-
-
-
-
-			<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
-			<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
-			<div id="mateListData" class="row">
-				<c:forEach items="${climbingMateList}" var="board">
-					<div class="col-md-4">
-						<div class="card my-card" style="width: 18rem; margin-bottom: 20px; height: 350px;">
-							<div class="card-body">
-								<h5 class="card-title">🌄${board.title}</h5>
-								<p class="card-text">작성자: ${board.writer}</p>
-								<p class="card-text">작성일자: ${board.inserted}</p>
-								<p class="card-text">모임장소: ${board.address}</p>
-								<p class="card-text">모임시간: ${board.time}</p>
-								${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}
-
-								<c:set var="isMember" value="false" />
-								<c:forEach items="${memberList}" var="memberList">
-									<c:if test="${memberList.nickName eq board.writer}">
-										<c:set var="isMember" value="true" />
-									</c:if>
-								</c:forEach>
-
-								<c:if test="${openDate <= nowDate }">
-									<button>마감된 경기</button>
-								</c:if>
-
-								<c:if test="${openDate > nowDate }">
-									<c:if test="${isMember}">
-										<button type="button" onclick="location.href='/climbing/id/${board.id}' ">지원 사항 상세보기</button>
-									</c:if>
-
-									<c:if test="${not isMember}">
-										<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-									</c:if>
-								</c:if>
-							</div>
-							<div class="card-footer" style="text-align: right">
-								<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-
-
 		</div>
 
 		<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -57,7 +57,7 @@
 
 					<div class="mb-3">
 						<label for="" class="form-label">인원수</label>
-						<input id="peopleInput" type="number" required class="form-control" name="people" value="${runningBoard.people }" placeholder="숫자를 입력해주세요 ex) 1" />
+						<input id="peopleInput" type="number" required class="form-control" name="people" value="${climbingMate.people }" placeholder="숫자를 입력해주세요 ex) 1" />
 					</div>
 
 					<div class="mb-3">

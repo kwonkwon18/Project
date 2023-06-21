@@ -74,7 +74,7 @@
 
 				</div>
 			</div>
-			<div id="map" style="width: 60%; height: 655px;"></div>
+			<div id="map" style="width: 60%; height: 867px;"></div>
 		</div>
 	</div>
 

@@ -18,6 +18,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
+<style>
+.my-card {
+	border: 4px solid green;
+}
+h2 {
+	font-family: 'Gasoek One', sans-serif;
+	font-family: 'Orbit', sans-serif;
+}
+</style>
+
 	<my:navBarClimbing></my:navBarClimbing>
 
 	<div style="margin-top: 53px; margin-left: 201.5px; max-width: 1903px; display: flex; min-width: 1500px;">
@@ -49,7 +59,7 @@
 					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
 				</button>
 			</div>
-			<h2>추천 코스</h2>
+			<h2><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%B6%94%EC%B2%9C+%EC%BD%94%EC%8A%A4.png"> </h2>
 			<ul>
 				<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
 					<a href="courseList">
@@ -74,7 +84,7 @@
 			<div id="courseListData" class="row">
 				<c:forEach items="${climbingCourseList}" var="board">
 					<div class="col-md-4">
-						<div class="card" style="width: 18rem; margin-bottom: 20px;">
+						<div class="card my-card" style="width: 18rem; margin-bottom: 20px;">
 							<div onclick="location.href='courseId/${board.id}'">
 								<div class="card-body">
 									<h5 class="card-text d-flex justify-content-between">
@@ -111,19 +121,5 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-		<style>
-.card {
-	margin-bottom: 20px;
-}
-
-.todayCard {
-	border: 4px solid #56B37F;
-}
-
-h2 {
-	font-family: 'Gasoek One', sans-serif;
-	font-family: 'Orbit', sans-serif;
-}
-</style>
 </body>
 </html>

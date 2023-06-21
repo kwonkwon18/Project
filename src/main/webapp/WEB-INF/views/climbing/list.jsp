@@ -17,6 +17,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
+	<style>
+.my-card1 {
+	border: 4px solid green;
+}
+
+h2 {
+	font-family: 'Gasoek One', sans-serif;
+	font-family: 'Orbit', sans-serif;
+}
+
+.my-card2 {
+	border: 4px solid green;
+}
+
+h2 {
+	font-family: 'Gasoek One', sans-serif;
+	font-family: 'Orbit', sans-serif;
+}
+
+.my-card3 {
+	border: 4px solid green;
+}
+
+h2 {
+	font-family: 'Gasoek One', sans-serif;
+	font-family: 'Orbit', sans-serif;
+}
+
+</style>
 
 	<my:navBarClimbing></my:navBarClimbing>
 
@@ -24,11 +53,11 @@
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
 	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
 
-	<div style="margin-top: 53px; margin-left:201.5px; max-width: 1903px; display: flex; min-width: 1500px;">
+	<div style="margin-top: 53px; margin-left: 201.5px; max-width: 1903px; display: flex; min-width: 1500px;">
 		<div style="width: 250px;">
 			<my:advertisement1></my:advertisement1>
 		</div>
-		<div style="max-width:1000px;">
+		<div style="max-width: 1000px;">
 			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="false" style="max-width: 1000px;">
 				<div class="carousel-indicators">
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -37,13 +66,13 @@
 				</div>
 				<div class="carousel-inner">
 					<div class="carousel-item active">
-						<img style="width: 1000px; height:500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block" alt="...">
+						<img style="width: 1000px; height: 500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block" alt="...">
 					</div>
 					<div class="carousel-item">
-						<img style="width: 1000px; height:500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block" alt="...">
+						<img style="width: 1000px; height: 500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block" alt="...">
 					</div>
 					<div class="carousel-item">
-						<img style="width: 1000px; height:500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" class="d-block" alt="...">
+						<img style="width: 1000px; height: 500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" class="d-block" alt="...">
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -54,7 +83,9 @@
 				</button>
 			</div>
 
-			<h2>메이트구하기</h2>
+			<h2>
+				<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EB%A9%94%EC%9D%B4%ED%8A%B8+%EA%B5%AC%ED%95%98%EA%B8%B0.png">
+			</h2>
 			<br />
 			<nav>
 				<ul>
@@ -64,7 +95,7 @@
 						<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
 					</div>
 					<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
-					<div style="text-align:right;">
+					<div style="text-align: right;">
 						<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
 					</div>
 					<!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
@@ -99,7 +130,7 @@
 				<c:forEach items="${climbingMateList}" var="board" varStatus="status">
 					<c:if test="${status.index < 3 }">
 						<div class="col-md-4">
-							<div class="card" style="width: 18rem; margin-bottom: 20px; height: 350px;">
+							<div class="card my-card1" style="width: 18rem; margin-bottom: 20px; height: 350px;">
 								<div class="card-body">
 									<h5 class="card-title">🌄${board.title}</h5>
 									<p class="card-text">작성자: ${board.writer}</p>
@@ -132,27 +163,26 @@
 								<div class="card-footer" style="text-align: right">
 									<button data-board-userId="${board.writer }" data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
 								</div>
-                
-			<div id="dropdown1" style="display: none">
-				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">검색하기 🔍</button>
-					<form action="/climbing/mateList" class="d-flex" role="mateSearch">
-						<select class="form-select" name="type" id="" style="width: 150px">
-							<option value="all">전체</option>
-							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
-							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
-							<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
-						</select>
-						<input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
-						<button class="btn btn-outline-success" type="submit">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</form>
-				</ul>
-			</div>
-		</nav>
 
-		<!-- 	<ul>
+								<div id="dropdown1" style="display: none">
+									<ul>
+										<button type="button" class="btn btn-success" style="pointer-events: none;">검색하기 🔍</button>
+										<form action="/climbing/mateList" class="d-flex" role="mateSearch">
+											<select class="form-select" name="type" id="" style="width: 150px">
+												<option value="all">전체</option>
+												<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
+												<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
+												<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
+											</select> <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+											<button class="btn btn-outline-success" type="submit">
+												<i class="fa-solid fa-magnifying-glass"></i>
+											</button>
+										</form>
+									</ul>
+								</div>
+								</nav>
+
+								<!-- 	<ul>
 			<div style="text-align: right;">
 				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
 			</div>
@@ -190,9 +220,10 @@
 
 			<br /> <br /> <br />
 
-     /*  아래 형꺼랑 비교해서 작동하는지        
 			<div class="container-lg">
-				<h2>오늘의 등산</h2>
+				<h2>
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%98%A4%EB%8A%98%EC%9D%98+%EB%93%B1%EC%82%B0.png">
+				</h2>
 				<ul>
 					<!-- 새로 작성된 코드, 변경된 코드  -->
 					<!-- table.table>thead>tr>th*4^^tbody -->
@@ -218,7 +249,7 @@
 					<c:forEach items="${climbingTodayList}" var="board" varStatus="status">
 						<c:if test="${status.index < 3 }">
 							<div class="col-md-4">
-								<div class="card" style="width: 18rem; margin-bottom: 20px;">
+								<div class="card my-card2" style="width: 18rem; margin-bottom: 20px;">
 									<div onclick="location.href='todayId/${board.id}'">
 										<div class="card-body">
 											<h5 class="card-title d-flex justify-content-between">
@@ -243,10 +274,9 @@
 							</div>
 						</c:if>
 					</c:forEach>
-				</div> 
-    
-        */
+				</div>
 
+				<!-- 
 	<div class="container-lg">
 		<h2>오늘의 등산</h2>
 		<br />
@@ -313,12 +343,15 @@
 				</c:if>
 			</c:forEach>
 		</div>
-	</div>
+	 -->
+			</div>
 
-	<br /> <br />
+			<br /> <br />
 
 			<div class="container-lg">
-				<h2>추천 코스</h2>
+				<h2>
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%B6%94%EC%B2%9C+%EC%BD%94%EC%8A%A4.png">
+				</h2>
 				<ul>
 					<!-- 			<button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
 					<!-- 			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button> -->
@@ -346,7 +379,7 @@
 					<c:forEach items="${climbingCourseList}" var="board" varStatus="status">
 						<c:if test="${status.index < 3 }">
 							<div class="col-md-4">
-								<div class="card" style="width: 18rem; margin-bottom: 20px;">
+								<div class="card my-card3" style="width: 18rem; margin-bottom: 20px;">
 									<div onclick="location.href='courseId/${board.id}'">
 										<div class="card-body">
 											<h5 class="card-text d-flex justify-content-between">
@@ -359,7 +392,7 @@
 											<c:if test="${status.count lt 2 }">
 												<div>
 													<img class="img-thumbnail" src="${bucketUrl}/climbingCourse/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
-                        </div>
+												</div>
 											</c:if>
 										</c:forEach>
 									</div>

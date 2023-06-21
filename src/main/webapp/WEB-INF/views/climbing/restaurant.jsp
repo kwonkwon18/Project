@@ -42,7 +42,7 @@
 	left: 0;
 	bottom: 0;
 	width: 250px;
-	margin: 10px 0 30px 10px;
+	margin: 25px 0 30px 10px;
 	padding: 5px;
 	overflow-y: auto;
 	background: rgba(255, 255, 255, 0.7);

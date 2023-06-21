@@ -17,7 +17,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Gasoek+One&family=Orbit&display=swap" rel="stylesheet">
 </head>
 <body>
+	<style>
+.my-card {
+	border: 4px solid green;
+}
 
+/* .card-member { */
+/* 	border: 4px solid #56B37F; */
+/* } */
+
+/* .card-nonMember { */
+/* 	border: 4px solid #646EFF; */
+/* } */
+
+/* .todayCard { */
+/* 	border: 4px solid green; */
+/* } */
+h2 {
+	font-family: 'Gasoek One', sans-serif;
+	font-family: 'Orbit', sans-serif;
+}
+</style>
 
 	<my:navBarClimbing></my:navBarClimbing>
 
@@ -25,11 +45,11 @@
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
 	<fmt:formatDate value="${now }" pattern="yyyyMMddHHmm" var="nowDate" />
 
-	<div style="margin-top: 53px; margin-left:201.5px; max-width: 1903px; display: flex; min-width: 1500px;">
+	<div style="margin-top: 53px; margin-left: 201.5px; max-width: 1903px; display: flex; min-width: 1500px;">
 		<div style="width: 250px;">
 			<my:advertisement1></my:advertisement1>
 		</div>
-		<div style="max-width:1000px;">
+		<div style="max-width: 1000px;">
 			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="false" style="max-width: 1000px;">
 				<div class="carousel-indicators">
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -38,13 +58,13 @@
 				</div>
 				<div class="carousel-inner">
 					<div class="carousel-item active">
-						<img style="width: 1000px; height:500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block w-100" alt="...">
+						<img style="width: 1000px; height: 500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block w-100" alt="...">
 					</div>
 					<div class="carousel-item">
-						<img style="width: 1000px; height:500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block w-100" alt="...">
+						<img style="width: 1000px; height: 500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block w-100" alt="...">
 					</div>
 					<div class="carousel-item">
-						<img style="width: 1000px; height:500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" class="d-block w-100" alt="...">
+						<img style="width: 1000px; height: 500px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" class="d-block w-100" alt="...">
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -55,7 +75,7 @@
 				</button>
 			</div>
 
-			<h2>메이트구하기</h2>
+			<h2><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EB%A9%94%EC%9D%B4%ED%8A%B8+%EA%B5%AC%ED%95%98%EA%B8%B0.png"></h2>
 			<br />
 			<nav>
 				<ul>
@@ -96,12 +116,13 @@
 				</div>
 			</ul>
 
+
 			<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
 			<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 			<div id="mateListData" class="row">
 				<c:forEach items="${climbingMateList}" var="board">
 					<div class="col-md-4">
-						<div class="card" style="width: 18rem; margin-bottom: 20px; height: 350px;">
+						<div class="card my-card" style="width: 18rem; margin-bottom: 20px; height: 350px;">
 							<div class="card-body">
 								<h5 class="card-title">🌄${board.title}</h5>
 								<p class="card-text">작성자: ${board.writer}</p>
@@ -138,7 +159,7 @@
 					</div>
 				</c:forEach>
 			</div>
-    /*
+			<!--  
 			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				<span class="visually-hidden">Previous</span>
@@ -167,7 +188,6 @@
 					<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
 					<button type="button" class="btn btn-success" onclick="location.href='https://www.weather.go.kr/w/weather/forecast/mid-term.do'">날씨 보기</button>
 				</span>
-				<!-- 				<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
 			</ul>
 			<div id="dropdown1" style="display: none">
 				<ul>
@@ -188,11 +208,11 @@
 			</div>
 		</nav>
 
-		<!-- 	<ul>
+			<ul>
 			<div style="text-align: right;">
 				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
 			</div>
-		</ul> -->
+		</ul> 
 
 
 
@@ -201,62 +221,59 @@
 		<div id="mateListData" class="row">
 
 			<!-- 카드를 만들어 주기 전에 isMember 판별  -->
-			<c:forEach items="${climbingMateList}" var="board" varStatus="status">
-				<c:set var="isMember" value="false" />
-				<c:forEach items="${memberList}" var="memberList">
-					<c:if test="${memberList.nickName eq board.writer}">
-						<c:set var="isMember" value="true" />
-					</c:if>
-				</c:forEach>
+<%-- 			<c:forEach items="${climbingMateList}" var="board" varStatus="status"> --%>
+<%-- 				<c:set var="isMember" value="false" /> --%>
+<%-- 				<c:forEach items="${memberList}" var="memberList"> --%>
+<%-- 					<c:if test="${memberList.nickName eq board.writer}"> --%>
+<%-- 						<c:set var="isMember" value="true" /> --%>
+<%-- 					</c:if> --%>
+<%-- 				</c:forEach> --%>
 
 
 
-				<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" />
-				<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
-				<div class="col-md-4">
-					<div class="card ${isMember ? 'card-member' : 'card-nonMember'}">
-						<div class="card-body">
-							<h5 class="card-title">🌄${board.title}</h5>
-							<div class="mb-3">
-								<label for="" class="form-label">작성자</label>
-								<span id="writerData${status.index + 1}" type="text" class="form-control">${board.writer}</span>
-							</div>
-							<div class="mb-3">
-								<label for="" class="form-label">모임장소</label>
-								<span id="addressText" class="form-control">${board.address}</span>
-							</div>
-							<div class="mb-3">
-								<label for="" class="form-label">모임시간</label>
-								<span id="timeText" class="form-control">${board.time}</span>
-							</div>
+<%-- 				<fmt:parseDate value="${board.time}" pattern="yyyy-MM-dd'T'HH:mm" var="startDate" /> --%>
+<%-- 				<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" /> --%>
+<!-- 				<div class="col-md-4"> -->
+<%-- 					<div class="card ${isMember ? 'card-member' : 'card-nonMember'}"> --%>
+<!-- 						<div class="card-body"> -->
+<%-- 							<h5 class="card-title">🌄${board.title}</h5> --%>
+<!-- 							<div class="mb-3"> -->
+<%-- 								<label for="" class="form-label">작성자</label> <span id="writerData${status.index + 1}" type="text" class="form-control">${board.writer}</span> --%>
+<!-- 							</div> -->
+<!-- 							<div class="mb-3"> -->
+<%-- 								<label for="" class="form-label">모임장소</label> <span id="addressText" class="form-control">${board.address}</span> --%>
+<!-- 							</div> -->
+<!-- 							<div class="mb-3"> -->
+<%-- 								<label for="" class="form-label">모임시간</label> <span id="timeText" class="form-control">${board.time}</span> --%>
+<!-- 							</div> -->
 
 
 
-							<c:if test="${openDate <= nowDate }">
-								<div class="card-footer card-footer-gray" style="text-align: right">
-										<button class = "btn btn-danger">마감된 등산</button>
-									</div>
-							</c:if>
+<%-- 							<c:if test="${openDate <= nowDate }"> --%>
+<!-- 								<div class="card-footer card-footer-gray" style="text-align: right"> -->
+<!-- 									<button class="btn btn-danger">마감된 등산</button> -->
+<!-- 								</div> -->
+<%-- 							</c:if> --%>
 
-							<c:if test="${openDate > nowDate }">
-								<c:if test="${isMember}">
-									<div class="card-footer card-footer-gray" style="text-align: right">
-										<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="" class=" btn btn-success" onclick="location.href='/climbing/id/${board.id}'">내 게시물</button>
-									</div>
-								</c:if>
+<%-- 							<c:if test="${openDate > nowDate }"> --%>
+<%-- 								<c:if test="${isMember}"> --%>
+<!-- 									<div class="card-footer card-footer-gray" style="text-align: right"> -->
+<%-- 										<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="" class=" btn btn-success" onclick="location.href='/climbing/id/${board.id}'">내 게시물</button> --%>
+<!-- 									</div> -->
+<%-- 								</c:if> --%>
 
-								<c:if test="${not isMember}">
-									<div class="card-footer card-footer-gray" style="text-align: right">
-										<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button>
-									</div>
-								</c:if>
-							</c:if>
-						</div>
-					</div>
-				</div>
+<%-- 								<c:if test="${not isMember}"> --%>
+<!-- 									<div class="card-footer card-footer-gray" style="text-align: right"> -->
+<%-- 										<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="listUpButton${status.index + 1}" class="listUpButton btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">더보기</button> --%>
+<!-- 									</div> -->
+<%-- 								</c:if> --%>
+<%-- 							</c:if> --%>
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 
-			</c:forEach>
-      */
+<%-- 			</c:forEach> --%>
+
 		</div>
 
 		<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -274,19 +291,6 @@
 			<my:advertisement2></my:advertisement2>
 		</div>
 	</div>
-
-	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">게시물 상세 보기</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body" id="resMate"></div>
-			</div>
-		</div>
-	</div>
-
 
 	<script src="/js/climbingNavBar.js"></script>
 
@@ -319,27 +323,5 @@
 		}
 	</script>
 
-	<style>
-.card {
-	margin-bottom: 20px;
-}
-
-.card-member {
-	border: 4px solid #56B37F;
-}
-
-.card-nonMember {
-	border: 4px solid #646EFF;
-}
-
-.todayCard {
-	border: 4px solid #DCEBFF;
-}
-
-h2 {
-	font-family: 'Gasoek One', sans-serif;
-	font-family: 'Orbit', sans-serif;
-}
-</style>
 </body>
 </html>

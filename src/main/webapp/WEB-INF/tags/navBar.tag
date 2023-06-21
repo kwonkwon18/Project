@@ -31,14 +31,19 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/runningMain">🏃‍♀️ 러닝  </a>
+					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/runningMain" style="color: white;">러닝</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/futsal/futsalMate">⚽ 풋살  </a>
+					<a class="nav-link ${current eq 'add' ? 'active' : '' }" href="/futsal/futsalMate" style="color: white;">풋살</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/list">🌄 등산  </a>
+					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/list" style="color: white;">등산</a>
 				</li>
+				<sec:authorize access="isAuthenticated()">
+					<li class="nav-item">
+						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/my_page" style="color: white;">마이페이지  </a>
+					</li>
+				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item">
 						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/logout" style="color: red;">로그아웃  </a>
@@ -46,17 +51,12 @@
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<li class="nav-item">
-						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/login" style="color: blue;">로그인  </a>
+						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/login" style="color: aqua;">로그인  </a>
 					</li>
 				</sec:authorize>
 				<sec:authorize access="isAnonymous()">
 					<li class="nav-item">
-						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/signup">회원가입  </a>
-					</li>
-				</sec:authorize>
-				<sec:authorize access="isAuthenticated()">
-					<li class="nav-item">
-						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/my_page">마이페이지  </a>
+						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/signup" style="color: white;">회원가입  </a>
 					</li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">

@@ -51,7 +51,7 @@ public interface ClimbingMateMapper {
 			    c.Lat,
 			    c.Lng,
 			    c.people,
-			    c.address;
+			    c.address
 			""")
 	@ResultMap("climbingMateResultMap")
 	ClimbingMate selectById(Integer id);
@@ -173,7 +173,7 @@ public interface ClimbingMateMapper {
 
 	@Select("""
 			select boardId ,memberId
-			from ClimbingParty p left join ClimbingBoard b ON p.boardId = b.id
+			from ClimbingParty p left join ClimbingMate b ON p.boardId = b.id
 			""")
 	List<ClimbingParty> selectMember();
 
@@ -199,12 +199,12 @@ public interface ClimbingMateMapper {
 	@Select("""
 			select * from Member where userId = #{userId}
 			""")
-	Member getNickName(String name);
+	Member getNickName(String userId);
 
 	@Select("""
 			select * from Member where userId = #{userId}
 			""")
-	Member selectMemberById(String name);
+	Member selectMemberById(String userId);
 
 	// 주소 반영한 것
 	@Select("""

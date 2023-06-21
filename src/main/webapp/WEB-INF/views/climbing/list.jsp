@@ -44,6 +44,7 @@ h2 {
 	font-family: 'Gasoek One', sans-serif;
 	font-family: 'Orbit', sans-serif;
 }
+
 </style>
 
 	<my:navBarClimbing></my:navBarClimbing>
@@ -75,31 +76,33 @@ h2 {
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
+
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
 				</button>
 				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
+					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
 				</button>
 			</div>
 
-			<h2>메이트구하기</h2>
+			<h2>
+				<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EB%A9%94%EC%9D%B4%ED%8A%B8+%EA%B5%AC%ED%95%98%EA%B8%B0.png">
+			</h2>
+      
 			<br />
 			<nav>
 				<ul>
 					<a id="all1" href="mateList" style="text-decoration-line: none;">전체</a>
 					<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 					<div class="dropdown-menu" aria-labelledby="search1">
-						<a class="dropdown-item" href="#">메뉴 항목 1</a>
-						<a class="dropdown-item" href="#">메뉴 항목 2</a>
-						<a class="dropdown-item" href="#">메뉴 항목 3</a>
+
+						<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
+
 					</div>
 					<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
 					<div style="text-align: right;">
 						<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">번개 글작성</button>
 					</div>
-					<!--             <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button> -->
+
 				</ul>
 				<div id="dropdown1" style="display: none">
 					<ul>
@@ -110,8 +113,10 @@ h2 {
 								<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
 								<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
 								<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
-							</select>
-							<input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+
+							</select> 
+              <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+
 							<button class="btn btn-outline-success" type="submit">
 								<i class="fa-solid fa-magnifying-glass"></i>
 							</button>
@@ -122,8 +127,10 @@ h2 {
 
 			<ul>
 				<div style="text-align: right;">
-					<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a>
-					<a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
+
+					<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> 
+        <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
+
 				</div>
 			</ul>
 
@@ -176,8 +183,10 @@ h2 {
 												<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
 												<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
 												<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
-											</select>
-											<input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+
+											</select> 
+                      <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+
 											<button class="btn btn-outline-success" type="submit">
 												<i class="fa-solid fa-magnifying-glass"></i>
 											</button>
@@ -186,16 +195,19 @@ h2 {
 								</div>
 								</nav>
 
-								<!--    <ul>
-         <div style="text-align: right;">
-            <a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
-         </div>
-      </ul> -->
+
+								<!-- 	<ul>
+			<div style="text-align: right;">
+				<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
+			</div>
+		</ul> -->
+
 
 							</div>
 						</div>
 					</c:if>
 				</c:forEach>
+
 			</div>
 
 			<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -210,16 +222,84 @@ h2 {
 				</div>
 			</div>
 
-			<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">게시물 상세 보기</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body" id="resMate"></div>
+
+			<br /> <br /> <br />
+
+			<div class="container-lg">
+				<h2>
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%98%A4%EB%8A%98%EC%9D%98+%EB%93%B1%EC%82%B0.png">
+				</h2>
+				<ul>
+					<!-- 새로 작성된 코드, 변경된 코드  -->
+					<!-- table.table>thead>tr>th*4^^tbody -->
+					<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
+						<a href="todayList">
+							<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
+						</a>
+						<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
+						<form action="/climbing/todayList" class="d-flex" role="todaySearch">
+							<input id="searchInput" value="${param.courseSearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
+							<button id="search" class="btn btn-outline-success" type="submit">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+						</form>
 					</div>
+
+					<div style="text-align: right;">
+						<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
+					</div>
+				</ul>
+				<br />
+				<div id="todayListData" class="row">
+					<c:forEach items="${climbingTodayList}" var="board" varStatus="status">
+						<c:if test="${status.index < 3 }">
+							<div class="col-md-4">
+								<div class="card my-card2" style="width: 18rem; margin-bottom: 20px;">
+									<div onclick="location.href='todayId/${board.id}'">
+										<div class="card-body">
+											<h5 class="card-title d-flex justify-content-between">
+												<span>🌄 ${board.writer}</span>
+												<p style="font-size: medium;">${board.inserted}</p>
+											</h5>
+											<p class="card-text">${board.title}</p>
+											<p class="card-text">
+												<i class="fa-solid fa-heart"></i> ${board.likeCount } <i class="fa-regular fa-comments"></i> ${board.commentCount }
+											</p>
+											<%-- 							<p class="card-text">${board.body}</p> --%>
+										</div>
+										<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+											<c:if test="${status.count lt 2 }">
+												<div>
+													<img class="img-thumbnail" src="${bucketUrl}/climbingToday/${board.id}/${fileName}" alt="" style="width: 285px; height: 260px !important;" />
+												</div>
+											</c:if>
+										</c:forEach>
+									</div>
+								</div>
+							</div>
+						</c:if>
+					</c:forEach>
 				</div>
+
+				<!-- 
+	<div class="container-lg">
+		<h2>오늘의 등산</h2>
+		<br />
+		<ul>
+			<div style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 10px;">
+				<a href="todayList">
+					<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>
+				</a>
+				<button type="button" class="btn btn-success" style="pointer-events: none;">🌄지역별 보기</button>
+				<form action="/climbing/todayList" class="d-flex" role="todaySearch">
+					<input id="searchInput" value="${param.courseSearch}" name="todaySearch" class="form-control" type="todaySearch" placeholder="Search" aria-label="todaySearch" style="width: 300px">
+					<button id="search" class="btn btn-outline-success" type="submit">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</form>
+				<span style="margin-left: 520px;">
+					<button type="button" class="btn btn-success" onclick="location.href='todayAdd'">번개 글작성</button>
+
 			</div>
 
 			<br />
@@ -279,7 +359,10 @@ h2 {
 									</div>
 								</div>
 							</div>
-						</c:if>
+              
+
+					<!-- 
+            </c:if>
 					</c:forEach>
 				</div>
 
@@ -361,6 +444,27 @@ h2 {
 				<ul>
 					<!--          <button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
 					<!--          <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button> -->
+          
+          -->
+
+						</div>
+					</div>
+				</c:if>
+			</c:forEach>
+		</div>
+	 -->
+			</div>
+
+			<br /> <br />
+
+			<div class="container-lg">
+				<h2>
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%B6%94%EC%B2%9C+%EC%BD%94%EC%8A%A4.png">
+				</h2>
+				<ul>
+					<!-- 			<button type="button" class="btn btn-success" onclick="location.href='courseList'">전체 보기</button> -->
+					<!-- 			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'">지역별/거리별 보기</button> -->
+
 					<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
 						<a href="courseList">
 							<button type="button" class="btn btn-success" style="margin-right: 10px;">전체 보기</button>

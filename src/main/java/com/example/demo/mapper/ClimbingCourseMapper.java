@@ -109,11 +109,13 @@ public interface ClimbingCourseMapper {
 			f.fileName, 
 			(SELECT COUNT(*) FROM ClimbingCourseLike cl WHERE cl.boardId = c.id) as likeCount, 
 			(SELECT COUNT(*) FROM ClimbingCourseComment ct WHERE ct.boardId = c.id) as commentCount 
-			FROM ClimbingCourse c 
-			LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId 
-			LEFT JOIN ClimbingCourseLike cl on c.id = cl.boardId 
-			LEFT JOIN ClimbingCourseFileName f2 ON c.id = f2.courseId WHERE c.title LIKE '%%' ORDER BY c.id DESC;
-
+			FROM 
+				ClimbingCourse c 
+				LEFT JOIN ClimbingCourseFileName f ON c.id = f.courseId 
+				LEFT JOIN ClimbingCourseLike cl on c.id = cl.boardId 
+				LEFT JOIN ClimbingCourseFileName f2 ON c.id = f2.courseId 
+			WHERE c.title LIKE '%${courseSearch}%'
+			ORDER BY c.id DESC
 			""")
 	@ResultMap("climbingCourseResultMap")
 	List<ClimbingCourse> selectListByCourseSearch(String courseSearch);

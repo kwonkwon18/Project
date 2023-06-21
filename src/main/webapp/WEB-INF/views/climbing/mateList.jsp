@@ -22,7 +22,6 @@
 .my-card {
 	border: 4px solid green;
 }
-
 h2 {
 	font-family: 'Gasoek One', sans-serif;
 	font-family: 'Orbit', sans-serif;
@@ -45,7 +44,6 @@ h2 {
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-
 				</div>
 				<div class="carousel-inner">
 					<div class="carousel-item active">
@@ -59,10 +57,12 @@ h2 {
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
 				</button>
 				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
 				</button>
 			</div>
 
@@ -75,7 +75,9 @@ h2 {
 					<a id="all1" href="mateList" style="text-decoration-line: none;">전체</a>
 					<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
 					<div class="dropdown-menu" aria-labelledby="search1">
-						<a class="dropdown-item" href="#">메뉴 항목 1</a> <a class="dropdown-item" href="#">메뉴 항목 2</a> <a class="dropdown-item" href="#">메뉴 항목 3</a>
+						<a class="dropdown-item" href="#">메뉴 항목 1</a>
+						<a class="dropdown-item" href="#">메뉴 항목 2</a>
+						<a class="dropdown-item" href="#">메뉴 항목 3</a>
 					</div>
 					<a href="mateMap" style="text-decoration-line: none;">지도로 보기</a>
 					<div style="text-align: right;">
@@ -94,7 +96,8 @@ h2 {
 								<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
 								<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
 								<%-- <option value="writer" ${param.type eq 'writer' ? 'selected': '' }>글쓴이</option> --%>
-							</select> <input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
+							</select>
+							<input value="${param.mateSearch}" name="mateSearch" class="form-control" type="mateSearch" aria-label="mateSearch">
 							<button class="btn btn-outline-success" type="submit">
 								<i class="fa-solid fa-magnifying-glass"></i>
 							</button>
@@ -105,7 +108,8 @@ h2 {
 
 			<ul>
 				<div style="text-align: right;">
-					<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a> <a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
+					<a href="/climbing/mateList?type=distance" style="text-decoration-line: none;">거리순</a>
+					<a href="/climbing/mateList" style="text-decoration-line: none;">최신순</a>
 				</div>
 			</ul>
 
@@ -172,7 +176,6 @@ h2 {
 					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
 
 					<form action="/climbing/mateList" class="d-flex" role="mateSearch">
-
 						<select class="form-select" name="type" id="" style="width: 150px">
 							<option value="all">전체</option>
 							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>

@@ -107,7 +107,7 @@
 					<div class="col">
 						<div class="card">
 							<div class="card-body">
-								<h5 class="card-title">🏃‍♀️🏃‍♂️ ${board.title}</h5>
+								<h5 class="card-title">⚽⚽ ${board.title}</h5>
 								<div>
 
 									<div class="mb-3">
@@ -132,14 +132,14 @@
 
 									<c:if test="${openDate <= nowDate }">
 										<div class="card-footer card-footer-gray" style="text-align: right">
-											<button>마감된 매치</button>
+											<button class="btn btn-danger">마감된 매치</button>
 										</div>
 									</c:if>
 
 									<c:if test="${openDate > nowDate }">
 										<c:if test="${isMember}">
 											<div class="card-footer card-footer-gray" style="text-align: right">
-												<button type="button" onclick="location.href='/futsal/id/${board.id}' ">지원 사항 상세보기</button>
+												<button data-board-userId="${board.writer }" data-board-id="${board.id }" type="button" id="" class=" btn btn-success" onclick="location.href='/futsal/id/${board.id}'">내 게시물</button>
 											</div>
 										</c:if>
 

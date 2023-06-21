@@ -32,7 +32,7 @@ function showGroupList() {
 			for (var i = 0; i < insertedList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`
-						<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button0">
+						<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openGroupChatRoomBtn" id="button0">
 							<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 								<span class="titleSpan">${titleList[0]}</span>
 								<span class="ms-auto">${timeList[0]}</span>
@@ -49,7 +49,7 @@ function showGroupList() {
 				for (var j = i - 1; j >= 0; j--) {
 					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
 						$(`#button${j}`).before(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openGroupChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="titleSpan">${titleList[i]}</span>
 									<span class="ms-auto">${timeList[i]}</span>
@@ -65,7 +65,7 @@ function showGroupList() {
 						break;
 					} else {
 						$(`#button${j}`).after(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openGroupChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="titleSpan">${titleList[i]}</span>
 									<span class="ms-auto">${timeList[i]}</span>
@@ -364,7 +364,7 @@ $("#groupChatListSearchBtn").click(function() {
 			for (var i = 0; i < insertedList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`
-						<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button0">
+						<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openGroupChatRoomBtn" id="button0">
 							<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 								<span class="titleSpan">${titleList[0]}</span>
 								<span class="ms-auto">${timeList[0]}</span>
@@ -381,7 +381,7 @@ $("#groupChatListSearchBtn").click(function() {
 				for (var j = i - 1; j >= 0; j--) {
 					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
 						$(`#button${j}`).before(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openGroupChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="titleSpan">${titleList[i]}</span>
 									<span class="ms-auto">${timeList[i]}</span>
@@ -397,7 +397,7 @@ $("#groupChatListSearchBtn").click(function() {
 						break;
 					} else {
 						$(`#button${j}`).after(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openGroupChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="titleSpan">${titleList[i]}</span>
 									<span class="ms-auto">${timeList[i]}</span>

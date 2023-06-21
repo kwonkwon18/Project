@@ -214,7 +214,7 @@ function handleListUpButtonClick() {
 									$("#chatBox").append(`
 			                			<div id="chatContainer"></div> 
 			            			`)
-			            			if (chatList.length > 12) {
+									if (chatList.length > 12) {
 										$("#chatList").css("width", "320px");
 									} else {
 										$("#chatList").css("width", "300px");
@@ -286,8 +286,8 @@ function handleListUpButtonClick() {
 
 				function resizeMap() {
 					var mapContainer = document.getElementById('map');
-					mapContainer.style.width = '300px';
-					mapContainer.style.height = '300px';
+					mapContainer.style.width = '470px';
+					mapContainer.style.height = '500px';
 				}
 
 				resizeMap();

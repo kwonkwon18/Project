@@ -233,10 +233,10 @@ public class ClimbingController {
 		List<ClimbingParty> rejectMembers = mateService.selectRejectMemberIdByBoardId(id, getList.getWriter());
 		getMemberList.put("rejectMembers", rejectMembers);
 		
+		
 		List<Member> memberList = mateService.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
 		
-
 		model.addAllAttributes(getMemberList);
 
 		return "climbing/mateGet";

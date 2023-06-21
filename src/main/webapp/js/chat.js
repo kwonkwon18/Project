@@ -35,7 +35,7 @@ function showList() {
 			for (var i = 0; i < nickNameList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button0">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button0">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[0]}</span>
 									<span>님과의 대화방</span>
@@ -53,7 +53,7 @@ function showList() {
 				for (var j = i - 1; j >= 0; j--) {
 					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
 						$(`#button${j}`).before(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>
@@ -70,7 +70,7 @@ function showList() {
 						break;
 					} else {
 						$(`#button${j}`).after(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>
@@ -392,7 +392,7 @@ $("#chatListSearchBtn").click(function() {
 			for (var i = 0; i < nickNameList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button0">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button0">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[0]}</span>
 									<span>님과의 대화방</span>
@@ -410,7 +410,7 @@ $("#chatListSearchBtn").click(function() {
 				for (var j = i - 1; j >= 0; j--) {
 					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
 						$(`#button${j}`).before(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>
@@ -427,7 +427,7 @@ $("#chatListSearchBtn").click(function() {
 						break;
 					} else {
 						$(`#button${j}`).after(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>

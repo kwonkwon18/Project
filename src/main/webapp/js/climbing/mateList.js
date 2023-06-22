@@ -215,8 +215,8 @@ function handleListUpButtonClick() {
 			                			<div id="chatContainer"></div> 
 			            			`)
 									if (chatList.length > 12) {
-										$("#chatList").css("width", "360px");
-										$(".input-group").css("width", "360px");
+										$("#chatList").css("width", "357px");
+										$(".input-group").css("width", "357px");
 										$("#chatSearchBox").css("width", "303px");
 										$("#chatSearch").css("width", "232px");
 									} else {

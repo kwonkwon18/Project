@@ -263,4 +263,22 @@ public interface MemberMapper {
 			""")
 	int deleteMember(String userId);
 
+	@Delete("""
+			DELETE FROM Chat
+			WHERE senderId = #{userId} or recipientId = #{userId}
+			""")
+	void deleteChatByUserId(String userId);
+
+	@Delete("""
+			DELETE FROM ChatRoom
+			WHERE creater = #{userId} or invited = #{userId}
+			""")
+	void deleteChatRoomByUserId(String userId);
+
+	@Delete("""
+			DELETE FROM GroupChatMessage
+			WHERE senderId = #{userId}
+			""")
+	void deleteGroupChatRoomByUserId(String userId);
+
 }

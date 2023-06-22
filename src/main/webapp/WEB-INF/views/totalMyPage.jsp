@@ -66,35 +66,35 @@
 				<!-- .mb-3*4>label+input -->
 				<div class="mb-3">
 					<label class="form-label" for="">아이디</label>
-					<input class="form-control" type="text" value="${member.userId }" readonly />
+					<input class="form-control" type="text" value="${member.userId }" name="userId" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">별명</label>
-					<input class="form-control" type="text" value="${member.nickName }" readonly />
+					<input class="form-control" type="text" value="${member.nickName }" name="nickName" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">생일</label>
-					<input class="form-control" type="text" value="${member.birth }" readonly />
+					<input class="form-control" type="text" value="${member.birth }" name="birth" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">성별</label>
-					<input class="form-control" type="text" value="${member.gender }" readonly />
+					<input class="form-control" type="text" value="${member.gender }" name="gender" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">주소</label>
-					<input class="form-control" type="text" value="${member.address }" readonly />
+					<input class="form-control" type="text" value="${member.address }" name="address" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">핸드폰 번호</label>
-					<input class="form-control" type="text" value="${member.phone }" readonly />
+					<input class="form-control" type="text" value="${member.phone }" name="phone" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">이메일</label>
-					<input class="form-control" type="text" value="${member.email }" readonly />
+					<input class="form-control" type="text" value="${member.email }" name="email" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">소개</label>
-					<input class="form-control" type="text" value="${member.introduce }" readonly />
+					<input class="form-control" type="text" value="${member.introduce }" name="introduce" readonly />
 				</div>
 				<a class="btn btn-secondary" href="/modify?userId=${member.userId }">수정</a>
 				<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#confirmModal">회원탈퇴</button>
@@ -117,9 +117,9 @@
 				</div>
 				<div class="modal-body">
 					<form id="removeForm" action="/remove" method="post">
-						<input type="hidden" name="id" value="${member.userId }" />
-						<label for="passwordInput1" class="form-label">암호</label>
-						<input id="passwordInput1" type="password" name="password" class="form-control" />
+						회원탈퇴 하시겠습니까?
+						<input type="hidden" name="userId" value="${member.userId }" />
+						<input type="hidden" name="nickName" value="${member.nickName }" />
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -139,6 +139,7 @@
 		<script src="/js/groupChat.js"></script>
 		<script src="/js/chat.js" charset="UTF-8"></script>
 	</sec:authorize>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@ public class ChatController {
 
 	@Autowired
 	private ChatService service;
-	
+
 	@Autowired
 	private GroupChatService groupService;
 
@@ -47,17 +47,17 @@ public class ChatController {
 		List<LocalDateTime> chatInsertedList = new ArrayList<>();
 		LocalTime time;
 		for (ChatRoom chatRoom : chatRoomList) {
-			if(authentication.getName().equals(chatRoom.getInvited())) {
+			if (authentication.getName().equals(chatRoom.getInvited())) {
 				nickNameList.add(memberService.getNickName(chatRoom.getCreater()));
 				chatCount.add(chatRoom.getCreaterChatCount());
 			} else {
 				nickNameList.add(memberService.getNickName(chatRoom.getInvited()));
 				chatCount.add(chatRoom.getInvitedChatCount());
 			}
-			if(service.lastMessageSelectById(chatRoom.getId()) == null) {
+			if (service.lastMessageSelectById(chatRoom.getId()) == null) {
 				lastMessageList.add("");
 			} else {
-				if(service.lastMessageSelectById(chatRoom.getId()).length() > 15) {
+				if (service.lastMessageSelectById(chatRoom.getId()).length() > 15) {
 					lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()).substring(0, 13) + "...");
 				} else {
 					lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()));
@@ -78,12 +78,11 @@ public class ChatController {
 		return map;
 	}
 
-	
 	@GetMapping("room")
 	@ResponseBody
 	@PreAuthorize("authenticated")
 	public Map<String, Object> chatRoom(Authentication authentication, LocalDateTime inserted) {
-		
+
 		Map<String, Object> map = new HashMap<>();
 		String myUserId = authentication.getName();
 		Integer chatRoomId = service.getChatRoomId(myUserId, inserted);
@@ -93,7 +92,7 @@ public class ChatController {
 		map.put("myId", authentication.getName());
 		return map;
 	}
-	
+
 	@GetMapping("roomOpen")
 	@ResponseBody
 	@PreAuthorize("authenticated")
@@ -107,53 +106,49 @@ public class ChatController {
 		map.put("myId", authentication.getName());
 		return map;
 	}
-	
+
 	@PostMapping("add")
 	@ResponseBody
 	@PreAuthorize("authenticated")
-	public void chatAdd(
-			@RequestParam String message,
-			@RequestParam Integer chatRoomId,
-			@RequestParam(required = false) MultipartFile[] files, 
-			Authentication authentication) throws Exception {
-		Chat chat = new Chat(); 
+	public void chatAdd(@RequestParam String message, @RequestParam Integer chatRoomId,
+			@RequestParam(required = false) MultipartFile[] files, Authentication authentication) throws Exception {
+		Chat chat = new Chat();
 		chat.setSenderId(authentication.getName());
 		chat.setMessage(message);
 		chat.setChatRoomId(chatRoomId);
-		if(files != null) {
+		if (files != null) {
 			service.addFiles(chat, files);
 		} else {
 			service.addChat(chat);
 		}
 	}
-	
+
 	@GetMapping("check")
 	@ResponseBody
 	@PreAuthorize("authenticated")
-	public Map<String, Object> chatCheck(
-			@RequestParam("chatRoomId") Integer chatRoomId,
-			Integer lastChatId,
+	public Map<String, Object> chatCheck(@RequestParam("chatRoomId") Integer chatRoomId, Integer lastChatId,
 			Authentication authentication) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("chatList", service.checkId(lastChatId, chatRoomId));
 		map.put("myUserId", authentication.getName());
 		return map;
 	}
-	
+
 	@GetMapping("deleteRoom/{chatRoomId}")
 	@PreAuthorize("authenticated")
-	public void deleteRoom(@PathVariable("chatRoomId") Integer chatRoomId,Authentication authentication) {
+	public void deleteRoom(@PathVariable("chatRoomId") Integer chatRoomId, Authentication authentication) {
 		service.delete(chatRoomId, authentication.getName());
 	}
-	
+
 	@GetMapping("roomCheck")
 	@ResponseBody
-	public Map<String, Object> checkRoom(@RequestParam("yourNickName") String yourNickName, Authentication authentication) {
+	public Map<String, Object> checkRoom(@RequestParam("yourNickName") String yourNickName,
+			Authentication authentication) {
 		String yourId = memberService.getUserId(yourNickName);
 		boolean check = service.checkChatRoom(yourId, authentication.getName());
 		return Map.of("check", check);
 	}
-	
+
 	@PostMapping("roomCreate")
 	@ResponseBody
 	public void roomCreate(@RequestBody String yourNickName, Authentication authentication) {
@@ -161,7 +156,7 @@ public class ChatController {
 		String decodeYourNickName = URLDecoder.decode(yourNickName, StandardCharsets.UTF_8);
 		service.createChatRoom(myId, decodeYourNickName.substring(decodeYourNickName.indexOf("=") + 1));
 	}
-	
+
 	@GetMapping("findRoom")
 	@ResponseBody
 	public Map<String, Object> findRoom(Authentication authentication, @RequestParam String search) {
@@ -175,17 +170,17 @@ public class ChatController {
 		List<LocalDateTime> chatInsertedList = new ArrayList<>();
 		LocalTime time;
 		for (ChatRoom chatRoom : chatRoomList) {
-			if(memberService.getNickName(authentication.getName()).equals(chatRoom.getInvited())) {
+			if (memberService.getNickName(authentication.getName()).equals(chatRoom.getInvited())) {
 				nickNameList.add(memberService.getNickName(chatRoom.getCreater()));
 				chatCount.add(chatRoom.getCreaterChatCount());
 			} else {
 				nickNameList.add(memberService.getNickName(chatRoom.getInvited()));
 				chatCount.add(chatRoom.getInvitedChatCount());
 			}
-			if(service.lastMessageSelectById(chatRoom.getId()) == null) {
+			if (service.lastMessageSelectById(chatRoom.getId()) == null) {
 				lastMessageList.add("");
 			} else {
-				if(service.lastMessageSelectById(chatRoom.getId()).length() > 15) {
+				if (service.lastMessageSelectById(chatRoom.getId()).length() > 15) {
 					lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()).substring(0, 13) + "...");
 				} else {
 					lastMessageList.add(service.lastMessageSelectById(chatRoom.getId()));
@@ -205,7 +200,7 @@ public class ChatController {
 		map.put("chatInsertedList", chatInsertedList);
 		return map;
 	}
-	
+
 	@GetMapping("search")
 	@ResponseBody
 	public Map<String, Object> chatSearch(String search, Integer chatRoomId) {
@@ -213,7 +208,7 @@ public class ChatController {
 		map.put("chatList", service.searchChatId(search, chatRoomId));
 		return map;
 	}
-	
+
 	@GetMapping("countMyChat")
 	@ResponseBody
 	public Map<String, Object> countMyChat(Authentication authentication) {
@@ -225,7 +220,5 @@ public class ChatController {
 		map.put("count", count);
 		return map;
 	}
-	
 
-	
 }

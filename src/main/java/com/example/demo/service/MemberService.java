@@ -66,16 +66,84 @@ public class MemberService {
 	}
 
 	public boolean remove(Member member) {
-		Member oldMember = mapper.selectById(member.getUserId());
-		int cnt = 0;
-		if (oldMember.getPassword().equals(member.getPassword())) {
-			// 암호가 같으면?
-			cnt = mapper.deleteById(member.getUserId());
+		
+		System.out.println(member);
 
-		} else {
-			// 암호가 같지 않으면?
+		// 러닝메이트 관련 ---
+		// 러닝 ==========
+		// 신청 목록 지우기
+		mapper.deleteRunningPartyById(member.getUserId());
+		System.out.println(1);
+		// 러닝 게시물 지우기
+		mapper.deleteRunningBoardById(member.getNickName());
+		System.out.println(2);
 
+		// 러닝 today 관련 --
+		// 좋아요 지우기
+		mapper.deleteRunningTodayLikeById(member.getUserId());
+		System.out.println(3);
+		// 댓글 지우기
+		mapper.deleteRunningTodayCommentById(member.getUserId());
+		System.out.println(4);
+		// 러닝 게시물 파일 지우기
+		List<Integer> idList = mapper.selectIdByWriter(member.getNickName());
+		for (Integer id : idList) {
+			mapper.deleteRunningFileNameById(id);
 		}
+		System.out.println(5);
+
+		// 러닝 today 지우기
+		mapper.deleteRunningTodayById(member.getNickName());
+		System.out.println(6);
+
+		// 등산 =========
+		// 등산메이트 관련
+		// 신청 목록 지우기
+		mapper.deleteClimbingPartyById(member.getUserId());
+		System.out.println(7);
+		// 등산 메이트 게시물 지우기
+		mapper.deleteClimbingMateById(member.getNickName());
+		System.out.println(8);
+
+		// 등산 today 관련
+		// 좋아요 지우기
+		mapper.deleteClimbingTodayLikeById(member.getUserId());
+		System.out.println(9);
+		// 댓글 지우기
+		mapper.deleteClimbingTodayCommentById(member.getUserId());
+		System.out.println(10);
+
+		// 등산 today 파일 지우기
+		List<Integer> climbingTodayIdList = mapper.selectClimbingTodayByWriter(member.getNickName());
+		for (Integer id : climbingTodayIdList) {
+			mapper.deleteClimbingTodayFileNameById(id);
+		}
+		System.out.println(11);
+
+		// 등산 today 지우기
+		mapper.deleteClimbingTodayById(member.getNickName());
+		System.out.println(12);
+
+		// 등산 course 관련
+		// 등산 코스 like 지우기
+		mapper.deleteClimbingCourseLikeById(member.getUserId());
+		System.out.println(13);
+		// 등산코스 댓글 지우기
+		mapper.deleteClimbingCourseCommentById(member.getUserId());
+		System.out.println(14);
+		// 등산 코스 파일 지우기
+		List<Integer> climbingCourseIdList = mapper.selectClimbCourseIdByWriter(member.getNickName());
+		for (Integer id : climbingCourseIdList) {
+			mapper.deleteClimbingCourseFileNameById(id);
+		}
+		System.out.println(15);
+		// 등산 코스 지우기
+		mapper.deleteClimbingCourseById(member.getNickName());
+		System.out.println(16);
+
+		int cnt = mapper.deleteMember(member.getUserId());
+		System.out.println(17);
+		System.out.println(cnt);
 
 		return cnt == 1;
 	}

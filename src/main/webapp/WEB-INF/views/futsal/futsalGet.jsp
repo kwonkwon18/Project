@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 
 
 
@@ -17,7 +18,8 @@
 <body>
 
 <my:navBarFutsal></my:navBarFutsal>
-
+<br />
+<br />
 <br />
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
@@ -49,10 +51,11 @@
 					<div class="col-md-6" >
 						<div class="mb-3" >
 							<!-- <label for="" class="form-label">제목</label> -->
-							<div class="card" style="height: 350px;" >
+							<div class="card" style="height: 400px;" >
 							  <div class="card-body" >
+								<h4 style="font-weight: bold;">M A T E 구하기</h4>
+								<hr />
 							    <h5 class="card-title" style="font-weight: bold;" >${board.title }</h5>
-							    <hr />
 							    <p class="card-text">${board.body }</p>
 							  </div>
 							</div>
@@ -67,64 +70,64 @@
 						</div> --%>
 					</div>
 					<div class="col-md-4">
-					<div class="card" style="height: 350px;" >
-						<br />
-						<div class="mb-3">
-							<div class="row">
-								<div class="col-md-3">
-									<h5>작성자</h5>
-								</div>
-								<div class="col-md-8">
-									<h5 style="font-weight: bold;">${board.writer }</h5>
-								</div>
-							</div>
-						</div>
-	
-						<div class="mb-3">
-							<div class="row">
-								<div class="col-md-3">
-									<h5>모임시간</h5>
-								</div>
-								<div class="col-md-8">
-									<h5 style="font-weight: bold;">${board.time }</h5>
+						<div class="card" style="height: 400px;" >
+							<br />
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-3">
+										<h5>작성자</h5>
+									</div>
+									<div class="col-md-8">
+										<h5 style="font-weight: bold;">${board.writer }</h5>
+									</div>
 								</div>
 							</div>
-						</div>
-	
-						<div class="mb-3">
-							<div class="row">
-								<div class="col-md-3">
-									<h5>작성일시</h5>
-								</div>
-								<div class="col-md-8">
-									<h5 style="font-weight: bold;">${board.inserted }</h5>
+		
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-3">
+										<h5>모임시간</h5>
+									</div>
+									<div class="col-md-8">
+										<h5 style="font-weight: bold;">${board.time }</h5>
+									</div>
 								</div>
 							</div>
-							<hr />
-						</div>
-						<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
-						<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
-	
-	
-	
-						<div class="mb-3">
-							<div class="row">
-								<div class="col-md-3">
-									<h5>M A T E</h5>
+		
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-3">
+										<h5>작성일시</h5>
+									</div>
+									<div class="col-md-8">
+										<h5 style="font-weight: bold;">${board.inserted }</h5>
+									</div>
 								</div>
-								<div class="col-md-8">
-									<c:forEach items="${members}" var="member">
-										<c:if test="${board.id eq member.boardId}">
-											<div class="mb-3">
-												<h5 style="font-weight: bold;">${member.memberId}</h5>
-											</div>
-										</c:if>
-									</c:forEach>
+								<hr />
+							</div>
+							<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
+							<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+		
+		
+		
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-3">
+										<h5>M A T E</h5>
+									</div>
+									<div class="col-md-8">
+										<c:forEach items="${members}" var="member">
+											<c:if test="${board.id eq member.boardId}">
+												<div class="mb-3">
+													<h5 style="font-weight: bold;">${member.memberId}</h5>
+												</div>
+											</c:if>
+										</c:forEach>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 			</div>
 					<div>
 						<a class="btn btn-secondary" href="/futsal/futsalModify/${board.id }">수정</a>

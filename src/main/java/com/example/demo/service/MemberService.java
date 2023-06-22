@@ -146,6 +146,8 @@ public class MemberService {
 		mapper.deleteRunningBoardById(member.getNickName());
 		System.out.println(2);
 
+		mapper.deleteClimbingMateById(member.getNickName());
+
 		int cnt = mapper.deleteMember(member.getUserId());
 
 		return cnt == 1;

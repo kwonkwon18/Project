@@ -21,9 +21,6 @@
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/futsal/futsalTodayList">오늘의 풋살</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/futsal/myPage">마이페이지</a>
-				</li>
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item">
 						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/logout">로그아웃</a>

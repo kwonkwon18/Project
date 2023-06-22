@@ -26,11 +26,11 @@
 	</div>
 
 	<div class="container-lg">
-
-		<div class="row justify-content-center">
+		<div class="row justify-content-center" style="margin-top: 100px;">
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex" style="font-size: 40px;">
-					<span id="boardIdText"> ${board.id } </span> 번게시물
+					<span style="display: none;" id="boardIdText"> ${board.title } </span> 
+					<span> ${board.title } </span> 
 					<%-- 			<sec:authorize access="isAuthenticated()"> --%>
 					<%-- 			<sec:authentication property="name" var="userId" /> --%>
 					<%-- 				<c:if test="${userId eq board.userId }"> --%>

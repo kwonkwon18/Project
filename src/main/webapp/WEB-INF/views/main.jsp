@@ -20,6 +20,7 @@
 	<br />
 	<br />
 
+
 	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2500">
 		<div class="carousel-indicators">
 			<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -29,24 +30,28 @@
 		</div>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<a href="/running/runningMain"> <img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%9F%AC%EB%8B%9D.jpg" class="d-block w-100" alt="...">
+				<a href="/running/runningMain">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%9F%AC%EB%8B%9D.jpg" class="d-block w-100" alt="...">
 				</a>
 			</div>
 			<div class="carousel-item">
-				<a href="/futsal/futsalList"> <img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%ED%92%8B%EC%82%B41.jpg" class="d-block w-100" alt="...">
+				<a href="/futsal/futsalList">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%ED%92%8B%EC%82%B41.jpg" class="d-block w-100" alt="...">
 				</a>
 			</div>
 			<div class="carousel-item">
-				<a href="/climbing/list"> 
-				<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%93%B1%EC%82%B02.jpg" class="d-block w-100" alt="...">
+				<a href="/climbing/list">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%93%B1%EC%82%B02.jpg" class="d-block w-100" alt="...">
 				</a>
 			</div>
 		</div>
 		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
 		</button>
 		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
 		</button>
 	</div>
 

@@ -18,6 +18,9 @@ import com.example.demo.domain.Member;
 import com.example.demo.service.ChatService;
 import com.example.demo.service.MemberService;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/")
 public class MainController {
@@ -78,7 +81,7 @@ public class MainController {
 			e.printStackTrace();
 			rttr.addFlashAttribute("member", member);
 			rttr.addFlashAttribute("message", "회원 가입 실패 ❌❌");
-			return "redirect:/login";
+			return "redirect:/main";
 		}
 	}
 
@@ -101,32 +104,6 @@ public class MainController {
 		Member member = memberService.get(authentication.getName());
 		System.out.println(member);
 		model.addAttribute("member", member);
-	}
-
-//   @PostMapping("remove")
-//   public String remove(Member member,RedirectAttributes rttr) {
-//      boolean ok = memberService.remove(member);
-//      if(오케이) {
-//         rttr.addFlashAttribute("message", "회원 탈퇴되었습니다.");
-//         return "redirect:/list";
-//      }
-//      else {
-//         rttr.addFlashAttribute("message", "회원 탈퇴에 문제가 생겼습니다.");
-//         return "redirect:/info?userId"+member.getUserId();
-//      }
-//   }
-	// 1.
-	@PostMapping("remove")
-	public String remove(Member member, RedirectAttributes rttr) {
-
-		boolean ok = memberService.remove(member);
-		if (ok) {
-			rttr.addFlashAttribute("message", "회원 탈퇴하였습니다.");
-			return "redirect:/list";
-		} else {
-			rttr.addFlashAttribute("message", "회원 탈퇴시 문제가 발생하였습니다.");
-			return "redirect:/info";
-		}
 	}
 
 	@GetMapping("modify")
@@ -153,4 +130,18 @@ public class MainController {
 	public void welcomMain() {
 
 	}
+
+	@PostMapping("remove")
+	public String remove(Member member, RedirectAttributes rttr, HttpServletRequest request) throws Exception {
+		boolean ok = memberService.remove(member);
+		if (ok) {
+			request.logout();
+			rttr.addFlashAttribute("message", "회원 탈퇴하였습니다.");
+			return "redirect:/main";
+		} else {
+			rttr.addFlashAttribute("message", "회원 탈퇴시 문제가 발생하였습니다.");
+			return "redirect:/main";
+		}
+	}
+
 }

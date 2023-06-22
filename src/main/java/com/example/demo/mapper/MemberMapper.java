@@ -117,4 +117,150 @@ public interface MemberMapper {
 			WHERE email = #{email}
 			""")
 	Member selectByEmail(String email);
+
+	// 멤버 삭제 =====
+	// 러닝 ***********
+	// 러닝 메이트 신청 인원 삭제
+	@Delete("""
+			DELETE FROM RunningParty
+			WHERE host = #{userId} or guest = #{userId}
+			""")
+	void deleteRunningPartyById(String userId);
+
+	// 러닝 올린 게시물 삭제
+	@Delete("""
+			DELETE FROM RunningBoard
+			WHERE writer = #{nickName}
+			""")
+	void deleteRunningBoardById(String nickName);
+
+	// 러닝 today like 삭제
+	@Delete("""
+			DELETE FROM RunningLike
+			WHERE memberId = #{userId}
+			""")
+	void deleteRunningTodayLikeById(String userId);
+
+	// 러닝 today like 삭제
+	@Delete("""
+			DELETE FROM RunningComment
+			WHERE memberId = #{userId}
+			""")
+	void deleteRunningTodayCommentById(String userId);
+
+	// 러닝 today 삭제
+	@Delete("""
+			DELETE FROM RunningToday
+			WHERE writer = #{nickName}
+			""")
+	void deleteRunningTodayById(String nickName);
+
+	// 등산 ***********
+	// 등산 메이트 신청 인원 삭제 1
+	@Delete("""
+			DELETE FROM ClimbingParty
+			WHERE host = #{userId} or guest = #{userId}
+			""")
+	void deleteClimbingPartyById(String userId);
+
+	// 등산 올린 게시물 삭제 2
+	@Delete("""
+			DELETE FROM ClimbingMate
+			WHERE writer = #{nickName}
+			""")
+	void deleteClimbingMateById(String nickName);
+
+	// 등산 today like 삭제 1
+	@Delete("""
+			DELETE FROM ClimbingTodayLike
+			WHERE memberId = #{userId}
+			""")
+	void deleteClimbingTodayLikeById(String userId);
+
+	// 등산 today comment 삭제 2
+	@Delete("""
+			DELETE FROM ClimbingTodayComment
+			WHERE memberId = #{userId}
+			""")
+	void deleteClimbingTodayCommentById(String userId);
+
+	// 등산 today 삭제 3
+	@Delete("""
+			DELETE FROM ClimbingToday
+			WHERE writer = #{nickName}
+			""")
+	void deleteClimbingTodayById(String nickName);
+
+	// 등산 Course like 삭제 1
+	@Delete("""
+			DELETE FROM ClimbingCourseLike
+			WHERE memberId = #{userId}
+			""")
+	void deleteClimbingCourseLikeById(String userId);
+
+	// 등산 Course comment 삭제 2
+	@Delete("""
+			DELETE FROM ClimbingCourseComment
+			WHERE memberId = #{userId}
+			""")
+	void deleteClimbingCourseCommentById(String userId);
+
+	// 등산 Course 삭제 3
+	@Delete("""
+			DELETE FROM ClimbingCourse
+			WHERE writer = #{nickName}
+			""")
+	void deleteClimbingCourseById(String nickName);
+
+	@Select("""
+			SELECT id
+			FROM RunningToday
+			WHERE writer = #{nickName}
+			""")
+	List<Integer> selectIdByWriter(String nickName);
+
+	@Delete("""
+			DELETE FROM RunningFileName
+			WHERE boardId = #{boardId}
+			""")
+	void deleteRunningFileNameById(Integer boardId);
+
+	@Delete("""
+			DELETE FROM ClimbingToday
+			WHERE todayId = #{todayId}
+			""")
+	List<Integer> selectClimbIdByWriter(Integer todayId);
+
+	@Select("""
+			SELECT id
+			FROM ClimbingToday
+			WHERE writer = #{nickName}
+			""")
+	List<Integer> selectClimbingTodayByWriter(String nickName);
+
+	@Delete("""
+			DELETE FROM ClimbingTodayFileName
+			WHERE todayId = #{todayId}
+			""")
+	void deleteClimbingTodayFileNameById(Integer todayId);
+
+	@Select("""
+			SELECT id
+			FROM ClimbingCourse
+			WHERE writer = #{nickName}
+			""")
+	List<Integer> selectClimbCourseIdByWriter(String nickName);
+
+	@Delete("""
+			DELETE FROM ClimbingCourseFileName
+			WHERE courseId = #{courseId}
+			""")
+	void deleteClimbingCourseFileNameById(Integer courseId);
+
+	@Delete("""
+			DELETE FROM Member
+			WHERE userId = #{userId}
+			""")
+	int deleteMember(String userId);
+
 }

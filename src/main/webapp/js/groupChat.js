@@ -454,8 +454,7 @@ $("#chatMemberListBtn2").click(function() {
 	$.ajax("/groupChat/memberCheck?lastChatRoomId=" + lastChatRoomId, {
 		success: function(data) {
 			const memberList = data.memberList;
-			console.log(lastChatRoomId);
-			console.log(memberList);
+			$(".list-group").empty();
 			for (var i = 0; i < memberList.length; i++) {
 				$(".list-group").append(`
 					<li class="list-group-item">${memberList[i]}</li>

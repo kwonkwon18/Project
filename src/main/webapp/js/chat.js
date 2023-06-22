@@ -266,9 +266,8 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 	})
 }
 
-$("#fileInputBtn").on("change", function() {
+$("#fileInputHiddenBtn").on("change", function() {
 	var files = $(this)[0].files;
-	$("#dropupBtn").click();
 	if (files.length > 1) {
 		$("#chatTextArea").val(files[0].name + "....");
 	} else {
@@ -286,7 +285,7 @@ $("#sendChatBtn").click(function() {
 	formData.append("chatRoomId", chatRoomId);
 
 	// 파일 선택된 경우 FormData에 파일 추가
-	const files = $("#fileInputBtn")[0].files;
+	const files = $("#fileInputHiddenBtn")[0].files;
 	if (files !== undefined && files.length > 0) {
 		for (let i = 0; i < files.length; i++) {
 			formData.append("files", files[i]);

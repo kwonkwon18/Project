@@ -18,7 +18,7 @@ button.active {
 
 </style>
 
-<div style="position: relative; display: none; border: 1px solid #ccc; overflow-y: auto; float: left; height: 60vh; width: 340px; background-color: white; border-radius: 3% 3% 0 0; margin-bottom: 50px; margin-left: -1px; z-index: 1; border: 1px solid black;" id="chatBox" class="position-fixed bottom-0 start-0">
+<div style="position: relative; display: none; border: 1px solid #ccc; overflow-y: auto; float: left; height: 60vh; width: 340px; background-color: white; border-radius: 3% 3% 0 0; margin-bottom: 50px; z-index: 1; border: 1px solid black;" id="chatBox" class="position-fixed bottom-0 start-0">
 	<div style="padding-top: 10px; position: sticky; top: 0px; background-color: black; color:white; height: 40px; width: 100%;">
 		<button type="button" id="returnBtn" style="background-color: white; position: absolute; top: 0; left: 0; height: 40px; width: 40px; border: 0; border-bottom: 1px solid black;">
 			<i class="fa-solid fa-arrow-left-long"></i>
@@ -39,7 +39,7 @@ button.active {
 		<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%A9%94%EC%9D%B4%ED%8A%B8.png" alt="..." width="80" height="70">
 	</div>
 
-	<div class="input-group" style="position: fixed; bottom: 10px; left: -1px; width: 340px; margin-bottom: 3px; border: 1px solid black; border-top: 0;">
+	<div class="input-group" style="position: fixed; bottom: 10px; width: 340px; margin-bottom: 3px; left: 0; border: 1px solid black; border-top: 0;">
 		<div class="btn-group dropup">
 			<button type="button" style="background-color: black; border-radius: 0;" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="dropupBtn">
 				<i style="width: 20px;" class="fa-solid fa-bars"></i>

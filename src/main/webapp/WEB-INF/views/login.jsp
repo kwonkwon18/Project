@@ -39,18 +39,20 @@ input[type="text"], input[type="password"] {
 				</div>
 				<br />
 				<br />
-				<h1 class="login-title">로 그 인 🐾🐾</h1>
+				<h1 class="login-title" style="margin-left:200px;"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/login/%EB%A1%9C%EA%B7%B8%EC%9D%B8.png" alt="" /></h1>
+				<br />
 				<form method="post">
-					<div class="mb-3">
-						<label for="" class="form-label">아이디</label>
+					<div class="mb-3" style="margin-left:120px;">
+						<label for="" class="form-label"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/login/%EC%95%84%EC%9D%B4%EB%94%94.png" alt="" /></label>
 						<input class="form-control" type="text" name="username" />
 					</div>
-					<div class="mb-3">
-						<label for="" class="form-label">패스워드</label>
+					<div class="mb-3" style="margin-left:120px;">
+						<label for="" class="form-label"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/login/%ED%8C%A8%EC%8A%A4%EC%9B%8C%EB%93%9C.png" alt="" /></label>
 						<input class="form-control" type="password" name="password" />
 					</div>
-					<div class="mb-3">
-						<input class="btn btn-success" type="submit" value="로그인">
+					<br />
+					<div class="mb-3" style="margin-left:120px;">
+						<input class="btn btn-dark" style="width: 412.8px; height: 39px;" type="submit" value="로그인">
 					</div>
 				</form>
 			</div>

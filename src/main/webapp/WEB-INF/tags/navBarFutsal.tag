@@ -35,7 +35,7 @@
 					</li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
-					<button class="nav-item btn btn-primary" style="width: 40.23px; height: 38.21px; align-items: center; justify-content: center; display: flex; margin-right: 10px;">
+					<button class="nav-item btn btn-primary" style="width: 40px; height: 40px; align-items: center; justify-content: center; display: flex; margin-right: 10px;">
 						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/futsal/myPage">
 							<i style="color: white;" class="fa-regular fa-bookmark"></i>
 						</a>

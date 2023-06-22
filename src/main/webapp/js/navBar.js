@@ -9,7 +9,7 @@ $(document).ready(function() {
 				$("#NumberOfAlarm").css("display", "block");
 			}
 			console.log("러닝" + data.confirmationTotal)
-			 $("#NumberOfAlarm").html("❕");
+			$("#NumberOfAlarm").html("❕");
 		}
 	})
 });
@@ -350,7 +350,8 @@ $("#alarmList").click(function() {
 					<div id = "climbingBoard${boardId}" class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
          🏕 ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; 
-        <button class = "btn btn-primary poserConfirmation deleteAlarmClimbing" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" value="${boardId}">확인</button>
+        <button class = "btn btn-primary memberConfirmationClimbing deleteAlarmClimbing" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" value="${boardId}">확인</button>
+         &nbsp;&nbsp;<button class="btn btn-danger justConfirmationClimbing deleteAlarmClimbing" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button"  value="${boardId}" style="justify-content: flex-end;">닫기</button>
     </div>
     </div>
     
@@ -491,5 +492,34 @@ $("#climbingMemberAlarm").on("click", ".memberConfirmationClimbing", function() 
 		complete: function() {
 			location.href = "/climbing/id/" + boardId;
 		}
+	});
+});
+
+
+$("#climbingMemberAlarm").on("click", ".justConfirmationClimbing", function() {
+	var memberId = $(this).data('board-memberid');
+	var userId = $(this).data('board-userid');
+	var boardId = $(this).data('board-boardid');
+	var title = $(this).data('board-title');
+
+	console.log(memberId);
+	console.log(userId);
+	console.log(boardId);
+	console.log(title);
+
+	const data = { boardId, userId, memberId };
+	console.log(data);
+
+	$.ajax("/climbing/confirmation", {
+		method: "post",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success: function(data) {
+
+		},
+		error: function() {
+			alert("접수 오류발생.");
+		}
+
 	});
 });

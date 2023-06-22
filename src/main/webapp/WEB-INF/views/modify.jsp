@@ -11,6 +11,47 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<style>
+.container-lg {
+	width: 500px;
+	margin: 0 auto; /* Center the container horizontally */
+	margin-top: 100px; /* Add top margin for spacing */
+}
+
+.btn-success {
+	background-color: #00C73C;
+	border-color: #00C73C;
+}
+
+.btn-success:hover {
+	background-color: #00A237;
+	border-color: #00A237;
+}
+
+.form-label {
+	margin-bottom: 0.5rem;
+	font-weight: bold;
+}
+
+.mb-3 {
+	margin-bottom: 1rem;
+}
+
+#checkIdBtn, #checkNickNameBtn, #checkEmailBtn {
+	margin-top: 0.5rem;
+}
+
+/* Custom styles for the bordered container */
+.registration-container {
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+	padding: 1rem;
+	background-color: #f8f9fa;
+	margin-bottom: 2rem;
+	width: 600px; /* Adjust the width as desired */
+	margin: 0 auto;
+}
+</style>
 </head>
 <body>
 
@@ -21,7 +62,7 @@
 	<div class="container-lg">
 		<form action="/modify" method="post">
 			<div class="row justify-content-center">
-				<div class="col-12 col-md-8 col-lg-6">
+				<div class="registration-container">
 					<h1>회원 정보</h1>
 					<!-- .mb-3*4>label+input -->
 					<div class="mb-3">

@@ -10,6 +10,47 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+.container-lg {
+	width: 500px;
+	margin: 0 auto; /* Center the container horizontally */
+	margin-top: 100px; /* Add top margin for spacing */
+}
+
+.btn-success {
+	background-color: #00C73C;
+	border-color: #00C73C;
+}
+
+.btn-success:hover {
+	background-color: #00A237;
+	border-color: #00A237;
+}
+
+.form-label {
+	margin-bottom: 0.5rem;
+	font-weight: bold;
+}
+
+.mb-3 {
+	margin-bottom: 1rem;
+}
+
+#checkIdBtn, #checkNickNameBtn, #checkEmailBtn {
+	margin-top: 0.5rem;
+}
+
+/* Custom styles for the bordered container */
+.registration-container {
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+	padding: 1rem;
+	background-color: #f8f9fa;
+	margin-bottom: 2rem;
+	width: 600px; /* Adjust the width as desired */
+	margin: 0 auto;
+}
+</style>
 </head>
 <body>
 
@@ -19,16 +60,16 @@
 
 	<div class="container-lg">
 		<div class="row justify-content-center">
-			<div class="col-12 col-md-8 col-lg-6">
+			<div class="registration-container">
 				<h1>회원 정보</h1>
 				<!-- .mb-3*4>label+input -->
 				<div class="mb-3">
 					<label class="form-label" for="">아이디</label>
-					<input class="form-control" type="text" value="${member.userId }" readonly/>
+					<input class="form-control" type="text" value="${member.userId }" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">별명</label>
-					<input class="form-control" type="text" value="${member.nickName }" readonly/>
+					<input class="form-control" type="text" value="${member.nickName }" readonly />
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">생일</label>
@@ -55,41 +96,39 @@
 					<input class="form-control" type="text" value="${member.introduce }" readonly />
 				</div>
 				<a class="btn btn-secondary" href="/modify?userId=${member.userId }">수정</a>
-				<button type="button" data-bs-toggle="modal"
-					class="btn btn-danger"
-					data-bs-target="#confirmModal">회원탈퇴</button>
+				<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#confirmModal">회원탈퇴</button>
 			</div>
 		</div>
-	</div>	
+	</div>
 	<%-- <div class="d-none">
-		<form id="removeForm" action="/remove" method="post">
-			<input type="text" name="id" value="${member.id }" />
-		</form>
-	</div> --%>
-	
+      <form id="removeForm" action="/remove" method="post">
+         <input type="text" name="id" value="${member.id }" />
+      </form>
+   </div> --%>
+
 	<!-- 탈퇴 확인Modal -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">탈퇴 확인</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-     	<form id="removeForm" action="/remove" method="post">
-     		<input type="hidden" name="id" value="${member.userId }"/>
-     		<label for="passwordInput1" class="form-label">암호</label>
-     		<input id="passwordInput1" type="password" name="password" class="form-control" />
-     	</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-        <button type="submit" form="removeForm" class="btn btn-danger">예</button>
-      </div>
-    </div>
-  </div>
-</div>
-	
+	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">탈퇴 확인</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="removeForm" action="/remove" method="post">
+						<input type="hidden" name="id" value="${member.userId }" />
+						<label for="passwordInput1" class="form-label">암호</label>
+						<input id="passwordInput1" type="password" name="password" class="form-control" />
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+					<button type="submit" form="removeForm" class="btn btn-danger">예</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<sec:authorize access="isAuthenticated()">
 		<my:chatBtn></my:chatBtn>
 		<script src="/js/groupChat.js"></script>

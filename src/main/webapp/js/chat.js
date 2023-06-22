@@ -25,9 +25,9 @@ function showList() {
 			var chatCount = data.chatCount;
 			var chatInsertedList = data.chatInsertedList;
 			$("#chatList").append(`
-			<div id="chatListContainer"></div>
+			<div id="chatListContainer" style="margin-top: 150px;"></div>
 			`)
-			if (insertedList.length > 12) {
+			if (insertedList.length > 7) {
 				$("#chatList").css("width", "357px");
 			} else {
 				$("#chatList").css("width", "340px");
@@ -149,7 +149,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 			$("#chatBox").append(`
                 <div id="chatContainer"></div> 
             `)
-            if (chatList.length > 12) {
+            if (chatList.length > 7) {
 				// 스크롤바가 있을 때의 동작
 				$("#chatBox").css("width", "357px");
 				$(".input-group").css("width", "357px");
@@ -167,7 +167,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
                 	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
-            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+            	                <div style="font-size: 7px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 								</div>
@@ -176,7 +176,7 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 					} else {
 						$("#chatContainer").append(`
                 	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
-            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+            	                <div style="font-size: 7px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
         	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
     	                    </div>
 	                    `)
@@ -188,14 +188,14 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 								</div>
-	                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
+	                            <div style="font-size: 7px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 	                        </div>
 	                    `)
 					} else {
 						$("#chatContainer").append(`
 	                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 	                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-	                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
+	                            <div style="font-size: 7px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 	                        </div>
 	                    `)
 					}
@@ -226,7 +226,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 					if (chat.fileName !== null) {
 						$("#chatContainer").append(`
                 	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
-            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+            	                <div style="font-size: 7px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 								</div>
@@ -235,7 +235,7 @@ function currentChatId(lastChatIdParam, chatRoomId) {
 					} else {
 						$("#chatContainer").append(`
                 	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
-            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+            	                <div style="font-size: 7px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
         	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
     	                    </div>
 	                    `)
@@ -247,14 +247,14 @@ function currentChatId(lastChatIdParam, chatRoomId) {
           						<div>
 									<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 								</div>
-	                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
+	                            <div style="font-size: 7px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 	                        </div>
 	                    `)
 					} else {
 						$("#chatContainer").append(`
 	                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 	                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-	                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
+	                            <div style="font-size: 7px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 	                        </div>
 	                    `)
 					}
@@ -366,7 +366,7 @@ $("#deleteChatRoomModalButton").click(function() {
 //							if (chat.senderId === myId) {
 //								$("#chatContainer").append(`
 //			                        <div class="d-flex justify-content-end" style="padding-right: 10px;">
-//			                            <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
+//			                            <div style="font-size: 7px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 //			                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
 //			                        </div>
 //			                    `)
@@ -420,9 +420,9 @@ $("#chatListSearchBtn").click(function() {
 			var chatInsertedList = data.chatInsertedList;
 			$("#chatListContainer").remove("");
 			$("#chatList").append(`
-			<div id="chatListContainer"></div>
+			<div id="chatListContainer" style="margin-top: 150px;"></div>
 			`)
-			if (insertedList.length > 12) {
+			if (insertedList.length > 7) {
 				$("#chatList").css("width", "357px");
 			} else {
 				$("#chatList").css("width", "340px");

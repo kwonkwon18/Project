@@ -70,30 +70,42 @@ button.active {
 
 
 <div style="border: 1px solid black; padding: 10px; overflow-y: auto; float: left; height: 65vh; width: 340px; display: none; background-color: white; border-radius: 3%; margin-bottom: 15px; margin-left: -1px; z-index: 1;" id="chatList" class="position-fixed bottom-0 start-0">
-	<span style="position: absolute; left: 50%; transform: translateX(-50%);"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/ChatRoom/%EC%B1%84%ED%8C%85%EB%B0%A9+%EB%A6%AC%EC%8A%A4%ED%8A%B8.png" alt="" /></span>
-	<button type="button" class="chatClose" style="background-color: white; position: absolute; top: 0; right: 0; height: 40px; width: 40px; border: 0;">
-		<i class="fa-solid fa-x"></i>
-	</button>
-	<br />
-	<br />
-	<div class="mb-3 container text-center">
-		<div class="row">
-			<button style="border: 1px solid; background-color:white;" class="col active" type="button" id="personalChatRoomListBtn"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/ChatRoom/1%EB%8C%801%EC%B1%84%ED%8C%85%EB%B0%A9.png" alt="" /></button>
-			<button style="border: 1px solid; border-left: 0; background-color:white;" class="col" type="button" id="groupChatRoomListBtn"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/ChatRoom/%EA%B7%B8%EB%A3%B9%EC%B1%84%ED%8C%85%EB%B0%A9.png" alt="" /></button>
+	<div style="position: fixed; top: 308px; width: 318px; background-color: white;">
+		<span style="position: absolute; left: 50%; transform: translateX(-50%);">
+			<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/ChatRoom/%EC%B1%84%ED%8C%85%EB%B0%A9+%EB%A6%AC%EC%8A%A4%ED%8A%B8.png" alt="" />
+		</span>
+		<button type="button" class="chatClose" style="background-color: white; position: absolute; top: 0; right: 0; height: 40px; width: 40px; border: 0;">
+			<i class="fa-solid fa-x"></i>
+		</button>
+		<br />
+		<br />
+		<div class="mb-3 container text-center">
+			<div class="row">
+				<button style="border: 1px solid; background-color: white;" class="col active" type="button" id="personalChatRoomListBtn">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/ChatRoom/1%EB%8C%801%EC%B1%84%ED%8C%85%EB%B0%A9.png" alt="" />
+				</button>
+				<button style="border: 1px solid; border-left: 0; background-color: white;" class="col" type="button" id="groupChatRoomListBtn">
+					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/ChatRoom/%EA%B7%B8%EB%A3%B9%EC%B1%84%ED%8C%85%EB%B0%A9.png" alt="" />
+				</button>
+			</div>
+		</div>
+		<div class="mb-3" style="display: flex; border: 1px solid;">
+			<input type="text" style="width: 277px; border: 0px;" id="chatListSearchText" onkeyup="handleKeyUp(event)" />
+			<button type="button" id="searchRemove" style="display: none; background-color: white; border-color: white; border: 0px;">
+				<i class="fa-solid fa-x"></i>
+			</button>
+			<button type="button" id="groupSearchRemove" style="display: none; background-color: white; border-color: white; border: 0px;">
+				<i class="fa-solid fa-x"></i>
+			</button>
+			<button type="button" style="background-color: white; border: 0px; border-left: 1px solid" id="chatListSearchBtn">
+				<i class="fa-solid fa-magnifying-glass" style="margin-left: 5px;"></i>
+			</button>
+			<button type="button" style="display: none; border: 0px; border-left: 1px solid; background-color: white" id="groupChatListSearchBtn">
+				<i class="fa-solid fa-magnifying-glass" style="margin-left: 5px;"></i>
+			</button>
 		</div>
 	</div>
-	<div class="mb-3" style="display: flex; border: 1px solid;">
-		<input type="text" style="width: 277px; border: 0px;" id="chatListSearchText" onkeyup="handleKeyUp(event)" />
-		<button type="button" id="searchRemove" style="display: none; background-color: white; border-color: white; border: 0px;">
-			<i class="fa-solid fa-x"></i>
-		</button>
-		<button type="button" id="groupSearchRemove" style="display: none; background-color: white; border-color: white; border: 0px;">
-			<i class="fa-solid fa-x"></i>
-		</button>
-		<button type="button" style="background-color: white; border: 0px; border-left: 1px solid" id="chatListSearchBtn"><i class="fa-solid fa-magnifying-glass" style="margin-left: 5px;"></i></button>
-		<button type="button" style="display: none; border: 0px; border-left: 1px solid; background-color: white" id="groupChatListSearchBtn"><i class="fa-solid fa-magnifying-glass" style="margin-left: 5px;"></i></button>
-	</div>
-	
+
 	<div style="position: fixed; z-index: -1; left: 130px; bottom: 20px;">
 		<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%A9%94%EC%9D%B4%ED%8A%B8.png" alt="..." width="80" height="70">
 	</div>

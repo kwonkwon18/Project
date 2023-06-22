@@ -28,9 +28,9 @@ function showList() {
 			<div id="chatListContainer"></div>
 			`)
 			if (insertedList.length > 12) {
-				$("#chatList").css("width", "320px");
+				$("#chatList").css("width", "360px");
 			} else {
-				$("#chatList").css("width", "300px");
+				$("#chatList").css("width", "340px");
 			}
 			for (var i = 0; i < nickNameList.length; i++) {
 				if (i === 0) {
@@ -149,6 +149,19 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 			$("#chatBox").append(`
                 <div id="chatContainer"></div> 
             `)
+            if (chatList.length > 12) {
+				// 스크롤바가 있을 때의 동작
+				$("#chatBox").css("width", "360px");
+				$(".input-group").css("width", "360px");
+				$("#chatSearchBox").css("width", "303px");
+				$("#chatSearch").css("width", "232px");
+			} else {
+				// 스크롤바가 없을 때의 동작
+				$("#chatBox").css("width", "340px");
+				$(".input-group").css("width", "340px");
+				$("#chatSearchBox").css("width", "320px");
+				$("#chatSearch").css("width", "249px");
+			}
 			for (const chat of chatList) {
 				if (chat.senderId === myId) {
 					if (chat.fileName !== null) {
@@ -194,7 +207,6 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
 			} else {
 				lastChatId = chatList[chatList.length - 1].id;
 			}
-			console.log(lastChatId);
 			repeat = setInterval(function() {
 				currentChatId(lastChatId, lastChatRoomId);
 			}, 500);
@@ -389,6 +401,11 @@ $("#chatListSearchBtn").click(function() {
 			$("#chatList").append(`
 			<div id="chatListContainer"></div>
 			`)
+			if (insertedList.length > 12) {
+				$("#chatList").css("width", "360px");
+			} else {
+				$("#chatList").css("width", "340px");
+			}
 			for (var i = 0; i < nickNameList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`
@@ -474,13 +491,13 @@ $("#chatSearchBtn").click(function() {
 	var search = $("#chatSearch").val();
 	var chatRoomId = lastChatRoomId;
 	var count = 1;
-	if($("#sendChatBtn").is(":hidden")) {
+	if ($("#sendChatBtn").is(":hidden")) {
 		$.ajax("/groupChat/search?search=" + search + "&chatRoomId=" + chatRoomId, {
 			success: function(data) {
 				var idList = data.chatList;
 				var element = idList[0];
-				if(idList.length <= 0) {
-        			alert('검색어를 찾을 수 없습니다.');
+				if (idList.length <= 0) {
+					alert('검색어를 찾을 수 없습니다.');
 				} else {
 					$("#chatSearchBtn").hide();
 					$("#nextBtn").show();
@@ -488,7 +505,7 @@ $("#chatSearchBtn").click(function() {
 					$("#nextBtn").click(function() {
 						element = idList[count];
 						document.getElementById(element).scrollIntoView(false);
-						if(count === idList.length - 1) {
+						if (count === idList.length - 1) {
 							count = 0;
 						} else {
 							count = count + 1;
@@ -496,14 +513,14 @@ $("#chatSearchBtn").click(function() {
 					})
 				}
 			}
-		})		
+		})
 	} else {
 		$.ajax("/chat/search?search=" + search + "&chatRoomId=" + chatRoomId, {
 			success: function(data) {
 				var idList = data.chatList;
 				var element = idList[0];
-				if(idList.length <= 0) {
-        			alert('검색어를 찾을 수 없습니다.');
+				if (idList.length <= 0) {
+					alert('검색어를 찾을 수 없습니다.');
 				} else {
 					$("#chatSearchBtn").hide();
 					$("#nextBtn").show();
@@ -511,7 +528,7 @@ $("#chatSearchBtn").click(function() {
 					$("#nextBtn").click(function() {
 						element = idList[count];
 						document.getElementById(element).scrollIntoView(false);
-						if(count === idList.length - 1) {
+						if (count === idList.length - 1) {
 							count = 0;
 						} else {
 							count = count + 1;

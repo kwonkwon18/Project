@@ -25,9 +25,9 @@ function showGroupList() {
 			<div id="chatListContainer"></div>
 			`)
 			if (insertedList.length > 12) {
-				$("#chatList").css("width", "320px");
+				$("#chatList").css("width", "360px");
 			} else {
-				$("#chatList").css("width", "300px");
+				$("#chatList").css("width", "340px");
 			}
 			for (var i = 0; i < insertedList.length; i++) {
 				if (i === 0) {
@@ -112,6 +112,19 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 			$("#chatBox").append(`
                 <div id="chatContainer"></div> 
             `)
+			if (chatList.length > 12) {
+				// 스크롤바가 있을 때의 동작
+				$("#chatBox").css("width", "360px");
+				$(".input-group").css("width", "360px");
+				$("#chatSearchBox").css("width", "303px");
+				$("#chatSearch").css("width", "232px");
+			} else {
+				// 스크롤바가 없을 때의 동작
+				$("#chatBox").css("width", "340px");
+				$(".input-group").css("width", "340px");
+				$("#chatSearchBox").css("width", "320px");
+				$("#chatSearch").css("width", "249px");
+			}
 			for (const chat of chatList) {
 				if (lastSenderId === chat.senderId) {
 					if (chat.senderId === myId) {
@@ -361,6 +374,11 @@ $("#groupChatListSearchBtn").click(function() {
 			$("#chatList").append(`
 			<div id="chatListContainer"></div>
 			`)
+			if (insertedList.length > 12) {
+				$("#chatList").css("width", "360px");
+			} else {
+				$("#chatList").css("width", "340px");
+			}
 			for (var i = 0; i < insertedList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`

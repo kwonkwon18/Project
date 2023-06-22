@@ -349,7 +349,7 @@ h2 {
 				</div>
 			</div>
 		</div>
-		<div>
+		<div style="max-width: 250px">
 			<my:advertisement2></my:advertisement2>
 		</div>
 	</div>

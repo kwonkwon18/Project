@@ -7,8 +7,8 @@ button.active {
 }
 </style>
 
-<div style="position: relative; display: none; border: 1px solid #ccc; overflow-y: auto; float: left; height: 60vh; width: 404px; background-color: white; border-radius: 3% 3% 0 0; margin-bottom: 50px; margin-left: -1px; z-index: 1;" id="chatBox" class="position-fixed bottom-0 start-0">
-	<div style="padding-top: 10px; position: sticky; top: 0px; background-color: red; height: 40px; width: 100%;">
+<div style="position: relative; display: none; border: 1px solid #ccc; overflow-y: auto; float: left; height: 60vh; width: 340px; background-color: white; border-radius: 3% 3% 0 0; margin-bottom: 50px; margin-left: -1px; z-index: 1;" id="chatBox" class="position-fixed bottom-0 start-0">
+	<div style="padding-top: 10px; position: sticky; top: 0px; background-color: #375bac; color:white; height: 40px; width: 100%;">
 		<button type="button" id="returnBtn" style="background-color: white; position: absolute; top: 0; left: 0; border-color: white; height: 40px; width: 40px;">
 			<i class="fa-solid fa-arrow-left-long"></i>
 		</button>
@@ -16,16 +16,19 @@ button.active {
 			<i class="fa-solid fa-x"></i>
 		</button>
 	</div>
-	<div id="chatSearchBox" class="mb-3" style="position: sticky; top: 45px; display: none; border: 1px solid black; width: 275.556px; height: 25.99px; margin-left: 10px; margin-top: 10px;">
-		<input type="text" style="width: 200px; border: 0px;" id="chatSearch" />
-		<button type="button" style="margin-left: auto; border: 0px; border-right: 1px solid black; background-color: blue;" id="chatSearchBtn">검색</button>
+	<div id="chatSearchBox" class="mb-3" style="position: sticky; top: 45px; display: none; border: 1px solid black; width: 320px; height: 25.99px; margin-left: 10px; margin-top: 10px;">
+		<input type="text" style="width: 249px; border: 0px;" id="chatSearch" />
+		<button type="button" style="margin-left: auto; border: 0px; border-right: 1px solid black; background-color: background-color: #375bac; color: white;" id="chatSearchBtn">검색</button>
 		<button type="button" style="display: none; margin-left: auto; border: 0px; border-right: 1px solid black;" id="nextBtn">다음</button>
 		<button type="button" id="chatSearchRemove" style="background-color: white; border-color: white; border: 0px;">
 			<i class="fa-solid fa-x"></i>
 		</button>
 	</div>
+	<div style="position: fixed; z-index: -1; left: 130px; bottom: 65px;">
+		<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%A9%94%EC%9D%B4%ED%8A%B8.png" alt="..." width="80" height="70">
+	</div>
 
-	<div class="input-group" style="position: fixed; bottom: 10px; width: 300px;">
+	<div class="input-group" style="position: fixed; bottom: 10px; width: 340px;">
 		<div class="btn-group dropup">
 			<button type="button" style="border-radius: 0;" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="dropupBtn">
 				<i class="fa-solid fa-bars"></i>
@@ -33,24 +36,24 @@ button.active {
 			<div class="dropdown-menu">
 				<button type="button" id="chatSearchOpenBtn">검색</button>
 				<button id="chatMemberListBtn" data-bs-toggle="modal" data-bs-target="#chatMemberListModal">채팅인원보기</button>
-				<input type="file" multiple name="files" accept="image/*" id="fileInputBtn" />
+				<input type="file" multiple name="files" accept="image/*" id="fileInputBtn"/>
 				<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteChatRoomConfirmModal" id="dChat">방 나가기</button>
 				<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteGroupChatRoomConfirmModal" id="dGroupChat" style="display: none;">방 나가기</button>
 			</div>
 		</div>
 		<input type="text" style="height: 40px;" placeholder="채팅을 입력해주세요" id="chatTextArea" class="form-control" />
-		<button id="sendChatBtn" class="btn btn-outline-danger">
+		<button id="sendChatBtn" class="btn" style="color: #375bac; border: 1px solid;">
 			<i class="fa-regular fa-paper-plane"></i>
 		</button>
-		<button id="sendGroupChatBtn" class="btn btn-outline-danger" style="display: none;">
+		<button id="sendGroupChatBtn" class="btn btn-outline-danger" style="display: none; color: #375bac; border: 1px solid;">
 			<i class="fa-regular fa-paper-plane"></i>
 		</button>
 	</div>
 </div>
 
 
-<div style="border: 1px solid; padding: 10px; overflow-y: auto; float: left; height: 65vh; width: 404px; display: none; background-color: white; border-radius: 3%; margin-bottom: 15px; margin-left: -1px; z-index: 1;" id="chatList" class="position-fixed bottom-0 start-0">
-	<span style="position: absolute; left: 50%; transform: translateX(-50%);">채팅방 리스트</span>
+<div style="border: 1px solid; padding: 10px; overflow-y: auto; float: left; height: 65vh; width: 340px; display: none; background-color: white; border-radius: 3%; margin-bottom: 15px; margin-left: -1px; z-index: 1;" id="chatList" class="position-fixed bottom-0 start-0">
+	<span style="position: absolute; left: 50%; transform: translateX(-50%);"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/ChatRoom/%EC%B1%84%ED%8C%85%EB%B0%A9+%EB%A6%AC%EC%8A%A4%ED%8A%B8.png" alt="" /></span>
 	<button type="button" class="chatClose" style="background-color: white; position: absolute; top: 0; right: 0; height: 40px; width: 40px; border: 0;">
 		<i class="fa-solid fa-x"></i>
 	</button>
@@ -63,7 +66,7 @@ button.active {
 		</div>
 	</div>
 	<div class="mb-3" style="display: flex; border: 1px solid;">
-		<input type="text" style="width: 200px; border: 0px;" id="chatListSearchText" />
+		<input type="text" style="width: 248px; border: 0px;" id="chatListSearchText" />
 		<button type="button" id="searchRemove" style="background-color: white; border-color: white; border: 0px;">
 			<i class="fa-solid fa-x"></i>
 		</button>
@@ -74,7 +77,7 @@ button.active {
 		<button type="button" style="display: none; margin-left: auto; border: 0px;" id="groupChatListSearchBtn">검색</button>
 	</div>
 	
-	<div style="position: fixed; z-index: -1; left: 131px; bottom: 20px;">
+	<div style="position: fixed; z-index: -1; left: 130px; bottom: 20px;">
 		<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%EB%A9%94%EC%9D%B4%ED%8A%B8.png" alt="..." width="80" height="70">
 	</div>
 </div>

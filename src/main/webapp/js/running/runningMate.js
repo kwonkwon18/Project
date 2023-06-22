@@ -214,9 +214,15 @@ function handleListUpButtonClick() {
 			                			<div id="chatContainer"></div> 
 			            			`)
 									if (chatList.length > 12) {
-										$("#chatList").css("width", "320px");
+										$("#chatBox").css("width", "360px");
+										$(".input-group").css("width", "360px");
+										$("#chatSearchBox").css("width", "303px");
+										$("#chatSearch").css("width", "232px");
 									} else {
-										$("#chatList").css("width", "300px");
+										$("#chatBox").css("width", "340px");
+										$(".input-group").css("width", "340px");
+										$("#chatSearchBox").css("width", "320px");
+										$("#chatSearch").css("width", "249px");
 									}
 									for (const chat of chatList) {
 										if (chat.senderId === myId) {

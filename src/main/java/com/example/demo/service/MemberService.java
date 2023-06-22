@@ -66,17 +66,21 @@ public class MemberService {
 	}
 
 	public boolean remove(Member member) {
-		
+
 		System.out.println(member);
+
+		// 채팅 지우기
+		mapper.deleteChatByUserId(member.getUserId());
+		// 채팅방 지우기
+		mapper.deleteChatRoomByUserId(member.getUserId());
+		// 그룹 채팅방 지우기
+		mapper.deleteGroupChatRoomByUserId(member.getUserId());
 
 		// 러닝메이트 관련 ---
 		// 러닝 ==========
 		// 신청 목록 지우기
 		mapper.deleteRunningPartyById(member.getUserId());
 		System.out.println(1);
-		// 러닝 게시물 지우기
-		mapper.deleteRunningBoardById(member.getNickName());
-		System.out.println(2);
 
 		// 러닝 today 관련 --
 		// 좋아요 지우기
@@ -101,9 +105,6 @@ public class MemberService {
 		// 신청 목록 지우기
 		mapper.deleteClimbingPartyById(member.getUserId());
 		System.out.println(7);
-		// 등산 메이트 게시물 지우기
-		mapper.deleteClimbingMateById(member.getNickName());
-		System.out.println(8);
 
 		// 등산 today 관련
 		// 좋아요 지우기
@@ -141,9 +142,11 @@ public class MemberService {
 		mapper.deleteClimbingCourseById(member.getNickName());
 		System.out.println(16);
 
+		// 러닝 게시물 지우기
+		mapper.deleteRunningBoardById(member.getNickName());
+		System.out.println(2);
+
 		int cnt = mapper.deleteMember(member.getUserId());
-		System.out.println(17);
-		System.out.println(cnt);
 
 		return cnt == 1;
 	}

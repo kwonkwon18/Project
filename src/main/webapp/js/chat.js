@@ -298,6 +298,7 @@ $("#sendChatBtn").click(function() {
 		contentType: false,
 		complete: function() {
 			$("#chatTextArea").val("");
+			$("#fileInputHiddenBtn").val("");
 			scrollToBottom();
 		}
 	})

@@ -83,7 +83,7 @@ $("#alarmList").click(function() {
 					$("#climbingMemberAlarm").append(`
 					<div id = "climbingBoard${boardId}" class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">🏕 ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; 
-        <button class = "btn btn-primary poserConfirmation deleteAlarmClimbing" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" value="${boardId}">확인</button>
+        <button class = "btn btn-primary memberConfirmationClimbing deleteAlarmClimbing" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" value="${boardId}">확인</button>
     </div>
     </div>
     

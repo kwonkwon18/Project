@@ -1,17 +1,22 @@
 package com.example.demo.controller;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.*;
-import org.springframework.stereotype.*;
-import org.springframework.ui.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.domain.*;
-import com.example.demo.service.*;
+import com.example.demo.domain.Member;
+import com.example.demo.service.ChatService;
+import com.example.demo.service.MemberService;
 
 @Controller
 @RequestMapping("/")
@@ -22,6 +27,25 @@ public class MainController {
 
 	@Autowired
 	private MemberService memberService;
+
+	@GetMapping("checkEmail/{email}")
+	@ResponseBody
+	public Map<String, Object> checkEmail(@PathVariable("email") String email) {
+		return memberService.checkEmail(email);
+	}
+
+	@GetMapping("checkNickName/{nickName}")
+	@ResponseBody
+	public Map<String, Object> checkNickName(@PathVariable("nickName") String nickName) {
+		return memberService.checkNickName(nickName);
+	}
+
+	@GetMapping("IDCheck/{userId}")
+	@ResponseBody
+	public Map<String, Object> checkId(@PathVariable("id") String id) {
+
+		return memberService.IDCheck(id);
+	}
 
 	@GetMapping({ "/", "main" })
 	public void main() {
@@ -64,7 +88,7 @@ public class MainController {
 		model.addAttribute("memberList", list);
 	}
 
-	// 경로 : /member/info?id=asdf
+	// 경로 : /member/info?userid=asdf
 	@GetMapping("info")
 	public void info(String userId, Model model) {
 		Member member = memberService.get(userId);
@@ -72,60 +96,61 @@ public class MainController {
 		model.addAttribute("member", member);
 	}
 
-	@GetMapping("mypage")
-	public void myapge(String userId, Model model) {
-		Member member = memberService.get(userId);
+	@GetMapping("totalMyPage")
+	public void myapge(Authentication authentication, Model model) {
+		Member member = memberService.get(authentication.getName());
 		System.out.println(member);
 		model.addAttribute("member", member);
 	}
-	
-//	@PostMapping("remove")
-//	public String remove(Member member,RedirectAttributes rttr) {
-//		boolean ok = memberService.remove(member);
-//		if(ok) {
-//			rttr.addFlashAttribute("message", "회원 탈퇴되었습니다.");
-//			return "redirect:/list";
-//		}
-//		else {
-//			rttr.addFlashAttribute("message", "회원 탈퇴에 문제가 생겼습니다.");
-//			return "redirect:/info?userId"+member.getUserId();
-//		}
-//	}
+
+//   @PostMapping("remove")
+//   public String remove(Member member,RedirectAttributes rttr) {
+//      boolean ok = memberService.remove(member);
+//      if(오케이) {
+//         rttr.addFlashAttribute("message", "회원 탈퇴되었습니다.");
+//         return "redirect:/list";
+//      }
+//      else {
+//         rttr.addFlashAttribute("message", "회원 탈퇴에 문제가 생겼습니다.");
+//         return "redirect:/info?userId"+member.getUserId();
+//      }
+//   }
 	// 1.
 	@PostMapping("remove")
 	public String remove(Member member, RedirectAttributes rttr) {
-		
+
 		boolean ok = memberService.remove(member);
 		if (ok) {
-			rttr.addFlashAttribute("message","회원 탈퇴하였습니다.");
+			rttr.addFlashAttribute("message", "회원 탈퇴하였습니다.");
 			return "redirect:/list";
-		}
-		else {
+		} else {
 			rttr.addFlashAttribute("message", "회원 탈퇴시 문제가 발생하였습니다.");
 			return "redirect:/info";
 		}
 	}
-	
-	
+
 	@GetMapping("modify")
-		public void modifyForm(String userId,Model model) {
-		Member member=memberService.get(userId);
-		model.addAttribute("member",member);
-//		model.addAttribute(memberService.get(userId));
+	public void modifyForm(Authentication authentication, Model model) {
+		Member member = memberService.get(authentication.getName());
+		model.addAttribute("member", member);
 	}
-	
-	//2.
+
+	// 2.
 	@PostMapping("modify")
-	public String modifyProcess(Member member,  RedirectAttributes rttr) {
+	public String modifyProcess(Member member, RedirectAttributes rttr) {
 		boolean ok = memberService.modify(member);
-		
-		if ( ok) {
+
+		if (ok) {
 			rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다.");
-			return "redirect:/info?id=" +member.getUserId();
-		}
-		else {
+			return "redirect:/info?userId=" + member.getUserId();
+		} else {
 			rttr.addFlashAttribute("message", "회원 정보시 문제가 발생했습니다.");
-			return "redirect:/modify?id="+member.getUserId();
+			return "redirect:/modify?userId=" + member.getUserId();
 		}
+	}
+
+	@GetMapping("welcomeMain")
+	public void welcomMain() {
+
 	}
 }

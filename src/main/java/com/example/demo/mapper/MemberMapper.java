@@ -1,10 +1,12 @@
 package com.example.demo.mapper;
 
-import java.util.*;
+import java.util.List;
 
-
-import org.apache.ibatis.annotations.*;
-
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.domain.Member;
 
@@ -16,22 +18,21 @@ public interface MemberMapper {
 			WHERE userId = #{userId}
 			""")
 	String getNickNameByUserId(String userId);
-	
+
 	// ** 서재권 추가내용
 	@Select("""
 			SELECT * FROM Member
 			WHERE userId = #{userId}
 			""")
 	Member getMemberInfoByUserId(String userId);
-	
 
-	
 	@Insert("""
 			insert into Member
 			(userId, password, name, nickName, birth, gender, address, phone, email, introduce)
 			values (#{userId}, #{password}, #{name} ,#{nickName}, #{birth}, #{gender}, #{address}, #{phone}, #{email}, #{introduce})
 			""")
 	Integer insertMember(Member member);
+
 	////////////////
 	@Select("""
 			SELECT *
@@ -46,36 +47,34 @@ public interface MemberMapper {
 			WHERE userId = #{userId}
 			""")
 	Member selectById(String integer);
-	
-	
 
 	@Delete("""
 			DELETE FROM Member
 			WHERE userId=#{userId}
 			""")
 	Integer deleteById(String userId);
-	
+
 	@Update("""
 			UPDATE Member
 			SET password = #{password},
-				name 	 = #{name},
-				nickName = #{nickName},
-				birth 	 = #{birth},
-				gender 	 = #{gender},
-				address  = #{address},
-				phone	 = #{phone},
-				email	 = #{email},
-				introduce= #{introduce}
+			   name     = #{name},
+			   nickName = #{nickName},
+			   birth     = #{birth},
+			   gender     = #{gender},
+			   address  = #{address},
+			   phone    = #{phone},
+			   email    = #{email},
+			   introduce= #{introduce}
 			WHERE
-				userId = #{userId};
+			   userId = #{userId};
 			""")
 	Integer update(Member member);
 
-	 @Select("""
-         SELECT userId FROM Member
-         WHERE nickName = #{invitedNickName}
-         """)
-   String getUserIdSelectByNickName(String invitedNickName);
+	@Select("""
+			SELECT userId FROM Member
+			WHERE nickName = #{invitedNickName}
+			""")
+	String getUserIdSelectByNickName(String invitedNickName);
 
 	@Select("""
 			SELECT userId FROM Member
@@ -83,5 +82,39 @@ public interface MemberMapper {
 			""")
 	List<String> UserIdSelectBySearch(String search);
 
-	
+	@Update("""
+			UPDATE Member
+			SET password = #{password},
+			   name     = #{name},
+			   nickName = #{nickName},
+			   birth     = #{birth},
+			   gender     = #{gender},
+			   address  = #{address},
+			   phone    = #{phone},
+			   email    = #{email},
+			   introduce= #{introduce}
+			WHERE
+			   id = #{id};
+			""")
+	Integer updateMember(Member member);
+
+	@Select("""
+			SELECT id FROM Member
+			WHERE userId = #{userId}
+			""")
+	Integer getId(String userId);
+
+	@Select("""
+			SELECT *
+			FROM Member
+			WHERE NickName = #{NickName}
+			""")
+	Member selectByNickName(String nickName);
+
+	@Select("""
+			SELECT *
+			FROM Member
+			WHERE email = #{email}
+			""")
+	Member selectByEmail(String email);
 }

@@ -11,10 +11,10 @@ function showList() {
 	$("#chatBox").hide();
 	$("#chatListSearchBtn").show();
 	$("#groupChatListSearchBtn").hide();
-	$("#searchRemove").show();
+	$("#groupSearchRemove").hide();
+	$("searchRemove").show();
 	$("#groupChatRoomListBtn").removeClass("active");
 	$("#personalChatRoomListBtn").addClass("active");
-	$("#groupSearchRemove").hide();
 	$.ajax("/chat/open", {
 		contentType: "application/json",
 		success: function(data) {
@@ -28,14 +28,14 @@ function showList() {
 			<div id="chatListContainer"></div>
 			`)
 			if (insertedList.length > 12) {
-				$("#chatList").css("width", "360px");
+				$("#chatList").css("width", "357px");
 			} else {
 				$("#chatList").css("width", "340px");
 			}
 			for (var i = 0; i < nickNameList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button0">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: black; color: white; border: 0;" class="openChatRoomBtn" id="button0">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[0]}</span>
 									<span>님과의 대화방</span>
@@ -43,7 +43,7 @@ function showList() {
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span>${lastMessageList[0]}</span>
-									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[0]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-light">${chatCount[0]}</span>
 								</div>
 								<input type="hidden" class="inserted" value="${insertedList[0]}">
 								<input type="hidden" class="chatInserted" value="${chatInsertedList[0]}">
@@ -53,7 +53,7 @@ function showList() {
 				for (var j = i - 1; j >= 0; j--) {
 					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
 						$(`#button${j}`).before(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: black; color: white; border: 0;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>
@@ -61,7 +61,7 @@ function showList() {
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span>${lastMessageList[i]}</span>
-									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-light">${chatCount[i]}</span>
 								</div>
 								<input type="hidden" class="inserted" value="${insertedList[i]}">
 								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
@@ -70,7 +70,7 @@ function showList() {
 						break;
 					} else {
 						$(`#button${j}`).after(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: black; color: white; border: 0;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>
@@ -78,7 +78,7 @@ function showList() {
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span>${lastMessageList[i]}</span>
-									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-light">${chatCount[i]}</span>
 								</div>
 								<input type="hidden" class="inserted" value="${insertedList[i]}">
 								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
@@ -151,8 +151,8 @@ $("#chatList").on("click", ".openChatRoomBtn", function() {
             `)
             if (chatList.length > 12) {
 				// 스크롤바가 있을 때의 동작
-				$("#chatBox").css("width", "360px");
-				$(".input-group").css("width", "360px");
+				$("#chatBox").css("width", "357px");
+				$(".input-group").css("width", "357px");
 				$("#chatSearchBox").css("width", "303px");
 				$("#chatSearch").css("width", "232px");
 			} else {
@@ -310,6 +310,27 @@ function keyupHandler(event) {
 	}
 };
 
+function handleKeyUp(event) {
+	var input = event.target;
+	var inputValue = input.value.trim();
+	console.log(inputValue);
+	
+	if(inputValue === "") {
+		$("#chatListSearchText").css("width", "277px");
+		$("#searchRemove").hide();
+		$("#groupSearchRemove").hide();
+	} else {
+		$("#chatListSearchText").css("width", "253px");
+		if($("#personalChatRoomListBtn").hasClass("active")) {
+			$("#groupSearchRemove").hide();
+			$("#searchRemove").show();
+		} else {
+			$("#searchRemove").hide();
+			$("#groupSearchRemove").show();
+		}
+	}
+}
+
 $("#deleteChatRoomModalButton").click(function() {
 	$("#chatContainer").remove("");
 	clearInterval(repeat);
@@ -402,14 +423,14 @@ $("#chatListSearchBtn").click(function() {
 			<div id="chatListContainer"></div>
 			`)
 			if (insertedList.length > 12) {
-				$("#chatList").css("width", "360px");
+				$("#chatList").css("width", "357px");
 			} else {
 				$("#chatList").css("width", "340px");
 			}
 			for (var i = 0; i < nickNameList.length; i++) {
 				if (i === 0) {
 					$("#chatListContainer").append(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button0">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: black; color: white; border: 0;" class="openChatRoomBtn" id="button0">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[0]}</span>
 									<span>님과의 대화방</span>
@@ -417,7 +438,7 @@ $("#chatListSearchBtn").click(function() {
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span>${lastMessageList[0]}</span>
-									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[0]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-light">${chatCount[0]}</span>
 								</div>
 								<input type="hidden" class="inserted" value="${insertedList[0]}">
 								<input type="hidden" class="chatInserted" value="${chatInsertedList[0]}">
@@ -427,7 +448,7 @@ $("#chatListSearchBtn").click(function() {
 				for (var j = i - 1; j >= 0; j--) {
 					if (chatInsertedList[i] > $("#chatListContainer").find("input.chatInserted").val()) {
 						$(`#button${j}`).before(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: black; color: white; border: 0;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>
@@ -435,7 +456,7 @@ $("#chatListSearchBtn").click(function() {
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span>${lastMessageList[i]}</span>
-									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-light">${chatCount[i]}</span>
 								</div>
 								<input type="hidden" class="inserted" value="${insertedList[i]}">
 								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
@@ -444,7 +465,7 @@ $("#chatListSearchBtn").click(function() {
 						break;
 					} else {
 						$(`#button${j}`).after(`
-							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: #375bac; color: white;" class="openChatRoomBtn" id="button${i}">
+							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px; background-color: black; color: white; border: 0;" class="openChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span class="nickNameSpan">${nickNameList[i]}</span>
 									<span>님과의 대화방</span>
@@ -452,7 +473,7 @@ $("#chatListSearchBtn").click(function() {
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
 									<span>${lastMessageList[i]}</span>
-									<span style="margin-left: auto;"class="badge text-bg-secondary">${chatCount[i]}</span>
+									<span style="margin-left: auto;"class="badge text-bg-light">${chatCount[i]}</span>
 								</div>
 								<input type="hidden" class="inserted" value="${insertedList[i]}">
 								<input type="hidden" class="chatInserted" value="${chatInsertedList[i]}">
@@ -467,7 +488,9 @@ $("#chatListSearchBtn").click(function() {
 })
 
 $("#searchRemove").click(function() {
+	$("#chatListSearchText").css("width", "277px");
 	$("#chatListSearchText").val("");
+	$("#searchRemove").hide();
 	showList();
 })
 
@@ -540,11 +563,13 @@ $("#chatSearchBtn").click(function() {
 	}
 });
 
+$("#fileInputBtn").click(function() {
+	$("#fileInputHiddenBtn").click();
+});
+
 
 $("#personalChatRoomListBtn").click(function() {
 	showList();
-	$(this).addClass("active");
-	$("#groupChatRoomListBtn").removeClass("active");
 });
 
 $(document).ready(function() {

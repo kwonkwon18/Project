@@ -10,7 +10,7 @@ $(document).ready(function() {
 				$("#NumberOfAlarm").css("display", "block");
 			}
 			console.log("러닝" + data.confirmationTotal)
-			 $("#NumberOfAlarm").html("❕");
+			$("#NumberOfAlarm").html("❕");
 		}
 	})
 });
@@ -83,6 +83,7 @@ $("#alarmList").click(function() {
 					<div id = "postOk${boardId}" class="btn btn-outline-primary mb-3 " style="width: 500px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
         🏃‍♀️ ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; <button class="btn btn-primary memberConfirmation deleteAlarm" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button"  value="${boardId}" style="justify-content: flex-end;">확인</button>
+        &nbsp;&nbsp;<button class="btn btn-danger justConfirmation deleteAlarm" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button"  value="${boardId}" style="justify-content: flex-end;">닫기</button>
     </div>
     </div>
     
@@ -221,6 +222,37 @@ $("#runningMemberAlarm").on("click", ".memberConfirmation", function() {
 		error: function() {
 			alert("접수 오류발생.");
 		},
+		complete: function() {
+			location.href = "/running/id/" + boardId;
+		}
+	});
+});
+
+$("#runningMemberAlarm").on("click", ".justConfirmation", function() {
+	var memberId = $(this).data('board-memberid');
+	var userId = $(this).data('board-userid');
+	var boardId = $(this).data('board-boardid');
+	var title = $(this).data('board-title');
+
+	console.log(memberId);
+	console.log(userId);
+	console.log(boardId);
+	console.log(title);
+
+	const data = { boardId, userId, memberId };
+	console.log(data);
+
+	$.ajax("/running/confirmation", {
+		method: "post",
+		contentType: "application/json",
+		data: JSON.stringify(data),
+		success: function(data) {
+			$("#offcanvasClose").click();
+			showGroupList();
+		},
+		error: function() {
+			alert("접수 오류발생.");
+		},
 		/*complete: function() {
 			location.href = "/running/id/" + boardId;
 		}*/
@@ -252,7 +284,8 @@ $("#runningMemberAlarm").on("click", ".poserConfirmation", function() {
 		},
 		error: function() {
 			alert("오류발생.");
-		},
+		}
+		,
 		complete: function() {
 			hostPost.remove(); // AJAX 호출이 완료된 후 hostpost div를 삭제
 		}

@@ -41,7 +41,7 @@
 				</li>
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item">
-						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/my_page" style="color: white;">마이페이지  </a>
+						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/totalMyPage" style="color: white;">마이페이지  </a>
 					</li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">

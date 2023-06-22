@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -77,5 +78,31 @@ public class MemberService {
 		}
 
 		return cnt == 1;
+	}
+
+	public boolean modify(Member member) {
+		System.out.println(member);
+		member.setId(mapper.getId(member.getUserId()));
+		int cnt = mapper.updateMember(member);
+		System.out.println("@@@" + cnt);
+
+		return cnt == 1;
+	}
+
+	public Map<String, Object> IDCheck(String userId) {
+		Member member = mapper.selectById(userId);
+
+		return Map.of("available", member == null);
+	}
+
+	public Map<String, Object> checkNickName(String nickName) {
+		Member member = mapper.selectByNickName(nickName);
+		return Map.of("available", member == null);
+	}
+
+	public Map<String, Object> checkEmail(String email) {
+		Member member = mapper.selectByEmail(email);
+
+		return Map.of("available", member == null);
 	}
 }

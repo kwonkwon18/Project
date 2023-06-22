@@ -26,7 +26,7 @@
 		<div style="justify-content: center; padding-left: 24px; padding-right: 24px; padding-bottom: 32px; padding-top: 32px; align-items: center; display: flex;">
 			<div class="row" style="width: 100%;">
 				<div style="flex: 0 0 auto; width: 90%; font-size: 2.5rem; line-height: 2.5rem;">${MyNickName }</div>
-				<button type="button" class="btn" style="flex: 0 0 auto; width: 10%; font-weight: 500; font-size: .875rem; line-height: 1.25rem; padding-top: 0.5rem; padding-bottom: 0.5rem; border: 1px solid hsla(220, 9%, 46%, .3); border-radius: 0.375rem; justify-content: center; display: inline-flex;" onclick="location.href='/my_page'">나의 계정</button>
+				<button type="button" class="btn" style="flex: 0 0 auto; width: 10%; font-weight: 500; font-size: .875rem; line-height: 1.25rem; padding-top: 0.5rem; padding-bottom: 0.5rem; border: 1px solid hsla(220, 9%, 46%, .3); border-radius: 0.375rem; justify-content: center; display: inline-flex;" onclick="location.href='/totalMyPage'">나의 계정</button>
 			</div>
 		</div>
 		<div style="column-gap: 2rem; border-top: 1px solid hsla(220, 9%, 46%, .3); display: flex; position: relative;">

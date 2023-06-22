@@ -149,7 +149,7 @@
 						<input id="inputIntroduce" type="text" class="form-control" name="introduce" value="${member.introduce }" />
 					</div>
 					<div class="mb-3">
-						<input id="signupSubmit" class="btn btn-success" type="submit" value="가입">
+						<input id="signupSubmit" class="btn btn-dark" type="submit" value="Sign Up">
 					</div>
 				</form>
 			</div>

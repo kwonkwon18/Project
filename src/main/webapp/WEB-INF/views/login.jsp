@@ -52,7 +52,7 @@ input[type="text"], input[type="password"] {
 					</div>
 					<br />
 					<div class="mb-3" style="margin-left:120px;">
-						<input class="btn btn-dark" style="width: 412.8px; height: 39px;" type="submit" value="로그인">
+						<input class="btn btn-dark" style="width: 412.8px; height: 39px;" type="submit" value="Login">
 					</div>
 				</form>
 			</div>

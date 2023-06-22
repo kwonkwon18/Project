@@ -27,10 +27,10 @@
 
 	<!-- 본문  -->
 
-	<div class="container-lg">
+	<div class="container-lg" style="margin: auto;">
+		<div id="map" style="width: 500px; height: 500px;"></div>
 
 		<div class="row justify-content-center">
-			<div id="map" style="width: 500px; height: 500x;"></div>
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
 					<div class="me-auto">
@@ -92,7 +92,10 @@
 							<input type="text" name="id" value="${board.id }" />
 						</form>
 					</div>
-
+				</div>
+			</div>
+		</div>
+	</div>
 
 					<!-- Modal -->
 						<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

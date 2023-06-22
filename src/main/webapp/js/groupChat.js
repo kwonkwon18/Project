@@ -334,8 +334,8 @@ $("#sendGroupChatBtn").click(function() {
 	formData.append("chatRoomId", chatRoomId);
 
 	// 파일 선택된 경우 FormData에 파일 추가
-	const files = $("#fileInputBtn")[0].files;
-	if ($("#fileInputBtn")[0].files !== undefined) {
+	const files = $("#fileInputHiddenBtn")[0].files;
+	if ($("#fileInputHiddenBtn")[0].files !== undefined) {
 		if (files.length > 0) {
 			for (let i = 0; i < files.length; i++) {
 				formData.append("files", files[i]);
@@ -349,6 +349,7 @@ $("#sendGroupChatBtn").click(function() {
 		contentType: false,
 		complete: function() {
 			$("#chatTextArea").val("");
+			$("#fileInputHiddenBtn").val("");
 			scrollToBottom();
 		}
 	})

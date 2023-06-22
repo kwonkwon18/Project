@@ -204,7 +204,7 @@ $("#runningCurrentListBtn").click(function() {
 										<label for="" class="form-label">모임시간</label>
 										<input id="timeText" type="text" class="form-control" value="${totalMyData[i].time}" readonly />
 									</div>
-									<button type="button" onclick="location.href='/climbing/id/${totalMyData[i].id}'">내 게시물 상세 보기</button>
+									<button type="button" onclick="location.href='/running/id/${totalMyData[i].id}'">내 게시물 상세 보기</button>
 									<input class="LatSubmit${idNumber}" type="hidden" name="Lat" value="${totalMyData[i].lat}" />
 									<input class="LngSubmit${idNumber}" type="hidden" name="Lng" value="${totalMyData[i].lng}" />
 								</div>
@@ -270,7 +270,7 @@ $("#runningMyPostListBtn").click(function() {
 											<label for="" class="form-label">모임시간</label>
 											<input id="timeText" type="text" class="form-control" value="${totalMyData[i].time}" readonly />
 										</div>
-										<button type="button" onclick="location.href='/climbing/id/${totalMyData[i].id}'">내 게시물 상세 보기</button>
+										<button type="button" onclick="location.href='/running/id/${totalMyData[i].id}'">내 게시물 상세 보기</button>
 										<input class="LatSubmit${idNumber}" type="hidden" name="Lat" value="${totalMyData[i].lat}" />
 										<input class="LngSubmit${idNumber}" type="hidden" name="Lng" value="${totalMyData[i].lng}" />
 									</div>
@@ -337,7 +337,7 @@ $("#runningYourPostListBtn").click(function() {
 											<label for="" class="form-label">모임시간</label>
 											<input id="timeText" type="text" class="form-control" value="${totalMyData[i].time}" readonly />
 										</div>
-										<button type="button" onclick="location.href='/climbing/id/${totalMyData[i].id}'">내 게시물 상세 보기</button>
+										<button type="button" onclick="location.href='/running/id/${totalMyData[i].id}'">내 게시물 상세 보기</button>
 										<input class="LatSubmit${idNumber}" type="hidden" name="Lat" value="${totalMyData[i].lat}" />
 										<input class="LngSubmit${idNumber}" type="hidden" name="Lng" value="${totalMyData[i].lng}" />
 									</div>

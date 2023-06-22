@@ -45,7 +45,7 @@
 	border: 1px solid #ced4da;
 	border-radius: 0.25rem;
 	padding: 1rem;
-	background-color: #f8f9fa;
+	background-color: white;
 	margin-bottom: 2rem;
 	width: 600px; /* Adjust the width as desired */
 	margin: 0 auto;
@@ -62,42 +62,42 @@
 		<div class="row justify-content-center">
 			<div class="registration-container">
 
-				<h1>회원 정보</h1>
+				<h1><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%ED%9A%8C%EC%9B%90%EC%A0%95%EB%B3%B4.png" alt="" /></h1>
 				<!-- .mb-3*4>label+input -->
 				<div class="mb-3">
-					<label class="form-label" for="">아이디</label>
+					<label class="form-label" for=""><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%95%84%EC%9D%B4%EB%94%94.png" alt="" /></label>
 					<input class="form-control" type="text" value="${member.userId }" name="userId" readonly />
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="">별명</label>
+					<label class="form-label" for=""><img style="margin-left: -1px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EB%B3%84%EB%AA%85.png" alt="" /></label>
 					<input class="form-control" type="text" value="${member.nickName }" name="nickName" readonly />
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="">생일</label>
+					<label class="form-label" for=""><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%83%9D%EC%9D%BC.png" alt="" /></label>
 					<input class="form-control" type="text" value="${member.birth }" name="birth" readonly />
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="">성별</label>
+					<label class="form-label" for=""><img style="margin-left: -4px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%84%B1%EB%B3%84.png" alt="" /></label>
 					<input class="form-control" type="text" value="${member.gender }" name="gender" readonly />
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="">주소</label>
+					<label class="form-label" for=""><img style="margin-left: -3px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%A3%BC%EC%86%8C.png" alt="" /></label>
 					<input class="form-control" type="text" value="${member.address }" name="address" readonly />
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="">핸드폰 번호</label>
+					<label class="form-label" for=""><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%A0%84%ED%99%94%EB%B2%88%ED%98%B8.png" alt="" /></label>
 					<input class="form-control" type="text" value="${member.phone }" name="phone" readonly />
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="">이메일</label>
+					<label class="form-label" for=""><img style="margin-left: -3px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%9D%B4%EB%A9%94%EC%9D%BC.png" alt="" /></label>
 					<input class="form-control" type="text" value="${member.email }" name="email" readonly />
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="">소개</label>
+					<label class="form-label" for=""><img style="margin-left: -1px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%86%8C%EA%B0%9C.png" alt="" /></label>
 					<input class="form-control" type="text" value="${member.introduce }" name="introduce" readonly />
 				</div>
-				<a class="btn btn-secondary" href="/modify?userId=${member.userId }">수정</a>
-				<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#confirmModal">회원탈퇴</button>
+				<a class="btn btn-dark" href="/modify?userId=${member.userId }">Modify</a>
+				<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#confirmModal">Withdrawal</button>
 			</div>
 		</div>
 	</div>

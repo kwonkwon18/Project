@@ -52,6 +52,7 @@ public class RunningCommentService {
 
 	public Map<String, Object> update(RunningComment comment) {
 		int cnt = mapper.update(comment);
+		System.out.println(cnt + "100");
 		var res = new HashMap<String, Object>();
 		if (cnt == 1) {
 			res.put("message", "댓글이 수정되었습니다.");

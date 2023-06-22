@@ -40,19 +40,6 @@ public interface RunningPartyMapper {
 	Integer deleteByBoardId(Integer boardId);
 
 	@Select("""
-			SELECT
-				boardId,
-				userId,
-				memberId,
-			    r.title
-			  FROM RunningParty p
-			  LEFT JOIN RunningBoard r on r.id = p.boardId
-			WHERE userId = #{userId} AND participation = 0;
-			""")
-	@Options(useGeneratedKeys = true, keyProperty = "id")
-	List<RunningParty> selectAlarmList(RunningParty runningParty);
-
-	@Select("""
 			        SELECT
 				count(*)
 			  FROM RunningParty
@@ -87,11 +74,10 @@ public interface RunningPartyMapper {
 //	        """)
 //	Integer makeMate(RunningParty runningParty, String host);
 
-	
 	@Insert("""
-	        insert into RunningParty (boardId, memberId, userId, host, guest, participation)
-	        values (#{boardId}, #{userId}, #{userId}, #{host}, #{host}, 1)
-	        """)
+			insert into RunningParty (boardId, memberId, userId, host, guest, participation)
+			values (#{boardId}, #{userId}, #{userId}, #{host}, #{host}, 1)
+			""")
 	Integer makeMate(Integer boardId, String userId, String host);
 
 	@Select("""
@@ -103,9 +89,64 @@ public interface RunningPartyMapper {
 			    r.title
 			  FROM RunningParty p
 			  LEFT JOIN RunningBoard r on r.id = p.boardId
-			WHERE userId = #{userId} AND participation = 1 or participation = 2 ;
+			WHERE guest = #{userId} AND (participation = 1 or participation = 2) and confirmation = 1 ;
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	List<RunningParty> selectMemberAlarmList(RunningParty runningParty);
+	List<RunningParty> selectMemberAlarmList(String userId);
+	
+	@Select("""
+			SELECT
+				boardId,
+				userId,
+				memberId,
+			    r.title
+			  FROM RunningParty p
+			  LEFT JOIN RunningBoard r on r.id = p.boardId
+			WHERE host = #{userId} AND participation = 0 and confirmation = 1
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	List<RunningParty> selectAlarmList(String userId);
+
+	@Update("""
+			UPDATE RunningParty
+			SET
+				confirmation = 0
+			WHERE
+				userId = #{userId} and memberId = #{userId} and boardId = #{boardId}
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	Integer confirmationHost(RunningParty runningParty);
+
+	
+	@Update("""
+			UPDATE RunningParty
+			SET
+				confirmation = 0
+			WHERE
+				userId = #{userId} and memberId = #{memberId} and boardId = #{boardId}
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	Integer confirmationGuest(RunningParty runningParty);
+
+	
+	@Select("""
+			SELECT
+				count(*)
+			  FROM RunningParty p
+			  LEFT JOIN RunningBoard r on r.id = p.boardId
+			WHERE host = #{userId} AND participation = 0 and confirmation = 1
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	Integer countOfAlarmHost(String userId);
+	
+	@Select("""
+			SELECT
+				count(*)
+			  FROM RunningParty p
+			  LEFT JOIN RunningBoard r on r.id = p.boardId
+			WHERE guest = #{userId} AND (participation = 1 or participation = 2) and confirmation = 1 ;
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	Integer countOfAlarmGuest(String userId);
 
 }

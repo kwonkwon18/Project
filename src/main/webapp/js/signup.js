@@ -1,8 +1,48 @@
+// 이메일 중복확인 버튼이 클릭되면
+$("#checkEmailBtn").click(function() {
+	const email = $("#inputEmail").val();
+	$.ajax("checkEmail/" + email, {
+		success: function(data) {
+			
+			if (data.available) {
+				$("#availableEmailMessage").removeClass("d-none");
+				$("#notAvailableEmailMessage").addClass("d-none");
+			} else {
+				$("#availableEmailMessage").addClass("d-none");
+				$("#notAvailableEmailMessage").removeClass("d-none");
+			}
+		}
+	});
+});
+
+
+// 별명 중복확인 버튼이 클릭되면
+$("#checkNickNameBtn").click(function() {
+	const NickName = $("#inputNickName").val();
+	
+	$.ajax("/checkNickName/" + NickName, {
+		success: function(data) {
+			`{"available": true}`
+			
+			if (data.available) {
+				$("#availableNickNameMessage").removeClass("d-none");
+				$("#notAvailableNickNameMessage").addClass("d-none");
+			} else {
+				$("#availableNickNameMessage").addClass("d-none");
+				$("#notAvailableNickNameMessage").removeClass("d-none");
+			}
+		}
+	});
+});
+
+
+
+
 // id 중복확인 버튼이 클릭되면
 $("#checkIdBtn").click(function() {
 	const userid = $("#inputId").val();	
 	// 입력한 ID와 ajax 요청 보내서
-	$.ajax("/member/checkId/" + userid, {
+	$.ajax("IDCheck/" + userid, {
 		success: function(data) {
 			// `{"available": true}` 
 			
@@ -12,7 +52,7 @@ $("#checkIdBtn").click(function() {
 				$("#notAvailableIdMessage").addClass("d-none");
 			} else {
 				// 사용가능하지 않다는 메세지 출력
-				$("#availableIdMessage").addClass("d-none");
+				$("#avai lableIdMessage").addClass("d-none");
 				$("#notAvailableIdMessage").removeClass("d-none");
 			}
 		}

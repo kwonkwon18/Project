@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +29,7 @@
 					<div>
 						<div class="mb-3">
 							<label for="" class="form-label">제목</label>
-							<input type="text" name = "title" class="form-control" value="${board.title }" />
+							<input type="text" name="title" class="form-control" value="${board.title }" />
 						</div>
 
 						<h1>
@@ -36,7 +37,7 @@
 						</h1>
 
 
-						<!-- 그림 파일 출력  -->
+<%-- 						<!-- 그림 파일 출력  -->
 						<div class="mb-3">
 							<c:forEach items="${board.fileName }" var="fileName">
 								<div>
@@ -46,20 +47,44 @@
 								</div>
 							</c:forEach>
 						</div>
+ --%>
+						<!-- 그림 파일 출력 -->
+						<div class="mb-3">
+							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+								<div class="mb-3">
+									<div class="row">
+										<div class="col-2 d-flex">
+											<div class="form-check form-switch m-auto">
+												<input name="removeFiles" value="${fileName }" class="form-check-input" type="checkbox" role="switch" id="removeCheckBox${status.index }">
+												<label class="form-check-label" for="removeCheckBox${status.index }">
+													<i class="fa-solid fa-trash-can text-danger"></i>
+												</label>
+											</div>
+										</div>
+
+										<div class="col-10">
+											<div>
+												<img class="img-thumbnail img-fluid" src="${bucketUrl }/runningToday/${board.id }/${fileName}" alt="" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
 
 						<div class="mb-3">
 							<label for="" class="form-label">본문</label>
-							<textarea name = "body" class="form-control" rows="10">${board.body }</textarea>
+							<textarea name="body" class="form-control" rows="10">${board.body }</textarea>
 						</div>
 
 						<div class="mb-3">
 							<label for="" class="form-label">작성자</label>
-							<input id="writerText" name = "writer" type="text" readonly class="form-control" value="${board.writer }" />
+							<input id="writerText" name="writer" type="text" readonly class="form-control" value="${board.writer }" />
 						</div>
 
 						<div class="mb-3">
 							<label for="" class="form-label">작성일시</label>
-							<input type="text" name = "inserted" readonly class="form-control" value="${board.inserted }" />
+							<input type="text" name="inserted" readonly class="form-control" value="${board.inserted }" />
 						</div>
 
 						<!-- 새 그림파일 추가   -->
@@ -78,7 +103,14 @@
 			</div>
 		</div>
 	</div>
+	
+	<sec:authorize access="isAuthenticated()">
+		<my:chatBtn></my:chatBtn>
+		<script src="/js/groupChat.js"></script>
+		<script src="/js/chat.js" charset="UTF-8"></script>
+	</sec:authorize>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<script src="/js/navBar.js"></script>
 </body>
 </html>

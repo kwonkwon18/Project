@@ -29,7 +29,7 @@ function showGroupList() {
 					$("#chatListContainer").append(`
 						<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button0">
 							<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-								<span class="titleSapn">${titleList[0]}</span>
+								<span class="titleSpan">${titleList[0]}</span>
 								<span class="ms-auto">${timeList[0]}</span>
 							</div>
 							<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
@@ -46,7 +46,7 @@ function showGroupList() {
 						$(`#button${j}`).before(`
 							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span class="titleSapn">${titleList[i]}</span>
+									<span class="titleSpan">${titleList[i]}</span>
 									<span class="ms-auto">${timeList[i]}</span>
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
@@ -62,7 +62,7 @@ function showGroupList() {
 						$(`#button${j}`).after(`
 							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span class="titleSapn">${titleList[i]}</span>
+									<span class="titleSpan">${titleList[i]}</span>
 									<span class="ms-auto">${timeList[i]}</span>
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
@@ -83,7 +83,7 @@ function showGroupList() {
 
 $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 	var title = $(this).find(".titleSpan").text();
-	document.addEventListener('keyup', keyupHandler);
+	document.addEventListener('keyup', groupKeyupHandler);
 	$("#chatList").hide();
 	$("#chatBox").show();
 	$(".chatNameTag").remove();
@@ -91,6 +91,7 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 	$("#sendChatBtn").hide();
 	$("#dChat").hide();
 	$("#dGroupChat").show();
+	$("#chatMemberListBtn").show();
 	$(`#returnBtn`).after(`
 		<span style="white-space: nowrap; position: absolute; left: 50%; transform: translateX(-50%);" class="chatNameTag">${title} 채팅방</span>
 	`);
@@ -111,7 +112,7 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 					if (chat.senderId === myId) {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
-	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 	            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 	          						<div>
 										<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
@@ -120,7 +121,7 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 		                    `)
 						} else {
 							$("#chatContainer").append(`
-	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 	            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 	        	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
 	    	                    </div>
@@ -129,18 +130,18 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 					} else {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
-		                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+		                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 	          						<div>
 										<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 									</div>
-		                            <div>${chat.time}</div>
+		                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 		                        </div>
 		                    `)
 						} else {
 							$("#chatContainer").append(`
-		                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+		                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 		                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-		                            <div>${chat.time}</div>
+		                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 		                        </div>
 		                    `)
 						}
@@ -150,7 +151,7 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">${chat.senderId}</div>
-	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 	            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 	          						<div>
 										<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
@@ -160,7 +161,7 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 						} else {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">${chat.senderId}</div>
-	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 	            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 	        	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
 	    	                    </div>
@@ -170,25 +171,25 @@ $("#chatList").on("click", ".openGroupChatRoomBtn", function() {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-start" style="padding-left: 10px;">${chat.senderId}</div>
-		                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+		                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 	          						<div>
 										<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 									</div>
-		                            <div>${chat.time}</div>
+		                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 		                        </div>
 		                    `)
 						} else {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-start" style="padding-left: 10px;">${chat.senderId}</div>
-		                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+		                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 		                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-		                            <div>${chat.time}</div>
+		                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 		                        </div>
 		                    `)
 						}
 					}
 				}
-					lastSenderId = chat.senderId;
+				lastSenderId = chat.senderId;
 			}
 			scrollToBottom();
 			if (chatList[chatList.length - 1] === undefined) {
@@ -214,11 +215,13 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 				return;
 			}
 			for (const chat of chatList) {
+				console.log(lastSenderId);
+				console.log(chat.senderId);
 				if (lastSenderId === chat.senderId) {
 					if (chat.senderId === chatList1.myUserId) {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
-	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 	            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 	          						<div>
 										<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
@@ -227,7 +230,7 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 		                    `)
 						} else {
 							$("#chatContainer").append(`
-	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 	            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 	        	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
 	    	                    </div>
@@ -236,18 +239,18 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 					} else {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
-		                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+		                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 	          						<div>
 										<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 									</div>
-		                            <div>${chat.time}</div>
+		                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 		                        </div>
 		                    `)
 						} else {
 							$("#chatContainer").append(`
-		                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+		                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 		                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-		                            <div>${chat.time}</div>
+		                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 		                        </div>
 		                    `)
 						}
@@ -257,7 +260,7 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">${chat.senderId}</div>
-	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 	            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 	          						<div>
 										<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
@@ -267,7 +270,7 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 						} else {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">${chat.senderId}</div>
-	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;">
+	                	        <div class="d-flex justify-content-end" style="padding-right: 10px;" id="${chat.id}">
 	            	                <div style="font-size: 12px; margin-top: auto; margin-right: 2px;">${chat.time}</div>
 	        	                    <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div> 
 	    	                    </div>
@@ -277,25 +280,25 @@ function currentGroupChatId(lastChatIdParam, chatRoomId) {
 						if (chat.fileName !== null) {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-start" style="padding-left: 10px;">${chat.senderId}</div>
-		                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+		                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 	          						<div>
 										<img class="img-fluid img-thumbnail" src="${chat.imgUrl}" height="200" width="200" />
 									</div>
-		                            <div>${chat.time}</div>
+		                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 		                        </div>
 		                    `)
 						} else {
 							$("#chatContainer").append(`
 	                	        <div class="d-flex justify-content-start" style="padding-left: 10px;">${chat.senderId}</div>
-		                        <div class="d-flex justify-content-start" style="padding-left: 10px;">
+		                        <div class="d-flex justify-content-start" style="padding-left: 10px;" id="${chat.id}">
 		                            <div style=" padding: 5px; background-color: #f0f0f0; border-radius: 15px; margin-bottom: 5px; word-break: break-all; max-width: 200px;">${chat.message}</div>
-		                            <div>${chat.time}</div>
+		                            <div style="font-size: 12px; margin-top: auto; margin-left: 2px;">${chat.time}</div>
 		                        </div>
 		                    `)
 						}
 					}
 				}
-			lastSenderId = chat.senderId;
+				lastSenderId = chat.senderId;
 			}
 			lastChatId = chatList[chatList.length - 1].id;
 			scrollToBottom();
@@ -358,7 +361,7 @@ $("#groupChatListSearchBtn").click(function() {
 					$("#chatListContainer").append(`
 						<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button0">
 							<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-								<span class="titleSapn">${titleList[0]}</span>
+								<span class="titleSpan">${titleList[0]}</span>
 								<span class="ms-auto">${timeList[0]}</span>
 							</div>
 							<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
@@ -375,7 +378,7 @@ $("#groupChatListSearchBtn").click(function() {
 						$(`#button${j}`).before(`
 							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span class="titleSapn">${titleList[i]}</span>
+									<span class="titleSpan">${titleList[i]}</span>
 									<span class="ms-auto">${timeList[i]}</span>
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
@@ -391,7 +394,7 @@ $("#groupChatListSearchBtn").click(function() {
 						$(`#button${j}`).after(`
 							<button type="button" style="width: 100%; height: 60px; margin-bottom: 5px;" class="openGroupChatRoomBtn" id="button${i}">
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
-									<span class="titleSapn">${titleList[i]}</span>
+									<span class="titleSpan">${titleList[i]}</span>
 									<span class="ms-auto">${timeList[i]}</span>
 								</div>
 								<div class="d-flex" style="padding-right: 10px; padding-left: 10px;">
@@ -413,6 +416,31 @@ $("#groupChatListSearchBtn").click(function() {
 $("#groupSearchRemove").click(function() {
 	$("#chatListSearchText").val("");
 	showGroupList();
+})
+
+function groupKeyupHandler(event) {
+	if (event.key === 'Enter') {
+		document.getElementById('sendGroupChatBtn').click();
+	}
+};
+
+$("#chatMemberListBtn").click(function() {
+	$.ajax("/groupChat/memberCheck?lastChatRoomId=" + lastChatRoomId, {
+		success: function(data) {
+			const memberList = data.memberList;
+			console.log(lastChatRoomId);
+			console.log(memberList);
+			for (var i = 0; i < memberList.length; i++) {
+				$(".list-group").append(`
+					<li class="list-group-item">${memberList[i]}</li>
+				`)
+			}
+		}
+	})
+})
+
+$("#chatMemberListModalClose").click(function() {
+	$(".list-group").empty();
 })
 
 $("#groupChatRoomListBtn").click(function() {

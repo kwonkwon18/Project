@@ -70,7 +70,7 @@ button.active {
 
 
 <div style="border: 1px solid black; padding: 10px; overflow-y: auto; float: left; height: 65vh; width: 340px; display: none; background-color: white; border-radius: 3%; margin-bottom: 15px; margin-left: -1px; z-index: 1;" id="chatList" class="position-fixed bottom-0 start-0">
-	<div style="position: fixed; top: 308px; width: 318px; background-color: white;">
+	<div style="position: fixed; top: 33.5vh; width: 318px; background-color: white;">
 		<span style="position: absolute; left: 50%; transform: translateX(-50%);">
 			<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/ChatRoom/%EC%B1%84%ED%8C%85%EB%B0%A9+%EB%A6%AC%EC%8A%A4%ED%8A%B8.png" alt="" />
 		</span>

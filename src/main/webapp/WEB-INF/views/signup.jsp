@@ -44,7 +44,7 @@
 	border: 1px solid #ced4da;
 	border-radius: 0.25rem;
 	padding: 1rem;
-	background-color: #f8f9fa;
+	background-color: white;
 	margin-bottom: 2rem;
 	width: 600px; /* Adjust the width as desired */
 	margin: 0 auto;
@@ -59,36 +59,37 @@
 
 			<div class="registration-container">
 				<!-- Added container -->
-				<h1>회원가입</h1>
+				<h1><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.png" alt="" /></h1>
+				<br />
 				<form method="post">
 					<div class="mb-3">
-						<label for="inputId" class="form-label">아이디</label>
+						<label for="inputId" class="form-label"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%95%84%EC%9D%B4%EB%94%94.png" alt="" /></label>
 						<input id="inputId" type="text" class="form-control" name="userId" value="${member.userId }" />
 						<!-- <div id="availableIdMessage">사용 가능한 ID입니다.</div>
                   <div id="notAvailableIdMessage">사용 불가능한 ID입니다.</div>
                   <button type="button" id="checkIdBtn" class="btn btn-secondary">중복확인</button> -->
 					</div>
 					<div class="mb-3">
-						<label for="inputPassword" class="form-label">패스워드</label>
+						<label for="inputPassword" class="form-label"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%ED%8C%A8%EC%8A%A4%EC%9B%8C%EB%93%9C.png" alt="" /></label>
 						<input id="inputPassword" type="password" class="form-control" name="password" value="${member.password }" />
 					</div>
 					<div class="mb-3">
-						<label for="inputEmail" class="form-label">이름</label>
+						<label for="inputEmail" class="form-label"><img style="margin-left: -2px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%9D%B4%EB%A6%84.png" alt="" /></label>
 						<input id="inputEmail" type="text" class="form-control" name="name" value="${member.name }" />
 					</div>
 					<div class="mb-3">
-						<label for="inputNickName" class="form-label">별명</label>
+						<label for="inputNickName" class="form-label"><img style="margin-left: -1px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EB%B3%84%EB%AA%85.png" alt="" /></label>
 						<input id="inputNickName" type="text" class="form-control" name="nickName" value="${member.nickName }" />
 						<!-- <div id="availableNickNameMessage">사용 가능한 별명입니다.</div>
                   <div id="notAvailableNickNameMessage">사용 불가능한 별명입니다.</div>
                   <button type="button" id="checkNickNameBtn" class="btn btn-secondary">중복확인</button> -->
 					</div>
 					<div class="mb-3">
-						<label for="inputEmail" class="form-label">생일</label>
+						<label for="inputEmail" class="form-label"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%83%9D%EC%9D%BC.png" alt="" /></label>
 						<input id="inputEmail" type="text" class="form-control" name="birth" value="${member.birth }" />
 					</div>
 					<div class="mb-3">
-						<label for="inputGender" class="form-label">성별</label>
+						<label for="inputGender" class="form-label"><img style="margin-left: -5px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%84%B1%EB%B3%84.png" alt="" /></label>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="gender" id="genderInputMale" value="남자" checked>
 							<label class="form-check-label" for="genderInputMale"> 남자 </label>
@@ -99,7 +100,7 @@
 						</div>
 					</div>
 					<div class="mb-3">
-						<label for="inputEmail" class=form-label">주소</label>
+						<label for="inputEmail" class=form-label"><img style="margin-left: -3px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%A3%BC%EC%86%8C.png" alt="" /></label>
 						<%-- <input id="inputEmail" type="text" class="form-control" name="address" value="${member.address }" /> --%>
 						<select class="form-control" name="address" id="address">
 							<option value="강남구">강남구</option>
@@ -133,18 +134,18 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="inputPhone" class="form-label">핸드폰 번호</label>
+						<label for="inputPhone" class="form-label"><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%A0%84%ED%99%94%EB%B2%88%ED%98%B8.png" alt="" /></label>
 						<input id="inputPhone" type="text" class="form-control" name="phone" value="${member.phone }" />
 					</div>
 					<div class="mb-3">
-						<label for="inputEmail" class="form-label">이메일</label>
+						<label for="inputEmail" class="form-label"><img style="margin-left: -3px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%9D%B4%EB%A9%94%EC%9D%BC.png" alt="" /></label>
 						<input id="inputEmail" type="text" class="form-control" name="email" value="${member.email }" />
 						<!-- <div id="availableEmailMessage">사용 가능한 이메일입니다.</div>
                   <div id="notAvailableEmailMessage">사용 불가능한 이메일입니다.</div>
                   <button type="button" id="checkEmailBtn" class="btn btn-secondary">중복확인</button> -->
 					</div>
 					<div class="mb-3">
-						<label for="inputIntroduce" class="form-label">소개</label>
+						<label for="inputIntroduce" class="form-label"><img style="margin-left: -1px;" src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/signup/%EC%86%8C%EA%B0%9C.png" alt="" /></label>
 						<input id="inputIntroduce" type="text" class="form-control" name="introduce" value="${member.introduce }" />
 					</div>
 					<div class="mb-3">

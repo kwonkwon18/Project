@@ -50,7 +50,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item">
-						<button class="nav-item btn btn-primary" style="width: 40.23px; height: 38.21px; align-items: center; justify-content: center; display: flex; margin-right: 10px;">
+						<button class="nav-item btn btn-primary" style="width: 40px; height: 40px; align-items: center; justify-content: center; display: flex; margin-right: 10px;">
 							<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/running/myPage">
 								<i class="fa-regular fa-bookmark btn btn-primary"></i>
 							</a>

@@ -41,11 +41,11 @@
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/restaurant" style="color: yellow;">맛집 찾기</a>
 				</li>
-				<sec:authorize access="isAuthenticated()">
-					<li class="nav-item">
-						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/myPage" style="color: yellow;">마이페이지</a>
-					</li>
-				</sec:authorize>
+<%-- 				<sec:authorize access="isAuthenticated()"> --%>
+<!-- 					<li class="nav-item"> -->
+<%-- 						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/myPage" style="color: yellow;">마이페이지</a> --%>
+<!-- 					</li> -->
+<%-- 				</sec:authorize> --%>
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item">
 						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/logout" style="color: red;">로그아웃</a>
@@ -57,7 +57,7 @@
 					</li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
-					<button class="nav-item btn btn-primary" style="width: 40.23px; height: 38.21px; align-items: center; justify-content: center; display: flex; margin-right: 10px;">
+					<button class="nav-item btn btn-primary" style="width: 40px; height: 40px; align-items: center; justify-content: center; display: flex; margin-right: 10px;">
 						<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/climbing/myPage">
 							<i style="color: white;" class="fa-regular fa-bookmark"></i>
 						</a>

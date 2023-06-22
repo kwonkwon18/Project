@@ -79,7 +79,7 @@
 					</div>
 					<div class="mb-3">
 						<label for="inputNickName"> 별명 </label>
-						<input id="inputNickName" class="form-control" type="text" name="nickName" value="${member.nickName }" />
+						<input id="inputNickName" class="form-control" type="text" name="nickName" value="${member.nickName }" readonly/>
 
 					</div>
 					<div class="mb-3">

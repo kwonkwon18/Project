@@ -278,9 +278,9 @@ public class RunningService {
 		return getMemberList;
 	}
 
-	public List<RunningBoard> getTotalMyPageInfo(String nickName1, String nickName2) {
+	public List<RunningBoard> getTotalMyPageInfo(String nickName) {
 		// TODO Auto-generated method stub
-		return mapper.selectTotalMyPageInfo(nickName1, nickName2);
+		return mapper.selectTotalMyPageInfo(nickName);
 	}
 
 	public boolean modify(RunningBoard runningBoard) {

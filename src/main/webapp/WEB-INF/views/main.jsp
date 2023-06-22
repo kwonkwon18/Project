@@ -18,7 +18,6 @@
 	<my:navBar></my:navBar>
 	<br />
 	<br />
-	<br />
 
 
 	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2500">

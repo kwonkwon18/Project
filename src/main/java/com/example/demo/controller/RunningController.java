@@ -128,7 +128,7 @@ public class RunningController {
 
 		myPageList.put("MyNickName", member.getNickName());
 
-		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
+		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName());
 		myPageList.put("totalMyData", totalMyData);
 
 		// 참여자들 리스트업
@@ -150,7 +150,7 @@ public class RunningController {
 
 		myPageList.put("MyNickName", member.getNickName());
 
-		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName(), member.getNickName());
+		List<RunningBoard> totalMyData = service.getTotalMyPageInfo(member.getNickName());
 		myPageList.put("totalMyData", totalMyData);
 
 		// 참여자들 리스트업

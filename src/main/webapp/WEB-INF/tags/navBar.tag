@@ -19,7 +19,7 @@
 		padding : 0;
 	}
 </style>
-<nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top" style="top: -8px;">
 	<div id="navbar-container" class="container-fluid" style="background-color: black;">
 
 		<a id="navbar-brand-link" class="navbar-brand" href="/main">

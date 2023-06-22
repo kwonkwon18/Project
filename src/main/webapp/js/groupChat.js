@@ -335,9 +335,11 @@ $("#sendGroupChatBtn").click(function() {
 
 	// 파일 선택된 경우 FormData에 파일 추가
 	const files = $("#fileInputBtn")[0].files;
-	if (files.length > 0) {
-		for (let i = 0; i < files.length; i++) {
-			formData.append("files", files[i]);
+	if ($("#fileInputBtn")[0].files !== undefined) {
+		if (files.length > 0) {
+			for (let i = 0; i < files.length; i++) {
+				formData.append("files", files[i]);
+			}
 		}
 	}
 	$.ajax("/groupChat/add", {

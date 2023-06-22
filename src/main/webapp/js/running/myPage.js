@@ -166,6 +166,7 @@ $("#runningCurrentListBtn").click(function() {
 	$.ajax("/running/myPageJs", {
 		success: function(data) {
 			var totalMyData = data.totalMyData;
+			console.log(totalMyData);
 			var myNickName = data.MyNickName;
 			$("#myInfo").after(`
 				<div class="container-lg" style="max-width: 1200px;" id="myInfoContainer">

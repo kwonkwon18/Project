@@ -328,7 +328,7 @@ $("#myPostListBtn").click(function() {
 					var idNumber = i + 1;
 					$("#myInfoRow").append(`
 						<div class="col">
-							<div class="card text-white bg-primary mb-3" style="max-width: 21rem; margin-left: 20px;">
+							<div class="card text-white bg-success mb-3" style="max-width: 21rem; margin-left: 20px;">
 									<div class="card-body">
 									<h5 class="card-title">
 										<span id="boardIdText${idNumber}">"${totalMyData[i].id}"</span>
@@ -395,7 +395,7 @@ $("#yourPostListBtn").click(function() {
 					var idNumber = i + 1;
 					$("#myInfoRow").append(`
 						<div class="col">
-							<div class="card text-white bg-primary mb-3" style="max-width: 21rem; margin-left: 20px;">
+							<div class="card text-white bg-success mb-3" style="max-width: 21rem; margin-left: 20px;">
 									<div class="card-body">
 									<h5 class="card-title">
 										<span id="boardIdText${idNumber}">"${totalMyData[i].id}"</span>

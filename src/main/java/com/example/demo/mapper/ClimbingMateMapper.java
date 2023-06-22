@@ -288,7 +288,6 @@ public interface ClimbingMateMapper {
 			from ClimbingMate c
 			left join ClimbingParty p on c.id = p.boardId
 			where (c.writer = #{nickName} or p.memberId = #{nickName})
-			    and c.writer <> p.memberId
 			GROUP BY p.id
 			order by c.inserted desc;
 								         """)

@@ -280,12 +280,11 @@ public interface RunningMapper {
 			    memberId
 			from RunningBoard b
 			left join RunningParty p on b.id = p.boardId
-			where (b.writer = #{nickName} or p.memberId = #{nickName2})
-			    and b.writer <> p.memberId
+			where (b.writer = #{nickName} or p.memberId = #{nickName})
 			GROUP BY b.id
 			order by b.inserted desc;
 					         """)
-	List<RunningBoard> selectTotalMyPageInfo(String nickName, String nickName2);
+	List<RunningBoard> selectTotalMyPageInfo(String nickName);
 
 	@Update("""
 			UPDATE RunningBoard

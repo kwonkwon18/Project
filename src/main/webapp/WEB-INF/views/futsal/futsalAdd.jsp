@@ -51,7 +51,7 @@
 					<div class="col-12 col-md-8 col-lg-6">
 						<br />
 						<br />
-						<div id="map" style="width: 100%; height: 450px;"></div>
+						<div id="map" style="width: 100%; height: 500px; border-radius: 8px;"></div>
 						<h4 style="font-weight: bold;">모일 장소를 찍어주세요 !</h4>
 						<div class="row">
 							<div class="col-md-5">

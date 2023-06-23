@@ -16,6 +16,11 @@
 
 	<my:navBarFutsal></my:navBarFutsal>
 	
+	<br />
+	<br />
+	<br />
+	<br />
+	
 	<!-- toast -->
 	<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
 		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -36,47 +41,42 @@
 					</div>
 				</div>
 
-				<div>
-					<div class="mb-3">
-						<label for="" class="form-label">제목</label>
-						<input type="text" class="form-control" value="${board.title }" readonly />
+				<div class="card">
+					<div class="m-3" style="margin-left: 20px; margin-right: 20px;"  >
+						<h6>오늘의 풋살</h6>
+						<h3 class="card-title mb-2">${board.title }</h3>
+						<h6 class="card-subtitle mb-2 text-body-secondary">${board.writer } &nbsp;&nbsp;  ${board.inserted }</h6>
+						<hr />
 					</div>
-					<h1>
-						<span id="boardIdText"> ${board.id }</span>
-
-					</h1>
+					<input id="boardIdText" type="hidden" value="${board.id }"/>
 
 
 					<!-- 그림 파일 출력  -->
-					<div class="mb-3">
+					<div>
 						<c:forEach items="${board.fileName }" var="fileName">
-							<div>
+							<div class="m-3">
 								<!-- http://localhost:8080/image/게시물번호/fileName  -->
 								<!-- aws로 올리면 위 만큼이 aws 주소가 됨   -->
 								<img class="img-fluid img-thumbnail" src="${bucketUrl }/futsalToday/${board.id }/${fileName}" alt="" height="300" width="300" />
 							</div>
 						</c:forEach>
+						<div class="m-3">
+							<p class="card-text">${board.body }</p>
+						</div>
 					</div>
-
-					<div class="mb-3">
-						<label for="" class="form-label">본문</label>
-						<textarea class="form-control" readonly rows="10">${board.body }</textarea>
+					<div class="m-3">
+						<div class="row justify-content-end">
+							<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
+							<div class="col-md-2">
+								<a class="btn btn-secondary" href="/futsal/futsalTodayModify/${board.id }">수정</a>
+							</div>
+							<div class="col-md-2">
+								<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+							</div>
+							</c:if>
+						</div>
+						<hr />
 					</div>
-
-					<div class="mb-3">
-						<label for="" class="form-label">작성자</label>
-						<input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
-					</div>
-
-					<div class="mb-3">
-						<label for="" class="form-label">작성일시</label>
-						<input type="text" readonly class="form-control" value="${board.inserted }" />
-					</div>
-
-					<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
-						<a class="btn btn-secondary" href="/futsal/futsalTodayModify/${board.id }">수정</a>
-						<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
-					</c:if>
 
 
 					<!-- 보안 넣어줘야함   -->
@@ -106,11 +106,11 @@
 					</c:if>
 					
 					<div id="commentContainer">
-						<h1>
+						<h5 class="m-3">
 							<i class="fa-solid fa-comments"></i>
-						</h1>
+						</h5>
 						<sec:authorize access="isAuthenticated()">
-							<div class="mb-3" id="addCommentContainer">
+							<div class="m-3" id="addCommentContainer">
 								
 
 								<div class="input-group">

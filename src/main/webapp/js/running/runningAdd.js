@@ -122,6 +122,14 @@ $("#inputValue").on("keyup", function(key) {
 		ps.keywordSearch(keyword, placesSearchCB);
 	}
 });
+$(document).ready(function() {
+	$("#searchPlace").click(function(event) {
+		event.preventDefault();
+		
+		var keyword = document.getElementById("inputValue").value.trim();
+		ps.keywordSearch(keyword, placesSearchCB);
+	});	
+})
 
 marker.setMap(map);
 

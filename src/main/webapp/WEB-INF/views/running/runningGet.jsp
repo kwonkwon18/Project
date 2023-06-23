@@ -18,6 +18,10 @@
 <body>
 
    <my:navBarRunning></my:navBarRunning>
+   <br />
+   <br />
+   <br />
+   <br />
 
    <jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
    <!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -30,9 +34,171 @@
 
    <div class="container-lg">
 
+	<div style="display: flex; justify-content: center;">
+			<div id="map" style=" width: 1070px; height: 400px; border-radius: 8px;"></div>
+		</div>
+		<div class="row justify-content-center">
+			<div>
+				<div class="d-flex">
+					<div class="me-auto">
+						<h1>
+							<input id="boardIdText" type="hidden" value="${board.id }" />
+							<input type="hidden" value="${formattedDate }" />
+						</h1>
+					</div>
+				</div>
+				<div>
+					<div class="row justify-content-center" >
+						<div class="col-md-6" >
+							<div class="mb-3" >
+								<!-- <label for="" class="form-label">제목</label> -->
+								<div class="card" style="height: 400px;" >
+								    <div class="card-body" >
+									  	<div class="row">
+										  	<div class="col-md-10">
+												<h4 style="font-weight: bold;">M A T E 구하기</h4>
+										  	</div>
+										  	<div class="col-md-2" style="float: right;">
+										  		<h5 style="font-weight: bold;">${board.address }</h5>
+										  	</div>
+									  	</div>
+										<hr />
+								    	<h5 class="card-title" style="font-weight: bold;" >${board.title }</h5>
+								    	<br />
+								   		<p class="card-text">${board.body }</p>
+										<%-- <input type="text" class="form-control" value="${board.title }" readonly /> --%>
+								    </div>
+									<div class="mt-3" style="vertical-align: bottom; margin-right: 10px; margin-bottom: 10px;">
+										<div style="float: right;">
+											<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
+												<a class="btn btn-secondary" href="/futsal/futsalModify/${board.id }">수정</a>
+												<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
+											</c:if>
+										</div>
+										<div class="d-none">
+											<form action="/futsal/futsalRemove" method="post" id="removeForm">
+												<input type="text" name="id" value="${board.id }" />
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+		
+		
+							<%-- <div class="mb-3">
+								<label for="" class="form-label">본문</label>
+								<textarea class="form-control" readonly rows="10">${board.body }</textarea>
+							</div> --%>
+						</div>
+						<div class="col-md-4">
+							<div class="card" style="height: 400px;" >
+								<br />
+								<div class="mb-3">
+									<div class="row">
+										<div class="col-md-3">
+											<h5>작성자</h5>
+										</div>
+										<div class="col-md-8">
+											<h5 style="font-weight: bold;">${board.writer }</h5>
+										</div>
+									</div>
+								</div>
+			
+								<div class="mb-3">
+									<div class="row">
+										<div class="col-md-3">
+											<h5>모임시간</h5>
+										</div>
+										<div class="col-md-8">
+											<h5 style="font-weight: bold;">${board.time }</h5>
+										</div>
+									</div>
+								</div>
+			
+								<div class="mb-3">
+									<div class="row">
+										<div class="col-md-3">
+											<h5>작성일시</h5>
+										</div>
+										<div class="col-md-8">
+											<h5 style="font-weight: bold;">${board.inserted }</h5>
+										</div>
+									</div>
+								</div>
+								<hr />
+								<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" />
+								<input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+				
+				
+				
+									<div class="mb-3">
+										<div class="row">
+											<div class="col-md-3">
+												<h5>M A T E</h5>
+											</div>
+											<div class="col-md-8">
+												<c:forEach items="${members}" var="member">
+													<c:if test="${board.id eq member.boardId}">
+														<div class="mb-3">
+															<h5 style="font-weight: bold;">${member.memberId}</h5>
+														</div>
+													</c:if>
+												</c:forEach>
+											</div>
+										</div>
+									</div>
+								<div style="float: right; vertical-align: bottom; margin-right: 5px; margin-bottom: 10px;">
+									<c:if test="${!isUser}">
+										<c:if test="${openDate < nowDate }">
+											<button class="btn btn-secondary">마감된 경기</button>
+										</c:if>
+			
+										<div class="row">
+											<div class="col-md-4">
+												<input class="form-control" type="text" id="currentPeopleHidden" value="지원 : ${board.currentNum } 명" readonly />
+											</div>
+											<div class="col-md-4">
+												<input class="form-control" type="text" id="totalPeople" value="모집 : ${board.people } 명" readonly />
+											</div>
+											<c:if test="${openDate > nowDate }">
+												<c:choose>
+													<c:when test="${isMember}">
+														<div class="col-md-4">
+															<button class="btn btn-danger" id="joinPartyBtn">취소하기🙅‍♀️></button>
+														</div>
+													</c:when>
+													<c:otherwise>
+														<c:if test="${board.people > board.currentNum }">
+															<div class="col-md-4">
+																<button class="btn btn-primary" id="joinPartyBtn">참여하기🙋‍♂️</button>️
+															</div>
+				               							</c:if>
+													</c:otherwise>
+												</c:choose>
+				
+												<c:if test="${board.people <= board.currentNum }">
+													<div class="col-md-4">
+														<button type="button" class="btn btn-secondary">마감</button>
+													</div>
+												</c:if>
+											</c:if>
+										</div>
+										<p id="currentPeople"></p>
+										<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
+									</c:if>
+			
+									<c:if test="${isUser}">
+										<button>내가 올린 게시물</button>
+									</c:if>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-
-      <div class="row justify-content-center">
+      <%-- <div class="row justify-content-center">
          <div id="map" style="width: 500px; height: 500x;"></div>
          <div class="col-12 col-md-8 col-lg-6">
             <div class="d-flex">
@@ -148,7 +314,7 @@
 
 
                   <!-- 본인 신청 확인  -->
-                  <%-- <c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" /> --%>
+                  <c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
                   <c:set var="isMember" value="false" />
                   <c:forEach items="${members}" var="members">
                      <c:if test="${members.memberId eq memberNickName}">
@@ -198,7 +364,7 @@
                                     <c:otherwise>
                                        <c:if test="${board.people > board.currentNum }">
                                           <button id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
-               </c:if>
+               					       </c:if>
                                     </c:otherwise>
                                  </c:choose>
                               </c:if>
@@ -218,7 +384,7 @@
                         <input type="text" id="totalPeople" value="${board.people }" />
                         <input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
                         <p id="currentPeople"></p>
-                        <%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
+                        <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  />
                      </c:if>
 
                      <c:if test="${isUser}">
@@ -226,7 +392,7 @@
                         <input type="text" id="totalPeople" value="${board.people }" />
                         <input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
                      </c:if>
-                  </div>
+                  </div> --%>
 
 
 

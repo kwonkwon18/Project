@@ -226,7 +226,7 @@ public class FutsalController {
 			// 해당 게시물 보기로 리디렉션
 //			rttr.addAttribute("success", "success");
 			rttr.addFlashAttribute("message", futsalBoard.getId() + "번 게시물이 수정되었습니다.");
-			return "redirect:/futsal/futsalList";
+			return "redirect:/futsal/futsalMate";
 		} else {
 			// 수정 form 으로 리디렉션
 //			rttr.addAttribute("fail", "fail");

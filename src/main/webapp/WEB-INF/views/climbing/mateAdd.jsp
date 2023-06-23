@@ -16,7 +16,12 @@
 <body>
 	<my:navBarClimbing> </my:navBarClimbing>
 	
-	<div id="map" style="width: 100%; height: 350px;"></div>
+	<br />
+	<br />
+	<br />
+	<br />
+	
+	<!-- <div id="map" style="width: 100%; height: 350px;"></div> -->
   
    <%
    java.util.Date now = new java.util.Date();
@@ -24,17 +29,127 @@
    String nowString = dateFormat.format(now);
    %>
 
-	모일 장소를 찍어주세요 !
+	<!-- 모일 장소를 찍어주세요 !
 	<br />
 	<input id="inputValue" type="text" placeholder="예) 하늘공원" />
 	<br />
-	<button id="searchPlace">검색</button>
+	<button id="searchPlace">검색</button> -->
 
 	<div id="clickLatlng"></div>
 
 	<div class="container-lg">
-
-		<div class="row justify-content-center">
+		
+		<form method="post">
+			<div class="row justify-content-center">
+				<div class="row">
+					<div class="col-12 col-md-8 col-lg-6">
+						<br />
+						<br />
+						<div id="map" style="width: 100%; height: 500px; border-radius: 8px;"></div>
+						<h4 style="font-weight: bold;">모일 장소를 찍어주세요 !</h4>
+						<div class="row">
+							<div class="col-md-5">
+								<input id="inputValue" type="text" placeholder="예)서울숲" class="form-control"/>
+							</div>
+							<div class="col-md-1">
+								<button id="searchPlace" class="btn btn-outline-success">
+									<i class="fa-solid fa-magnifying-glass"></i>
+								</button>
+							</div>
+						</div>
+					</div>				
+					<div class="col-12 col-md-8 col-lg-6">
+						<input id="addButton" class="btn btn-primary" type="submit" style="float: right; margin-left: 5px;" value="등록" /> 
+						<input type="reset" value="다시작성" class="btn btn-warning" style="float: right;">
+						<h3 style="font-weight: bold;">메이트 구하기</h3>
+						<hr />
+						<div class="mb-3">
+							<div class="row">
+								<div class="col-md-2">
+									<label for="titleInput" class="form-label">제목</label>
+								</div>
+								<div class="col-md-10">
+									<input id="titleInput" class="form-control" type="text"
+										name="title" value="${climbingMate.title }" required placeholder="제목을 입력해주세요."/>
+								</div>
+							</div>
+						</div>
+						<hr />
+	
+						<%--<div class="mb-3">
+								<label for="wirterInput" class="form-label">글쓴이</label>
+								<input id="wirterInput" class="form-control" type="text" name="writer" value="${climbingMate.writer }" />
+							</div>  --%>
+	
+						<div class="mb-3">
+							<div class="row">
+								<div class="col-md-2">
+									<label for="bodyTextarea" class="form-label">본문</label>
+								</div>
+								<div class="col-md-10">
+									<textarea rows="10" id="bodyTextarea" class="form-control" name="body" placeholder="최대 1000자까지 입력해주세요." required>${climbingMate.body } </textarea>
+								</div>
+							</div>
+						</div>
+	
+						<hr />
+	
+						<div class="mb-3">
+							<div class="row">
+								<div class="col-md-2">
+									<label for="dateInput" class="form-label">장소</label>
+								</div>
+								<div class="col-md-10">
+									<input required id="addressInput" name="address" type="text"
+										readonly class="form-control" />
+								</div>
+							</div>
+						</div>
+	
+						<hr />
+	
+						<div class="mb-3">
+							<div class="row">
+								<div class="col-md-2">
+									<label for="" class="form-label">인원수</label>
+								</div>
+								<div class="col-md-10">
+									<input id="peopleInput" type="number" required
+										class="form-control" name="people"
+										value="${climbingMate.people }" placeholder="숫자를 입력해주세요 ex) 1" />
+								</div>
+							</div>
+						</div>
+	
+						<hr />
+	
+						<div class="mb-3">
+							<div class="row">
+								<div class="col-md-2">
+									<label for="dateInput" class="form-label">모이는시간</label>
+								</div>
+								<div class="col-md-10">
+									<input class="form-control" required id="dateInput" name="time" type="datetime-local" min="<%=nowString%>" />
+								</div>
+							</div>
+						</div>
+						
+						<hr />
+	
+						<div class="mb-3">
+							<input type="hidden" readonly class="form-control" value="${climbingMate.inserted }" />
+						</div>
+	
+						<input id="LatSubmit" type="hidden" name="Lat" value="${climbingMate.Lat }" /> 
+						<input id="LngSubmit" type="hidden" name="Lng" value="${climbingMate.Lng }" />
+						<input id="writerInput" type="hidden" name="writer" value="${climbingMate.writer }" />
+	
+					</div>
+				</div>
+			</div>
+		</form>
+		
+		 <%-- <div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
 				<h1>게시물 작성</h1>
 				<form method="post">
@@ -44,7 +159,7 @@
 					</div>
 <!-- 					<div class="mb-3"> -->
 <!-- 						<label for="writerInput" class="form-label">글쓴이</label> -->
-<%-- 						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingMate.writer }" /> --%>
+						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingMate.writer }" />
 <!-- 					</div> -->
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
@@ -68,10 +183,9 @@
 					<input id="LngSubmit" type="hidden" name="Lng" value="" />
 					<input class="btn btn-primary" type="submit" value="등록" />
 					
+				</form>
 			</div>
-			</form>
-		</div>
-	</div>
+		</div> --%>
 	</div>
 
 	<my:chatBtn></my:chatBtn>
@@ -167,9 +281,13 @@
 		}
 
 		// 검색 버튼 클릭 이벤트를 등록합니다
-		$("#searchPlace").click(function() {
-			var keyword = document.getElementById("inputValue").value.trim();
-			ps.keywordSearch(keyword, placesSearchCB);
+		$(document).ready(function() {
+			$("#searchPlace").click(function(event) {
+				event.preventDefault();
+				
+				var keyword = document.getElementById("inputValue").value.trim();
+				ps.keywordSearch(keyword, placesSearchCB);
+			});
 		});
 
 		var markerPosition = new kakao.maps.LatLng(37.566826, 126.9786567);

@@ -33,7 +33,7 @@ $("#joinPartyBtn").click(function() {
 
 	const data = { boardId, userId };
 
-	$.ajax("/running/joinParty", {
+	$.ajax("/futsal/joinParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),
@@ -73,7 +73,7 @@ $("#rejectPartyBtn").click(function() {
 
 	const data = { boardId, userId };
 
-	$.ajax("/running/rejectParty", {
+	$.ajax("/futsal/rejectParty", {
 		method: "post",
 		contentType: "application/json",
 		data: JSON.stringify(data),

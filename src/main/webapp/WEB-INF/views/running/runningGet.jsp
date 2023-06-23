@@ -68,18 +68,36 @@
 								   		<p class="card-text">${board.body }</p>
 										<%-- <input type="text" class="form-control" value="${board.title }" readonly /> --%>
 								    </div>
-									<div class="mt-3" style="vertical-align: bottom; margin-right: 10px; margin-bottom: 10px;">
-										<div style="float: right;">
-											<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
-												<a class="btn btn-secondary" href="/futsal/futsalModify/${board.id }">수정</a>
-												<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
-											</c:if>
-										</div>
-										<div class="d-none">
-											<form action="/futsal/futsalRemove" method="post" id="removeForm">
-												<input type="text" name="id" value="${board.id }" />
-											</form>
-										</div>
+									<div>
+										<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
+						                  <div class="mt-3" style="vertical-align: bottom; margin-right: 10px; margin-bottom: 10px; float: right;">
+						                     <a class="btn btn-secondary" href="/running/runningModify/${board.id }">수정</a>
+						                     <button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
+						                  </div>
+						
+						                  <div class="d-none">
+						                     <form action="/running/runningRemove" method="post" id="removeForm">
+						                        <input type="text" name="id" value="${board.id }" />
+						                     </form>
+						                  </div>
+						
+						                  <!-- Modal -->
+						                  <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						                     <div class="modal-dialog">
+						                        <div class="modal-content">
+						                           <div class="modal-header">
+						                              <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+						                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						                           </div>
+						                           <div class="modal-body">삭제 하시겠습니까?</div>
+						                           <div class="modal-footer">
+						                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						                              <button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
+						                           </div>
+						                        </div>
+						                     </div>
+						                  </div>
+						                </c:if>
 									</div>
 								</div>
 							</div>
@@ -136,65 +154,97 @@
 											<div class="col-md-3">
 												<h5>M A T E</h5>
 											</div>
+											<c:set var="isUser" value="false" />
+							                <c:forEach items="${memberList}" var="memberList">
+							                   <c:if test="${memberList.nickName eq board.writer}">
+							                      <c:set var="isUser" value="true" />
+							                      <c:set var="userName" value="${memberList.nickName}" />
+							                   </c:if>
+							                </c:forEach>
 											<div class="col-md-8">
 												<c:forEach items="${members}" var="member">
-													<c:if test="${board.id eq member.boardId}">
+													<c:if test="${board.id eq member.boardId && board.writer ne member.memberId}">
 														<div class="mb-3">
-															<h5 style="font-weight: bold;">${member.memberId}</h5>
+															<input type="text" readonly class="form-control" value="${member.memberId}" />
 														</div>
 													</c:if>
 												</c:forEach>
 											</div>
 										</div>
+										
+										<%-- <label for="" class="form-label">신청한 사람 </label>
+						               <c:forEach items="${members}" var="member">
+						                  <!-- 보드아이디와 멤버의 보드아이디가 같은 경우 -->
+						                  <!-- 멤버의 아이디와 작성자가 같은 경우는 해주면 안됨  -->
+						                  <c:if test="${board.id eq member.boardId && board.writer ne member.memberId}">
+						                     <div class="mb-3">
+						                        <input type="text" readonly class="form-control" value="${member.memberId}" />
+						                     </div>
+						                  </c:if>
+						               </c:forEach> --%>
 									</div>
-								<div style="float: right; vertical-align: bottom; margin-right: 5px; margin-bottom: 10px;">
+								<div>
 									<c:if test="${!isUser}">
 										<c:if test="${openDate < nowDate }">
 											<button class="btn btn-secondary">마감된 경기</button>
 										</c:if>
-			
-										<div class="row">
-											<div class="col-md-4">
-												<input class="form-control" type="text" id="currentPeopleHidden" value="지원 : ${board.currentNum } 명" readonly />
-											</div>
-											<div class="col-md-4">
-												<input class="form-control" type="text" id="totalPeople" value="모집 : ${board.people } 명" readonly />
-											</div>
-											<c:if test="${openDate > nowDate }">
-												<c:choose>
-													<c:when test="${isMember}">
-														<div class="col-md-4">
-															<button class="btn btn-danger" id="joinPartyBtn">취소하기🙅‍♀️></button>
-														</div>
-													</c:when>
-													<c:otherwise>
-														<c:if test="${board.people > board.currentNum }">
+										<div class="mt-auto" style="position: absolute; bottom: 0; width: 100%; margin-left: 10px; margin-bottom: 10px;">
+											<div class="row">
+												<div class="col-md-4">
+													<input class="form-control text-right" type="text" id="currentPeopleHidden" value="지원 : ${board.currentNum } 명" readonly />
+												</div>
+												<div class="col-md-4">
+													<input class="form-control text-right" type="text" id="totalPeople" value="모집 : ${board.people } 명" readonly />
+												</div>
+												<c:if test="${openDate > nowDate }">
+													<c:choose>
+														<c:when test="${isMember}">
 															<div class="col-md-4">
-																<button class="btn btn-primary" id="joinPartyBtn">참여하기🙋‍♂️</button>️
+																<button class="btn btn-danger text-right" id="joinPartyBtn">취소하기🙅‍♀️></button>
 															</div>
-				               							</c:if>
-													</c:otherwise>
-												</c:choose>
-				
-												<c:if test="${board.people <= board.currentNum }">
-													<div class="col-md-4">
-														<button type="button" class="btn btn-secondary">마감</button>
-													</div>
+														</c:when>
+														<c:otherwise>
+															<c:if test="${board.people > board.currentNum }">
+																<div class="col-md-4">
+																	<button class="btn btn-primary text-right" id="joinPartyBtn">참여하기🙋‍♂️</button>️
+																</div>
+					               							</c:if>
+														</c:otherwise>
+													</c:choose>
+					
+													<c:if test="${board.people <= board.currentNum }">
+														<div class="col-md-4">
+															<button type="button" class="btn btn-secondary text-right">마감</button>
+														</div>
+													</c:if>
 												</c:if>
-											</c:if>
+											</div>
 										</div>
 										<p id="currentPeople"></p>
 										<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
 									</c:if>
 			
 									<c:if test="${isUser}">
-										<button>내가 올린 게시물</button>
-									</c:if>
+										<div class="mt-auto" style="position: absolute; bottom: 0; width: 100%; margin-left: 10px; margin-bottom: 10px;">
+											<div class="row">
+												<div class="col-md-4">
+						                        	<input class="form-control text-right" type="text" id="currentPeopleHidden" value="지원 : ${board.currentNum -1 } 명" />
+												</div>
+												<div class="col-md-4">
+						                        	<input class="form-control text-right" type="text" id="totalPeople" value="모집 : ${board.people } 명" />
+												</div>
+												<div class="col-md-8">
+						                        	<button class="btn btn-secondary text-right">내가 올린 게시물</button>
+												</div>
+					                        </div>
+				                        </div>
+				                    </c:if>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 
@@ -393,6 +443,23 @@
                         <input type="text" id="currentPeopleHidden" value="${board.currentNum -1 }" />
                      </c:if>
                   </div> --%>
+                  
+                  <!-- Modal -->
+					<!-- <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">삭제 하시겠습니까?</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+									<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
+								</div>
+							</div>
+						</div>
+					</div> -->
 
 
 

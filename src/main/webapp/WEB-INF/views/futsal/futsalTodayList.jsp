@@ -24,7 +24,7 @@
 
 
 	<div class="container-lg">
-		<h2>메이트구하기</h2>
+		<h2>오늘의 풋살</h2>
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -52,42 +52,33 @@
 			</button>
 		</div>
 
-		<%-- <nav>
-			<ul>
-				<span style="margin-left: 50px;"></span>
-				<a id="all1" href="/futsal/futsalMate" style="text-decoration-line: none;">전체</a>
-				<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색 </a>
-				<div class="dropdown-menu" aria-labelledby="search1">
-					<a class="dropdown-item" href="#">메뉴 항목 1</a>
-					<a class="dropdown-item" href="#">메뉴 항목 2</a>
-					<a class="dropdown-item" href="#">메뉴 항목 3</a>
-				</div>
-
-				<a href="futsalMap" style="text-decoration-line: none;">지도로 보기</a> -->
-				<span style="margin-left: 480px;"></span>
-				<button type="button" class="btn btn-success" onclick="location.href='futsalAdd'">번개 글작성</button>
-				 <button type="button" class="btn btn-success" onclick="location.href='mateAdd'">소모임 글작성</button>
-			</ul>
-			<div id="dropdown1" style="display: none">
+			<nav>
 				<ul>
-					<button type="button" class="btn btn-success" style="pointer-events: none;">검색🌄</button>
-					<form action="/running/runningMate" class="d-flex" role="search">
-						<select class="form-select" name="type" id="">
-							<option value="all">전체</option>
-							<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
-							<option value="address" ${param.type eq 'address' ? 'selected': '' }>위치</option>
-						</select>
-						<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</form>
+					<span style="margin-left: 50px;"></span>
+					<a id="all2" href="/futsal/futsalTodayList" style="text-decoration-line: none; display: inline-block;">전체</a>
+					&nbsp; &nbsp;
+					<a class="dropdown-toggle" href="#" role="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색</a>
+					&nbsp; &nbsp;
+					<span style="margin-left: 800px;">
+						<button type="button" class="btn btn-warning" onclick="location.href='futsalToday'" style="margin-left: auto;">풋살 공유하기 ✨</button>
+					</span>
 				</ul>
-			</div>
-		</nav>
+				<div id="dropdown2" style="display: none">
+					<ul>
+						<div class="d-flex justify-content-start align-items-center">
+							<form action="/futsal/futsalTodayList" class="d-flex" role="search">
+								<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex-grow: 1;">
+								<button class="btn btn-outline-success" type="submit">
+									<i class="fa-solid fa-magnifying-glass"></i>
+								</button>
+							</form>
+						</div>
+					</ul>
+				</div>
+			</nav>
 
-
-	<ul>
+	
+	<%-- <ul>
 			<div style="text-align: right;">
 				<a href="/futsal/futsalMate?type=distance" style="text-decoration-line: none;">거리순</a>
 				<a href="/futsal/futsalMate" style="text-decoration-line: none;">최신순</a>
@@ -130,5 +121,16 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="/js/chat.js"></script>
 		<script src="/js/futsal/futsalTodayList.js"></script>
+		
+		<script type="text/javascript">
+		$("#search2").click(function() {
+			if ($("#dropdown2").is(":hidden")) {
+				$("#dropdown2").slideDown();
+			} else {
+				$("#dropdown2").slideUp();
+			}
+		});
+		</script>
+		
 </body>
 </html>

@@ -44,9 +44,122 @@
 					<div class="me-auto"></div>
 				</div>
 
-				<!-- 좋아요  -->
-				<h1>
+				<div class="card">
+					<div class="m-3" style="margin-left: 20px; margin-right: 20px;"  >
+						<h6>오늘의 러닝</h6>
+						<h3 class="card-title mb-2">${board.title }</h3>
+						<h6 class="card-subtitle mb-2 text-body-secondary">${board.writer } &nbsp;&nbsp;  ${board.inserted }</h6>
+						<hr />
+					</div>
+					<input id="boardIdText" type="hidden" value="${board.id }"/>
 
+
+					<!-- 그림 파일 출력  -->
+					<div>
+						<c:forEach items="${board.fileName }" var="fileName">
+							<div class="m-3">
+								<!-- http://localhost:8080/image/게시물번호/fileName  -->
+								<!-- aws로 올리면 위 만큼이 aws 주소가 됨   -->
+								<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${board.id }/${fileName}" alt="" height="300" width="300" />
+							</div>
+						</c:forEach>
+						<div class="m-3">
+							<p class="card-text">${board.body }</p>
+						</div>
+					</div>
+					<div class="m-3">
+						<div class="row justify-content-end">
+							<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
+							<div class="col-md-2">
+								<a class="btn btn-secondary" href="/running/runningTodayModify/${board.id }">수정</a>
+							</div>
+							<div class="col-md-2">
+								<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+							</div>
+							</c:if>
+						</div>
+						<hr />
+					</div>
+
+
+					<!-- 보안 넣어줘야함   -->
+					<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
+						<div class="d-none">
+							<form action="/running/todayRemove" method="post" id="removeForm">
+								<input id="inputId" type="text" name="id" value="${board.id }" />
+							</form>
+						</div>
+
+						<!-- Modal -->
+						<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">삭제 하시겠습니까?</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+										<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:if>
+					
+					<div id="commentContainer">
+						<!-- 좋아요  -->
+						<div class="row">
+							<div class="col-md-1">
+								<h5 style="margin-left: 15px; margin-right: 5px;">
+									<i class="fa-solid fa-comments"></i>
+								</h5>
+							</div>
+							<div class="col-md-2">
+								<h5>
+									<span id="likeIcon">
+										<c:if test="${board.liked }">
+											<i class="fa-solid fa-heart"></i>
+										</c:if>
+										<c:if test="${not board.liked }">
+											<i class="fa-regular fa-heart"></i>
+										</c:if>
+				
+									</span>
+									<span id="likeNumber"> ${board.likeCount } </span>
+								</h5>
+							</div>
+						</div>
+						<sec:authorize access="isAuthenticated()">
+							<div class="m-3" id="addCommentContainer">
+								
+
+								<div class="input-group">
+									<div class="form-floating">
+										<textarea style="height: 97px" placeholder="댓글을 남겨주세요" class="form-control" id="commentTextArea"></textarea>
+										<label for="floatingTextarea">댓글을 남겨주세요</label>
+									</div>
+									<button class="btn btn-outline-primary" id="sendCommentBtn">
+										<i class="fa-regular fa-paper-plane"></i>
+									</button>
+								</div>
+							</div>
+						</sec:authorize>
+
+
+
+						<ul class="list-group" id="commentListContainer">
+
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+				<!-- 좋아요  -->
+				<%-- <h1>
 					<span id="likeIcon">
 						<c:if test="${board.liked }">
 							<i class="fa-solid fa-heart"></i>
@@ -57,11 +170,10 @@
 
 					</span>
 					<span id="likeNumber"> ${board.likeCount } </span>
+				</h1> --%>
 
-				</h1>
 
-
-				<div>
+				<%-- <div>
 					<div class="mb-3">
 						<label for="" class="form-label">제목</label>
 						<input type="text" class="form-control" value="${board.title }" readonly />
@@ -70,11 +182,11 @@
 						<span style="display: none;" id="boardIdText"> ${board.title } </span>
 						<span> ${board.title } </span>
 
-					</h1>
+					</h1> --%>
 
 
 					<!-- 그림 파일 출력  -->
-					<div class="mb-3">
+					<%-- <div class="mb-3">
 						<c:forEach items="${board.fileName }" var="fileName">
 							<div>
 								<!-- http://localhost:8080/image/게시물번호/fileName  -->
@@ -97,10 +209,10 @@
 					<div class="mb-3">
 						<label for="" class="form-label">작성일시</label>
 						<input type="text" readonly class="form-control" value="${board.inserted }" />
-					</div>
+					</div> --%>
 
 					<!-- 댓글  -->
-					<div id="commentContainer">
+					<%-- <div id="commentContainer">
 						<h1>
 							<i class="fa-solid fa-comments"></i>
 						</h1>
@@ -126,9 +238,9 @@
 
 
 						</ul>
-					</div>
+					</div> --%>
 
-					<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
+					<%-- <c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
 						<a class="btn btn-secondary" href="/running/runningTodayModify/${board.id }">수정</a>
 						<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 					</c:if>
@@ -158,12 +270,11 @@
 								</div>
 							</div>
 						</div>
-					</c:if>
+					</c:if> --%>
 
-				</div>
-			</div>
-		</div>
-	</div>
+				
+			
+		
 
 	<sec:authorize access="isAuthenticated()">
 		<sec:authentication property="name" var="userId" />

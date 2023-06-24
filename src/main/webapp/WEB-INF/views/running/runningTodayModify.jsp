@@ -14,12 +14,77 @@
 </head>
 <body>
 
-	<my:navBar></my:navBar>
+	<my:navBarRunning></my:navBarRunning>
+	<br />
+	<br />
+	<br />
+	<br />
 
 
 	<div class="container-lg">
-
+	
 		<div class="row justify-content-center">
+			<div class="col-12 col-md-8 col-lg-6">
+				<form method="post" enctype="multipart/form-data">
+					<input class="btn btn-secondary" type="submit" style="float: right; margin-left: 5px;" value="수정" />
+					<h3 style="font-weight: bold;">오늘의 러닝</h3>
+					<hr />
+						<div class="mb-3">
+							<!-- <label for="titleInput" class="form-label"></label> -->
+							<input id="titleInput" class="form-control" type="text" name="title" value="${board.title }" placeholder="제목을 입력해주세요." />
+						</div>
+						
+	<%-- 					<div class="mb-3">
+							<label for="wirterInput" class="form-label">글쓴이</label>
+							<input id="wirterInput" class="form-control" type="text" name="writer" value="${board.writer }" />
+							</div> --%>
+						
+						
+						<input id="titleInput" class="form-control" type="hidden" name="title" value="${board.title }" />
+						
+						<!-- application property에서 작업 하는 내용 
+						spring.servlet.multipart.max-file-size=1MB
+						spring.servlet.multipart.max-request-size=10MB -->
+						
+						<!-- 그림 파일 출력 -->
+						<div class="mb-3">
+							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
+								<div class="mb-3">
+									<div class="col-6">
+										<div>
+											<img class="img-thumbnail img-fluid" src="${bucketUrl }/runningToday/${board.id }/${fileName}" alt="" style="width: 250px; height: 200px; object-fit: cover;" />
+										</div>
+									</div>
+									
+									<div class="col-2 d-flex">
+										<div class="form-check form-switch m-auto" >
+											<input name="removeFiles" value="${fileName }" class="form-check-input" type="checkbox" role="switch" id="removeCheckBox${status.index }">
+											<label class="form-check-label" for="removeCheckBox${status.index }">
+												<i class="fa-solid fa-trash-can text-danger"></i>
+											</label>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+						
+						<div class="mb-3">
+							<!-- <label for="bodyTextarea" class="form-label">본문</label> -->
+							<textarea rows="10" id="bodyTextarea" class="form-control" name="body" placeholder="내용을 입력해주세요.">${board.body }</textarea>
+						</div>
+					
+						<div class="form-text">1MB 크기의 파일, 총 10MB 크기만 허용</div>
+						<div class="form-group">
+							<!-- <label for="fileInput" class="form-label"></label>  -->
+							<input class="form-control form-control-user" type="file" multiple name="files" accept="image/*" id="fileInput" onchange="setDetailImage(event);" required />
+						</div>
+						<div id="images_container" style="width: 250px; height: 200px; object-fit: cover;"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<%-- <div class="row justify-content-center">
 
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex">
@@ -37,7 +102,7 @@
 						</h1>
 
 
-<%-- 						<!-- 그림 파일 출력  -->
+						<!-- 그림 파일 출력  -->
 						<div class="mb-3">
 							<c:forEach items="${board.fileName }" var="fileName">
 								<div>
@@ -47,7 +112,7 @@
 								</div>
 							</c:forEach>
 						</div>
- --%>
+
 						<!-- 그림 파일 출력 -->
 						<div class="mb-3">
 							<c:forEach items="${board.fileName }" var="fileName" varStatus="status">
@@ -102,7 +167,35 @@
 
 			</div>
 		</div>
-	</div>
+	</div> --%>
+	
+	<script>
+	function setDetailImage(event){
+		for(var image of event.target.files){
+			var reader = new FileReader();
+			
+			reader.onload = function(event){
+				var img = document.createElement("img");
+				img.setAttribute("src", event.target.result);
+				img.setAttribute("class", "col-lg-6");
+				document.querySelector("div#images_container").appendChild(img);
+			};
+			
+			console.log(image);
+			reader.readAsDataURL(image);
+		}
+	}
+	</script>
+	
+	<script>
+	function resetImages() {
+	  var fileInput = document.getElementById("fileInput");
+	  fileInput.value = ""; // 파일 입력 필드 초기화
+	  
+	  var imagesContainer = document.getElementById("images_container");
+	  imagesContainer.innerHTML = ""; // 이미지 컨테이너 비우기
+	}
+	</script>
 	
 	<sec:authorize access="isAuthenticated()">
 		<my:chatBtn></my:chatBtn>

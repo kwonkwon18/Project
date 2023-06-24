@@ -122,6 +122,16 @@ $("#inputValue").on("keyup", function(key) {
 		ps.keywordSearch(keyword, placesSearchCB);
 	}
 });
+
+$(document).ready(function() {
+	$("#searchPlace").click(function(event) {
+		event.preventDefault();
+		
+		var keyword = document.getElementById("inputValue").value.trim();
+		ps.keywordSearch(keyword, placesSearchCB);
+	});	
+})
+
 marker.setMap(map);
 
 // 클릭한 위치를 기준으로 장소 검색

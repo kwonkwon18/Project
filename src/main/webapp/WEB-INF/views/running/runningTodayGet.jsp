@@ -16,6 +16,8 @@
 	<div>
 		<my:navBarRunning></my:navBarRunning>
 	</div>
+	
+	<span id="boardIdText"> ${board.id } </span>
 	<br />
 	<br />
 	<br />
@@ -48,10 +50,10 @@
 					<div class="m-3" style="margin-left: 20px; margin-right: 20px;"  >
 						<h6>오늘의 러닝</h6>
 						<h3 class="card-title mb-2">${board.title }</h3>
-						<h6 class="card-subtitle mb-2 text-body-secondary">${board.writer } &nbsp;&nbsp;  ${board.inserted }</h6>
+						<h6 class="card-subtitle mb-2 text-body-secondary">🏃‍♀️${board.writer } &nbsp;&nbsp;  ${board.inserted }</h6>
 						<hr />
 					</div>
-					<input id="boardIdText" type="hidden" value="${board.id }"/>
+					<%-- <input id="boardIdText" type="hidden" value="${board.id }"/> --%>
 
 
 					<!-- 그림 파일 출력  -->
@@ -67,10 +69,10 @@
 							<p class="card-text">${board.body }</p>
 						</div>
 					</div>
-					<div class="m-3">
+					<div class="mb-3">
 						<div class="row justify-content-end">
 							<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
-							<div class="col-md-2">
+							<div class="col-md-2" style="display: flex; justify-content: flex-end;">
 								<a class="btn btn-secondary" href="/running/runningTodayModify/${board.id }">수정</a>
 							</div>
 							<div class="col-md-2">
@@ -316,6 +318,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 	</sec:authorize>
 
 	<sec:authorize access="isAuthenticated()">

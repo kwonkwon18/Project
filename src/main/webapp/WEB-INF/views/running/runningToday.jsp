@@ -14,10 +14,10 @@
 <body>
 
 	<my:navBarRunning></my:navBarRunning>
-	<hr />
-	<hr />
-	<hr />
-	<hr />
+	<br />
+	<br />
+	<br />
+	<br />
 
 	<div class="container-lg">
 
@@ -35,7 +35,7 @@
 						
 	<%-- 					<div class="mb-3">
 							<label for="wirterInput" class="form-label">글쓴이</label>
-							<input id="wirterInput" class="form-control" type="text" name="writer" value="${futsalToday.writer }" />
+							<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningToday.writer }" />
 							</div> --%>
 						
 						
@@ -59,6 +59,7 @@
 				</form>
 			</div>
 		</div>
+	</div>
 				<%-- <form method="post" enctype="multipart/form-data">
 					<div class="mb-3">
 						<label for="titleInput" class="form-label">제목</label>

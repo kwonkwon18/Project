@@ -14,7 +14,54 @@
 </head>
 <body>
 	<my:navBarClimbing> </my:navBarClimbing>
+	<br />
+	<br />
+	<br />
+	<br />
+	
 	<div class="container-lg">
+
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-8 col-lg-6">
+				<form method="post" enctype="multipart/form-data">
+					<input id="addButton" class="btn btn-primary" type="submit" style="float: right; margin-left: 5px;" value="등록" />
+					<input type="reset" value="다시작성" class="btn btn-warning" style="float: right;" onclick="resetImages();">
+					<h3 style="font-weight: bold;">오늘의 등산</h3>
+					<hr />
+						<div class="mb-3">
+							<!-- <label for="titleInput" class="form-label"></label> -->
+							<input id="titleInput" class="form-control" type="text" name="title" value="${runningToday.title }" placeholder="제목을 입력해주세요." />
+						</div>
+						
+	<%-- 					<div class="mb-3">
+							<label for="wirterInput" class="form-label">글쓴이</label>
+							<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningToday.writer }" />
+							</div> --%>
+						
+						
+						<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title }" />
+						
+						<!-- application property에서 작업 하는 내용 
+						spring.servlet.multipart.max-file-size=1MB
+						spring.servlet.multipart.max-request-size=10MB -->
+						
+						<div class="mb-3">
+							<!-- <label for="bodyTextarea" class="form-label">본문</label> -->
+							<textarea rows="10" id="bodyTextarea" class="form-control" name="body" placeholder="내용을 입력해주세요.">${runningToday.body }</textarea>
+						</div>
+					
+						<div class="form-text">1MB 크기의 파일, 총 10MB 크기만 허용</div>
+						<div class="form-group">
+							<!-- <label for="fileInput" class="form-label"></label>  -->
+							<input class="form-control form-control-user" type="file" multiple name="files" accept="image/*" id="fileInput" onchange="setDetailImage(event);" required />
+						</div>
+						<div id="images_container" style="width: 250px; height: 200px; object-fit: cover;"></div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<%-- <div class="container-lg">
 
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
@@ -26,7 +73,7 @@
 					</div>
 <!-- 					<div class="mb-3"> -->
 <!-- 						<label for="writerInput" class="form-label">글쓴이</label> -->
-<%-- 						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingToday.writer }" /> --%>
+						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingToday.writer }" />
 <!-- 					</div> -->
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
@@ -40,11 +87,38 @@
 						</div>
 					</div>
 					<input class="btn btn-primary" type="submit" value="등록" />
+				</form>
 			</div>
-			</form>
 		</div>
-	</div>
-	</div>
+	</div> --%>
+	
+	<script>
+	function setDetailImage(event){
+		for(var image of event.target.files){
+			var reader = new FileReader();
+			
+			reader.onload = function(event){
+				var img = document.createElement("img");
+				img.setAttribute("src", event.target.result);
+				img.setAttribute("class", "col-lg-6");
+				document.querySelector("div#images_container").appendChild(img);
+			};
+			
+			console.log(image);
+			reader.readAsDataURL(image);
+		}
+	}
+	</script>
+	
+	<script>
+	function resetImages() {
+	  var fileInput = document.getElementById("fileInput");
+	  fileInput.value = ""; // 파일 입력 필드 초기화
+	  
+	  var imagesContainer = document.getElementById("images_container");
+	  imagesContainer.innerHTML = ""; // 이미지 컨테이너 비우기
+	}
+	</script>
 	
 	<sec:authorize access="isAuthenticated()">
 		<my:chatBtn></my:chatBtn>

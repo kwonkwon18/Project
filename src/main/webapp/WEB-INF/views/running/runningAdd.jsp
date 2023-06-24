@@ -61,7 +61,7 @@
 								</div>
 								<div class="col-md-10">
 									<input id="titleInput" class="form-control" type="text"
-										name="title" value="${futsalBoard.title }" required placeholder="제목을 입력해주세요."/>
+										name="title" value="${runningBoard.title }" required placeholder="제목을 입력해주세요."/>
 								</div>
 							</div>
 						</div>
@@ -107,7 +107,7 @@
 								<div class="col-md-10">
 									<input id="peopleInput" type="number" required
 										class="form-control" name="people"
-										value="${futsalBoard.people }" placeholder="숫자를 입력해주세요 ex) 1" />
+										value="${runningBoard.people }" placeholder="숫자를 입력해주세요 ex) 1" />
 								</div>
 							</div>
 						</div>
@@ -128,7 +128,7 @@
 						<hr />
 	
 						<div class="mb-3">
-							<input type="hidden" readonly class="form-control" value="${board.inserted }" />
+							<input type="hidden" readonly class="form-control" value="${runningBoard.inserted }" />
 						</div>
 	
 						<input id="LatSubmit" type="hidden" name="Lat" value="" /> 

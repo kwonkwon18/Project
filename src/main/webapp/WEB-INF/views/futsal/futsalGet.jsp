@@ -56,7 +56,7 @@
 										  	<div class="col-md-10">
 												<h4 style="font-weight: bold;">M A T E 구하기</h4>
 										  	</div>
-										  	<div class="col-md-2" style="float: right;">
+										  	<div class="col-md-3" style="float: right;">
 										  		<h5 style="font-weight: bold;">${board.address }</h5>
 										  	</div>
 									  	</div>

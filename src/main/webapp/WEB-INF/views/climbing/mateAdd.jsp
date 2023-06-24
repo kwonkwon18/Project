@@ -194,7 +194,7 @@
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
 	<script>
-		var checkLat = false;
+		/* var checkLat = false;
 		var checkLng = false;
 		var checktitleInput = false;
 
@@ -233,7 +233,7 @@
 			checkpeopleInput = true;
 			enableSubmit();
 		});
-		console.log(checkpeopleInput)
+		console.log(checkpeopleInput) */
 
 		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 		var infowindow = new kakao.maps.InfoWindow({

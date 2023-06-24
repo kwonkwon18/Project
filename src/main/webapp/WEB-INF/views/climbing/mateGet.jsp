@@ -20,6 +20,12 @@
 <body>
 	<my:navBarClimbing>
 	</my:navBarClimbing>
+	<span id="boardIdText"> ${board.id } </span>
+	
+	<br />
+	<br />
+	<br />
+	<br />
 
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
@@ -30,24 +36,282 @@
 	<fmt:formatDate value="${startDate }" pattern="yyyyMMddHHmm" var="openDate" />
 
 	<!-- 본문  -->
-
+	
 	<div class="container-lg">
 
 
-
+		
 		<div class="row justify-content-center">
-			<div id="map" style="width: 500px; height: 500x;"></div>
-			<div class="col-12 col-md-8 col-lg-6">
-				<div class="d-flex">
-					<div class="me-auto">
-						<h1>
-							<span id="boardIdText"> ${board.id } </span>
-							번게시물${formattedDate }
-						</h1>
+				<div class="row justify-content-center">
+					<div class="row">
+						
+						<div class="col-12 col-md-8 col-lg-6">
+							<div class="col-md-3" style="display: flex; justify-content: flex-end; float: right; margin-top: 2px;">
+						  		<h3 style="font-weight: bold;">${board.address }</h3>
+						  	</div>
+							<div id="map" style="width: 100%; height: 600px; border-radius: 8px;"></div>
+							<%-- <input id="boardIdText" type="hidden" value="${board.id }" /> --%>
+							<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+							<input type="hidden" value="${formattedDate }" />
+							<!-- 본인 게시물 확인 -->
+							<c:set var="isUser" value="false" />
+							<c:forEach items="${memberList}" var="memberList">
+								<c:if test="${memberList.nickName eq board.writer}">
+									<c:set var="isUser" value="true" />
+									<c:set var="userName" value="${memberList.nickName}" />
+								</c:if>
+							</c:forEach>
+		
+							<c:forEach items="${memberList}" var="memberList">
+								<c:set var="memberNickName" value="${memberList.nickName}" />
+							</c:forEach>
+		
+		
+							<!-- 본인 신청 확인  -->
+							<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
+							<c:set var="isMember" value="false" />
+							<c:forEach items="${members}" var="members">
+								<c:if test="${members.memberId eq memberNickName}">
+									<c:set var="isMember" value="true" />
+								</c:if>
+							</c:forEach>
+		
+							<!-- 대기인원 확인  -->
+							<c:set var="isWaiting" value="false" />
+							<c:forEach items="${waitingMembers}" var="waitingMembers">
+								<c:if test="${waitingMembers.memberId eq memberNickName}">
+									<c:set var="isWaiting" value="true" />
+								</c:if>
+							</c:forEach>
+		
+							<!-- 거절인원 확인  -->
+							<c:set var="isReject" value="false" />
+							<c:forEach items="${rejectMembers}" var="rejectMembers">
+								<c:if test="${rejectMembers.memberId eq memberNickName}">
+									<c:set var="isReject" value="true" />
+								</c:if>
+							</c:forEach>
+		
+		
+							
+							<div class="mt-3">
+								<div class="row">
+									
+									<c:if test="${!isUser}">
+										<c:if test="${openDate < nowDate }">
+											<div class="col-md-5">
+												<button>마감된 러닝</button>
+											</div>
+										</c:if>
+			
+										<c:if test="${openDate > nowDate }">
+			
+											<c:if test="${isReject }">
+												<div class="col-md-5">
+													<button id="">거절된 러닝입니다.</button>
+												</div>
+											</c:if>
+			
+											<c:if test="${not isReject }">
+			
+			
+												<c:if test="${not isWaiting }">
+													<!-- 실제로 신청 되기 전에도 취소하기가 보여야함   -->
+													<c:choose>
+														<c:when test="${isMember}">
+															<div class="col-md-5">
+																<button class="btn btn-danger" id="joinPartyBtn">취소하기🙅‍♀️🙅‍♂️🙅‍♀️🙅‍♂️></button>
+															</div>
+														</c:when>
+														<c:otherwise>
+															<c:if test="${board.people > board.currentNum }">
+																<div class="col-md-5">
+																	<button class="btn btn-primary" id="joinPartyBtn">참여하기🙋‍♂️🙋‍♀️🙋‍♂️🙋‍♀</button>️
+																</div>
+			           									    </c:if>
+			
+														</c:otherwise>
+													</c:choose>
+												</c:if>
+			
+												<c:if test="${isWaiting }">
+													<div class="col-md-3">
+														<button class="btn btn-warning">신청대기중👼</button>
+													</div>
+													<div class="col-md-3">
+														<button class="btn btn-danger" id="joinPartyBtn">취소하기🙅‍♀️</button>
+													</div>
+												</c:if>
+			
+												<c:if test="${board.people <= board.currentNum }">
+													<div class="col-md-5">
+														<button class="btn btn-secondary">마감</button>
+													</div>
+												</c:if>
+											</c:if>
+										</c:if>
+			
+										<div class="col-md-3">
+											<input type="text" id="currentPeopleHidden" value="지원: ${board.currentNum }명" class="form-control"/>
+										</div>
+										<div class="col-md-3">
+											<input type="text" id="totalPeople" value="총 인원: ${board.people }명" class="form-control"/>
+										</div>
+											<p id="currentPeople"></p>
+										<input type="hidden" id = "currentPeopleHidden" value = "${board.currentNum }"  />
+									</c:if>
+								</div>
+								
+								<c:if test="${isUser}">
+									<div class="mt-3">
+										<div class="row">
+											<div class="col-md-5">
+												<button type="button" class="btn btn-secondary">내가 쓴 글</button>
+											</div>
+											<div class="col-md-3">
+												<input class="form-control" type="text" id="currentPeopleHidden" value="지원: ${board.currentNum }명" />
+											</div>
+											<div class="col-md-3">
+												<input class="form-control" type="text" id="totalPeople" value="총 인원: ${board.people }명" />
+											</div>
+										</div>
+									</div>
+								</c:if>
+							</div>
+						</div>
+						
+						<div class="col-12 col-md-8 col-lg-6">
+							<div class="row">
+								<div class="col-md-9">
+									<h3 style="font-weight: bold;">등산 메이트</h3>
+								</div>
+								<div class="col-md-3">
+									<sec:authorize access="#board.writer eq #userName">
+										<div style="float: rigth;">
+											<a class="btn btn-secondary" href="/climbing/mateModify/${board.id }">수정</a>
+											<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
+										</div>
+				
+				
+				
+				
+										<div class="d-none">
+											<form action="/climbing/mateRemove" method="post" id="removeForm">
+												<input type="text" name="id" value="${board.id }" />
+											</form>
+										</div>
+				
+				
+										<!-- Modal -->
+										<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body">삭제 하시겠습니까?</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+														<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</sec:authorize>
+								</div>
+							</div>
+							<hr />
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-2">
+										<label for="" class="form-label">제목</label>
+									</div>
+									<div class="col-md-10">
+										<input type="text" class="form-control" value="${board.title }" readonly />
+									</div>
+								</div>
+							</div>
+							<hr />
+							
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-2">
+										<label for="" class="form-label">본문</label>
+									</div>
+									<div class="col-md-10">
+										<textarea class="form-control" readonly rows="10">${board.body }</textarea>
+									</div>
+								</div>
+							</div>
+							
+							<hr />
+							
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-2">
+										<label for="" class="form-label">작성자</label>
+									</div>
+									<div class="col-md-10">
+										<input id="writerText" type="text" class="form-control" value="${board.writer }" readonly />
+									</div>
+								</div>
+							</div>
+							<hr />
+							
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-2">
+										<label for="" class="form-label">모임시간</label>
+									</div>
+									<div class="col-md-10">
+										<input id="timeText" type="text" class="form-control" value="${board.time }" readonly />
+									</div>
+								</div>
+							</div>
+							<hr />
+							
+							<%-- <div class="mb-3">
+								<div class="row">
+									<div class="col-md-2">
+										<label for="" class="form-label">작성일시</label>
+									</div>
+									<div class="col-md-10">
+										<input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
+									</div>
+								</div>
+							</div>
+							<hr /> --%>
+							<input id="insertedText" type="hidden" value="${board.inserted }" />
+							
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-md-2">
+										<label for="" class="form-label">M A T E</label>
+									</div>
+									<div class="col-md-4">
+										<c:forEach items="${members}" var="member">
+											<!-- 보드아이디와 멤버의 보드아이디가 같은 경우 -->
+											<!-- 멤버의 아이디와 작성자가 같은 경우는 해주면 안됨  -->
+											<c:if test="${board.id eq member.boardId && board.writer ne member.memberId}">
+												<div class="mb-1">
+													<input type="text" readonly class="form-control" value="${member.memberId}" />
+												</div>
+											</c:if>
+										</c:forEach>
+									</div>
+								</div>
+							</div>
+							<hr />
+							
+							
+							
+						</div>
+						
 					</div>
-				</div>
+				
 
-				<div>
+				<%-- <div>
 					<div class="mb-3">
 						<label for="" class="form-label">제목</label>
 						<input type="text" class="form-control" value="${board.title }" readonly />
@@ -73,11 +337,11 @@
 						<label for="" class="form-label">작성일시</label>
 						<input id="insertedText" type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
-					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" />
+					<input id="LatSubmit" type="hidden" name="Lat" value="${board.lat }" /> <input id="LngSubmit" type="hidden" name="Lng" value="${board.lng }" /> --%>
 
 
 					<!-- 본인 게시물 확인 -->
-					<c:set var="isUser" value="false" />
+					<%-- <c:set var="isUser" value="false" />
 					<c:forEach items="${memberList}" var="memberList">
 						<c:if test="${memberList.nickName eq board.writer}">
 							<c:set var="isUser" value="true" />
@@ -85,64 +349,13 @@
 						</c:if>
 					</c:forEach>
 
-
-
-					<label for="" class="form-label">신청한 사람 </label>
-					<c:forEach items="${members}" var="member">
-						<!-- 보드아이디와 멤버의 보드아이디가 같은 경우 -->
-						<!-- 멤버의 아이디와 작성자가 같은 경우는 해주면 안됨  -->
-						<c:if test="${board.id eq member.boardId && board.writer ne member.memberId}">
-							<div class="mb-3">
-								<input type="text" readonly class="form-control" value="${member.memberId}" />
-							</div>
-						</c:if>
-					</c:forEach>
-
-
-
-					<sec:authorize access="#board.writer eq #userName">
-						<div>
-							<a class="btn btn-secondary" href="/climbing/mateModify/${board.id }">수정</a>
-
-							<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" class="btn btn-danger">삭제</button>
-						</div>
-
-
-
-
-						<div class="d-none">
-							<form action="/climbing/mateRemove" method="post" id="removeForm">
-								<input type="text" name="id" value="${board.id }" />
-							</form>
-						</div>
-
-
-						<!-- Modal -->
-						<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									<div class="modal-body">삭제 하시겠습니까?</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-										<button type="submit" class="btn btn-danger" form="removeForm">삭제</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</sec:authorize>
-
-
 					<c:forEach items="${memberList}" var="memberList">
 						<c:set var="memberNickName" value="${memberList.nickName}" />
 					</c:forEach>
 
 
 					<!-- 본인 신청 확인  -->
-					<%-- <c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" /> --%>
+					<c:set var="currentUserId" value="${sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name}" />
 					<c:set var="isMember" value="false" />
 					<c:forEach items="${members}" var="members">
 						<c:if test="${members.memberId eq memberNickName}">
@@ -214,7 +427,7 @@
 							<input type="text" id="totalPeople" value="${board.people }" />
 							<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
 							<p id="currentPeople"></p>
-							<%-- <input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  /> --%>
+							<input type="text" id = "currentPeopleHidden" value = "${board.currentNum }"  />
 						</c:if>
 
 						<c:if test="${isUser}">
@@ -224,8 +437,10 @@
 							<input type="text" id="currentPeopleHidden" value="${board.currentNum }" />
 
 						</c:if>
-					</div>
-
+					</div> --%>
+				</div>
+			</div>
+		</div>
 
 
 					<!-- **************************************************  -->

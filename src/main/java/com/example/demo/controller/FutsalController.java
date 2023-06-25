@@ -30,7 +30,8 @@ public class FutsalController {
 	private FutsalTodayService todayService;
 
 	@GetMapping("/futsalList")
-	public void list(Model model) {
+	public void list(Model model,
+			@RequestParam(value = "search", defaultValue = "") String search) {
 
 		Map<String, Object> listMap = new HashMap<>();
 
@@ -39,7 +40,7 @@ public class FutsalController {
 		listMap.put("boardList", list);
 
 		// 오늘의 러닝
-		List<FutsalToday> today = todayService.listBoard();
+		List<FutsalToday> today = todayService.listBoard(search);
 		listMap.put("todayList", today);
 
 		model.addAllAttributes(listMap);
@@ -105,6 +106,7 @@ public class FutsalController {
 		}
 
 	}
+	
 
 	@GetMapping("/todayId/{id}")
 	public String detailToday(@PathVariable("id") Integer id, Model model) {
@@ -170,6 +172,9 @@ public class FutsalController {
 		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
 		List<Member> memberList = service.getUserId(authentication.getName());
 		getMemberList.put("memberList", memberList);
+		
+		List<FutsalToday> today = todayService.listBoard(search);
+		getMemberList.put("futsalTodayList", today);
 
 		model.addAllAttributes(getMemberList);
 	}
@@ -313,19 +318,47 @@ public class FutsalController {
 	}
 	
 	@GetMapping("futsalTodayList")
-	public void todayList(Model model
+	public void todayList(Model model,
 //			@RequestParam(value = "page", defaultValue = "1") Integer page,
-//			@RequestParam(value = "search", defaultValue = "") String search,
+			@RequestParam(value = "search", defaultValue = "") String search
 //			@RequestParam(value = "type", required = false) String type) 
 			) {
 		
 		Map<String, Object> todayList = new HashMap<>();		
 		
-		List<FutsalToday> today = todayService.listBoard();
+		List<FutsalToday> today = todayService.listBoard(search);
 		todayList.put("futsalTodayList", today);
 		
 		model.addAllAttributes(todayList);
 
+	}
+	
+	@GetMapping("/futsalMain")
+	public void futsalMain(Model model, Authentication authentication,
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "search", defaultValue = "") String search) {
+
+//		System.err.println("접근 1");
+
+		Map<String, Object> getMemberList = new HashMap<>();
+
+		List<FutsalBoard> futsalMates = service.getMateBoardByAddress(authentication, type, search);
+		getMemberList.put("futsalMates", futsalMates);
+
+		/* model.addAttribute("board", futsalMates); */
+//		System.out.println(futsalMates);
+
+		List<FutsalParty> members = service.selectMemberIdByBoardId();
+		getMemberList.put("members", members);
+
+		// 현재 로그인한 사람의 닉네임을 넘겨줘야함
+		List<Member> memberList = service.getUserId(authentication.getName());
+		getMemberList.put("memberList", memberList);
+
+		List<FutsalToday> today = todayService.listBoard(search);
+		getMemberList.put("futsalTodayList", today);
+
+		model.addAllAttributes(getMemberList);
 	}
 	
 	

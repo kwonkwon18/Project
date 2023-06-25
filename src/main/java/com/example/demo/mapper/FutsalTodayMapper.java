@@ -34,10 +34,14 @@ public interface FutsalTodayMapper {
 			FROM
 			    FutsalToday r
 			    LEFT JOIN FutsalFileName f ON r.id = f.boardId
+			    LEFT JOIN FutsalLike rl ON r.id = rl.boardId
+			    LEFT JOIN FutsalComment rc ON r.id = rc.boardId
+			WHERE
+				r.title LIKE CONCAT('%', #{search}, '%')
 			    order by r.inserted desc
 						""")
 	@ResultMap("boardResultMap")
-	List<FutsalToday> selectList();
+	List<FutsalToday> selectList(String search);
 
 	@Select("""
 			select * from FutsalToday where id = #{id};

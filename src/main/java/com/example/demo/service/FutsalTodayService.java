@@ -29,9 +29,9 @@ public class FutsalTodayService {
 	@Autowired
 	private FutsalMapper mapper;
 
-	public List<FutsalToday> listBoard() {
+	public List<FutsalToday> listBoard(String search) {
 
-		return todayMapper.selectList();
+		return todayMapper.selectList(search);
 
 	}
 

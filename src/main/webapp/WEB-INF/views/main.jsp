@@ -34,7 +34,7 @@
 				</a>
 			</div>
 			<div class="carousel-item">
-				<a href="/futsal/futsalList">
+				<a href="/futsal/futsalMain">
 					<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/logo/%ED%92%8B%EC%82%B41.jpg" class="d-block w-100" alt="...">
 				</a>
 			</div>

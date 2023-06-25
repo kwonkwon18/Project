@@ -16,6 +16,11 @@
 <body>
 
 	<my:navBarFutsal></my:navBarFutsal>
+	
+	<br />
+	<br />
+	<br />
+	<br />
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -37,13 +42,13 @@
 				</div>
 				<div class="carousel-inner">
 					<div class="carousel-item active">
-						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block w-100" height="500px" alt="...">
+						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/futsalMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block w-100" height="500px" alt="...">
 					</div>
 					<div class="carousel-item">
-						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block w-100" height="500px" alt="...">
+						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/futsalMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block w-100" height="500px" alt="...">
 					</div>
 					<div class="carousel-item">
-						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" height="500px" alt="...">
+						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/futsalMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" height="500px" alt="...">
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

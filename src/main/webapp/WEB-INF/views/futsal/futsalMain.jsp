@@ -19,7 +19,12 @@
 <body>
 
 
-	<my:navBarRunning></my:navBarRunning>
+	<my:navBarFutsal></my:navBarFutsal>
+	
+	<br />
+	<br />
+	<br />
+	<br />
 
 	<jsp:useBean id="now" class="java.util.Date"></jsp:useBean>
 	<!-- parseDate는 일단 들어오는 형식 대로 받아줘야함   -->
@@ -38,13 +43,13 @@
 				</div>
 				<div class="carousel-inner">
 					<div class="carousel-item active">
-						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/runningMate/%EB%8B%AC%EB%A6%AC%EA%B8%B01.jpg" class="d-block w-100" height="500px" alt="...">
+						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/futsalMate/%EC%BA%90%EB%9F%AC%EC%85%801.jpg" class="d-block w-100" height="500px" alt="...">
 					</div>
 					<div class="carousel-item">
-						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/runningMate/%EB%8B%AC%EB%A6%AC%EA%B8%B03.jpg" class="d-block w-100" height="500px" alt="...">
+						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/futsalMate/%EC%BA%90%EB%9F%AC%EC%85%802.jpg" class="d-block w-100" height="500px" alt="...">
 					</div>
 					<div class="carousel-item">
-						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/runningMate/%EB%8B%AC%EB%A6%AC%EA%B8%B02.jpg" height="500px" alt="...">
+						<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/futsalMate/%EC%BA%90%EB%9F%AC%EC%85%803.jpg" height="500px" alt="...">
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -62,23 +67,23 @@
 
 			<nav>
 				<ul>
-					<h2>메이트 구하기 🏃‍♀️ 🏃‍♀️</h2>
+					<h2>메이트 구하기 ⚽⚽</h2>
 					<span style="margin-left: 50px;"></span>
-					<a id="all1" href="/running/runningMate" style="text-decoration-line: none;">전체</a>
+					<a id="all1" href="/futsal/futsalMate" style="text-decoration-line: none;">전체</a>
 					&nbsp; &nbsp;
 					<a class="dropdown-toggle" href="#" role="button" id="search1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색</a>
 					&nbsp; &nbsp;
-					<a href="runningMap" style="text-decoration-line: none;">
+					<a href="futsalMap" style="text-decoration-line: none;">
 						지도로 보기
 						<i class="fa-solid fa-map-location-dot"></i>
 					</a>
 					<span style="margin-left: 700px;">
-						<button type="button" class="btn btn-success" onclick="location.href='runningAdd'">번개 글작성 ⚡</button>
+						<button type="button" class="btn btn-success" onclick="location.href='futsalAdd'">번개 글작성 ⚡</button>
 					</span>
 				</ul>
 				<div id="dropdown1" style="display: none">
 					<ul>
-						<form action="/running/runningMate" class="d-flex align-items-center" role="search">
+						<form action="/futsal/futsalMate" class="d-flex align-items-center" role="search">
 							<select class="form-select" name="type" id="" style="width: 150px">
 								<option value="all">전체</option>
 								<option value="title" ${param.type eq 'title' ? 'selected': '' }>제목</option>
@@ -96,14 +101,14 @@
 
 			<!-- <ul>
 			<div style="text-align: right;">
-				<a href="/running/runningMate?type=distance" style="text-decoration-line: none;">거리순</a>
-				<a href="/running/runningMate" style="text-decoration-line: none;">최신순</a>
+				<a href="/futsal/futsalMate?type=distance" style="text-decoration-line: none;">거리순</a>
+				<a href="/futsal/futsalMate" style="text-decoration-line: none;">최신순</a>
 			</div>
 		</ul> -->
 
 
 			<div class="row row-cols-1 row-cols-md-3 g-4">
-				<c:forEach items="${runningMates}" var="board" varStatus="status">
+				<c:forEach items="${futsalMates}" var="board" varStatus="status">
 
 					<c:set var="isMember" value="false" />
 					<c:forEach items="${memberList}" var="memberList">
@@ -118,7 +123,7 @@
 						<div class="col">
 							<div class="card ${isMember ? 'card-member' : 'card-nonMember'}" style="width: 18rem; margin-bottom: 20px; height: 400px;">
 								<div class="card-body">
-									<h5 class="card-title">🏃‍♀️🏃‍♂️ ${board.title}</h5>
+									<h5 class="card-title">⚽⚽ ${board.title}</h5>
 									<div>
 										<div class="mb-3">
 											<label for="" class="form-label">작성자</label>
@@ -161,38 +166,38 @@
 			<br />
 			<br />
 
-			<h2>오늘의 러닝</h2>
+			<h2>오늘의 풋살</h2>
 			<!-- 새로 작성된 코드, 변경된 코드  -->
 			<!-- table.table>thead>tr>th*4^^tbody -->
 
 			<%-- 		<ul style="display: flex; align-items: center;">
 			<span style="margin-left: 50px;"></span>
-			<a id="all2" href="/running/runningTodayList" style="text-decoration-line: none; display: inline-block;">전체</a>
+			<a id="all2" href="/futsal/futsalTodayList" style="text-decoration-line: none; display: inline-block;">전체</a>
 			&nbsp; &nbsp;
-			<form action="/running/runningTodayList" class="d-flex" role="search">
+			<form action="/futsal/futsalTodayList" class="d-flex" role="search">
 				<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex-grow: 1;">
 				<button class="btn btn-outline-success" type="submit">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
 			</form>
-			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'" style="margin-left: auto;">러닝 공유하기 ⚡</button>
+			<button type="button" class="btn btn-success" onclick="location.href='mateAdd'" style="margin-left: auto;">풋살 공유하기 ⚡</button>
 		</ul> --%>
 
 			<nav>
 				<ul>
 					<span style="margin-left: 50px;"></span>
-					<a id="all2" href="/running/runningTodayList" style="text-decoration-line: none; display: inline-block;">전체</a>
+					<a id="all2" href="/futsal/futsalTodayList" style="text-decoration-line: none; display: inline-block;">전체</a>
 					&nbsp; &nbsp;
 					<a class="dropdown-toggle" href="#" role="button" id="search2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration-line: none;">검색</a>
 					&nbsp; &nbsp;
 					<span style="margin-left: 800px;">
-						<button type="button" class="btn btn-warning" onclick="location.href='runningToday'" style="margin-left: auto;">러닝 공유하기 ✨</button>
+						<button type="button" class="btn btn-warning" onclick="location.href='futsalToday'" style="margin-left: auto;">풋살 공유하기 ✨</button>
 					</span>
 				</ul>
 				<div id="dropdown2" style="display: none">
 					<ul>
 						<div class="d-flex justify-content-start align-items-center">
-							<form action="/running/runningTodayList" class="d-flex" role="search">
+							<form action="/futsal/futsalTodayList" class="d-flex" role="search">
 								<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex-grow: 1;">
 								<button class="btn btn-outline-success" type="submit">
 									<i class="fa-solid fa-magnifying-glass"></i>
@@ -207,7 +212,7 @@
 
 
 			<div class="row">
-				<c:forEach items="${runningTodayList}" var="boardToday" varStatus="status">
+				<c:forEach items="${futsalTodayList}" var="boardToday" varStatus="status">
 					<c:if test="${status.index < 3 }">
 						<div class="col-md-4 todayListData" data-board-boardId="${boardToday.id }" onclick='newPage(${boardToday.id })'>
 							<div class="card todayCard" style="width: 18rem; margin-bottom: 20px; height: 620px;">
@@ -234,7 +239,7 @@
 										<c:forEach items="${boardToday.fileName }" var="fileName" varStatus="status">
 											<c:if test="${status.count lt 2 }">
 												<div>
-													<img class="img-fluid img-thumbnail" src="${bucketUrl }/runningToday/${boardToday.id }/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
+													<img class="img-fluid img-thumbnail" src="${bucketUrl }/futsalToday/${boardToday.id }/${fileName}" alt="" style="width: 450px; height: 260px !important;" />
 												</div>
 											</c:if>
 										</c:forEach>
@@ -279,11 +284,9 @@
 			</sec:authorize>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-			<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3f405ca1718e37ea86f8585e0ca94ef5
-&libraries=services"></script>
-			<script src="/js/running/runningMate.js" charset="UTF-8"></script>
-			<script src="/js/running/runningTodayList.js" charset="UTF-8"></script>
+			<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+			<script src="/js/futsal/futsalMate.js" charset="UTF-8"></script>
+			<script src="/js/futsal/futsalTodayList.js" charset="UTF-8"></script>
 
 			<style>
 .card-member {

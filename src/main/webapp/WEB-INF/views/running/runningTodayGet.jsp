@@ -69,7 +69,7 @@
 							<p class="card-text">${board.body }</p>
 						</div>
 					</div>
-					<div class="mb-3">
+					<div class="m-3">
 						<div class="row justify-content-end">
 							<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
 							<div class="col-md-2" style="display: flex; justify-content: flex-end;">

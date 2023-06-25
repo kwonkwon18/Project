@@ -62,7 +62,7 @@
 							<p class="card-text">${board.body }</p>
 						</div>
 					</div>
-					<div class="mb-3">
+					<div class="m-3">
 						<div class="row justify-content-end">
 							<c:if test="${board.writer eq member.nickName }">
 							<div class="col-md-2" style="display: flex; justify-content: flex-end;" >

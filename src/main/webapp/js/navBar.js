@@ -45,7 +45,7 @@ $("#alarmList").click(function() {
 
 				$("#runningHostAlarm").append(`
 
-    <div id = "runningBoard${boardId}" class="btn btn-outline-dark mb-3" style="width: 500px;">
+    <div id = "runningBoard${boardId}" class="btn btn-outline-dark mb-3" style="width: 550px;">
         🏃‍♀️ ${title} 에 ${memberId} 님이 신청하셨습니다.
             <button class="agreeParty btn btn-primary mr-10" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}">수락</button>
             <button class="disagreeParty btn btn-danger" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}">거절</button>
@@ -71,7 +71,7 @@ $("#alarmList").click(function() {
 					message = ` ${userId} 수락되었습니다. &nbsp;&nbsp;
 					<button class="btn btn-primary memberConfirmation deleteAlarm" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button" value="${boardId}" style="justify-content: flex-end;">확인</button>`
 					$("#runningMemberAlarm").append(`
-<div id = "runningBoard${boardId}" class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
+<div id = "runningBoard${boardId}" class="btn btn-outline-primary mb-3" style="width: 550px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
         🏃‍♀️ ${title} 신청이 ${message}
     </div>
@@ -79,7 +79,7 @@ $("#alarmList").click(function() {
 `);
 				} else if (participation === 1 && userId == memberId) {
 					$("#runningMemberAlarm").append(`
-					<div id = "postOk${boardId}" class="btn btn-outline-primary mb-3 " style="width: 500px; display: flex; ">
+					<div id = "postOk${boardId}" class="btn btn-outline-primary mb-3 " style="width: 550px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
         🏃‍♀️ ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; <button class="btn btn-primary memberConfirmation deleteAlarm" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button"  value="${boardId}" style="justify-content: flex-end;">확인</button>
     </div>
@@ -93,7 +93,7 @@ $("#alarmList").click(function() {
 					message = ` ${userId} 반려되었습니다. &nbsp;&nbsp;
 					<button class="btn btn-secondary memberConfirmation deleteAlarm" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button" value="${boardId}" style="justify-content: flex-end;">확인</button>`
 					$("#runningMemberAlarm").append(`
-<div id = "runningBoard${boardId}" class="btn btn-outline-danger mb-3" style="width: 500px; display: flex; ">
+<div id = "runningBoard${boardId}" class="btn btn-outline-danger mb-3" style="width: 550px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
         🏃‍♀️ ${title} 신청이 ${message}
     </div>
@@ -313,7 +313,7 @@ $("#alarmList").click(function() {
 				console.log(userId)
 
 				$("#climbingHostAlarm").append(`
-    <div id = "climbingBoard${boardId}" class="btn btn-outline-dark mb-3" style="width: 500px;">
+    <div id = "climbingBoard${boardId}" class="btn btn-outline-dark mb-3" style="width: 550px;">
        🏕 ${title} 에 ${memberId} 님이 신청하셨습니다.
             <button class="agreePartyClimbing btn btn-primary mr-10" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}">수락</button>
             <button class="disagreePartyClimbing btn btn-danger" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}">거절</button>
@@ -339,7 +339,7 @@ $("#alarmList").click(function() {
 					message = ` ${userId} 수락되었습니다. &nbsp;&nbsp;
 					<button class="btn btn-primary memberConfirmationClimbing deleteAlarmClimbing" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button"  value="${boardId}" style="justify-content: flex-end;">확인</button>`
 					$("#climbingMemberAlarm").append(`
-<div id = "climbingBoard${boardId}" class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
+<div id = "climbingBoard${boardId}" class="btn btn-outline-primary mb-3" style="width: 550px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
         🏕 ${title} 신청이 ${message}
     </div>
@@ -347,7 +347,7 @@ $("#alarmList").click(function() {
 `);
 				} else if (participation === 1 && userId == memberId) {
 					$("#climbingMemberAlarm").append(`
-					<div id = "climbingBoard${boardId}" class="btn btn-outline-primary mb-3" style="width: 500px; display: flex; ">
+					<div id = "climbingBoard${boardId}" class="btn btn-outline-primary mb-3" style="width: 550px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
          🏕 ' ${title} ' 게시물이 올라갔습니다 &nbsp;&nbsp; 
         <button class = "btn btn-primary memberConfirmationClimbing deleteAlarmClimbing" data-board-memberId = "${memberId}" data-board-userId = "${userId}" data-board-boardId = "${boardId}" data-board-title = "${title}"  type="button" value="${boardId}">확인</button>
@@ -363,7 +363,7 @@ $("#alarmList").click(function() {
 					message = ` ${userId} 반려되었습니다. &nbsp;&nbsp;
 					<button class="btn btn-secondary memberConfirmationClimbing deleteAlarmClimbing" data-board-memberId="${memberId}" data-board-userId="${userId}" data-board-boardId="${boardId}" data-board-title="${title}" type="button" value="${boardId}" style="justify-content: flex-end;">확인</button>`
 					$("#climbingMemberAlarm").append(`
-<div id = "climbingBoard${boardId}" class="btn btn-outline-danger mb-3" style="width: 500px; display: flex; ">
+<div id = "climbingBoard${boardId}" class="btn btn-outline-danger mb-3" style="width: 550px; display: flex; ">
     <div id="alarmDiv${boardId}" class="d-flex align-items-center" style="padding-right: 10px; padding-left: 10px;">
         🏕 ${title} 신청이 ${message}
     </div>

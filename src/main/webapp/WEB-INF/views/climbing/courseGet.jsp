@@ -16,21 +16,26 @@
 <body>
 
 	<my:navBarClimbing></my:navBarClimbing>
-
+	<br />
+	<br />
+	<br />
+	<br />
 	<div class="container-lg">
 
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="d-flex" style="font-size: 40px;">
-					<span id="boardIdText"> ${board.id } </span> 번게시물
+					<span id="boardIdText"> ${board.id } </span>
+					번게시물
 					<%-- 			<sec:authorize access="isAuthenticated()"> --%>
 					<%-- 			<sec:authentication property="name" var="userId" /> --%>
 					<%-- 				<c:if test="${userId eq board.userId }"> --%>
-					<div style="margin-left: auto;">
-						<a class="btn btn-secondary" href="/climbing/courseModify/${board.id }">수정</a>
-						<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
-					</div>
-
+					<c:if test="${board.writer eq member.nickName }">
+						<div style="margin-left: auto;">
+							<a class="btn btn-secondary" href="/climbing/courseModify/${board.id }">수정</a>
+							<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+						</div>
+					</c:if>
 					<!-- 보안 넣어줘야함   -->
 
 					<div class="d-none">
@@ -59,13 +64,16 @@
 				<br />
 				<div>
 					<div class="mb-3">
-						<label for="" class="form-label">제목</label> <input type="text" class="form-control" value="${board.title }" readonly />
+						<label for="" class="form-label">제목</label>
+						<input type="text" class="form-control" value="${board.title }" readonly />
 					</div>
 					<div class="mb-3">
-						<label for="" class="form-label">작성자</label> <input type="text" class="form-control" value="${board.writer }" readonly />
+						<label for="" class="form-label">작성자</label>
+						<input type="text" class="form-control" value="${board.writer }" readonly />
 					</div>
 					<div class="mb-3">
-						<label for="" class="form-label">작성일시</label> <input type="text" readonly class="form-control" value="${board.inserted }" />
+						<label for="" class="form-label">작성일시</label>
+						<input type="text" readonly class="form-control" value="${board.inserted }" />
 					</div>
 					<!-- 그림 파일 출력 -->
 					<div class="mb-3">
@@ -82,13 +90,16 @@
 					<!-- 좋아요  -->
 					<h1>
 
-						<span id="likeIcon"> <c:if test="${board.liked }">
+						<span id="likeIcon">
+							<c:if test="${board.liked }">
 								<i class="fa-solid fa-heart"></i>
-							</c:if> <c:if test="${not board.liked }">
+							</c:if>
+							<c:if test="${not board.liked }">
 								<i class="fa-regular fa-heart"></i>
 							</c:if>
 
-						</span> <span id="likeNumber"> ${board.likeCount } </span>
+						</span>
+						<span id="likeNumber"> ${board.likeCount } </span>
 
 					</h1>
 				</div>
@@ -168,17 +179,17 @@
 		</div>
 
 	</sec:authorize>
-		<!--  **************************************  -->
+	<!--  **************************************  -->
 
-		<sec:authorize access="isAuthenticated()">
-			<my:chatBtn></my:chatBtn>
-			<script src="/js/groupChat.js"></script>
-			<script src="/js/chat.js" charset="UTF-8"></script>
-		</sec:authorize>
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="/js/climbing/climbingCourseGet.js"></script>
-		<script src="/js/climbing/climbingCourseComment.js"></script>
+	<sec:authorize access="isAuthenticated()">
+		<my:chatBtn></my:chatBtn>
+		<script src="/js/groupChat.js"></script>
+		<script src="/js/chat.js" charset="UTF-8"></script>
+	</sec:authorize>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d88d8436c67d406cea914acf60c7b220&libraries=services"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="/js/climbing/climbingCourseGet.js"></script>
+	<script src="/js/climbing/climbingCourseComment.js"></script>
 </body>
 </html>

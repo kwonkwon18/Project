@@ -153,6 +153,12 @@ public interface ClimbingTodayMapper {
 		""")
 	@ResultMap("climbingTodayResultMap")
 	List<ClimbingToday> selectTodayList();
+
+	
+	@Select("""
+			select * from Member where userId = #{userId}
+			""")
+	Member getNickName(String userId);
 	
 
 }

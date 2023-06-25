@@ -187,6 +187,12 @@ public class ClimbingTodayService {
 		return todayMapper.selectTodayList();
 	}
 
+
+	public Member getNickName(String name) {
+		// TODO Auto-generated method stub
+		return todayMapper.getNickName(name);
+	}
+
 //	public Map<String, Object> listBoard(Integer page, String search, String type) {
 //		// 페이지당 행의 수
 //		Integer rowPerPage = 15;

@@ -63,18 +63,20 @@ function listComment() {
 			$("#commentListContainer").empty();
 			for (const climbingCourseComment of comments) {
 				const editButtons = `
-					<button 
-						id="commentDeleteBtn${climbingCourseComment.id}" 
-						class="commentDeleteButton"
-						data-bs-toggle="modal"
-						data-bs-target="#deleteCommentConfirmModal" 
-						data-climbingCourseComment-id="${climbingCourseComment.id}"><i class="fa-regular fa-trash-can"></i></button>
-						:
-						<button
+					<div class="justify-content-end" style="overflow: auto;">
+						<h6
 							id="commentUpdateBtn${climbingCourseComment.id}"
-							class="commentUpdateButton btn btn-secondary"
+							class="commentUpdateButton"
 							data-bs-toggle="modal" data-bs-target="#commentUpdateModal"
-							data-climbingCourseComment-id="${climbingCourseComment.id}"><i class="fa-regular fa-pen-to-square"></i></button>
+							data-climbingCourseComment-id="${climbingCourseComment.id}"
+							style="cursor: pointer; float: left; margin-right: 10px; color: gray; font-weight: bold;">수정</h6>
+						<h6 
+							id="commentDeleteBtn${climbingCourseComment.id}" 
+							class="commentDeleteButton"
+							data-bs-toggle="modal"
+							data-bs-target="#deleteCommentConfirmModal" 
+							data-climbingCourseComment-id="${climbingCourseComment.id}"
+							style="cursor: pointer; float: left; color: red; font-weight: bold;">삭제</h6>
 				`;
 				// console.log(comment);
 				$("#commentListContainer").append(`
@@ -84,12 +86,13 @@ function listComment() {
 							<div style="white-space: pre-wrap;">${climbingCourseComment.content}</div>
 						</div>
 						<div>
-							<span class="badge bg-primary rounded-pill">${climbingCourseComment.inserted}</span>
+							<span class="badge bg-light" style="color: black;">${climbingCourseComment.inserted}</span>
 							<div class="text-end mt-2">
 								${climbingCourseComment.editable ? editButtons : ''}
 							</div>
 						</div>
 					</li>
+					<hr />
 				`);
 			};
 			$(".commentUpdateButton").click(function() {

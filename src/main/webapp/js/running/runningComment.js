@@ -84,7 +84,7 @@ function listComment() {
 							<div style="white-space: pre-wrap;">${runningComment.content}</div>
 						</div>
 						<div>
-							<span class="badge bg-light rounded-pill" style="color: black;">${runningComment.inserted}</span>
+							<span class="badge bg-light" style="color: black;">${runningComment.inserted}</span>
 							<div class="text-end mt-2">
 								${runningComment.editable ? editButtons : ''}
 							</div>

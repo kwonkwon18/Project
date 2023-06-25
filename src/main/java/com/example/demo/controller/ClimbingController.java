@@ -412,7 +412,7 @@ public class ClimbingController {
 
 	}
 	
-	@GetMapping("/todayModify/{id}")
+	@GetMapping("/todayModify/{todayId}")
 	public String todayModifyForm(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("board", todayService.getClimbingToday(id, null));
 		return "climbing/todayModify";

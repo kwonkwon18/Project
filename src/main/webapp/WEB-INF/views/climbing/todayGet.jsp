@@ -30,7 +30,7 @@
 		</div>
 	</div>
 
-	<div class="container-lg">
+	<div class="container-lg mb-3">
 
 		<div class="row justify-content-center">
 
@@ -144,7 +144,7 @@
 
 
 
-						<ul class="list-group" id="commentListContainer">
+						<ul class="list-group m-3" id="commentListContainer">
 
 
 						</ul>

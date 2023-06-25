@@ -15,7 +15,7 @@
 <body>
 
 	<my:navBarClimbing></my:navBarClimbing>
-	<span id="boardIdText"> ${board.id } </span>
+	<span id="boardIdText"> ${board.todayId } </span>
 	<br />
 	<br />
 	<br />

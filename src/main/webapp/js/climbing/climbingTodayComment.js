@@ -63,18 +63,21 @@ function listComment() {
 			$("#commentListContainer").empty();
 			for (const climbingTodayComment of comments) {
 				const editButtons = `
-					<button 
-						id="commentDeleteBtn${climbingTodayComment.id}" 
-						class="commentDeleteButton"
-						data-bs-toggle="modal"
-						data-bs-target="#deleteCommentConfirmModal" 
-						data-climbingTodayComment-id="${climbingTodayComment.id}"><i class="fa-regular fa-trash-can"></i></button>
-						:
-						<button
+					<div class="justify-content-end" style="overflow: auto;">
+						<h6
 							id="commentUpdateBtn${climbingTodayComment.id}"
-							class="commentUpdateButton btn btn-secondary"
+							class="commentUpdateButton"
 							data-bs-toggle="modal" data-bs-target="#commentUpdateModal"
-							data-climbingTodayComment-id="${climbingTodayComment.id}"><i class="fa-regular fa-pen-to-square"></i></button>
+							data-climbingTodayComment-id="${climbingTodayComment.id}"
+							style="cursor: pointer; float: left; margin-right: 10px; color: gray; font-weight: bold;">수정</h6>
+						<h6 
+							id="commentDeleteBtn${climbingTodayComment.id}" 
+							class="commentDeleteButton"
+							data-bs-toggle="modal"
+							data-bs-target="#deleteCommentConfirmModal" 
+							data-climbingTodayComment-id="${climbingTodayComment.id}"
+							style="cursor: pointer; float: left; color: red; font-weight: bold;">삭제</h6>
+					</div>
 				`;
 				// console.log(comment);
 				$("#commentListContainer").append(`
@@ -84,12 +87,13 @@ function listComment() {
 							<div style="white-space: pre-wrap;">${climbingTodayComment.content}</div>
 						</div>
 						<div>
-							<span class="badge bg-primary rounded-pill">${climbingTodayComment.inserted}</span>
+							<span class="badge bg-light" style="color: black;">${climbingTodayComment.inserted}</span>
 							<div class="text-end mt-2">
 								${climbingTodayComment.editable ? editButtons : ''}
 							</div>
 						</div>
 					</li>
+					<hr	/>
 				`);
 			};
 			$(".commentUpdateButton").click(function() {

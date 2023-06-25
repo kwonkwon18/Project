@@ -37,7 +37,7 @@
 	</div>
 
 
-	<div class="container-lg">
+	<div class="container-lg mb-3">
 
 		<div class="row justify-content-center">
 
@@ -122,10 +122,10 @@
 								<h5>
 									<span id="likeIcon">
 										<c:if test="${board.liked }">
-											<i class="fa-solid fa-heart"></i>
+											<i class="fa-solid fa-heart" style="color: red"></i>
 										</c:if>
 										<c:if test="${not board.liked }">
-											<i class="fa-regular fa-heart"></i>
+											<i class="fa-regular fa-heart" style="color: red"></i>
 										</c:if>
 				
 									</span>
@@ -151,10 +151,10 @@
 
 
 
-						<ul class="list-group" id="commentListContainer">
-
+						<ul class="list-group m-3" id="commentListContainer">
 
 						</ul>
+						
 					</div>
 				</div>
 			</div>

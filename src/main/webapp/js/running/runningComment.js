@@ -60,18 +60,21 @@ function listComment() {
 			$("#commentListContainer").empty();
 			for (const runningComment of comments) {
 				const editButtons = `
-					<button 
-						id="commentDeleteBtn${runningComment.id}" 
-						class="commentDeleteButton"
-						data-bs-toggle="modal"
-						data-bs-target="#deleteCommentConfirmModal" 
-						data-runningComment-id="${runningComment.id}"><i class="fa-regular fa-trash-can"></i></button>
-						:
-						<button
+					<div class="justify-content-end" style="overflow: auto;">
+						<h6
 							id="commentUpdateBtn${runningComment.id}"
-							class="commentUpdateButton btn btn-secondary"
+							class="commentUpdateButton"
 							data-bs-toggle="modal" data-bs-target="#commentUpdateModal"
-							data-runningComment-id="${runningComment.id}"><i class="fa-regular fa-pen-to-square"></i></button>
+							data-runningComment-id="${runningComment.id}"
+							style="cursor: pointer; float: left; margin-right: 10px; color: gray; font-weight: bold;">수정</h6>
+						<h6 
+							id="commentDeleteBtn${runningComment.id}" 
+							class="commentDeleteButton"
+							data-bs-toggle="modal"
+							data-bs-target="#deleteCommentConfirmModal" 
+							data-runningComment-id="${runningComment.id}"
+							style="cursor: pointer; float: left; color: red; font-weight: bold;">삭제</h6>
+					</div>
 				`;
 				// console.log(comment);
 				$("#commentListContainer").append(`
@@ -81,12 +84,13 @@ function listComment() {
 							<div style="white-space: pre-wrap;">${runningComment.content}</div>
 						</div>
 						<div>
-							<span class="badge bg-primary rounded-pill">${runningComment.inserted}</span>
+							<span class="badge bg-light rounded-pill" style="color: black;">${runningComment.inserted}</span>
 							<div class="text-end mt-2">
 								${runningComment.editable ? editButtons : ''}
 							</div>
 						</div>
 					</li>
+					<hr />
 				`);
 			};
 			$(".commentUpdateButton").click(function() {

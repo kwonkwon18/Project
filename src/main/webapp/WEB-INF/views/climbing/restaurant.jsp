@@ -212,7 +212,8 @@
 		<div class="option">
 			<div>
 				<form onsubmit="searchPlaces(); return false;">
-					키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15">
+					키워드 :
+					<input type="text" value="이태원 맛집" id="keyword" size="15">
 					<button type="submit">검색하기</button>
 				</form>
 			</div>
@@ -450,6 +451,7 @@
 			}
 		}
 	</script>
+	<script src="/js/climbingNavBar.js"></script>
 
 	</body>
 </html>

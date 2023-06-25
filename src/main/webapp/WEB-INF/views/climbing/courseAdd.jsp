@@ -24,17 +24,20 @@
 				<h1>게시물 작성</h1>
 				<form method="post" enctype="multipart/form-data" action="">
 					<div class="mb-3">
-						<label for="titleInput" class="form-label">제목</label> <input id="titleInput" class="form-control" type="text" name="title" value="${climbingCourse.title }" />
+						<label for="titleInput" class="form-label">제목</label>
+						<input id="titleInput" class="form-control" type="text" name="title" value="${climbingCourse.title }" />
 					</div>
 					<div class="mb-3">
-						<label for="writerInput" class="form-label">글쓴이</label> <input id="writerInput" class="form-control" type="text" name="writer" value="${climbingCourse.writer }" />
+						<label for="writerInput" class="form-label">글쓴이</label>
+						<input id="writerInput" class="form-control" type="text" name="writer" value="${climbingCourse.writer }" />
 					</div>
 					<div class="mb-3">
 						<label for="bodyTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="bodyTextarea" class="form-control" name="body">${climbingCourse.body }</textarea>
 					</div>
 					<div class="mb-3">
-						<label for="fileInput" class="form-label">그림 파일</label> <input class="form-control" type="file" id="fileInput" name="files" accept="image/*" multiple>
+						<label for="fileInput" class="form-label">그림 파일</label>
+						<input class="form-control" type="file" id="fileInput" name="files" accept="image/*" multiple>
 						<div class="form-text">총 10MB, 하나의 파일은 1MB를 초과할 수 없습니다.</div>
 					</div>
 					<input class="btn btn-primary" type="submit" value="등록" />
@@ -44,6 +47,8 @@
 	</div>
 	</div>
 
+
+	<script src="/js/climbingNavBar.js"></script>
 	<sec:authorize access="isAuthenticated()">
 		<my:chatBtn></my:chatBtn>
 		<script src="/js/groupChat.js"></script>

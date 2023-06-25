@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<style>
+	<style>
 .my-card {
 	border: 4px solid green;
 }
@@ -57,13 +57,17 @@ h2 {
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 
 
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
 				</button>
 				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
 				</button>
 			</div>
-			<h2><img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%B6%94%EC%B2%9C+%EC%BD%94%EC%8A%A4.png"> </h2>
+			<h2>
+				<img src="https://bucket0503-qqwweerr11223344.s3.ap-northeast-2.amazonaws.com/project/climbingMate/%EC%B6%94%EC%B2%9C+%EC%BD%94%EC%8A%A4.png">
+			</h2>
 
 			<ul>
 				<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
@@ -99,7 +103,10 @@ h2 {
 									<p class="card-title">${board.title}</p>
 									<p class="card-text">
 
-										<i class="fa-solid fa-heart"></i> ${board.likeCount } <i class="fa-regular fa-comments"></i> ${board.commentCount }
+										<i class="fa-solid fa-heart"></i>
+										${board.likeCount }
+										<i class="fa-regular fa-comments"></i>
+										${board.commentCount }
 
 									</p>
 								</div>
@@ -120,14 +127,13 @@ h2 {
 			<my:advertisement2></my:advertisement2>
 		</div>
 
-
-      <sec:authorize access="isAuthenticated()">
+		<script src="/js/climbingNavBar.js"></script>
+		<sec:authorize access="isAuthenticated()">
 			<my:chatBtn></my:chatBtn>
 			<script src="/js/groupChat.js"></script>
 			<script src="/js/chat.js" charset="UTF-8"></script>
 		</sec:authorize>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 </body>
 </html>

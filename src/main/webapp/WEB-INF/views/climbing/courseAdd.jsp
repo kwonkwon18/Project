@@ -63,6 +63,8 @@
 		</div>
 	</div>
 
+
+	<script src="/js/climbingNavBar.js"></script>
 	<sec:authorize access="isAuthenticated()">
 		<my:chatBtn></my:chatBtn>
 		<script src="/js/groupChat.js"></script>

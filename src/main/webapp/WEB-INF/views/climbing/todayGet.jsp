@@ -64,9 +64,9 @@
 					</div>
 					<div class="mb-3">
 						<div class="row justify-content-end">
-							<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
+							<c:if test="${board.writer eq member.nickName }">
 							<div class="col-md-2" style="display: flex; justify-content: flex-end;" >
-								<a class="btn btn-secondary" href="/climbing/climbingTodayModify/${board.id }">수정</a>
+								<a class="btn btn-secondary" href="/climbing/todayModify/${board.id }">수정</a>
 							</div>
 							<div class="col-md-2">
 								<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
@@ -78,7 +78,7 @@
 
 
 					<!-- 보안 넣어줘야함   -->
-					<c:if test="${board.userId eq sessionScope['SPRING_SECURITY_CONTEXT'].authentication.name }">
+					<c:if test="${board.writer eq member.nickName }">
 						<div class="d-none">
 							<form action="/climbing/todayRemove" method="post" id="removeForm">
 								<input id="inputId" type="text" name="id" value="${board.id }" />

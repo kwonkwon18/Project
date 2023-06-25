@@ -399,9 +399,14 @@ public class ClimbingController {
 	@GetMapping("/todayId/{id}")
 	public String Todaydetail(@PathVariable("id") Integer id, Model model, Authentication authentication) {
 
+		Map<String,Object> list = new HashMap();
+		
 		ClimbingToday todayList = todayService.getClimbingToday(id, authentication.getName());
-
-		model.addAttribute("board", todayList);
+		list.put("board", todayList);
+		Member member = todayService.getNickName(authentication.getName());
+		list.put("member", member);
+		
+		model.addAllAttributes(list);
 
 		return "climbing/todayGet";
 
@@ -494,10 +499,16 @@ public class ClimbingController {
 
 	@GetMapping("/courseId/{id}")
 	public String Coursedetail(@PathVariable("id") Integer id, Model model, Authentication authentication) {
+		
+		Map<String,Object> list = new HashMap();
 
 		ClimbingCourse courseList = courseService.getClimbingCourse(id, authentication.getName());
+		list.put("board", courseList);
+		
+		Member member = todayService.getNickName(authentication.getName());
+		list.put("member", member);
 
-		model.addAttribute("board", courseList);
+		model.addAllAttributes(list);
 
 		return "climbing/courseGet";
 

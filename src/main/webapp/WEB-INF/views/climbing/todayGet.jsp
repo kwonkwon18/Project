@@ -115,10 +115,10 @@
 								<h5>
 									<span id="likeIcon">
 										<c:if test="${board.liked }">
-											<i class="fa-solid fa-heart"></i>
+											<i class="fa-solid fa-heart" style="color: red;"></i>
 										</c:if>
 										<c:if test="${not board.liked }">
-											<i class="fa-regular fa-heart"></i>
+											<i class="fa-regular fa-heart" style="color: red;"></i>
 										</c:if>
 				
 									</span>

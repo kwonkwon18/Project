@@ -140,7 +140,7 @@
 													</div>
 												</c:if>
 			
-												<c:if test="${board.people <= board.currentNum }">
+												<c:if test="${board.people <= board.currentNum  - 1}">
 													<div class="col-md-5">
 														<button class="btn btn-secondary">마감</button>
 													</div>
@@ -149,13 +149,13 @@
 										</c:if>
 			
 										<div class="col-md-3">
-											<input type="text" id="currentPeopleHidden" value="지원: ${board.currentNum }명" class="form-control"/>
+											<input type="text" id="currentPeopleHidden" value="지원: ${board.currentNum -1 }명" class="form-control"/>
 										</div>
 										<div class="col-md-3">
 											<input type="text" id="totalPeople" value="총 인원: ${board.people }명" class="form-control"/>
 										</div>
 											<p id="currentPeople"></p>
-										<input type="hidden" id = "currentPeopleHidden" value = "${board.currentNum }"  />
+										<input type="hidden" id = "currentPeopleHidden" value = "${board.currentNum -1}"  />
 									</c:if>
 								</div>
 								
@@ -166,7 +166,7 @@
 												<button type="button" class="btn btn-secondary">내가 쓴 글</button>
 											</div>
 											<div class="col-md-3">
-												<input class="form-control" type="text" id="currentPeopleHidden" value="지원: ${board.currentNum }명" />
+												<input class="form-control" type="text" id="currentPeopleHidden" value="지원: ${board.currentNum -1 }명" />
 											</div>
 											<div class="col-md-3">
 												<input class="form-control" type="text" id="totalPeople" value="총 인원: ${board.people }명" />

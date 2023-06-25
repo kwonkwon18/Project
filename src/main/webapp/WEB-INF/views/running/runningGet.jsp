@@ -97,7 +97,7 @@
 									<c:if test="${!isUser}">
 										<c:if test="${openDate < nowDate }">
 											<div class="col-md-5">
-												<button>마감된 러닝</button>
+												<button class="btn btn-secondary">마감된 러닝</button>
 											</div>
 										</c:if>
 			
@@ -105,7 +105,7 @@
 			
 											<c:if test="${isReject }">
 												<div class="col-md-5">
-													<button id="">거절된 러닝입니다.</button>
+													<button id="" class="btn btn-secondary">거절된 러닝입니다.</button>
 												</div>
 											</c:if>
 			

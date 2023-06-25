@@ -18,9 +18,9 @@ $("#likeIcon").click(function() {
 		
 		success : function(data){
 			if(data.like){
-				$("#likeIcon").html(`<i class="fa-solid fa-heart"></i>`);
+				$("#likeIcon").html(`<i class="fa-solid fa-heart" style="color: red"></i>`);
 			} else{
-				$("#likeIcon").html(`<i class="fa-regular fa-heart"></i>`);
+				$("#likeIcon").html(`<i class="fa-regular fa-heart" style="color: red"></i>`);
 			}
 			
 			// 좋아요 수 업데이트 < == 이건 조건과 무관하게 진행

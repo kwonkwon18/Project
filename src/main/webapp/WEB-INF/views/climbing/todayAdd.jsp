@@ -30,16 +30,16 @@
 					<hr />
 						<div class="mb-3">
 							<!-- <label for="titleInput" class="form-label"></label> -->
-							<input id="titleInput" class="form-control" type="text" name="title" value="${runningToday.title }" placeholder="제목을 입력해주세요." />
+							<input id="titleInput" class="form-control" type="text" name="title" value="${climbingToday.title }" placeholder="제목을 입력해주세요." />
 						</div>
 						
 	<%-- 					<div class="mb-3">
 							<label for="wirterInput" class="form-label">글쓴이</label>
-							<input id="wirterInput" class="form-control" type="text" name="writer" value="${runningToday.writer }" />
+							<input id="wirterInput" class="form-control" type="text" name="writer" value="${climbingToday.writer }" />
 							</div> --%>
 						
 						
-						<input id="titleInput" class="form-control" type="hidden" name="title" value="${runningToday.title }" />
+						<input id="titleInput" class="form-control" type="hidden" name="title" value="${climbingToday.title }" />
 						
 						<!-- application property에서 작업 하는 내용 
 						spring.servlet.multipart.max-file-size=1MB
@@ -47,13 +47,13 @@
 						
 						<div class="mb-3">
 							<!-- <label for="bodyTextarea" class="form-label">본문</label> -->
-							<textarea rows="10" id="bodyTextarea" class="form-control" name="body" placeholder="내용을 입력해주세요.">${runningToday.body }</textarea>
+							<textarea rows="10" id="bodyTextarea" class="form-control" name="body" placeholder="내용을 입력해주세요.">${climbingToday.body }</textarea>
 						</div>
 					
 						<div class="form-text">1MB 크기의 파일, 총 10MB 크기만 허용</div>
 						<div class="form-group">
 							<!-- <label for="fileInput" class="form-label"></label>  -->
-							<input class="form-control form-control-user" type="file" multiple name="files" accept="image/*" id="fileInput" onchange="setDetailImage(event);" required />
+							<input class="form-control form-control-user" type="file" multiple name="files" accept="image/*" id="fileInput" onchange="setDetailImage(event);"/>
 						</div>
 						<div id="images_container" style="width: 250px; height: 200px; object-fit: cover;"></div>
 				</form>

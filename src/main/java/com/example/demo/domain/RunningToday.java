@@ -11,12 +11,12 @@ public class RunningToday {
 	// db에 존재하는 필드
 	private Integer id;
 	private String title;
-	private String body;
-	private LocalDateTime inserted;
 	private String writer;
 	private String userId;
 	
 	private List<String> fileName;
+	private String body;
+	private LocalDateTime inserted;
 	private Integer likeCount;
 	private boolean liked;
 	private Integer commentCount;
